@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daily Game Performance Report — September 21, 2026</title>
+  <style>
+    :root {
+      --bg: #091321;
+      --panel: #122238;
+      --panel-2: #172b44;
+      --line: #29415d;
+      --text: #eef4fb;
+      --muted: #9fb1c5;
+      --blue: #6ea8ff;
+      --cyan: #40d9d0;
+      --green: #55d68b;
+      --yellow: #ffca64;
+      --red: #ff7388;
+      --violet: #b78cff;
+      --shadow: 0 12px 30px rgba(0, 0, 0, .22);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font: 14px/1.45 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .wrap { width: min(1900px, calc(100% - 28px)); margin: 0 auto; padding: 16px 0 24px; }
+    .topbar { display: grid; grid-template-columns: minmax(280px, .8fr) minmax(0, 2.2fr); gap: 16px; align-items: start; margin-bottom: 18px; }
+    .header-right { min-width: 0; }
+    .header-section-head { display: flex; justify-content: space-between; gap: 10px; align-items: end; margin-bottom: 8px; }
+    .header-section-head h2 { font-size: 16px; letter-spacing: -.02em; }
+    .header-section-head p { color: var(--muted); font-size: 10px; }
+    .header-right .small-grid { margin-top: 8px; }
+    .eyebrow { color: var(--cyan); font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1, h2, h3, p { margin: 0; }
+    h1 { margin-top: 4px; font-size: clamp(24px, 2.4vw, 34px); letter-spacing: -.04em; }
+    .subtitle { color: var(--muted); margin-top: 8px; }
+    .brand-logo { display: block; width: min(190px, 30vw); height: auto; margin-bottom: 7px; }
+    .report-date { display: flex; gap: 8px; align-items: baseline; margin-top: 10px; color: var(--text); font-size: 13px; font-weight: 700; }
+    .report-date span { color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+    .header-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 13px; }
+    .header-metrics { align-self: start; gap: 10px; }
+    .header-metrics .card { min-height: 128px; height: 128px; }
+    .header-metrics .metric-value { font-size: clamp(20px, 2vw, 30px); }
+    .language-toggle { display: inline-flex; align-items: center; padding: 3px; border: 1px solid #3f6b9c; border-radius: 999px; background: #10243a; }
+    .language-toggle button, .header-button { border: 0; border-radius: 999px; padding: 7px 12px; color: var(--muted); background: transparent; font: inherit; font-size: 11px; font-weight: 800; cursor: pointer; }
+    .language-toggle button.active { color: #fff; background: #2e74c8; box-shadow: 0 3px 10px rgba(46,116,200,.28); }
+    .header-button { border: 1px solid #3f6b9c; color: #d7e7fb; background: #132b47; }
+    .header-button:hover, .language-toggle button:hover { color: #fff; border-color: #70a9eb; }
+    .date-badge { display: none; }
+    .date-badge strong { display: block; color: #eaf3ff; font-size: 16px; }
+    .date-badge > div > span { display: block; color: var(--muted); font-size: 12px; }
+    .date-badge > .tag { display: inline-flex; color: var(--muted); }
+    .date-badge b { color: var(--cyan); font-size: 11px; text-transform: uppercase; letter-spacing: .09em; }
+    dialog.previous-dialog { width: min(440px, calc(100% - 30px)); border: 1px solid #477fca; border-radius: 16px; padding: 0; color: var(--text); background: #122238; box-shadow: 0 24px 80px rgba(0,0,0,.55); }
+    dialog.previous-dialog::backdrop { background: rgba(2, 9, 18, .72); }
+    .dialog-inner { padding: 20px; }
+    .dialog-inner p { color: var(--muted); margin-top: 8px; font-size: 13px; }
+    .dialog-actions { display: flex; justify-content: flex-end; margin-top: 18px; }
+
+    .section { margin-top: 16px; }
+    .section-head { display: flex; justify-content: space-between; gap: 12px; align-items: end; margin-bottom: 13px; }
+    .section-head h2 { font-size: 19px; letter-spacing: -.02em; }
+    .section-head p { color: var(--muted); font-size: 12px; }
+    .panel { border: 1px solid var(--line); background: linear-gradient(145deg, #142943, #0f1c2d); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .pad { padding: 18px; }
+    .grid { display: grid; gap: 14px; }
+    .big-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .small-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); margin-top: 8px; }
+    .small-grid .pad { padding: 10px 11px; }
+    .small-grid .metric-value { margin-top: 4px; font-size: 18px; }
+    .small-grid .metric-label { padding-right: 54px; }
+    .small-grid .metric-foot { position: absolute; top: 10px; right: 11px; z-index: 1; margin: 0; font-size: 10px; }
+    .small-grid .submetric-head, .small-grid .submetric-main { display: flex; justify-content: space-between; align-items: baseline; gap: 7px; }
+    .small-grid .submetric-head .metric-label { padding-right: 0; }
+    .small-grid .submetric-dod, .small-grid .submetric-wow { color: #5f7894; font-size: 9px; font-weight: 800; line-height: 1.2; white-space: nowrap; }
+    .small-grid .submetric-main { margin-top: 3px; }
+    .small-grid .submetric-main .metric-value { margin-top: 0; }
+    .small-grid .submetric-monthly { margin-top: 4px; color: #607187; font-size: 9px; line-height: 1.2; white-space: nowrap; }
+    .card { position: relative; overflow: hidden; }
+    .card::after { content: ""; position: absolute; inset: auto -30px -70px auto; width: 130px; height: 130px; border-radius: 50%; background: rgba(255,255,255,.42); }
+    .big-grid .card { color: #17253a; border-top: 0; }
+    .big-grid .accent-blue { background: #dcecff; border-color: #bcd8ff; }
+    .big-grid .accent-green { background: #dcf7e8; border-color: #b9e9cc; }
+    .big-grid .accent-orange { background: #fff0d6; border-color: #ffd58a; }
+    .big-grid .accent-red { background: #ffe2e7; border-color: #ffc1ca; }
+    .big-grid .accent-violet { background: #eee4ff; border-color: #d9c2ff; }
+    .big-grid .accent-cyan { background: #d9f7f6; border-color: #b5e9e5; }
+    .big-grid .metric-label { color: #536a84; font-weight: 700; }
+    .big-grid .metric-foot { color: #536a84; }
+    .small-grid .card { background: #14263c; border-top: 3px solid #385776; border-color: #29445f; }
+    .small-grid .card::after { background: rgba(110,168,255,.12); }
+    .metric-label { color: var(--muted); font-size: 12px; }
+    .metric-value { margin-top: 7px; font-size: clamp(18px, 2vw, 27px); font-weight: 800; letter-spacing: -.04em; }
+    .metric-foot { display: flex; justify-content: space-between; gap: 5px; margin-top: 10px; color: var(--muted); font-size: 11px; }
+    .metric-subtext { margin-top: 3px; color: #728399; font-size: 10px; line-height: 1.2; }
+    .metric-divider { padding: 0 5px; color: #a2afbe; }
+    .metric-context { display: flex; justify-content: space-between; gap: 6px; margin-top: 5px; color: #607187; font-size: 9px; line-height: 1.2; white-space: nowrap; }
+    .metric-context span:last-child { text-align: right; }
+    .positive { color: var(--green); } .negative { color: var(--red); } .warning { color: var(--yellow); } .info { color: var(--blue); }
+    .accent-blue { border-top: 3px solid var(--blue); } .accent-green { border-top: 3px solid var(--green); }
+    .accent-red { border-top: 3px solid var(--red); } .accent-violet { border-top: 3px solid var(--violet); } .accent-cyan { border-top: 3px solid var(--cyan); }
+
+    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 25fr 15fr 20fr; gap: 10px; align-items: stretch; }
+    .platform-layout table { min-width: 0; table-layout: fixed; font-size: 10px; }
+    .platform-layout th, .platform-layout td { padding: 8px 5px; white-space: normal; word-break: break-word; }
+    .platform-layout .platform-sub { font-size: 9px; }
+    .platform-matrix thead th { color: var(--text); text-align: center; background: rgba(64,217,208,.06); border-color: rgba(148,177,211,.28); }
+    .platform-matrix tbody th { color: var(--text); font-weight: 700; text-align: left; }
+    .table-scroll { overflow: visible; }
+    .table-scroll table { min-width: 0; }
+    table { width: 100%; border-collapse: collapse; min-width: 840px; }
+    th { padding: 12px 14px; color: var(--muted); font-size: 11px; font-weight: 700; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--line); }
+    td { padding: 13px 14px; border-bottom: 1px solid rgba(148,177,211,.09); white-space: nowrap; }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr:hover { background: rgba(110,168,255,.055); }
+    .platform-name { font-weight: 800; } .platform-sub { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; }
+    .tag { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 8px; color: var(--muted); font-size: 11px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .side-stack { display: contents; }
+    .side-stack > .panel { min-width: 0; }
+    .platform-charts { display: grid; align-content: start; gap: 9px; }
+    .platform-charts { border-color: #477fca; background: linear-gradient(145deg, #162e4d, #102238); }
+    .platform-charts .platform-chart { grid-template-columns: 96px 1fr; gap: 11px; padding: 8px 0; }
+    .platform-charts .mini-donut { width: 96px; height: 96px; }
+    .platform-chart { display: grid; grid-template-columns: 78px 1fr; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid var(--line); }
+    .platform-chart:first-of-type { border-top: 0; padding-top: 0; }
+    .mini-donut { width: 78px; height: 78px; display: block; }
+    .platform-chart strong { display: block; font-size: 11px; }
+    .platform-chart small { display: block; color: var(--muted); font-size: 10px; margin-top: 2px; }
+    .share-values { display: grid; gap: 3px; margin-top: 6px; color: var(--muted); font-size: 10px; }
+    .share-values span { display: block; }
+    .share-values i { display: inline-block; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%; }
+    .changelog-table table { min-width: 0; table-layout: fixed; font-size: 10px; }
+    .changelog-table th, .changelog-table td { padding: 8px 7px; white-space: normal; word-break: break-word; vertical-align: top; }
+    .changelog-table { border-color: #477fca; background: linear-gradient(145deg, #162e4d, #102238); }
+    .incident-panel { border-color: #b9792c; background: linear-gradient(145deg, #392b1c, #241d1d); }
+    .incident-panel .side-title h3 { color: #a86100; }
+    .compliance-panel { border-color: #68b58a; background: linear-gradient(145deg, #edf9f1, #dff3e7); }
+    .compliance-panel .side-title h3 { color: #187545; }
+    .compliance-panel table { min-width: 0; table-layout: fixed; font-size: 10px; }
+    .compliance-panel th, .compliance-panel td { padding: 9px 7px; white-space: normal; vertical-align: top; }
+    .compliance-panel th { color: #35634a; }
+    .compliance-panel td { color: #245b3a; font-weight: 700; }
+    .compliance-status { display: block; line-height: 1.35; }
+    .side-title { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 13px; }
+    .side-title h3 { font-size: 14px; }
+    .side-title span { color: var(--muted); font-size: 11px; }
+    .change { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: start; padding: 10px 0; border-top: 1px solid var(--line); }
+    .change:first-of-type { border-top: 0; padding-top: 0; }
+    .change i { width: 8px; height: 8px; margin-top: 5px; border-radius: 50%; background: var(--cyan); }
+    .change strong { display: block; font-size: 12px; } .change small { color: var(--muted); font-size: 11px; }
+    .change time { color: var(--muted); font-size: 11px; }
+    .alert-row { display: flex; justify-content: space-between; gap: 14px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+    .alert-row:first-of-type { border-top: 0; padding-top: 0; }
+    .alert-row strong { font-size: 12px; } .alert-row small { display: block; color: var(--muted); margin-top: 2px; }
+    .status { border-radius: 999px; padding: 5px 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; white-space: nowrap; }
+    .status.ok { color: #167a45; background: #e9f8ef; } .status.warn { color: #8a5c00; background: #fff4d8; } .status.danger { color: #b4233a; background: #ffebee; }
+
+    .chart-grid-2, .chart-grid-3 { display: contents; }
+    .game-performance-grid { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
+    .game-summary { grid-column: 1 / span 4; grid-row: 1; margin-bottom: 0; }
+    .dynamic-rtp { grid-column: 5 / span 4; grid-row: 1; }
+    .game-loss { grid-column: 9 / span 4; grid-row: 1; }
+    .total-tickets { grid-column: 13 / span 4; grid-row: 1; min-height: 230px; }
+    .player-distribution { grid-column: 17 / span 4; grid-row: 1; }
+    .hourly-rtp { grid-column: 1 / span 12; grid-row: 2; }
+    .bet-distribution { grid-column: 13 / span 4; grid-row: 2; }
+    .multiplier-distribution { grid-column: 17 / span 4; grid-row: 2; }
+    .game-summary table { min-width: 0; table-layout: fixed; font-size: 10px; }
+    .game-summary th, .game-summary td { padding: 8px 6px; white-space: normal; }
+    .game-summary thead th { text-align: center; }
+    .game-summary thead th:first-child { text-align: left; }
+    .game-summary tbody th { color: var(--text); text-align: left; }
+    .game-summary tfoot th, .game-summary tfoot td { color: var(--text); border-top: 1px solid rgba(110,168,255,.35); font-weight: 800; }
+    .chart-box { min-height: 305px; }
+    .chart-box.tall { min-height: 360px; }
+    .chart { width: 100%; height: 235px; display: block; }
+    .chart.tall-svg { height: 285px; }
+    .monthly-row .chart.tall-svg { height: 340px; }
+    .chart text[fill="#f3f7fb"] { fill: var(--text); }
+    .legend { display: flex; flex-wrap: wrap; gap: 10px 15px; color: var(--muted); font-size: 11px; margin-top: 8px; }
+    .legend span { display: inline-flex; gap: 6px; align-items: center; }
+    .legend i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; background: var(--blue); }
+    .legend i.line { height: 3px; border-radius: 2px; }
+    .chart-tooltip { position: fixed; z-index: 10000; max-width: 230px; padding: 8px 10px; border: 1px solid #477fca; border-radius: 8px; color: #f3f7fb; background: rgba(10, 25, 42, .96); box-shadow: 0 10px 26px rgba(18, 43, 70, .24); font-size: 11px; line-height: 1.45; pointer-events: none; opacity: 0; transform: translateY(4px); transition: opacity .12s ease, transform .12s ease; }
+    .chart-tooltip.visible { opacity: 1; transform: translateY(0); }
+    .chart-tooltip b { color: #fff; }
+    [data-tooltip-en] { cursor: crosshair; }
+    .keynote { clear: both; margin-top: 12px; padding: 9px 10px; border: 1px solid rgba(110,168,255,.24); border-left: 3px solid var(--cyan); border-radius: 8px; background: rgba(12,29,48,.72); color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .keynote b { color: var(--text); margin-right: 4px; }
+    .chart-note { color: var(--muted); font-size: 11px; margin-top: 4px; }
+    .donut-wrap { display: grid; place-items: center; min-height: 250px; position: relative; }
+    .donut-center { position: absolute; text-align: center; } .donut-center strong { display: block; font-size: 28px; } .donut-center span { color: var(--muted); font-size: 11px; }
+    .dynamic-list { display: grid; gap: 12px; margin-top: 8px; }
+    .dynamic-item { padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #14263c; }
+    .dynamic-head { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; } .dynamic-head span { color: var(--muted); }
+    .bar-track { height: 7px; border-radius: 99px; background: rgba(148,177,211,.13); overflow: hidden; margin: 9px 0 6px; } .bar-fill { height: 100%; border-radius: inherit; background: var(--blue); }
+    .dynamic-foot { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; }
+
+    .distribution { display: grid; grid-template-columns: 1.25fr .75fr; gap: 14px; }
+    .dist-table { min-width: 500px; } .dist-table td, .dist-table th { padding: 8px 10px; }
+    .mini-bar { width: 120px; height: 6px; border-radius: 5px; background: rgba(148,177,211,.12); overflow: hidden; } .mini-bar i { display: block; height: 100%; background: var(--cyan); border-radius: inherit; }
+    .game-performance-grid .dist-table { min-width: 0; width: 100%; table-layout: fixed; font-size: 9px; }
+    .game-performance-grid .dist-table td, .game-performance-grid .dist-table th { padding: 6px 4px; white-space: normal; word-break: break-word; }
+    .game-performance-grid .mini-bar { width: 100%; min-width: 18px; }
+    .game-performance-grid .bet-distribution, .game-performance-grid .multiplier-distribution { overflow: visible !important; }
+    .compact-pie { display: grid; grid-template-columns: 190px 1fr; gap: 15px; align-items: center; min-height: 290px; }
+    .game-loss { overflow: hidden; }
+    .game-loss .compact-pie { display: flex; flex-direction: column; gap: 10px; min-height: 0; align-items: stretch; }
+    .game-loss .donut-wrap { min-height: 185px; }
+    .game-loss .donut-wrap svg { width: min(160px, 100%); max-width: 100%; height: auto; }
+    .game-loss .compact-pie > div:last-child { width: 100%; min-width: 0; }
+    .game-loss .side-title { align-items: flex-start; margin-bottom: 9px; }
+    .game-loss .side-title h3 { line-height: 1.25; }
+    .game-loss > .side-title { display: block; }
+    .game-loss > .side-title span { display: block; margin-top: 3px; }
+    .game-loss .round-outcome-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+    .game-loss .round-outcome-card { min-width: 0; padding: 8px 6px; border: 1px solid #bcd0e4; border-radius: 10px; background: #f4f8fc; }
+    .game-loss .round-outcome-card h4 { margin: 0 0 3px; color: #243b53; font-size: 11px; }
+    .game-loss .round-outcome-card .donut-wrap { min-height: 116px; }
+    .game-loss .round-outcome-card .donut-wrap svg { width: 112px; height: 112px; }
+    .game-loss .round-outcome-card .donut-center strong { color: #162b42; font-size: 16px; }
+    .game-loss .round-outcome-card .donut-center span { color: #607187; font-size: 9px; }
+    .game-loss .round-outcome-card .legend-list { gap: 5px; color: #243b53; }
+    .game-loss .round-outcome-card .legend-list div { display: block; font-size: 9px; line-height: 1.25; }
+    .game-loss .round-outcome-card .legend-list b { display: block; margin-top: 2px; white-space: nowrap; }
+    .game-loss .loss-content { display: grid; grid-template-columns: 1fr; gap: 8px; min-width: 0; }
+    .game-loss .loss-content > div:last-child { width: 100%; min-width: 0; }
+    .game-loss .legend-list { gap: 8px; }
+    .game-loss .legend-list div { align-items: flex-start; flex-wrap: wrap; gap: 4px 8px; font-size: 10px; }
+    .game-loss .legend-list div b { white-space: nowrap; }
+    .game-loss .chart-note { font-size: 10px; line-height: 1.35; }
+    .player-grid { display: grid; grid-template-columns: 1.5fr 2fr 1.5fr 1.5fr 1.5fr 2fr; gap: 10px; align-items: stretch; }
+    .player-grid > .chart-grid-3 { display: contents; }
+    .player-grid > .panel, .player-grid > .chart-grid-3 > .panel { min-width: 0; align-self: stretch; height: 100%; }
+    .player-grid > .panel:first-child .compact-pie { grid-template-columns: 1fr; gap: 5px; min-height: 0; }
+    .player-grid > .panel:first-child .donut-wrap { min-height: 160px; }
+    .player-grid > .chart-grid-3 > .panel:nth-child(2), .player-grid > .chart-grid-3 > .panel:nth-child(3) { padding: 14px; }
+    .player-grid > .chart-grid-3 > .panel:nth-child(2) .chart, .player-grid > .chart-grid-3 > .panel:nth-child(3) .chart { height: 285px; }
+    .player-grid > .chart-grid-3 > .panel:nth-child(2) .side-title, .player-grid > .chart-grid-3 > .panel:nth-child(3) .side-title { margin-bottom: 8px; }
+    .player-grid table { min-width: 0; table-layout: fixed; font-size: 10px; }
+    .player-grid th, .player-grid td { padding: 8px 5px; white-space: normal; }
+    .player-feature-panel { margin-top: 0; }
+    .player-feature-panel table { min-width: 0; table-layout: fixed; font-size: 11px; }
+    .player-feature-panel th, .player-feature-panel td { padding: 8px 9px; white-space: normal; }
+    .player-feature-panel tbody th { color: var(--text); text-align: left; }
+    .monthly-row { display: grid; grid-template-columns: 3fr 2fr; gap: 10px; align-items: stretch; }
+    .monthly-row > .panel { min-width: 0; }
+    .monthly-row table { min-width: 0; font-size: 10px; }
+    .monthly-row th, .monthly-row td { padding: 8px 6px; white-space: normal; }
+    .monthly-row tfoot th, .monthly-row tfoot td { color: var(--text); border-top: 1px solid rgba(110,168,255,.35); font-weight: 800; }
+    .monthly-share-charts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .monthly-share-card { min-width: 0; padding: 10px; border: 1px solid #8db5e4; border-radius: 12px; background: linear-gradient(145deg, #f2f7ff, #e8f2ff); }
+    .monthly-share-card h4 { font-size: 11px; }
+    .monthly-share-card > small { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; }
+    .monthly-share-content { display: grid; grid-template-columns: 86px 1fr; gap: 8px; align-items: center; margin-top: 8px; }
+    .monthly-share-card svg { width: 86px; height: 86px; display: block; }
+    .monthly-share-legend { display: grid; gap: 4px; color: var(--muted); font-size: 10px; }
+    .monthly-share-legend span { display: flex; justify-content: space-between; gap: 5px; }
+    .monthly-share-legend i { display: inline-block; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%; }
+    .legend-list { display: grid; gap: 12px; } .legend-list div { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; } .legend-list span { color: var(--muted); }
+
+    .retention-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); } .retention-row:first-child { border-top: 0; padding-top: 0; }
+    .retention-row strong { display: block; font-size: 12px; } .retention-row small { color: var(--muted); } .retention-value { text-align: right; font-weight: 800; }
+    .spark { width: 100%; height: 28px; display: block; margin-top: 5px; }
+    .monthly-head { display: flex; gap: 8px; flex-wrap: wrap; } .filter { padding: 6px 9px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; font-size: 11px; } .filter.active { color: var(--text); background: rgba(110,168,255,.15); border-color: rgba(110,168,255,.38); }
+    .incident-notes { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+    .incident-notes strong { display: block; font-size: 11px; }
+    .incident-notes p { color: var(--muted); margin-top: 4px; font-size: 10px; line-height: 1.35; }
+    .report-archive { display: grid; gap: 8px; max-height: 330px; overflow: auto; margin-top: 15px; padding-right: 3px; }
+    .report-archive-item { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; color: var(--text); background: var(--panel-2); text-align: left; font: inherit; cursor: pointer; }
+    .report-archive-item:hover { border-color: var(--blue); background: #edf5ff; }
+    .report-archive-item span { font-weight: 800; font-size: 12px; }
+    .report-archive-item small { color: var(--muted); font-size: 10px; }
+    .report-archive-item b { grid-row: 1 / span 2; grid-column: 2; align-self: center; color: var(--blue); font-size: 10px; }
+    .footer { padding: 20px 0 0; color: var(--muted); font-size: 11px; text-align: center; }
+
+    /* Light dashboard theme */
+    :root { --bg: #eef2f6; --panel: #ffffff; --panel-2: #f7f9fc; --line: #d4dee9; --text: #1d2a3a; --muted: #607187; --shadow: 0 8px 22px rgba(38, 62, 88, .08); }
+    body { background: linear-gradient(180deg, #f7f9fc 0%, #edf1f5 100%); }
+    .panel { background: #ffffff; box-shadow: var(--shadow); }
+    .small-grid .card { background: #ffffff; border-color: #d4dee9; border-top-color: #9fb4cc; }
+    .small-grid .card::after { background: rgba(110,168,255,.08); }
+    .platform-charts, .changelog-table { border-color: #8db5e4; background: linear-gradient(145deg, #f2f7ff, #e8f2ff); }
+    .incident-panel { border-color: #e5ac5a; background: linear-gradient(145deg, #fff8ea, #fff1d6); }
+    .incident-panel .side-title h3 { color: #9a6400; }
+    .dynamic-item { background: #f7f9fc; }
+    .bar-track { background: #e3eaf2; }
+    .keynote { border-color: #c7dced; background: #f7fbff; }
+    .status.ok { color: #167a45; background: #e9f8ef; }
+    .language-toggle { background: #eef4fb; border-color: #a6c1df; }
+    .header-button { color: #2d527b; background: #f0f6fd; border-color: #8fb4dd; }
+    .header-button:hover, .language-toggle button:hover { color: #1d4f8a; border-color: #397bc1; }
+    dialog.previous-dialog { color: var(--text); background: #ffffff; border-color: #8db5e4; box-shadow: 0 24px 80px rgba(55, 77, 101, .22); }
+    dialog.previous-dialog::backdrop { background: rgba(36, 52, 70, .34); }
+    .platform-matrix thead th { background: #edf7f8; border-color: #c8d5e2; }
+    .game-summary tfoot th, .game-summary tfoot td, .monthly-row tfoot th, .monthly-row tfoot td { border-top-color: #b8cce1; }
+
+    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .game-summary, .dynamic-rtp, .game-loss, .total-tickets, .player-distribution, .hourly-rtp, .bet-distribution, .multiplier-distribution { grid-column: 1; grid-row: auto; } .side-stack { display: grid; gap: 10px; } }
+    @media (max-width: 700px) { .wrap { width: min(100% - 24px, 1540px); padding-top: 20px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="topbar">
+      <div>
+        <img class="brand-logo" src="data:image/png;base64,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" alt="Game Engine logo" />
+        <h1 id="reportTitle">Daily Game Performance Report</h1>
+        <p class="report-date"><span id="reportDateLabel">Report Date</span><span id="reportDateValue" data-report-date="2026-09-21">September 21, 2026</span></p>
+        <div class="header-actions" aria-label="Report controls">
+          <div class="language-toggle" role="group" aria-label="Language">
+            <button type="button" data-lang="en" class="active">EN</button>
+            <button type="button" data-lang="cn">CN</button>
+          </div>
+          <button type="button" class="header-button" id="previousReportButton">Previous Daily Report</button>
+          <button type="button" class="header-button" id="backToLatestReportButton" hidden>Back to Latest Report</button>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-section-head"><div><h2>General Operation Data</h2><p>Daily snapshot · Sample values for structure review</p></div><span class="tag"><i class="dot positive"></i>Report generated</span></div>
+        <div class="grid big-grid header-metrics" aria-label="Main operating metrics">
+          <article class="panel pad card accent-blue"><div class="metric-label">Bet Amount</div><div class="metric-value">₱602,152.00</div><div class="metric-subtext">Monthly Total ₱2,444,910</div><div class="metric-foot"><span class="positive">↑ 12.4% DoD <span class="metric-divider">|</span> WoW ↑ 8.6%</span></div></article>
+          <article class="panel pad card accent-green"><div class="metric-label">Payout</div><div class="metric-value">₱124,780.00</div><div class="metric-subtext">Monthly Total ₱2,343,980</div><div class="metric-foot"><span class="positive">↑ 8.7% DoD <span class="metric-divider">|</span> WoW ↑ 7.1%</span></div></article>
+          <article class="panel pad card accent-orange"><div class="metric-label">GGR</div><div class="metric-value positive">₱3,670.00</div><div class="metric-subtext">Monthly Total ₱100,930</div><div class="metric-foot"><span class="positive">↑ 18.1% DoD <span class="metric-divider">|</span> WoW ↑ 12.8%</span></div></article>
+          <article class="panel pad card accent-violet"><div class="metric-label">RTP</div><div class="metric-value">97.14%</div><div class="metric-subtext">Monthly Average 95.87%</div><div class="metric-foot"><span class="positive">↓ 0.22 pp DoD <span class="metric-divider">|</span> WoW +0.36 pp</span></div></article>
+          <article class="panel pad card accent-cyan"><div class="metric-label">MTD GGR</div><div class="metric-value">₱72,840.00</div><div class="metric-subtext">MTD Total ₱72,840</div><div class="metric-foot"><span class="positive">↑ 5.9% DoD <span class="metric-divider">|</span> WoW ↑ 5.9%</span></div></article>
+        </div>
+        <div class="grid small-grid">
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Total Rounds</div><div class="submetric-dod positive">↑ 9.8% DoD</div></div><div class="submetric-main"><div class="metric-value">18,642</div><div class="submetric-wow">WoW ↑ 11.6%</div></div><div class="submetric-monthly">Monthly Total 287,430</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Players</div><div class="submetric-dod positive">↑ 6.2% DoD</div></div><div class="submetric-main"><div class="metric-value">426</div><div class="submetric-wow">WoW ↑ 7.8%</div></div><div class="submetric-monthly">Monthly Total 4,551</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">New Players</div><div class="submetric-dod positive">↑ 14.6% DoD</div></div><div class="submetric-main"><div class="metric-value">118</div><div class="submetric-wow">WoW ↑ 9.3%</div></div><div class="submetric-monthly">Monthly Total 1,665</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">ABPU</div><div class="submetric-dod warning">↓ 2.4% DoD</div></div><div class="submetric-main"><div class="metric-value">₱301.52</div><div class="submetric-wow">WoW ↑ 3.1%</div></div><div class="submetric-monthly">Monthly Avg ₱296.40</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Max Payout</div><div class="submetric-dod positive">↑ 33.3% DoD</div></div><div class="submetric-main"><div class="metric-value">₱8,000</div><div class="submetric-wow">WoW ↑ 25.0%</div></div><div class="submetric-monthly">Monthly Max ₱12,000</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Max Multiplier</div><div class="submetric-dod warning">→ 0.0% DoD</div></div><div class="submetric-main"><div class="metric-value">200x</div><div class="submetric-wow">WoW → 0.0%</div></div><div class="submetric-monthly">Monthly Max 200x</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Max Bet</div><div class="submetric-dod warning">→ 0.0% DoD</div></div><div class="submetric-main"><div class="metric-value">₱1,000</div><div class="submetric-wow">WoW → 0.0%</div></div><div class="submetric-monthly">Monthly Max ₱1,000</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">D1 Retention</div><div class="submetric-dod warning">↑ 1.81 pp DoD</div></div><div class="submetric-main"><div class="metric-value">10.84%</div><div class="submetric-wow">WoW ↑ 0.84 pp</div></div><div class="submetric-monthly">Monthly Avg 10.12%</div></article>
+        </div>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-head"><div><h2>Platform Performance</h2><p>Platform-level contribution, status, and operational notes</p></div><div class="monthly-head"><span class="filter active">Daily</span><span class="filter">PHT</span></div></div>
+      <div class="platform-layout">
+        <div class="panel table-scroll platform-matrix">
+          <table>
+            <thead>
+              <tr><th rowspan="3">Metric</th><th colspan="3">Platform</th></tr>
+              <tr><th>Loteria</th><th colspan="2">Slot</th></tr>
+              <tr><th>BingoPlus (BP)</th><th>GameZone (GP)</th><th>ArenaPlus (AP)</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Bet Amount</th><td>₱83,250</td><td>₱28,600</td><td>₱16,600</td></tr>
+              <tr><th scope="row">Payout</th><td>₱80,550</td><td>₱28,230</td><td>₱16,000</td></tr>
+              <tr><th scope="row">GGR</th><td class="positive">₱2,700</td><td class="positive">₱370</td><td class="positive">₱600</td></tr>
+              <tr><th scope="row">RTP</th><td>96.76%</td><td>98.71%</td><td>96.39%</td></tr>
+              <tr><th scope="row">Active Players</th><td>286</td><td>92</td><td>48</td></tr>
+              <tr><th scope="row">New Players</th><td>81</td><td>23</td><td>14</td></tr>
+              <tr><th scope="row">D1 Retention</th><td>11.24%</td><td>9.52%</td><td>8.33%</td></tr>
+              <tr><th scope="row">Winning Tickets</th><td>4,728</td><td>8,104</td><td>5,810</td></tr>
+              <tr><th scope="row">Avg Bet / Player</th><td>₱291.08</td><td>₱310.87</td><td>₱345.83</td></tr>
+              <tr><th scope="row">GGR Share</th><td>73.57%</td><td>10.08%</td><td>16.35%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="side-stack">
+          <div class="panel pad platform-charts">
+            <div class="side-title"><h3>Platform Share</h3><span>Contribution mix</span></div>
+            <div class="platform-chart">
+              <svg class="mini-donut" viewBox="0 0 60 60" aria-label="GGR Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="73.57 26.43" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="10.08 89.92" stroke-dashoffset="-73.57" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="16.35 83.65" stroke-dashoffset="-83.65" transform="rotate(-90 30 30)"/></svg>
+              <div><strong>GGR Share</strong><small>Revenue contribution</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 73.57%</span><span><i style="background:var(--blue)"></i>GP 10.08%</span><span><i style="background:var(--violet)"></i>AP 16.35%</span></div></div>
+            </div>
+            <div class="platform-chart">
+              <svg class="mini-donut" viewBox="0 0 60 60" aria-label="Player Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="67.14 32.86" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="21.60 78.40" stroke-dashoffset="-67.14" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="11.26 88.74" stroke-dashoffset="-88.74" transform="rotate(-90 30 30)"/></svg>
+              <div><strong>Player Share</strong><small>Audience contribution</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 67.14%</span><span><i style="background:var(--blue)"></i>GP 21.60%</span><span><i style="background:var(--violet)"></i>AP 11.26%</span></div></div>
+            </div>
+            <div class="platform-chart">
+              <svg class="mini-donut" viewBox="0 0 60 60" aria-label="Bet Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="64.81 35.19" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="22.27 77.73" stroke-dashoffset="-64.81" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="12.92 87.08" stroke-dashoffset="-87.08" transform="rotate(-90 30 30)"/></svg>
+              <div><strong>Bet Share</strong><small>Betting volume contribution</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 64.81%</span><span><i style="background:var(--blue)"></i>GP 22.27%</span><span><i style="background:var(--violet)"></i>AP 12.92%</span></div></div>
+            </div>
+          </div>
+          <div class="panel pad changelog-table"><div class="side-title"><h3>Changelog</h3><span>Latest updates</span></div>
+            <table>
+              <thead><tr><th>Date</th><th>Details</th><th>Outcome</th></tr></thead>
+              <tbody>
+                <tr><td>Monday, September 21, 2026</td><td>Launch of <strong>Banana Craze on ArenaPlus</strong></td><td>Game Engine officially entered ArenaPlus</td></tr>
+                <tr><td>Thursday, September 17, 2026</td><td>Launch of <strong>Banana Craze on GameZone</strong>; minimum bet updated to <strong>₱0.50 at 2:00 PM</strong></td><td>Game Engine officially entered GameZone; lower minimum bet provided a more accessible entry point and supported increased traffic</td></tr>
+                <tr><td>Friday, September 18, 2026</td><td><strong>10:42 AM:</strong> RTP adjusted from <strong>97.0% → 98.3%</strong></td><td>RTP configuration was successfully updated to <strong>98.3%</strong>, reflecting the new target setting.</td></tr>
+                <tr><td>Monday, September 14, 2026</td><td>System maintenance for <strong>v2.17 upgrade</strong>, 9:00 AM–10:30 AM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
+                <tr><td>Thursday, September 10, 2026</td><td>Improved <strong>Banana Craze placement in BingoPlus Loteria</strong>, around 3:00 PM</td><td>Improved game visibility and accessibility within the Loteria section</td></tr>
+                <tr><td>Tuesday, September 1, 2026</td><td>System maintenance for <strong>v2.16 upgrade</strong>, 9:30 AM–1:15 PM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
+            <div class="alert-row"><div><strong>GGR Status</strong><small>Positive daily GGR</small></div><span class="status ok">Healthy</span></div>
+            <div class="alert-row"><div><strong>RTP Status</strong><small>97.14% vs target ≈ 98.3%</small></div><span class="status ok">Within target</span></div>
+            <div class="alert-row"><div><strong>Fusebreak / Alarm</strong><small>Review player-level volatility</small></div><span class="status warn">Monitor</span></div>
+            <div class="incident-notes"><strong>Notes</strong><p>No incident report or important operational note recorded for this date.</p></div>
+          </div>
+          <div class="panel pad compliance-panel"><div class="side-title"><h3>Compliance &amp; PAGCOR Update</h3><span>Current status</span></div>
+            <table>
+              <tbody>
+                <tr><th scope="row">GCP Accreditation</th><td><span class="compliance-status">✅ Approved — Numerical &amp; ECG</span></td></tr>
+                <tr><th scope="row">Game Application</th><td><span class="compliance-status">✅ Approved — Banana Craze, PikaPika</span></td></tr>
+                <tr><th scope="row">Next Games for Application</th><td><span class="compliance-status">🔄 BLAZING 7S, LUCKY COLOR, GINTO MATCH</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+  <div class="section-head"><div><h2>Game Performance</h2><p>Banana Craze operating behavior and outcome distribution</p></div></div>
+  <div class="game-performance-grid">
+  <div class="panel table-scroll game-summary">
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>Loteria</th><th>Slot</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Bet Amount</th><td>₱83,250</td><td>₱45,200</td></tr>
+        <tr><th scope="row">Payout</th><td>₱80,550</td><td>₱44,230</td></tr>
+        <tr><th scope="row">GGR</th><td class="positive">₱2,700</td><td class="positive">₱970</td></tr>
+        <tr><th scope="row">RTP</th><td>96.76%</td><td>97.85%</td></tr>
+        <tr><th scope="row">Total Rounds</th><td>4,728</td><td>13,914</td></tr>
+        <tr><th scope="row">Players</th><td>286</td><td>140</td></tr>
+        <tr><th scope="row">Winning Tickets</th><td>2,604</td><td>7,656</td></tr>
+        <tr><th scope="row">Avg Round / Game</th><td>₱17.61</td><td>₱3.25</td></tr>
+        <tr><th scope="row">Popular Bet Amount</th><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+      <div class="chart-grid-2">
+        <div class="panel pad chart-box tall hourly-rtp"><div class="side-title"><h3>Hourly RTP (00:00–23:59)</h3><span>Bars: bet amount + payout · Lines: RTP + 98.3% threshold</span></div>
+          <svg id="hourlyRtpChart" class="chart tall-svg" viewBox="0 0 760 315" preserveAspectRatio="none" role="img" aria-label="Hourly RTP combo chart">
+            <line x1="45" y1="228" x2="735" y2="228" stroke="#2c4660"/><line x1="45" y1="168" x2="735" y2="168" stroke="#1d344c"/><line x1="45" y1="108" x2="735" y2="108" stroke="#1d344c"/><line x1="45" y1="48" x2="735" y2="48" stroke="#1d344c"/>
+            <text x="8" y="232" fill="#8ea4bd" font-size="10">0</text><text x="3" y="172" fill="#8ea4bd" font-size="10">50</text><text x="0" y="112" fill="#8ea4bd" font-size="10">100</text><text x="0" y="52" fill="#8ea4bd" font-size="10">150</text>
+            <rect x="58" y="186" width="22" height="42" rx="4" fill="#6ea8ff"/><rect x="110" y="161" width="22" height="67" rx="4" fill="#6ea8ff"/><rect x="162" y="173" width="22" height="55" rx="4" fill="#6ea8ff"/><rect x="214" y="135" width="22" height="93" rx="4" fill="#6ea8ff"/><rect x="266" y="115" width="22" height="113" rx="4" fill="#6ea8ff"/><rect x="318" y="98" width="22" height="130" rx="4" fill="#6ea8ff"/><rect x="370" y="121" width="22" height="107" rx="4" fill="#6ea8ff"/><rect x="422" y="80" width="22" height="148" rx="4" fill="#6ea8ff"/><rect x="474" y="105" width="22" height="123" rx="4" fill="#6ea8ff"/><rect x="526" y="146" width="22" height="82" rx="4" fill="#6ea8ff"/><rect x="578" y="126" width="22" height="102" rx="4" fill="#6ea8ff"/><rect x="630" y="155" width="22" height="73" rx="4" fill="#6ea8ff"/><rect x="682" y="177" width="22" height="51" rx="4" fill="#6ea8ff"/>
+            <polyline points="69,181 121,157 173,169 225,130 277,109 329,92 381,115 433,74 485,99 537,141 589,121 641,150 693,172" fill="none" stroke="#b78cff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="69,119 121,106 173,114 225,83 277,93 329,58 381,74 433,44 485,67 537,84 589,62 641,95 693,108" fill="none" stroke="#55d68b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="69" cy="119" r="4" fill="#55d68b"/><circle cx="121" cy="106" r="4" fill="#55d68b"/><circle cx="173" cy="114" r="4" fill="#55d68b"/><circle cx="225" cy="83" r="4" fill="#55d68b"/><circle cx="277" cy="93" r="4" fill="#55d68b"/><circle cx="329" cy="58" r="4" fill="#55d68b"/><circle cx="381" cy="74" r="4" fill="#55d68b"/><circle cx="433" cy="44" r="4" fill="#55d68b"/><circle cx="485" cy="67" r="4" fill="#55d68b"/><circle cx="537" cy="84" r="4" fill="#55d68b"/><circle cx="589" cy="62" r="4" fill="#55d68b"/><circle cx="641" cy="95" r="4" fill="#55d68b"/><circle cx="693" cy="108" r="4" fill="#55d68b"/>
+            <line x1="45" y1="110" x2="735" y2="110" stroke="#f2a65a" stroke-width="2" stroke-dasharray="7 6"/>
+            <text x="60" y="249" fill="#8ea4bd" font-size="10">08</text><text x="112" y="249" fill="#8ea4bd" font-size="10">10</text><text x="164" y="249" fill="#8ea4bd" font-size="10">12</text><text x="216" y="249" fill="#8ea4bd" font-size="10">14</text><text x="268" y="249" fill="#8ea4bd" font-size="10">16</text><text x="320" y="249" fill="#8ea4bd" font-size="10">18</text><text x="372" y="249" fill="#8ea4bd" font-size="10">20</text><text x="424" y="249" fill="#8ea4bd" font-size="10">22</text><text x="476" y="249" fill="#8ea4bd" font-size="10">00</text><text x="528" y="249" fill="#8ea4bd" font-size="10">02</text><text x="580" y="249" fill="#8ea4bd" font-size="10">04</text><text x="632" y="249" fill="#8ea4bd" font-size="10">06</text><text x="684" y="249" fill="#8ea4bd" font-size="10">08</text>
+          </svg>
+          <div class="legend"><span><i style="background:var(--blue)"></i>Bet amount</span><span><i style="background:var(--violet)"></i>Payout</span><span><i class="line" style="background:var(--green)"></i>RTP trendline</span><span><i class="line" style="background:#f2a65a"></i>RTP threshold 98.3%</span></div><div class="chart-note">Sample: inactive hours can be excluded from the production chart.</div>
+        </div>
+        <div class="panel pad chart-box dynamic-rtp"><div class="side-title"><h3>Dynamic RTP</h3><span>Mode contribution</span></div>
+          <div class="dynamic-list">
+            <div class="dynamic-item"><div class="dynamic-head"><b>NON</b><span>17,902 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:96%;background:var(--cyan)"></div></div><div class="dynamic-foot"><span>96.82% RTP</span><b class="positive">₱5,120 GGR</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Cumulative</b><span>512 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:38%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span>105.43% RTP</span><b class="negative">-₱890 GGR</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Daily</b><span>228 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:24%;background:var(--red)"></div></div><div class="dynamic-foot"><span>112.76% RTP</span><b class="negative">-₱560 GGR</b></div></div>
+          </div>
+          <div class="chart-note" style="margin-top:18px">Interpretation: NON drives most volume; cumulative and daily modes remain more volatile because of smaller samples.</div>
+        </div>
+        <div class="panel pad game-loss"><div class="side-title"><h3>Winning Rounds vs Losing Rounds</h3><span>Loss vs win rounds</span></div><div class="round-outcome-grid"><article class="round-outcome-card"><h4>Loteria</h4><div class="donut-wrap"><svg class="round-outcome-chart" width="210" height="210" viewBox="0 0 210 210" role="img" aria-label="Loteria winning rounds versus losing rounds"><circle cx="105" cy="105" r="72" fill="none" stroke="#243c55" stroke-width="27"/><circle cx="105" cy="105" r="72" fill="none" stroke="#55d68b" stroke-width="27" stroke-dasharray="249 452" stroke-linecap="round" transform="rotate(-90 105 105)"/><circle cx="105" cy="105" r="72" fill="none" stroke="#ff7388" stroke-width="27" stroke-dasharray="203 452" stroke-dashoffset="-261" stroke-linecap="round" transform="rotate(-90 105 105)"/></svg><div class="donut-center"><strong>4,728</strong><span>Total rounds</span></div></div><div class="legend-list"><div><span><i class="dot positive" style="display:inline-block;margin-right:5px"></i>Winning rounds</span><b class="positive">2,604 · 55.1%</b></div><div><span><i class="dot negative" style="display:inline-block;margin-right:5px"></i>Losing rounds</span><b class="negative">2,124 · 44.9%</b></div></div></article><article class="round-outcome-card"><h4>Slot</h4><div class="donut-wrap"><svg class="round-outcome-chart" width="210" height="210" viewBox="0 0 210 210" role="img" aria-label="Slot winning rounds versus losing rounds"><circle cx="105" cy="105" r="72" fill="none" stroke="#243c55" stroke-width="27"/><circle cx="105" cy="105" r="72" fill="none" stroke="#55d68b" stroke-width="27" stroke-dasharray="249 452" stroke-linecap="round" transform="rotate(-90 105 105)"/><circle cx="105" cy="105" r="72" fill="none" stroke="#ff7388" stroke-width="27" stroke-dasharray="203 452" stroke-dashoffset="-261" stroke-linecap="round" transform="rotate(-90 105 105)"/></svg><div class="donut-center"><strong>13,914</strong><span>Total rounds</span></div></div><div class="legend-list"><div><span><i class="dot positive" style="display:inline-block;margin-right:5px"></i>Winning rounds</span><b class="positive">7,656 · 55.0%</b></div><div><span><i class="dot negative" style="display:inline-block;margin-right:5px"></i>Losing rounds</span><b class="negative">6,258 · 45.0%</b></div></div></article></div><div class="chart-note" style="margin-top:10px">Sample placeholder: final values should be connected to the daily back-office export.</div></div>
+      </div>
+
+      <div class="chart-grid-3" style="margin-top:14px">
+        <div class="panel pad chart-box total-tickets"><div class="side-title"><h3>Total Tickets</h3><span>By feature behavior</span></div>
+          <svg class="chart" viewBox="0 0 390 235" role="img" aria-label="Total tickets by Loteria and Slot"><line x1="42" y1="194" x2="370" y2="194" stroke="#2c4660"/><line x1="42" y1="132" x2="370" y2="132" stroke="#1d344c"/><line x1="42" y1="70" x2="370" y2="70" stroke="#1d344c"/><rect x="52" y="70" width="22" height="124" rx="5" fill="#6ea8ff"/><rect x="80" y="131" width="22" height="63" rx="5" fill="#b78cff"/><rect x="159" y="146" width="22" height="48" rx="5" fill="#6ea8ff"/><rect x="187" y="162" width="22" height="32" rx="5" fill="#b78cff"/><rect x="266" y="128" width="22" height="66" rx="5" fill="#6ea8ff"/><rect x="294" y="148" width="22" height="46" rx="5" fill="#b78cff"/><text x="77" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Normal Bet</text><text x="184" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Buy Feature</text><text x="291" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Bonus Round</text></svg>
+          <div class="legend"><span><i style="background:var(--blue)"></i>Loteria</span><span><i style="background:var(--violet)"></i>Slot</span></div><div class="chart-note">Ticket totals are separated by Loteria and Slot for each feature behavior.</div>
+        </div>
+        <div class="panel pad chart-box player-distribution"><div class="side-title"><h3>Player Distribution by Rounds Played</h3><span>Horizontal bar chart · Number of Unique Players</span></div>
+          <svg class="chart" viewBox="0 0 390 235" preserveAspectRatio="none" role="img" aria-label="Horizontal bar chart showing player distribution by rounds played, separated by Loteria and Slot"><line x1="100" y1="18" x2="100" y2="196" stroke="#2c4660"/><line x1="205" y1="18" x2="205" y2="196" stroke="#1d344c"/><line x1="310" y1="18" x2="310" y2="196" stroke="#1d344c"/><text x="100" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">0</text><text x="205" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">50</text><text x="310" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">100</text><text x="4" y="31" fill="#8ea4bd" font-size="8">1–10</text><text x="4" y="61" fill="#8ea4bd" font-size="8">11–20</text><text x="4" y="91" fill="#8ea4bd" font-size="8">21–50</text><text x="4" y="121" fill="#8ea4bd" font-size="8">51–100</text><text x="4" y="151" fill="#8ea4bd" font-size="8">100+</text><rect x="100" y="20" width="210" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="30" width="78" height="8" rx="4" fill="#b78cff"/><rect x="100" y="50" width="110" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="60" width="60" height="8" rx="4" fill="#b78cff"/><rect x="100" y="80" width="78" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="90" width="58" height="8" rx="4" fill="#b78cff"/><rect x="100" y="110" width="60" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="120" width="38" height="8" rx="4" fill="#b78cff"/><rect x="100" y="140" width="45" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="150" width="25" height="8" rx="4" fill="#b78cff"/></svg>
+          <div class="legend"><span><i style="background:var(--blue)"></i>Loteria</span><span><i style="background:var(--violet)"></i>Slot</span></div><div class="chart-note">Unique players are separated by Loteria and Slot across each rounds-played range.</div>
+        </div>
+        <div class="panel pad chart-box bet-distribution"><div class="side-title"><h3>Bet Amount Distribution</h3><span>Bet amount + rounds + share</span></div>
+          <table class="dist-table"><thead><tr><th>Bet range</th><th>Total bet</th><th>Rounds</th><th>Share</th><th></th></tr></thead><tbody><tr><td>₱0.5–3</td><td>₱8,640</td><td>6,284</td><td>6.7%</td><td><div class="mini-bar"><i style="width:92%"></i></div></td></tr><tr><td>₱5–10</td><td>₱21,500</td><td>4,710</td><td>16.7%</td><td><div class="mini-bar"><i style="width:72%"></i></div></td></tr><tr><td>₱11–20</td><td>₱27,880</td><td>2,860</td><td>21.7%</td><td><div class="mini-bar"><i style="width:48%"></i></div></td></tr><tr><td>₱21–50</td><td>₱31,240</td><td>2,210</td><td>24.3%</td><td><div class="mini-bar"><i style="width:37%"></i></div></td></tr><tr><td>₱51–100</td><td>₱18,420</td><td>1,090</td><td>14.3%</td><td><div class="mini-bar"><i style="width:22%"></i></div></td></tr><tr><td>₱101–200</td><td>₱10,880</td><td>510</td><td>8.5%</td><td><div class="mini-bar"><i style="width:12%"></i></div></td></tr><tr><td>₱501–1,000</td><td>₱9,890</td><td>978</td><td>7.7%</td><td><div class="mini-bar"><i style="width:18%"></i></div></td></tr></tbody></table>
+        </div>
+        <div class="panel pad chart-box multiplier-distribution"><div class="side-title"><h3>Multiplier Distribution</h3><span>Winning outcome bands</span></div>
+          <table class="dist-table"><thead><tr><th>Multiplier</th><th>Rounds</th><th>Share</th></tr></thead><tbody><tr><td>0x</td><td>10,566</td><td>56.7%</td></tr><tr><td>0.01x–1x</td><td>1,239</td><td>6.6%</td></tr><tr><td>&gt;1x–2x</td><td>3,040</td><td>16.3%</td></tr><tr><td>&gt;2x–5x</td><td>2,280</td><td>12.2%</td></tr><tr><td>&gt;5x–10x</td><td>850</td><td>4.6%</td></tr><tr><td>&gt;10x–25x</td><td>440</td><td>2.4%</td></tr><tr><td>&gt;25x–50x</td><td>140</td><td>.8%</td></tr><tr><td>&gt;50x–100x</td><td>65</td><td>.3%</td></tr><tr><td>&gt;100x–250x</td><td>20</td><td>.1%</td></tr><tr><td>&gt;250x</td><td>2</td><td>.01%</td></tr></tbody></table>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><h2>Player Performance</h2><p>Acquisition, retention, platform mix, and player behavior</p></div></div>
+      <div class="player-grid">
+        <div class="panel pad"><div class="side-title"><h3>New Player vs Returning Player vs Active Players</h3><span>426 active players</span></div><div class="compact-pie"><div class="donut-wrap"><svg width="180" height="180" viewBox="0 0 180 180"><circle cx="90" cy="90" r="61" fill="none" stroke="#243c55" stroke-width="25"/><circle cx="90" cy="90" r="61" fill="none" stroke="#6ea8ff" stroke-width="25" stroke-dasharray="106 383" stroke-linecap="round" transform="rotate(-90 90 90)"/><circle cx="90" cy="90" r="61" fill="none" stroke="#b78cff" stroke-width="25" stroke-dasharray="277 383" stroke-dashoffset="-113" stroke-linecap="round" transform="rotate(-90 90 90)"/></svg><div class="donut-center"><strong>426</strong><span>players</span></div></div><div class="legend-list"><div><span><i class="dot" style="display:inline-block;margin-right:7px;color:var(--blue)"></i>New players</span><b>118 · 27.7%</b></div><div><span><i class="dot" style="display:inline-block;margin-right:7px;color:var(--violet)"></i>Returning</span><b>308 · 72.3%</b></div></div></div></div>
+        <div class="panel pad"><div class="side-title"><h3>Player per Platform</h3><span>New vs returning + active players</span></div><div class="table-scroll"><table><thead><tr><th>Platform</th><th>New players</th><th>Returning players</th><th>Active Players</th><th>New share</th></tr></thead><tbody><tr><td><b>BP</b><span class="platform-sub">BingoPlus</span></td><td>81</td><td>205</td><td>286</td><td>28.3%</td></tr><tr><td><b>GP</b><span class="platform-sub">GameZone</span></td><td>23</td><td>69</td><td>92</td><td>25.0%</td></tr><tr><td><b>AP</b><span class="platform-sub">ArenaPlus</span></td><td>14</td><td>34</td><td>48</td><td>29.2%</td></tr></tbody></table></div></div>
+      <div class="chart-grid-3" style="margin-top:14px">
+        <div class="panel pad"><div class="side-title"><h3>Player Retention</h3><span>D1–D7 sample</span></div><div class="retention-row"><div><strong>D1 Retention</strong><small>Next-day returning players</small><svg class="spark" viewBox="0 0 160 28"><polyline points="1,20 25,17 50,19 75,13 100,15 125,8 159,11" fill="none" stroke="#ffca64" stroke-width="2"/></svg></div><div class="retention-value warning">10.84%</div></div><div class="retention-row"><div><strong>D3 Retention</strong><small>Third-day returning players</small><svg class="spark" viewBox="0 0 160 28"><polyline points="1,20 25,18 50,21 75,16 100,17 125,14 159,16" fill="none" stroke="#6ea8ff" stroke-width="2"/></svg></div><div class="retention-value">6.42%</div></div><div class="retention-row"><div><strong>D7 Retention</strong><small>Seventh-day returning players</small><svg class="spark" viewBox="0 0 160 28"><polyline points="1,22 25,20 50,22 75,19 100,20 125,17 159,18" fill="none" stroke="#b78cff" stroke-width="2"/></svg></div><div class="retention-value">3.18%</div></div></div>
+        <div class="panel pad chart-box"><div class="side-title"><h3>Rounds Comparison</h3><span>New vs returning players</span></div><svg class="chart" viewBox="0 0 390 235" preserveAspectRatio="none"><line x1="42" y1="194" x2="370" y2="194" stroke="#2c4660"/><rect x="65" y="132" width="28" height="62" rx="5" fill="#6ea8ff"/><rect x="95" y="82" width="28" height="112" rx="5" fill="#b78cff"/><rect x="155" y="117" width="28" height="77" rx="5" fill="#6ea8ff"/><rect x="185" y="67" width="28" height="127" rx="5" fill="#b78cff"/><rect x="245" y="147" width="28" height="47" rx="5" fill="#6ea8ff"/><rect x="275" y="103" width="28" height="91" rx="5" fill="#b78cff"/><text x="66" y="217" fill="#8ea4bd" font-size="11">BP</text><text x="156" y="217" fill="#8ea4bd" font-size="11">GP</text><text x="246" y="217" fill="#8ea4bd" font-size="11">AP</text></svg><div class="legend"><span><i style="background:var(--blue)"></i>New players</span><span><i style="background:var(--violet)"></i>Returning players</span></div></div>
+        <div class="panel pad chart-box"><div class="side-title"><h3>Unique Players by Bet Denomination</h3><span>Monthly background · Daily highlight</span></div><svg class="chart" viewBox="0 0 390 235" preserveAspectRatio="none" role="img" aria-label="Monthly background bars with daily highlighted bars for unique players by bet denomination, separated by Loteria and Slot"><line x1="92" y1="10" x2="92" y2="196" stroke="#2c4660"/><line x1="197" y1="10" x2="197" y2="196" stroke="#1d344c"/><line x1="302" y1="10" x2="302" y2="196" stroke="#1d344c"/><text x="92" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">0</text><text x="197" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">50</text><text x="302" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">100</text><text x="4" y="30" fill="#8ea4bd" font-size="8">₱1</text><text x="4" y="60" fill="#8ea4bd" font-size="8">₱5</text><text x="4" y="90" fill="#8ea4bd" font-size="8">₱10</text><text x="4" y="120" fill="#8ea4bd" font-size="8">₱20</text><text x="4" y="150" fill="#8ea4bd" font-size="8">₱50</text><text x="4" y="180" fill="#8ea4bd" font-size="8">₱100+</text><g class="monthly-bars"><rect x="92" y="16" width="240" height="10" rx="5" fill="#6ea8ff" opacity=".22"/><rect x="92" y="28" width="190" height="10" rx="5" fill="#b78cff" opacity=".22"/><rect x="92" y="46" width="200" height="10" rx="5" fill="#6ea8ff" opacity=".22"/><rect x="92" y="58" width="165" height="10" rx="5" fill="#b78cff" opacity=".22"/><rect x="92" y="76" width="160" height="10" rx="5" fill="#6ea8ff" opacity=".22"/><rect x="92" y="88" width="128" height="10" rx="5" fill="#b78cff" opacity=".22"/><rect x="92" y="106" width="125" height="10" rx="5" fill="#6ea8ff" opacity=".22"/><rect x="92" y="118" width="96" height="10" rx="5" fill="#b78cff" opacity=".22"/><rect x="92" y="136" width="92" height="10" rx="5" fill="#6ea8ff" opacity=".22"/><rect x="92" y="148" width="70" height="10" rx="5" fill="#b78cff" opacity=".22"/><rect x="92" y="166" width="62" height="10" rx="5" fill="#6ea8ff" opacity=".22"/><rect x="92" y="178" width="60" height="10" rx="5" fill="#b78cff" opacity=".22"/></g><g class="daily-bars"><rect x="92" y="19" width="210" height="6" rx="3" fill="#6ea8ff"/><rect x="92" y="31" width="85" height="6" rx="3" fill="#b78cff"/><rect x="92" y="49" width="130" height="6" rx="3" fill="#6ea8ff"/><rect x="92" y="61" width="100" height="6" rx="3" fill="#b78cff"/><rect x="92" y="79" width="95" height="6" rx="3" fill="#6ea8ff"/><rect x="92" y="91" width="62" height="6" rx="3" fill="#b78cff"/><rect x="92" y="109" width="68" height="6" rx="3" fill="#6ea8ff"/><rect x="92" y="121" width="54" height="6" rx="3" fill="#b78cff"/><rect x="92" y="139" width="45" height="6" rx="3" fill="#6ea8ff"/><rect x="92" y="151" width="35" height="6" rx="3" fill="#b78cff"/><rect x="92" y="169" width="28" height="6" rx="3" fill="#6ea8ff"/><rect x="92" y="181" width="28" height="6" rx="3" fill="#b78cff"/></g></svg><div class="legend"><span><i style="background:var(--blue)"></i>Loteria</span><span><i style="background:var(--violet)"></i>Slot</span><span><i style="background:#8ea4bd;opacity:.28"></i>Monthly total</span><span><i style="background:#8ea4bd"></i>Daily</span></div><div class="chart-note">Monthly background is a sample MTD reference; daily unique players are highlighted.</div></div>
+      </div>
+      <div class="panel pad table-scroll player-feature-panel">
+        <div class="side-title"><h3>Players by Game Feature Behavior</h3><span>Players may appear in more than one category</span></div>
+        <table>
+          <thead><tr><th>Feature Behavior</th><th>Players</th><th>Share of Active Players</th><th>Average Rounds / Player</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Normal Rounds</th><td>392</td><td>92.0%</td><td>43.6</td></tr>
+            <tr><th scope="row">Bonus Round</th><td>144</td><td>33.8%</td><td>8.2</td></tr>
+            <tr><th scope="row">Buy Feature</th><td>58</td><td>13.6%</td><td>3.7</td></tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><h2>Monthly Performance</h2><p>30-day trend and month-to-date platform summary</p></div><div class="monthly-head"><span class="filter active">30 days</span><span class="filter">MTD</span></div></div>
+      <div class="monthly-row">
+      <div class="panel pad chart-box"><div class="side-title"><h3>30-Day Performance Trend</h3><span>Bars: bet amount + payout · Lines: RTP + D1 retention</span></div><svg id="thirtyDayChart" class="chart tall-svg" viewBox="0 0 1020 340" preserveAspectRatio="none" role="img" aria-label="30-day performance trend chart"></svg><div class="legend"><span><i style="background:var(--blue)"></i>Bet amount</span><span><i style="background:var(--violet)"></i>Payout</span><span><i class="line" style="background:var(--green)"></i>RTP trendline</span><span><i class="line" style="background:#f2a65a"></i>D1 Retention trendline</span><span class="legend-note"><i style="background:#ef4444;width:7px;height:7px;border-radius:50%"></i>Red dot: RTP changed during the day</span></div></div>
+      <div class="panel table-scroll"><table><thead><tr><th>Platform</th><th>Bet Amount</th><th>Payout</th><th>GGR</th><th>RTP</th><th>Players</th><th>New Players</th><th>Max Payout</th><th>Max Multiplier</th><th>Overall Retention</th></tr></thead><tbody><tr><td><b>BingoPlus</b><span class="platform-sub">Loteria</span></td><td>₱1,485,220</td><td>₱1,414,880</td><td class="positive">₱70,340</td><td>95.26%</td><td>2,842</td><td>1,116</td><td>₱12,000</td><td>200x</td><td>11.08%</td></tr><tr><td><b>GameZone</b><span class="platform-sub">Slot</span></td><td>₱605,410</td><td>₱587,220</td><td class="positive">₱18,190</td><td>96.99%</td><td>1,085</td><td>348</td><td>₱10,000</td><td>100x</td><td>8.42%</td></tr><tr><td><b>ArenaPlus</b><span class="platform-sub">Slot</span></td><td>₱354,280</td><td>₱341,880</td><td class="positive">₱12,400</td><td>96.50%</td><td>624</td><td>201</td><td>₱8,000</td><td>75x</td><td>7.96%</td></tr></tbody><tfoot><tr><th>Total</th><th>₱2,444,910</th><th>₱2,343,980</th><th class="positive">₱100,930</th><th>95.87%</th><th>4,551</th><th>1,665</th><th>₱12,000</th><th>200x</th><th>10.12%</th></tr></tfoot></table>
+        <div class="monthly-share-charts">
+          <div class="monthly-share-card"><h4>Monthly GGR Share</h4><small>Revenue contribution</small><div class="monthly-share-content"><svg viewBox="0 0 60 60" aria-label="Monthly GGR Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#dce5ef" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="69.69 30.31" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="18.02 81.98" stroke-dashoffset="-69.69" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="12.29 87.71" stroke-dashoffset="-87.71" transform="rotate(-90 30 30)"/></svg><div class="monthly-share-legend"><span><span><i style="background:var(--cyan)"></i>BP</span><b>69.69%</b></span><span><span><i style="background:var(--blue)"></i>GP</span><b>18.02%</b></span><span><span><i style="background:var(--violet)"></i>AP</span><b>12.29%</b></span></div></div></div>
+          <div class="monthly-share-card"><h4>Monthly Player Share</h4><small>Audience contribution</small><div class="monthly-share-content"><svg viewBox="0 0 60 60" aria-label="Monthly Player Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#dce5ef" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="62.45 37.55" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="23.84 76.16" stroke-dashoffset="-62.45" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="13.71 86.29" stroke-dashoffset="-86.29" transform="rotate(-90 30 30)"/></svg><div class="monthly-share-legend"><span><span><i style="background:var(--cyan)"></i>BP</span><b>62.45%</b></span><span><span><i style="background:var(--blue)"></i>GP</span><b>23.84%</b></span><span><span><i style="background:var(--violet)"></i>AP</span><b>13.71%</b></span></div></div></div>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <div class="footer">Sample structure only · Values, chart series, and statuses are placeholders pending final data mapping.</div>
+  </main>
+  <dialog class="previous-dialog" id="previousReportDialog" aria-labelledby="previousReportTitle">
+    <div class="dialog-inner">
+      <div class="side-title"><h3 id="previousReportTitle">Previous Daily Report</h3><span>Archive</span></div>
+      <p id="previousReportHelp">Choose a date below to view its daily report sample on this same page.</p>
+      <div class="report-archive" id="reportArchiveList" aria-label="Previous daily reports"></div>
+      <div class="dialog-actions"><button type="button" class="header-button" id="closePreviousReport">Close</button></div>
+    </div>
+  </dialog>
+  <script>
+    (() => {
+      const NS = 'http://www.w3.org/2000/svg';
+      const brandLogo = document.querySelector('.brand-logo');
+      if (brandLogo) brandLogo.src = 'data:image/png;base64,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DVGAhhwTyAun+7RU21KCHhq2vAcX87t4OznDExISThbPNGnFoK8/f2UywR0jtAdGOvcxMs1hSKsNEYEQCEr8PxB8WWzai01s6I14ORaj9qj02RFKxueCYxpRQeOJCEUICKf5v2KfWWy2lGPEHEhx0An7/HL6odl3P8N8COfgfiKqhISEVSKR1hQc/vbHtwDObfUQLtl1sowA30Ib1g6+BhOoWc4n3bKvh7TqrIa+s7lOzXRMguyHEm2m7J9yZsm8aIp0A4uJislJSEYDJUq+OIiWJykSmJgM+RHwEZEj088+2tBihH2Y4BB/+91HkJCQkLAmSKRVEXRrc9NoGi+M842+ZmQT9uMlwOzbnnzI5XMPJhNbTJMblNq7Fq5hL+xzBBJX2LL7uPcJxGcBOJbIn5WWJeuVT+i35T6B+ogmH547oh/ib/+/iZwSEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEp41IKwhdnZ2Nnu93hvm7Zb569ttRDTKsuzuN7/5zSG0DHO+vun7DUQ8eOutt74KLaJu322P5XOf+9yNefvffvvtm7BGMNe/Za7/tVn77XNw586du9AAn//859+cTCbv7e3tDRe1tfctz/O7pu0IGqDL6xBM+27Nc/Oeucb9puOOwffrkenrXoV2D027fagJe5/Mb/3KrGfd7B+Y+3hl1nNq95trfmmZeym/uXm/BWljnomvmus8gCVgvrcd8/LSrP3LPHcWMtbydn42hsuOf9F5BG0849OQwZrBfKHXzI1433xx2+ZvaP527Z/dZ14fmP270DLMl3nNvFwzN3kXWoa5ljfr9G3aPzBtbfsBLIkvfOELA/OyO2u/JUZYM9j7Za59Z9Z+s+9DaAjb77wfmcA+g7btMoKDr2MbZo+l8XVYWIEBx7/bvvmNvGl/P+Ya7tjJHywBM8ZN09eteW3s79Gcc6cJYVmY/rfs8z5tHwvFOzDnGeb9S8GQ5mvzvis+z4CfiTZ+M/ae9qEj2Ge89Buyz8GW+Z5umX0/bEuGdvlbnYcNWBOwdvWOubGb5mJfnfIjeGhutn1gbpi2t9ucLRjh/aYlLnPe23YcbfVtYfq1P8qhebu9qG/7MJm29piReb0HS8LcS/tjHJrZzlppUwtgNZTbbWu8jBH4H/BMMBlYDWYHlsOgw+sQITqa9t2ydvLA/I3Mx8bfvXl+7ps+dm1/07RTfl6tgLwMzfGSvY5pO/g3OTKv/Wn77aTMaA7Qwmx+25xjuKDNFdOmETHHsGO2Ms78XW9TzsQw4xyYl71pmqP5zixhWhk6rGJxWIBOn/FZWBtNy86Y5hCWg/kyHvLrJWgJ9sdtNTlr3rCfDXG+AC3BkpTVmKy6z5v6c9rafVZY7po/S3QPYXnYh2pp8jsp8D3Yku+iAxyY+9qf18DcL/sd3DOC8D40BF9Hv8PrsHhtlqBlYbS/rLZuf4d20jPNzBkR1qtdCF+ZTJr+neA1Jshj5jSz74b524MlYe8TTyznYdDSRPKK6We/K8ISmTPreqx5074aOfcSLIET+K3OxFqQFv8ArKB+fd6XaW319gsxAqWVGyWajTmn/WG485ovtQ8twTwY9uGxBDy0n63tfVZbIxjeMS975phHdna5rE9CHipzPUvPDk8Koj00NTVVgJ21z9S0rK+BJxlLaaYncB0WW4uEaBuaAU96dmJTI98nIawRLIfNaWZqO3lgt8Bo2kH2+WZSXkrLYhM6zJskWr+beem3MZG0WlAFra4xNjY27FgP5shI9z2aezuCJWCfcXuejp/x6eeGFYOFq/X77C76Adj9bRGWaDb2h8eb3A/HfBl9aAmmbzcbZiI+MH1PFZjsQ7Emg5vWpNfGQ23Ib9HDu454rQ1BOwssHKd+ByyUnabbgiB+rUvBtEiIRhOWpc02ZqIopGDPaTWebXPeWy0RloW97wXS+uIXv7glhDTrHKwR7y07BjGhz5ss20AR1o5GsAQiLagz64e9HuBJ8jSwH6oNOXpl3nm6xMpJi2elB11EmcyDeRBvmS/4tjyIQiywwOdRE7GaPtU0FZsFeSytPNSWMGFFD9US2OryB82O4c1pAQqGZJzW3dJzWMXc1BgsRKcKWg5ecCbvNkjFnsMKbHN/rB/EOfNbJCyLY6RliNJaHQrjN9telPf8m9lZViNmVNF8ttuYTFnLi33teCI5U37w5Hg7mqh3cp6usQ6BGG9Oe2isYGFVt4A2Qt6tecM88Lbv66Vd9gfaCmmJXyOaDduHvl9uF/lQ7soM2RzzHiyPgT2fuVaasu/AOGlfhDWCaA/mWdgzY96b0uSeGfPrsARsYIL53sVveRCd2/lPzL6XYUmIo33OdVgH+VVYDk6Ixr8Ra9Y2214zrwMmrNac49avZInQ9P8OBxC0pg1bc62dtMpnNj0emzyYduprbkvL4smLvX9b8yLq7HgWRRdWAU8kYcZvEpZ1fcTyg7XVTZZn1i1ho7H7bUw4TuK3Og8rJS15aGaEg2+b2VWch2LbjszfMpFK0zSbGPbH04cWwBpkPBs+pmmJD0VmPnzMflsPlfnbWsew9mmw2oP1v5l7MFU4mGdh6fDZ8Xg8Mv3LrP2RbG9TMzHf3yX7HXZ5HfzM7Jq3O6Y/JwhtlKq5BvuMXW5RC3KwgR3mWQW2TLQ+uy49oxKMFKMwwQCvZS09wWCf84G9d7Pa8G/zDrUTGGXPs2uF/bSdRtA/giUQ+1KvXr1qvydH9NaPZmURPxtLywP+rY7Yr3UMbTzj87BqTavPr8dupJ1G2Rf5bH4070IL5i47S+MHFTnJr4y2zIMFvwabFwbyeQZ5XmnDF8K5L9Zu3YbGdlJw2sNbb7211A+3CjggxmkLEoxj0JZm4sKnu7oO1uTEV2n/btvtnMxstSGbh9aG2ax8Tvu2cUTlLNiJnJAWazv7U0y0arbn3++wpQmGM6HP+67MmC4t8nlVQeRnvGr66uoZV/lh7qFOmmyYu9m+w1rX0qRlJ01dPuOLsFKfljFtuAeRFiShRRrZUrM8++Ozaj4TyJXyH3+pW9AOCn4N8afIZzZxDEs/0LbsxJ0GAnQBjh7t1EYugk4CYkpBQK1opCfhaOeI1ALYZLdn/q5By+Aw7dFeyxocwwYgHch3Yc2P0xrZ74zbWGG8C+1g4XdltbCWojBPIqJ06vWI748LHXR2npPCSjUtMdcYddPmXc38MlmNX9qBab48q+bvmn6mzqo58W5p27XMTOPxsunLBQFY01FsFrQQk15LTlqXvQ+nBOIHaskEswgjMdPG/kRoAfK9t+STnAWbe7c3Y58976bNaWpzFszJqkPoBm72L9/FDGKUyN4dDtpa+jmJfM7vzWmzGZlil0UrycmzEEWUHrseOyEzss0+90tPyE/4tzoVK9W0+AE9sGVg5rWzajwtGY0V5WTNNAPZShTQgk/L+jXg+I9cZvL2wTnmU2OT3hCWBOedbHYsOFtFlbDjltFnf+J2SxFoDl1fxyoSOk8iTBv8b25mNGCUqmBNn7vQAqpoPhztd9DiRLKze1ghLH8ELYC17pP8rR7DykPe7YNqZ3IL6mEtVdlhSk7WVIiZclr2fU1slx9QeZjMtdpaacMps/vXshaqV0QZ9yM4JWATzBBOAFwiqw/+ebjd8n3qtAKJzb2rYmJqU8uSMO0uZtb8u3TpBosCYcjX42wrJcFioQmdJ8tLa0dtJifPwdxSVDZKs42gLE6O7tLEuRArD3k3D6qt9/eCrXFmyML6lu4JeXCY6zbX6mrsBK4aHSYh0eXosrrgmek02/zI/jdjRmnrqC0962dTjjURPYDpY7v/9ttv34Y1gczkwY95MK2NuS+thVmTr2W3w8K/NS0rCjfesQm409osex3Eyepzmiw72Zp6zq5n1hSq0szaL1G9O9AeqpjQt+aYYiuDtaAD83rHPBvH9ttncdk0CPYJ787ZL9HXjVH6rU6VL23+VmdhLQrm2gfW3JC7XIFb7K4H5gaMzOtSN4Fv9C5UiHwyPjabRLkDS0TY8Pl2po3ZRg6BL30ymnLMtTa+bHOOPfvKEXHHsEpb9CyI8Jg15jZ/BLYOpBX8HdyHg66vg2tYHszZf59N3K0hqpvZBdw9W2TKtpU9zHW15nuU39ui81pN3Jx76efELofDxX9nNVk2MtFdzzwzppWB1ELV9UXPOLRkhkxISEhISEhISEhISEhISEhISEhImIJ/BwYDz+ih2u+IAAAAAElFTkSuQmCC';
+      const make = (tag, attrs = {}, text = '') => {
+        const node = document.createElementNS(NS, tag);
+        Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+        if (text) node.textContent = text;
+        return node;
+      };
+      const drawLabel = (svg, x, y, text, attrs = {}) => svg.appendChild(make('text', { x, y, fill: '#8ea4bd', 'font-size': 10, ...attrs }, text));
+      const tooltip = document.createElement('div');
+      tooltip.className = 'chart-tooltip';
+      document.body.appendChild(tooltip);
+      let tooltipLanguage = 'en';
+      let activeTooltipTarget = null;
+      const positionTooltip = event => {
+        const gap = 14;
+        const bounds = tooltip.getBoundingClientRect();
+        const left = Math.max(10, Math.min(event.clientX + gap, window.innerWidth - bounds.width - 10));
+        const top = Math.max(10, Math.min(event.clientY + gap, window.innerHeight - bounds.height - 10));
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
+      };
+      const showTooltip = (target, event) => {
+        activeTooltipTarget = target;
+        tooltip.innerHTML = target.dataset[tooltipLanguage === 'cn' ? 'tooltipCn' : 'tooltipEn'] || target.dataset.tooltipEn || '';
+        tooltip.classList.add('visible');
+        positionTooltip(event);
+      };
+      const hideTooltip = target => {
+        if (activeTooltipTarget === target) {
+          activeTooltipTarget = null;
+          tooltip.classList.remove('visible');
+        }
+      };
+      const bindTooltip = target => {
+        if (!target || target.dataset.tooltipBound === 'true') return;
+        target.dataset.tooltipBound = 'true';
+        target.addEventListener('mouseenter', event => showTooltip(target, event));
+        target.addEventListener('mousemove', event => {
+          if (activeTooltipTarget === target) positionTooltip(event);
+        });
+        target.addEventListener('mouseleave', () => hideTooltip(target));
+        target.addEventListener('focus', event => showTooltip(target, event));
+        target.addEventListener('blur', () => hideTooltip(target));
+      };
+      const setTip = (target, english, chinese) => {
+        target.setAttribute('data-tooltip-en', english);
+        target.setAttribute('data-tooltip-cn', chinese || english);
+        bindTooltip(target);
+      };
+      document.addEventListener('dashboard-language-change', event => {
+        tooltipLanguage = event.detail === 'cn' ? 'cn' : 'en';
+        if (activeTooltipTarget) tooltip.innerHTML = activeTooltipTarget.dataset[tooltipLanguage === 'cn' ? 'tooltipCn' : 'tooltipEn'] || activeTooltipTarget.dataset.tooltipEn || '';
+      });
+
+      const hourly = document.getElementById('hourlyRtpChart');
+      if (hourly) {
+        const W = 900, H = 315, pad = { l: 32, r: 30, t: 24, b: 62 }, base = H - pad.b;
+        const hours = Array.from({ length: 24 }, (_, hour) => `${String(hour).padStart(2, '0')}:00`);
+        const bet = [30, 28, 26, 25, 27, 32, 38, 44, 35, 46, 55, 62, 70, 82, 78, 88, 96, 110, 102, 118, 126, 112, 86, 58];
+        const payout = [29, 27, 24, 24, 26, 30, 36, 42, 34, 44, 52, 60, 68, 77, 74, 84, 91, 104, 96, 111, 119, 106, 82, 55];
+        const rtp = [96.8, 96.4, 95.9, 96.2, 96.9, 97.1, 97.4, 97.8, 96.7, 97.2, 98.0, 98.4, 97.9, 98.2, 97.5, 98.9, 99.4, 98.7, 99.1, 100.2, 100.9, 99.5, 98.3, 97.2];
+        const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
+        const x = i => pad.l + plotW * i / (hours.length - 1);
+        const yAmount = value => base - value / 150 * plotH;
+        const yRtp = value => base - (value - 94) / 8 * plotH;
+        hourly.setAttribute('viewBox', `0 0 ${W} ${H}`);
+        hourly.replaceChildren();
+        [0, 50, 100, 150].forEach(value => {
+          const y = yAmount(value);
+          hourly.appendChild(make('line', { x1: pad.l, y1: y, x2: W - pad.r, y2: y, stroke: value ? '#1d344c' : '#2c4660' }));
+          drawLabel(hourly, 8, y + 4, String(value), { 'font-size': 9 });
+        });
+        [94, 98.3, 102].forEach(value => drawLabel(hourly, W - 30, yRtp(value) + 4, `${value}%`, { 'font-size': 9 }));
+        hours.forEach((label, i) => drawLabel(hourly, x(i), base + 30, label, { 'text-anchor': 'end', transform: `rotate(-55 ${x(i)} ${base + 30})`, 'font-size': 8 }));
+        const barWidth = Math.min(13, plotW / hours.length * .24);
+        bet.forEach((value, i) => {
+          const bar = make('rect', { x: x(i) - barWidth - 2, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 4, fill: '#6ea8ff' });
+          setTip(bar, `<b>${hours[i]}</b><br>Bet Amount: ${value}`, `<b>${hours[i]}</b><br>投注金额：${value}`);
+          hourly.appendChild(bar);
+        });
+        payout.forEach((value, i) => {
+          const bar = make('rect', { x: x(i) + 2, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 4, fill: '#b78cff' });
+          setTip(bar, `<b>${hours[i]}</b><br>Payout: ${value}`, `<b>${hours[i]}</b><br>派彩：${value}`);
+          hourly.appendChild(bar);
+        });
+        const points = rtp.map((value, i) => `${x(i)},${yRtp(value)}`).join(' ');
+        hourly.appendChild(make('polyline', { points, fill: 'none', stroke: '#55d68b', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+        rtp.forEach((value, i) => {
+          const point = make('circle', { cx: x(i), cy: yRtp(value), r: 3.5, fill: '#55d68b' });
+          setTip(point, `<b>${hours[i]}</b><br>RTP: ${value.toFixed(1)}%`, `<b>${hours[i]}</b><br>RTP：${value.toFixed(1)}%`);
+          hourly.appendChild(point);
+        });
+        const thresholdY = yRtp(98.3);
+        hourly.appendChild(make('line', { x1: pad.l, y1: thresholdY, x2: W - pad.r, y2: thresholdY, stroke: '#f2a65a', 'stroke-width': 2, 'stroke-dasharray': '7 6' }));
+        drawLabel(hourly, W - 90, thresholdY - 7, '98.3% target', { fill: '#f2a65a', 'font-size': 9 });
+      }
+
+      const thirtyDay = document.getElementById('thirtyDayChart');
+      if (thirtyDay) {
+        const W = 1020, H = 340, pad = { l: 48, r: 36, t: 24, b: 84 }, base = H - pad.b;
+        const start = Date.UTC(2026, 7, 23);
+        const dates = Array.from({ length: 30 }, (_, i) => new Date(start + i * 86400000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }));
+        const bet = [85, 92, 70, 110, 100, 118, 105, 125, 135, 110, 145, 125, 150, 130, 145, 160, 150, 170, 155, 165, 180, 160, 175, 145, 170, 150, 180, 165, 175, 160];
+        const payout = [82, 88, 67, 106, 96, 113, 101, 120, 130, 106, 139, 121, 144, 126, 139, 154, 143, 164, 149, 159, 173, 153, 168, 139, 163, 144, 173, 158, 168, 154];
+        const rtp = [95.5, 96.2, 94.8, 97.4, 96.7, 98.1, 97.6, 99.0, 98.4, 96.8, 99.4, 97.7, 100.2, 98.9, 97.6, 99.1, 98.2, 100.4, 99.3, 98.7, 100.7, 99.8, 101.1, 98.5, 99.8, 97.9, 100.3, 99.0, 98.6, 97.14];
+        const d1Retention = [8.2, 8.6, 7.9, 9.1, 8.8, 9.5, 9.2, 10.0, 9.7, 9.0, 10.4, 9.8, 10.7, 10.1, 9.6, 10.9, 10.3, 11.2, 10.6, 11.0, 11.6, 11.1, 11.9, 10.5, 11.4, 10.8, 10.9, 11.2, 11.0, 10.84];
+        const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
+        const x = i => pad.l + plotW * i / (dates.length - 1);
+        const yAmount = value => base - value / 200 * plotH;
+        const yRtp = value => base - (value - 90) / 15 * plotH;
+        const yRetention = value => base - value / 15 * plotH;
+        thirtyDay.setAttribute('viewBox', `0 0 ${W} ${H}`);
+        thirtyDay.replaceChildren();
+        [0, 50, 100, 150, 200].forEach(value => {
+          const y = yAmount(value);
+          thirtyDay.appendChild(make('line', { x1: pad.l, y1: y, x2: W - pad.r, y2: y, stroke: value ? '#1d344c' : '#2c4660' }));
+          drawLabel(thirtyDay, 7, y + 4, String(value), { 'font-size': 9 });
+        });
+        dates.forEach((date, i) => drawLabel(thirtyDay, x(i), base + 38, date, { 'text-anchor': 'end', transform: `rotate(-65 ${x(i)} ${base + 38})`, 'font-size': 8 }));
+        [90, 95, 100, 105].forEach(value => drawLabel(thirtyDay, W - 26, yRtp(value) + 4, `${value}%`, { 'font-size': 9 }));
+        drawLabel(thirtyDay, W - 26, pad.t + 4, 'D1 15%', { fill: '#f2a65a', 'font-size': 9 });
+        drawLabel(thirtyDay, W - 26, base + 4, 'D1 0%', { fill: '#f2a65a', 'font-size': 9 });
+        const barWidth = Math.max(4, Math.min(8, plotW / dates.length * .22));
+        bet.forEach((value, i) => {
+          const bar = make('rect', { x: x(i) - barWidth - 1, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 2, fill: '#6ea8ff' });
+          setTip(bar, `<b>${dates[i]}</b><br>Bet Amount: ${value}`, `<b>${dates[i]}</b><br>投注金额：${value}`);
+          thirtyDay.appendChild(bar);
+        });
+        payout.forEach((value, i) => {
+          const bar = make('rect', { x: x(i) + 1, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 2, fill: '#b78cff' });
+          setTip(bar, `<b>${dates[i]}</b><br>Payout: ${value}`, `<b>${dates[i]}</b><br>派彩：${value}`);
+          thirtyDay.appendChild(bar);
+        });
+        thirtyDay.appendChild(make('polyline', { points: rtp.map((value, i) => `${x(i)},${yRtp(value)}`).join(' '), fill: 'none', stroke: '#55d68b', 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+        thirtyDay.appendChild(make('polyline', { points: d1Retention.map((value, i) => `${x(i)},${yRetention(value)}`).join(' '), fill: 'none', stroke: '#f2a65a', 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+        [rtp, d1Retention].forEach((series, seriesIndex) => series.forEach((value, i) => {
+          const isRtpChange = !seriesIndex && dates[i] === 'Sep 18';
+          const point = make('circle', { cx: x(i), cy: seriesIndex ? yRetention(value) : yRtp(value), r: isRtpChange ? 4.8 : 2.4, fill: isRtpChange ? '#ef4444' : (seriesIndex ? '#f2a65a' : '#55d68b'), stroke: isRtpChange ? '#ffffff' : 'none', 'stroke-width': isRtpChange ? 1.5 : 0 });
+          const rtpChange = isRtpChange ? '<br>RTP change: 97.0% → 98.3%' : (!seriesIndex && i === rtp.length - 1 ? '<br>DoD: ↓ 0.22 pp' : '');
+          const rtpChangeCn = isRtpChange ? '<br>RTP变化：97.0% → 98.3%' : (!seriesIndex && i === rtp.length - 1 ? '<br>日环比：↓ 0.22 个百分点' : '');
+          const english = seriesIndex ? `<b>${dates[i]}</b><br>D1 Retention: ${value.toFixed(2)}%` : `<b>${dates[i]}</b><br>RTP: ${value.toFixed(2)}%${rtpChange}`;
+          const chinese = seriesIndex ? `<b>${dates[i]}</b><br>D1留存率：${value.toFixed(2)}%` : `<b>${dates[i]}</b><br>RTP：${value.toFixed(2)}%${rtpChangeCn}`;
+          setTip(point, english, chinese);
+          thirtyDay.appendChild(point);
+        }));
+      }
+
+      const bindStaticRects = (selector, tips) => {
+        document.querySelectorAll(`${selector} rect`).forEach((rect, index) => {
+          if (tips[index]) setTip(rect, tips[index][0], tips[index][1]);
+        });
+      };
+      bindStaticRects('.total-tickets svg', [
+        ['<b>Normal Bet · Loteria</b><br>Tickets: 8,520', '<b>普通投注 · 乐透</b><br>票数：8,520'],
+        ['<b>Normal Bet · Slot</b><br>Tickets: 4,340', '<b>普通投注 · 老虎机</b><br>票数：4,340'],
+        ['<b>Buy Feature · Loteria</b><br>Tickets: 1,580', '<b>购买功能 · 乐透</b><br>票数：1,580'],
+        ['<b>Buy Feature · Slot</b><br>Tickets: 840', '<b>购买功能 · 老虎机</b><br>票数：840'],
+        ['<b>Bonus Round · Loteria</b><br>Tickets: 2,020', '<b>奖励回合 · 乐透</b><br>票数：2,020'],
+        ['<b>Bonus Round · Slot</b><br>Tickets: 1,342', '<b>奖励回合 · 老虎机</b><br>票数：1,342']
+      ]);
+      bindStaticRects('.player-distribution svg', [
+        ['<b>1–10 Rounds · Loteria</b><br>Unique Players: 118', '<b>1–10回合 · 乐透</b><br>唯一玩家：118'],
+        ['<b>1–10 Rounds · Slot</b><br>Unique Players: 44', '<b>1–10回合 · 老虎机</b><br>唯一玩家：44'],
+        ['<b>11–20 Rounds · Loteria</b><br>Unique Players: 62', '<b>11–20回合 · 乐透</b><br>唯一玩家：62'],
+        ['<b>11–20 Rounds · Slot</b><br>Unique Players: 34', '<b>11–20回合 · 老虎机</b><br>唯一玩家：34'],
+        ['<b>21–50 Rounds · Loteria</b><br>Unique Players: 43', '<b>21–50回合 · 乐透</b><br>唯一玩家：43'],
+        ['<b>21–50 Rounds · Slot</b><br>Unique Players: 35', '<b>21–50回合 · 老虎机</b><br>唯一玩家：35'],
+        ['<b>51–100 Rounds · Loteria</b><br>Unique Players: 35', '<b>51–100回合 · 乐透</b><br>唯一玩家：35'],
+        ['<b>51–100 Rounds · Slot</b><br>Unique Players: 20', '<b>51–100回合 · 老虎机</b><br>唯一玩家：20'],
+        ['<b>100+ Rounds · Loteria</b><br>Unique Players: 28', '<b>100+回合 · 乐透</b><br>唯一玩家：28'],
+        ['<b>100+ Rounds · Slot</b><br>Unique Players: 7', '<b>100+回合 · 老虎机</b><br>唯一玩家：7']
+      ]);
+      bindStaticRects('.player-grid > .chart-grid-3 > .panel:nth-child(2) svg', [
+        ['<b>BP · New Players</b><br>Rounds: 62', '<b>BP · 新玩家</b><br>回合数：62'],
+        ['<b>BP · Returning Players</b><br>Rounds: 112', '<b>BP · 回访玩家</b><br>回合数：112'],
+        ['<b>GP · New Players</b><br>Rounds: 77', '<b>GP · 新玩家</b><br>回合数：77'],
+        ['<b>GP · Returning Players</b><br>Rounds: 127', '<b>GP · 回访玩家</b><br>回合数：127'],
+        ['<b>AP · New Players</b><br>Rounds: 47', '<b>AP · 新玩家</b><br>回合数：47'],
+        ['<b>AP · Returning Players</b><br>Rounds: 91', '<b>AP · 回访玩家</b><br>回合数：91']
+      ]);
+      bindStaticRects('.player-grid > .chart-grid-3 > .panel:nth-child(3) svg .daily-bars', [
+        ['<b>₱1 · Loteria</b><br>Unique Players: 84', '<b>₱1 · 乐透</b><br>唯一玩家：84'],
+        ['<b>₱1 · Slot</b><br>Unique Players: 34', '<b>₱1 · 老虎机</b><br>唯一玩家：34'],
+        ['<b>₱5 · Loteria</b><br>Unique Players: 52', '<b>₱5 · 乐透</b><br>唯一玩家：52'],
+        ['<b>₱5 · Slot</b><br>Unique Players: 32', '<b>₱5 · 老虎机</b><br>唯一玩家：32'],
+        ['<b>₱10 · Loteria</b><br>Unique Players: 38', '<b>₱10 · 乐透</b><br>唯一玩家：38'],
+        ['<b>₱10 · Slot</b><br>Unique Players: 21', '<b>₱10 · 老虎机</b><br>唯一玩家：21'],
+        ['<b>₱20 · Loteria</b><br>Unique Players: 27', '<b>₱20 · 乐透</b><br>唯一玩家：27'],
+        ['<b>₱20 · Slot</b><br>Unique Players: 19', '<b>₱20 · 老虎机</b><br>唯一玩家：19'],
+        ['<b>₱50 · Loteria</b><br>Unique Players: 18', '<b>₱50 · 乐透</b><br>唯一玩家：18'],
+        ['<b>₱50 · Slot</b><br>Unique Players: 14', '<b>₱50 · 老虎机</b><br>唯一玩家：14'],
+        ['<b>₱100+ · Loteria</b><br>Unique Players: 11', '<b>₱100+ · 乐透</b><br>唯一玩家：11'],
+        ['<b>₱100+ · Slot</b><br>Unique Players: 11', '<b>₱100+ · 老虎机</b><br>唯一玩家：11']
+      ]);
+      document.querySelectorAll('.platform-charts .mini-donut').forEach(svg => {
+        const label = svg.getAttribute('aria-label') || '';
+        const values = label.startsWith('GGR') ? [['BingoPlus (BP): 73.57%', 'BingoPlus (BP)：73.57%'], ['GameZone (GP): 10.08%', 'GameZone (GP)：10.08%'], ['ArenaPlus (AP): 16.35%', 'ArenaPlus (AP)：16.35%']] : label.startsWith('Player') ? [['BingoPlus (BP): 67.14%', 'BingoPlus (BP)：67.14%'], ['GameZone (GP): 21.60%', 'GameZone (GP)：21.60%'], ['ArenaPlus (AP): 11.26%', 'ArenaPlus (AP)：11.26%']] : [['BingoPlus (BP): 64.81%', 'BingoPlus (BP)：64.81%'], ['GameZone (GP): 22.27%', 'GameZone (GP)：22.27%'], ['ArenaPlus (AP): 12.92%', 'ArenaPlus (AP)：12.92%']];
+        svg.querySelectorAll('circle').forEach((circle, index) => { if (index > 0 && values[index - 1]) setTip(circle, values[index - 1][0], values[index - 1][1]); });
+      });
+      const roundOutcomeTips = [
+        [['<b>Loteria · Winning Rounds</b><br>2,604 · 55.1%', '<b>乐透 · 中奖回合</b><br>2,604 · 55.1%'], ['<b>Loteria · Losing Rounds</b><br>2,124 · 44.9%', '<b>乐透 · 未中奖回合</b><br>2,124 · 44.9%']],
+        [['<b>Slot · Winning Rounds</b><br>7,656 · 55.0%', '<b>老虎机 · 中奖回合</b><br>7,656 · 55.0%'], ['<b>Slot · Losing Rounds</b><br>6,258 · 45.0%', '<b>老虎机 · 未中奖回合</b><br>6,258 · 45.0%']]
+      ];
+      document.querySelectorAll('.game-loss .round-outcome-chart').forEach((svg, chartIndex) => {
+        const circles = svg.querySelectorAll('circle');
+        const tips = roundOutcomeTips[chartIndex] || [];
+        if (circles[1] && tips[0]) setTip(circles[1], tips[0][0], tips[0][1]);
+        if (circles[2] && tips[1]) setTip(circles[2], tips[1][0], tips[1][1]);
+      });
+      const playerDonutCircles = document.querySelectorAll('.player-grid > .panel:first-child svg circle');
+      if (playerDonutCircles[1]) setTip(playerDonutCircles[1], '<b>New Players</b><br>118 · 27.7%', '<b>新玩家</b><br>118 · 27.7%');
+      if (playerDonutCircles[2]) setTip(playerDonutCircles[2], '<b>Returning Players</b><br>308 · 72.3%', '<b>回访玩家</b><br>308 · 72.3%');
+      document.querySelectorAll('.monthly-share-card svg').forEach(svg => {
+        const label = svg.getAttribute('aria-label') || '';
+        const values = label.startsWith('Monthly GGR') ? [['BingoPlus (BP): 69.69%', 'BingoPlus (BP)：69.69%'], ['GameZone (GP): 18.02%', 'GameZone (GP)：18.02%'], ['ArenaPlus (AP): 12.29%', 'ArenaPlus (AP)：12.29%']] : [['BingoPlus (BP): 62.45%', 'BingoPlus (BP)：62.45%'], ['GameZone (GP): 23.84%', 'GameZone (GP)：23.84%'], ['ArenaPlus (AP): 13.71%', 'ArenaPlus (AP)：13.71%']];
+        svg.querySelectorAll('circle').forEach((circle, index) => { if (index > 0 && values[index - 1]) setTip(circle, values[index - 1][0], values[index - 1][1]); });
+      });
+      document.querySelectorAll('.dynamic-item').forEach(item => {
+        const head = item.querySelector('.dynamic-head')?.textContent.trim() || '';
+        const foot = item.querySelector('.dynamic-foot')?.textContent.trim() || '';
+        const round = item.querySelector('.dynamic-head span')?.textContent.trim() || '';
+        const mode = item.querySelector('.dynamic-head b')?.textContent.trim() || '';
+        const rtpValue = item.querySelector('.dynamic-foot span')?.textContent.trim() || '';
+        const ggr = item.querySelector('.dynamic-foot b')?.textContent.trim() || '';
+        const modeCn = mode === 'NON' ? '普通模式' : mode === 'Cumulative' ? '累计' : mode === 'Daily' ? '每日' : mode;
+        const roundCn = round.replace('rounds', '回合数');
+        setTip(item, `<b>${mode}</b><br>${round}<br>${rtpValue}<br>${ggr}`, `<b>${modeCn}</b><br>${roundCn}<br>${rtpValue}<br>${ggr}`);
+      });
+
+      const notes = [
+        ['.platform-matrix', 'BingoPlus contributes the largest share of daily activity in this sample.'],
+        ['.platform-charts', 'Platform Share compares revenue, audience, and betting-volume contribution.'],
+        ['.changelog-table', 'Recent launches and the minimum-bet update expanded platform access during the reporting period.'],
+        ['.compliance-panel', 'GCP accreditation and current Game Application approvals are shown for management tracking.'],
+        ['.game-summary', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is shown as unavailable until category-level mapping is available.'],
+        ['.hourly-rtp', 'Hourly RTP is evaluated against the 98.3% threshold while bet amount and payout intensity are shown by hour.'],
+        ['.dynamic-rtp', 'NON drives most volume; cumulative and daily modes remain more volatile because of smaller samples.'],
+        ['.game-loss', 'Winning rounds represent about 55.0% of total rounds in both Loteria and Slot.'],
+        ['.total-tickets', 'Normal Bet accounts for the majority of ticket activity across both Loteria and Slot.'],
+        ['.player-distribution', 'The 1–10 rounds range has the most unique players, shown separately for Loteria and Slot.'],
+        ['.bet-distribution', 'The ₱21–50 range has the largest share of total bet amount in this sample.'],
+        ['.multiplier-distribution', '0x is the largest multiplier band by rounds.'],
+        ['.player-grid > .panel:first-child', 'Returning players make up most active players in this sample.'],
+        ['.player-grid > .panel:nth-child(2)', 'BingoPlus has the largest active-player base among the three platforms.'],
+        ['.player-grid > .chart-grid-3 > .panel:nth-child(1)', 'D1 retention is the main player-engagement metric to monitor.'],
+        ['.player-grid > .chart-grid-3 > .panel:nth-child(2)', 'Returning players record more rounds than new players across platforms in this sample.'],
+        ['.player-grid > .chart-grid-3 > .panel:nth-child(3)', 'Unique-player counts are highest at the lower bet denominations, with Loteria and Slot shown separately.'],
+        ['.player-feature-panel', 'Normal Rounds are the primary feature behavior, while Buy Feature and Bonus Round are smaller segments.'],
+        ['.monthly-row > .panel:first-child', 'The 30-day view compares daily bet and payout bars with RTP and D1 retention trendlines.'],
+        ['.monthly-row > .panel:nth-child(2)', 'MTD platform totals show BingoPlus as the largest contributor in the sample.']
+      ];
+      notes.forEach(([selector, text]) => {
+        const panel = document.querySelector(selector);
+        if (!panel || panel.querySelector('.keynote')) return;
+        const note = document.createElement('div');
+        note.className = 'keynote';
+        note.innerHTML = `<b>Key Insight:</b> ${text}`;
+        const monthlyShares = panel.querySelector('.monthly-share-charts');
+        if (monthlyShares) panel.insertBefore(note, monthlyShares);
+        else panel.appendChild(note);
+      });
+    })();
+  </script>
+  <script>
+    (() => {
+      const previousButton = document.getElementById('previousReportButton');
+      const previousDialog = document.getElementById('previousReportDialog');
+      const closePrevious = document.getElementById('closePreviousReport');
+      const archiveList = document.getElementById('reportArchiveList');
+      const previousReportHelp = document.getElementById('previousReportHelp');
+      const reportDateValue = document.getElementById('reportDateValue');
+      const backToLatestButton = document.getElementById('backToLatestReportButton');
+      const originalText = new WeakMap();
+      const originalAttributes = new WeakMap();
+      let currentLang = 'en';
+      const latestReportDate = '2026-09-21';
+      let currentReportDate = reportDateValue?.dataset.reportDate || latestReportDate;
+      const syncLatestButton = () => {
+        if (backToLatestButton) backToLatestButton.hidden = currentReportDate === latestReportDate;
+      };
+
+      const cn = {
+        'Daily Game Performance Report': '每日游戏表现报告',
+        'Report Date': '报告日期',
+        'Previous Daily Report': '上一日报告',
+        'General Operation Data': '总体运营数据',
+        'Daily snapshot · Sample values for structure review': '每日快照 · 结构审查示例',
+        'Report generated': '报告已生成',
+        'Bet Amount': '投注金额', 'Payout': '派彩', 'GGR': '游戏总收入', 'Positive GGR': '正向GGR', 'Monthly Total ₱2,444,910': '月度总计 ₱2,444,910', 'Monthly Total ₱2,343,980': '月度总计 ₱2,343,980', 'Monthly Total ₱100,930': '月度总计 ₱100,930', 'Monthly Average 95.87%': '月度平均 95.87%', 'MTD Total ₱72,840': 'MTD总计 ₱72,840', 'WoW ↑ 8.6%': '周环比 ↑ 8.6%', 'WoW ↑ 7.1%': '周环比 ↑ 7.1%', 'WoW ↑ 12.8%': '周环比 ↑ 12.8%', 'WoW +0.36 pp': '周环比 +0.36 个百分点', 'WoW ↑ 5.9%': '周环比 ↑ 5.9%', 'Monthly Total ₱1.85M': '月度总计 ₱1.85M', 'Monthly Total ₱1.77M': '月度总计 ₱1.77M', 'Monthly Total ₱72.84K': '月度总计 ₱72.84K', 'Monthly Avg 96.06%': '月度平均 96.06%',
+        'Daily': '每日', 'Within target': '在目标范围内', 'MTD GGR': 'MTD GGR', 'Sep 1–21': '9月1日至21日',
+        'Total Rounds': '总回合数', 'Players': '玩家数', 'New Players': '新玩家', 'ABPU': '每位玩家平均投注',
+        'Max Payout': '最高派彩', 'Max Multiplier': '最高倍数', 'Max Bet': '最高投注', 'D1 Retention': 'D1留存率',
+        'Platform Performance': '平台表现', 'Platform-level contribution, status, and operational notes': '平台贡献、状态与运营备注',
+        'Platform': '平台', 'Loteria': '乐透', 'Slot': '老虎机', 'Metric': '指标', 'Value': '数值', 'Active Players': '活跃玩家',
+        'D1 Retention': 'D1留存率', 'Winning Tickets': '中奖票数', 'Avg Bet / Player': '每位玩家平均投注', 'GGR Share': 'GGR占比',
+        'Platform Share': '平台占比', 'Contribution mix': '贡献构成', 'Revenue contribution': '收入贡献', 'Monthly GGR Share': '月度GGR占比', 'Monthly Player Share': '月度玩家占比',
+        'Audience contribution': '用户贡献', 'Betting volume contribution': '投注量贡献', 'Changelog': '变更记录',
+        'Latest updates': '最新更新', 'Date': '日期', 'Details': '详情', 'Outcome': '结果',
+        'Launch of ': '上线', 'Launch of': '上线', 'Game Engine officially entered ArenaPlus': '游戏引擎正式进入ArenaPlus', 'RTP adjusted from ': 'RTP从', 'RTP adjusted from': 'RTP从', 'RTP configuration was successfully updated to ': 'RTP配置已成功更新为', 'RTP configuration was successfully updated to': 'RTP配置已成功更新为', 'Friday, September 18, 2026': '2026年9月18日星期五', 'Monday, September 21, 2026': '2026年9月21日星期一', 'Thursday, September 17, 2026': '2026年9月17日星期四', 'Monday, September 14, 2026': '2026年9月14日星期一', 'Thursday, September 10, 2026': '2026年9月10日星期四', 'Tuesday, September 1, 2026': '2026年9月1日星期二',
+        'Game Engine officially entered GameZone; lower minimum bet provided a more accessible entry point and supported increased traffic': '游戏引擎正式进入GameZone；降低最低投注门槛，提供更易进入的起点并促进流量增长',
+        'Banana Craze on ArenaPlus': 'ArenaPlus上的Banana Craze', 'Banana Craze on GameZone': 'GameZone上的Banana Craze', 'minimum bet updated to ': '最低投注更新为', 'minimum bet updated to': '最低投注更新为', '₱0.50 at 2:00 PM': '₱0.50（下午2:00）', 'System maintenance for ': '系统维护，进行', 'System maintenance for': '系统维护，进行', 'upgrade': '升级',
+        '9:00 AM–10:30 AM; Game Hall temporarily closed': '上午9:00–10:30；游戏大厅暂时关闭', '9:30 AM–1:15 PM; Game Hall temporarily closed': '上午9:30–下午1:15；游戏大厅暂时关闭', 'Game Hall temporarily closed': '游戏大厅暂时关闭', 'System upgrade completed': '系统升级完成',
+        'Improved ': '优化', 'Improved': '优化', 'Improved Banana Craze placement in BingoPlus Loteria': '优化Banana Craze在BingoPlus乐透专区的位置', 'around 3:00 PM': '约下午3:00', '10:42 AM:': '上午10:42：', '97.0% → 98.3%': '97.0% → 98.3%', 'reflecting the new target setting.': '反映新的目标设置。',
+        'Alerts & Incident Report': '警报与事件报告', 'Daily status': '每日状态', 'GGR Status': 'GGR状态', 'Compliance & PAGCOR Update': '合规与PAGCOR更新', 'Current status': '当前状态', 'GCP Accreditation': 'GCP认证', 'Game Application': '游戏申请', 'Next Games for Application': '下一批申请游戏', '✅ Approved — Numerical & ECG': '✅ 已批准 — Numerical 与 ECG', '✅ Approved — Banana Craze, PikaPika': '✅ 已批准 — Banana Craze、PikaPika', '🔄 BLAZING 7S, LUCKY COLOR, GINTO MATCH': '🔄 BLAZING 7S、LUCKY COLOR、GINTO MATCH',
+        'Positive daily GGR': '每日GGR为正', 'Healthy': '正常', 'RTP Status': 'RTP状态', '97.14% vs target ≈ 98.3%': '97.14% vs 目标 ≈ 98.3%',
+        'Fusebreak / Alarm': 'Fusebreak / 警报', 'Review player-level volatility': '检查玩家层级波动', 'Monitor': '监控中',
+        'Notes': '备注', 'No incident report or important operational note recorded for this date.': '此日期暂无事件报告或重要运营备注。',
+        'Game Performance': '游戏表现', 'Banana Craze operating behavior and outcome distribution': 'Banana Craze运营行为与结果分布',
+        'Rounds': '回合数', 'Total': '总计', 'Avg Round / Game': '平均每局回合投注', 'Hourly RTP (00:00–23:59)': '每小时RTP（00:00–23:59）', 'Hourly RTP': '每小时RTP',
+        'Bars: bet amount + payout · Lines: RTP + 98.3% threshold': '柱状图：投注金额 + 派彩 · 折线：RTP + 98.3%阈值',
+        'Bet amount': '投注金额', 'RTP trendline': 'RTP趋势线', 'RTP threshold 98.3%': 'RTP阈值 98.3%',
+        'Sample: inactive hours can be excluded from the production chart.': '示例：生产图表可排除无活跃玩家的时段。',
+        'Dynamic RTP': '动态RTP', 'Mode contribution': '模式贡献', 'rounds': '回合数',
+        'Interpretation: NON drives most volume; cumulative and daily modes remain more volatile because of smaller samples.': '说明：普通模式贡献大部分交易量；累计模式和每日模式样本较小，波动性更高。',
+        'Winning Rounds vs Losing Rounds': '中奖回合与未中奖回合', 'Loss vs win rounds': '未中奖与中奖回合', 'Total rounds': '总回合数',
+        'Winning rounds': '中奖回合', 'Losing rounds': '未中奖回合',
+        'Sample placeholder: final values should be connected to the daily back-office export.': '示例占位：最终数据应连接至每日后台导出。',
+        'Total Tickets': '总票数', 'By feature behavior': '按功能行为', 'Normal Bet': '普通投注', 'Buy Feature': '购买功能',
+        'Bonus Round': '奖励回合', 'Normal Bet accounts for the majority of total tickets.': '普通投注占本示例总票数的大部分。', 'Players by Loteria / Slot': '按乐透 / 老虎机玩家',
+        'Avg Round': '平均回合投注', 'Popular Bet Amount': '最常用投注金额', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is shown as unavailable until category-level mapping is available.': '游戏表现按乐透与老虎机分类。老虎机合并GameZone与ArenaPlus；在获得分类数据映射前，最常用投注金额暂显示为不可用。',
+        'Ticket totals are separated by Loteria and Slot for each feature behavior.': '各功能行为的票数总计按乐透与老虎机区分。', 'Unique players are separated by Loteria and Slot across each rounds-played range.': '各回合区间的唯一玩家按乐透与老虎机区分。', 'Unique players by denomination, categorized by Loteria and Slot.': '唯一玩家按投注面额统计，并按乐透与老虎机分类。',
+        'Player Distribution by Rounds Played': '按已玩回合数划分的玩家分布', 'Horizontal bar chart': '横向柱状图', 'Number of Unique Players': '唯一玩家数量',
+        'Most unique players are concentrated in the 1–10 rounds range.': '大多数唯一玩家集中在1–10回合区间。',
+        'Bet Amount Distribution': '投注金额分布', 'Bet amount + rounds + share': '投注金额 + 回合数 + 占比', 'Bet range': '投注区间',
+        'Total bet': '总投注', 'Share': '占比', 'Multiplier Distribution': '倍数分布', 'Winning outcome bands': '中奖结果区间',
+        'Multiplier': '倍数', 'Player Performance': '玩家表现', 'Acquisition, retention, platform mix, and player behavior': '获客、留存、平台构成与玩家行为',
+        'New Player vs Returning Player': '新玩家与回访玩家', 'New Player vs Returning Player vs Active Players': '新玩家、回访玩家与活跃玩家', '426 active players': '426名活跃玩家', 'players': '玩家',
+        'New players': '新玩家', 'Returning': '回访玩家', 'Player per Platform': '各平台玩家', 'New vs returning': '新玩家与回访玩家', 'New vs returning + active players': '新玩家、回访玩家与活跃玩家', 'Monthly background': '月度背景', 'Daily highlight': '每日突出', 'Monthly total': '月度总计',
+        'Returning players': '回访玩家', 'New share': '新玩家占比', 'Player Retention': '玩家留存', 'D1–D7 sample': 'D1–D7示例',
+        'Next-day returning players': '次日回访玩家', 'D3 Retention': 'D3留存率', 'Third-day returning players': '第三日回访玩家',
+        'D7 Retention': 'D7留存率', 'Seventh-day returning players': '第七日回访玩家', 'Rounds Comparison': '回合数对比',
+        'Unique Players by Bet Denomination': '按投注面额划分的唯一玩家', 'Unique players by their selected bet denomination.': '按所选投注面额划分的唯一玩家。', 'Monthly background is a sample MTD reference; daily unique players are highlighted.': '月度背景为MTD示例参考；每日唯一玩家以高亮显示。', 'The 1–10 rounds range has the most unique players, shown separately for Loteria and Slot.': '1–10回合区间的唯一玩家最多，并按乐透与老虎机分别显示。',
+        'Players by Game Feature Behavior': '按游戏功能行为划分的玩家', 'Players may appear in more than one category': '玩家可能出现在多个类别中',
+        'Feature Behavior': '功能行为', 'Share of Active Players': '活跃玩家占比', 'Average Rounds / Player': '平均回合数 / 玩家',
+        'Normal Rounds': '普通回合', 'Monthly Performance': '月度表现', '30-day trend and month-to-date platform summary': '30天趋势与月初至今平台汇总',
+        '30 days': '30天', 'MTD': '月初至今', '30-Day Performance Trend': '30天表现趋势',
+        'Bars: bet amount + payout · Lines: RTP + D1 retention': '柱状图：投注金额 + 派彩 · 折线：RTP + D1留存率', 'D1 Retention trendline': 'D1留存趋势线', 'Red dot: RTP changed during the day': '红点：当天RTP发生变化', 'Trend Change Highlight': '趋势变化重点', 'RTP Change': 'RTP变化', 'Sep 18': '9月18日', 'Configuration updated': '配置已更新', '18,642 current total': '当前总计18,642', '97.14% current RTP': '当前RTP为97.14%', 'DoD: ↓ 0.22 pp': '日环比：↓ 0.22 个百分点',
+        'Overall Retention': '总体留存', 'Sample structure only · Values, chart series, and statuses are placeholders pending final data mapping.': '仅为示例结构 · 数据、图表序列和状态将在最终数据映射后更新。',
+        'BingoPlus contributes the largest share of daily activity in this sample.': '本示例中，BingoPlus贡献了最大份额的日常活动。',
+        'Platform Share compares revenue, audience, and betting-volume contribution.': '平台占比比较收入、用户和投注量贡献。',
+        'Recent launches and the minimum-bet update expanded platform access during the reporting period.': '报告期间的近期上线和最低投注更新扩大了平台访问范围。',
+        'GCP accreditation and current Game Application approvals are shown for management tracking.': '此处显示GCP认证和当前游戏申请批准状态，供管理层追踪。',
+        'GameZone carries the highest sample rounds, while BingoPlus leads the sample GGR.': '本示例中，GameZone回合数最高，而BingoPlus的GGR最高。',
+        'Hourly RTP is evaluated against the 98.3% threshold while bet amount and payout intensity are shown by hour.': '每小时RTP根据98.3%阈值进行评估，同时按小时显示投注金额和派彩强度。',
+        'NON drives most volume; cumulative and daily modes remain more volatile because of smaller samples.': '普通模式贡献大部分交易量；累计模式和每日模式因样本较小而波动更高。',
+        'Winning rounds represent about 55.0% of total rounds in both Loteria and Slot.': '本示例中，乐透与老虎机的中奖回合约占总回合数的55.0%。',
+        'Normal Bet accounts for the majority of ticket activity.': '普通投注占票数活动的大部分。',
+        'Normal Bet accounts for the majority of ticket activity across both Loteria and Slot.': '普通投注在乐透与老虎机两类平台中均占票数活动的大部分。',
+        'Most unique players are concentrated in the 1–10 rounds range.': '大多数唯一玩家集中在1–10回合区间。',
+        'The ₱21–50 range has the largest share of total bet amount in this sample.': '本示例中，₱21–50区间占总投注金额的比例最高。',
+        '0x is the largest multiplier band by rounds.': '按回合数统计，0x是最大的倍数区间。',
+        'Returning players make up most active players in this sample.': '本示例中，回访玩家占活跃玩家的大多数。',
+        'BingoPlus has the largest active-player base among the three platforms.': '在三个平台中，BingoPlus拥有最大的活跃玩家群体。',
+        'Unique-player counts are highest at the lower bet denominations, with Loteria and Slot shown separately.': '较低投注面额的唯一玩家数量最高，并分别显示乐透与老虎机数据。',
+        'D1 retention is the main player-engagement metric to monitor.': 'D1留存率是需要重点监控的玩家参与度指标。',
+        'Returning players record more rounds than new players across platforms in this sample.': '本示例中，回访玩家在各平台的回合数高于新玩家。',
+        'Unique-player counts are highest at the lower bet denominations.': '较低投注面额的唯一玩家数量最高。',
+        'Normal Rounds are the primary feature behavior, while Buy Feature and Bonus Round are smaller segments.': '普通回合是主要功能行为，购买功能和奖励回合占比较小。',
+        'The 30-day view compares daily bet and payout bars with RTP and D1 retention trendlines.': '30天视图通过每日投注和派彩柱状图，对比RTP与D1留存率趋势线。',
+        'MTD platform totals show BingoPlus as the largest contributor in the sample.': '月初至今的平台总计显示，BingoPlus是本示例中最大的贡献者。',
+        'Key Insight:': '关键洞察：', 'Archive': '存档', 'Choose a date below to view its daily report sample on this same page.': '请选择下方日期，在同一页面查看日报示例。', 'Back to Latest Report': '返回最新报告',
+        'Daily report archive': '日报存档', 'View report': '查看报告', 'Close': '关闭', '98.3% target': '98.3%目标', 'Aug ': '8月', 'Sep ': '9月'
+      };
+      Object.assign(cn, {
+        'DoD': '日环比', 'WoW': '周环比', 'pp': '百分点', 'Monthly Total': '月度总计', 'Monthly Average': '月度平均', 'Monthly Avg': '月度平均', 'Monthly Max': '月度最高',
+        'PHT': '菲律宾时间', 'NON': '普通模式', 'Cumulative': '累计', 'rounds': '回合数', 'Player Share': '玩家占比', 'Bet Share': '投注占比', 'Popular Bet Amount': '最常用投注金额',
+        'Improved game visibility and accessibility within the Loteria section.': '提升Loteria专区内的游戏可见性与可访问性。', 'September 21, 2026': '2026年9月21日',
+        '30-day performance trend chart': '30天表现趋势图', 'Bet Share pie chart': '投注占比饼图', 'GGR Share pie chart': 'GGR占比饼图', 'Hourly RTP combo chart': '每小时RTP组合图', 'Language': '语言', 'Main operating metrics': '主要运营指标',
+        'Loteria winning rounds versus losing rounds': 'Loteria中奖回合与未中奖回合', 'Monthly GGR Share pie chart': '月度GGR占比饼图', 'Monthly Player Share pie chart': '月度玩家占比饼图', 'Player Share pie chart': '玩家占比饼图',
+        'Previous daily reports': '上一日报告', 'Report controls': '报告控制', 'Slot winning rounds versus losing rounds': 'Slot中奖回合与未中奖回合', 'Total tickets by Loteria and Slot': 'Loteria和Slot总票数',
+        'Horizontal bar chart showing player distribution by rounds played, separated by Loteria and Slot': '按已玩回合数划分的玩家分布横向柱状图，数据按Loteria和Slot分别显示',
+        'Monthly background bars with daily highlighted bars for unique players by bet denomination, separated by Loteria and Slot': '按投注面额划分的唯一玩家月度背景柱状图与每日高亮柱状图，数据按Loteria和Slot分别显示'
+      });
+      const entries = Object.entries(cn).sort((a, b) => b[0].length - a[0].length);
+
+      const translateText = (source, lang) => {
+        if (lang === 'en') return source;
+        const leading = source.match(/^\s*/)?.[0] || '';
+        const trailing = source.match(/\s*$/)?.[0] || '';
+        let value = source.trim();
+        entries.forEach(([from, to]) => { value = value.split(from).join(to); });
+        return leading + value + trailing;
+      };
+      const englishDate = iso => new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
+      const chineseDate = iso => new Intl.DateTimeFormat('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
+      const archiveDates = Array.from({ length: 20 }, (_, index) => {
+        const date = new Date(Date.UTC(2026, 8, 20 - index));
+        return date.toISOString().slice(0, 10);
+      });
+
+      const renderReportDate = () => {
+        if (!reportDateValue) return;
+        reportDateValue.dataset.reportDate = currentReportDate;
+        reportDateValue.textContent = currentLang === 'cn' ? chineseDate(currentReportDate) : englishDate(currentReportDate);
+        document.title = `${currentLang === 'cn' ? '每日游戏表现报告' : 'Daily Game Performance Report'} — ${currentLang === 'cn' ? chineseDate(currentReportDate) : englishDate(currentReportDate)}`;
+        syncLatestButton();
+      };
+
+      const renderArchive = () => {
+        if (!archiveList) return;
+        archiveList.replaceChildren();
+        archiveDates.forEach(iso => {
+          const item = document.createElement('button');
+          item.type = 'button';
+          item.className = 'report-archive-item';
+          item.dataset.reportDate = iso;
+          item.innerHTML = `<span>${currentLang === 'cn' ? chineseDate(iso) : englishDate(iso)}</span><small>${currentLang === 'cn' ? '日报存档' : 'Daily report archive'}</small><b>${currentLang === 'cn' ? '查看报告' : 'View report'}</b>`;
+          item.addEventListener('click', () => {
+            currentReportDate = iso;
+            history.replaceState(null, '', `?date=${iso}`);
+            renderReportDate();
+            if (previousReportHelp) previousReportHelp.textContent = currentLang === 'cn' ? `当前查看：${chineseDate(iso)}。` : `Now viewing: ${englishDate(iso)}.`;
+            previousDialog?.close();
+          });
+          archiveList.appendChild(item);
+        });
+      };
+
+      const requestedDate = new URLSearchParams(location.search).get('date');
+      if (requestedDate && archiveDates.includes(requestedDate)) currentReportDate = requestedDate;
+      previousButton?.addEventListener('click', () => previousDialog?.showModal());
+      backToLatestButton?.addEventListener('click', () => {
+        currentReportDate = latestReportDate;
+        history.replaceState(null, '', `${location.pathname}${location.hash}`);
+        renderReportDate();
+        if (previousReportHelp) previousReportHelp.textContent = currentLang === 'cn' ? '请选择下方日期，在同一页面查看日报示例。' : 'Choose a date below to view its daily report sample on this same page.';
+      });
+      closePrevious?.addEventListener('click', () => previousDialog?.close());
+      previousDialog?.addEventListener('click', event => {
+        if (event.target === previousDialog) previousDialog.close();
+      });
+
+      const applyLanguage = lang => {
+        currentLang = lang;
+        document.documentElement.lang = lang === 'cn' ? 'zh-CN' : 'en';
+        document.dispatchEvent(new CustomEvent('dashboard-language-change', { detail: lang }));
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        let node;
+        while (node = walker.nextNode()) {
+          if (!originalText.has(node)) originalText.set(node, node.nodeValue);
+          node.nodeValue = translateText(originalText.get(node), lang);
+        }
+        document.querySelectorAll('[aria-label],[title],[placeholder]').forEach(item => {
+          const attrs = originalAttributes.get(item) || {};
+          ['aria-label', 'title', 'placeholder'].forEach(attribute => {
+            if (item.hasAttribute(attribute) && attrs[attribute] === undefined) attrs[attribute] = item.getAttribute(attribute);
+            if (attrs[attribute] !== undefined) item.setAttribute(attribute, translateText(attrs[attribute], lang));
+          });
+          originalAttributes.set(item, attrs);
+        });
+        document.querySelectorAll('[data-lang]').forEach(item => item.classList.toggle('active', item.dataset.lang === lang));
+        renderArchive();
+        renderReportDate();
+      };
+
+      renderArchive();
+      applyLanguage('en');
+      document.querySelectorAll('[data-lang]').forEach(button => button.addEventListener('click', () => applyLanguage(button.dataset.lang)));
+    })();
+  </script>
+</body>
+</html>
