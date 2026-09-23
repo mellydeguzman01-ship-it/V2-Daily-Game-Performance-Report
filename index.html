@@ -928,7 +928,7 @@
       const englishDate = iso => new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
       const chineseDate = iso => new Intl.DateTimeFormat('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
       const archiveDates = Array.from({ length: 20 }, (_, index) => {
-        const date = new Date(Date.UTC(2026, 8, 20 - index));
+        const date = new Date(Date.UTC(2026, 8, 21 - index));
         return date.toISOString().slice(0, 10);
       });
 
