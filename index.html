@@ -927,10 +927,31 @@
       };
       const englishDate = iso => new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
       const chineseDate = iso => new Intl.DateTimeFormat('zh-CN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date(`${iso}T00:00:00Z`));
-      const archiveDates = Array.from({ length: 20 }, (_, index) => {
-        const date = new Date(Date.UTC(2026, 8, 21 - index));
-        return date.toISOString().slice(0, 10);
-      });
+      // Historical reports are served from the verified dated-report archive.
+      // Keep the existing archive UI; this map supplies the actual report data per date.
+      const archiveReportUrls = {
+        '2026-09-22': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-22.html',
+        '2026-09-21': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-21.html',
+        '2026-09-20': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-20.html',
+        '2026-09-18': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-18.html',
+        '2026-09-17': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-17.html',
+        '2026-09-16': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-16.html',
+        '2026-09-15': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-15.html',
+        '2026-09-14': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-14.html',
+        '2026-09-13': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-13.html',
+        '2026-09-12': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-12.html',
+        '2026-09-10': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-10.html',
+        '2026-09-09': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-09.html',
+        '2026-09-08': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-08.html',
+        '2026-09-07': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-07.html',
+        '2026-09-06': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-06.html',
+        '2026-09-05': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-05.html',
+        '2026-09-04': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-04.html',
+        '2026-09-03': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-03.html',
+        '2026-09-02': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-02.html',
+        '2026-09-01': 'https://mellydeguzman01-ship-it.github.io/Daily-Game-Performance-Report/Daily_Game_Performance_Report_2026-09-01.html'
+      };
+      const archiveDates = Object.keys(archiveReportUrls);
 
       const renderReportDate = () => {
         if (!reportDateValue) return;
@@ -950,11 +971,8 @@
           item.dataset.reportDate = iso;
           item.innerHTML = `<span>${currentLang === 'cn' ? chineseDate(iso) : englishDate(iso)}</span><small>${currentLang === 'cn' ? '日报存档' : 'Daily report archive'}</small><b>${currentLang === 'cn' ? '查看报告' : 'View report'}</b>`;
           item.addEventListener('click', () => {
-            currentReportDate = iso;
-            history.replaceState(null, '', `?date=${iso}`);
-            renderReportDate();
-            if (previousReportHelp) previousReportHelp.textContent = currentLang === 'cn' ? `当前查看：${chineseDate(iso)}。` : `Now viewing: ${englishDate(iso)}.`;
-            previousDialog?.close();
+            // Open the verified dated report so every historical metric comes from its source data.
+            window.location.href = archiveReportUrls[iso];
           });
           archiveList.appendChild(item);
         });
