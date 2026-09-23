@@ -375,15 +375,15 @@
             <div class="side-title"><h3>Platform Share</h3><span>Contribution mix</span></div>
             <div class="platform-chart">
               <svg class="mini-donut" viewBox="0 0 60 60" aria-label="GGR Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="26.54 73.46" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="58.08 41.92" stroke-dashoffset="-26.54" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="15.38 84.62" stroke-dashoffset="-84.62" transform="rotate(-90 30 30)"/></svg>
-              <div><strong>GGR Share</strong><small>Revenue contribution · backend order split</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 26.54%</span><span><i style="background:var(--blue)"></i>GP 58.08%</span><span><i style="background:var(--violet)"></i>AP 15.38%</span></div></div>
+              <div><strong>GGR Share</strong><small>GGR contribution · ₱11,192.50 + ₱24,490.50 + ₱6,486.75 = ₱42,169.75</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 26.54%</span><span><i style="background:var(--blue)"></i>GP 58.08%</span><span><i style="background:var(--violet)"></i>AP 15.38%</span></div></div>
             </div>
             <div class="platform-chart">
-              <svg class="mini-donut" viewBox="0 0 60 60" aria-label="Player Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="67.14 32.86" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="21.60 78.40" stroke-dashoffset="-67.14" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="11.26 88.74" stroke-dashoffset="-88.74" transform="rotate(-90 30 30)"/></svg>
-              <div><strong>Player Share</strong><small>Audience contribution</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 67.14%</span><span><i style="background:var(--blue)"></i>GP 21.60%</span><span><i style="background:var(--violet)"></i>AP 11.26%</span></div></div>
+              <svg class="mini-donut" viewBox="0 0 60 60" aria-label="Player Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="15.44 84.56" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="73.38 26.62" stroke-dashoffset="-15.44" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="11.18 88.82" stroke-dashoffset="-88.82" transform="rotate(-90 30 30)"/></svg>
+              <div><strong>Player Share</strong><small>Active-player contribution · 374 + 1,778 + 271 = 2,423</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 15.44%</span><span><i style="background:var(--blue)"></i>GP 73.38%</span><span><i style="background:var(--violet)"></i>AP 11.18%</span></div></div>
             </div>
             <div class="platform-chart">
               <svg class="mini-donut" viewBox="0 0 60 60" aria-label="Bet Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="64.81 35.19" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="22.27 77.73" stroke-dashoffset="-64.81" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="12.92 87.08" stroke-dashoffset="-87.08" transform="rotate(-90 30 30)"/></svg>
-              <div><strong>Bet Share</strong><small>Betting volume contribution</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 64.81%</span><span><i style="background:var(--blue)"></i>GP 22.27%</span><span><i style="background:var(--violet)"></i>AP 12.92%</span></div></div>
+              <div><strong>Bet Share</strong><small>Bet amount contribution · ₱136,930 + ₱473,148 + ₱60,443.50 = ₱670,521.50</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 20.42%</span><span><i style="background:var(--blue)"></i>GP 70.56%</span><span><i style="background:var(--violet)"></i>AP 9.01%</span></div></div>
             </div>
           </div>
           <div class="panel pad changelog-table"><div class="side-title"><h3>Changelog</h3><span>Latest updates</span></div>
@@ -644,7 +644,8 @@
         const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
         const x = i => pad.l + plotW * i / (dates.length - 1);
         const yAmount = value => base - value / 700 * plotH;
-        const yRtp = value => base - (value - 90) / 15 * plotH;
+        const rtpMin = 85, rtpMax = 110;
+        const yRtp = value => base - (value - rtpMin) / (rtpMax - rtpMin) * plotH;
         const retentionMax = 20;
         const yRetention = value => base - value / retentionMax * plotH;
         thirtyDay.setAttribute('viewBox', `0 0 ${W} ${H}`);
