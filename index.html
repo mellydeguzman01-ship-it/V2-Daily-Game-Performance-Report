@@ -115,11 +115,11 @@
     .platform-matrix thead th { color: var(--text); text-align: center; background: rgba(64,217,208,.06); border-color: rgba(148,177,211,.28); }
     .platform-matrix tbody th { color: var(--text); font-weight: 700; text-align: left; }
     .table-scroll { overflow: visible; }
-    .monthly-row > .table-scroll { min-width: 0; overflow-x: auto; overflow-y: visible; -webkit-overflow-scrolling: touch; }
-    .monthly-row > .table-scroll > table { min-width: 1460px; table-layout: auto; font-size: 10px; }
-    .monthly-row > .table-scroll > table th, .monthly-row > .table-scroll > table td { padding: 8px 9px; white-space: nowrap; vertical-align: middle; }
-    .monthly-row > .table-scroll > table th:first-child, .monthly-row > .table-scroll > table td:first-child { position: sticky; left: 0; z-index: 1; background: #142943; }
-    .monthly-row > .table-scroll > table tfoot th { background: #142943; }
+    .monthly-row > .table-scroll { min-width: 0; overflow: visible; }
+    .monthly-row > .table-scroll > table { width: 100%; min-width: 0; table-layout: fixed; font-size: 9px; }
+    .monthly-row > .table-scroll > table th, .monthly-row > .table-scroll > table td { padding: 7px 4px; white-space: normal; overflow-wrap: anywhere; word-break: break-word; vertical-align: middle; }
+    .monthly-row > .table-scroll > table th:first-child, .monthly-row > .table-scroll > table td:first-child { position: static; z-index: auto; background: #ffffff !important; color: #243b53; }
+    .monthly-row > .table-scroll > table tfoot th, .monthly-row > .table-scroll > table tfoot td { background: #eef5fc !important; color: #243b53; }
     .table-scroll table { min-width: 0; }
     table { width: 100%; border-collapse: collapse; min-width: 840px; }
     th { padding: 12px 14px; color: var(--muted); font-size: 11px; font-weight: 700; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--line); }
