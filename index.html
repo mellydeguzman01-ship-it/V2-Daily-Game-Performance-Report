@@ -115,6 +115,11 @@
     .platform-matrix thead th { color: var(--text); text-align: center; background: rgba(64,217,208,.06); border-color: rgba(148,177,211,.28); }
     .platform-matrix tbody th { color: var(--text); font-weight: 700; text-align: left; }
     .table-scroll { overflow: visible; }
+    .monthly-row > .table-scroll { min-width: 0; overflow-x: auto; overflow-y: visible; -webkit-overflow-scrolling: touch; }
+    .monthly-row > .table-scroll > table { min-width: 1460px; table-layout: auto; font-size: 10px; }
+    .monthly-row > .table-scroll > table th, .monthly-row > .table-scroll > table td { padding: 8px 9px; white-space: nowrap; vertical-align: middle; }
+    .monthly-row > .table-scroll > table th:first-child, .monthly-row > .table-scroll > table td:first-child { position: sticky; left: 0; z-index: 1; background: #142943; }
+    .monthly-row > .table-scroll > table tfoot th { background: #142943; }
     .table-scroll table { min-width: 0; }
     table { width: 100%; border-collapse: collapse; min-width: 840px; }
     th { padding: 12px 14px; color: var(--muted); font-size: 11px; font-weight: 700; text-align: left; white-space: nowrap; border-bottom: 1px solid var(--line); }
@@ -325,23 +330,23 @@
         </div>
       </div>
       <div class="header-right">
-        <div class="header-section-head"><div><h2>General Operation Data</h2><p>Daily snapshot · Verified backend data (BP1 / Banana Craze)</p></div><span class="tag"><i class="dot positive"></i>Report generated</span></div>
+        <div class="header-section-head"><div><h2>General Operation Data</h2><p>Daily snapshot · BP1 / Banana Craze</p></div><span class="tag"><i class="dot positive"></i>Report generated</span></div>
         <div class="grid big-grid header-metrics" aria-label="Main operating metrics">
           <article class="panel pad card accent-blue"><div class="metric-label">Bet Amount</div><div class="metric-value">₱670,521.50</div><div class="metric-subtext">September MTD ₱6,123,922.50</div><div class="metric-foot"><span class="positive">↑ 11.4% DoD</span></div></article>
-          <article class="panel pad card accent-green"><div class="metric-label">Payout</div><div class="metric-value">₱628,351.75</div><div class="metric-subtext">September MTD ₱5,890,268.63</div><div class="metric-foot"><span class="positive">↑ 8.3% DoD</span></div></article>
+          <article class="panel pad card accent-green"><div class="metric-label">Payout</div><div class="metric-value">₱628,351.75</div><div class="metric-subtext">September MTD ₱5,890,268.62</div><div class="metric-foot"><span class="positive">↑ 8.3% DoD</span></div></article>
           <article class="panel pad card accent-orange"><div class="metric-label">GGR</div><div class="metric-value positive">₱42,169.75</div><div class="metric-subtext">September MTD ₱233,653.88</div><div class="metric-foot"><span class="positive">↑ 91.9% DoD</span></div></article>
-          <article class="panel pad card accent-violet"><div class="metric-label">RTP</div><div class="metric-value">93.71%</div><div class="metric-subtext">September Average 96.19%</div><div class="metric-foot"><span class="warning">↓ 2.64 pp DoD</span></div></article>
-          <article class="panel pad card accent-cyan"><div class="metric-label">MTD GGR</div><div class="metric-value">₱233,653.88</div><div class="metric-subtext">September MTD</div><div class="metric-foot"><span class="positive">↑ 21.0% vs prior day</span></div></article>
+          <article class="panel pad card accent-violet"><div class="metric-label">RTP</div><div class="metric-value">93.71%</div><div class="metric-subtext">September Average 96.19%</div><div class="metric-foot"><span class="warning">↓ 2.74 pp vs prior day</span></div></article>
+          <article class="panel pad card accent-cyan"><div class="metric-label">MTD GGR</div><div class="metric-value">₱233,653.88</div><div class="metric-subtext">September MTD · backend aggregate</div><div class="metric-foot"><span class="positive">↑ 91.9% vs prior day</span></div></article>
         </div>
         <div class="grid small-grid">
-          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Total Rounds</div><div class="submetric-dod positive">↑ 13.1% DoD</div></div><div class="submetric-main"><div class="metric-value">151,871</div><div class="submetric-wow">Verified backend count</div></div><div class="submetric-monthly">September MTD 1,084,806</div></article>
-          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Players</div><div class="submetric-dod positive">↑ 11.2% DoD</div></div><div class="submetric-main"><div class="metric-value">2,421</div><div class="submetric-wow">Verified backend count</div></div><div class="submetric-monthly">September MTD unique count unavailable</div></article>
-          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">New Players</div><div class="submetric-dod positive">↑ 13.2% DoD</div></div><div class="submetric-main"><div class="metric-value">1,963</div><div class="submetric-wow">Verified backend count</div></div><div class="submetric-monthly">Aggregate lifecycle source</div></article>
-          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">ABPU</div><div class="submetric-dod warning">↓ 2.4% DoD</div></div><div class="submetric-main"><div class="metric-value">₱276.69</div><div class="submetric-wow">WoW ↑ 3.1%</div></div><div class="submetric-monthly">Monthly Avg ₱296.40</div></article>
-          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Max Payout</div><div class="submetric-dod positive">↑ 33.3% DoD</div></div><div class="submetric-main"><div class="metric-value">₱3,000</div><div class="submetric-wow">WoW ↑ 25.0%</div></div><div class="submetric-monthly">Monthly Max ₱10,250</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Total Rounds</div><div class="submetric-dod positive">↑ 13.1% DoD</div></div><div class="submetric-main"><div class="metric-value">151,871</div><div class="submetric-wow">count</div></div><div class="submetric-monthly">September MTD 1,084,806</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Players</div><div class="submetric-dod positive">↑ 11.2% DoD</div></div><div class="submetric-main"><div class="metric-value">2,421</div><div class="submetric-wow">count</div></div><div class="submetric-monthly">September MTD unique players —</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">New Players</div><div class="submetric-dod positive">↑ 13.2% DoD</div></div><div class="submetric-main"><div class="metric-value">1,963</div><div class="submetric-wow">count</div></div><div class="submetric-monthly">Aggregate lifecycle source</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">ABPU</div><div class="submetric-dod warning">↓ 2.4% DoD</div></div><div class="submetric-main"><div class="metric-value">₱276.96</div><div class="submetric-wow">count</div></div><div class="submetric-monthly">Monthly Avg —</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Max Payout</div><div class="submetric-dod positive">↑ 33.3% DoD</div></div><div class="submetric-main"><div class="metric-value">₱3,750</div><div class="submetric-wow">count</div></div><div class="submetric-monthly">Monthly Max —</div></article>
           <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Max Multiplier</div><div class="submetric-dod warning">→ 0.0% DoD</div></div><div class="submetric-main"><div class="metric-value">250x</div><div class="submetric-wow">WoW → 0.0%</div></div><div class="submetric-monthly">Monthly Max 500x</div></article>
           <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Max Bet</div><div class="submetric-dod warning">→ 0.0% DoD</div></div><div class="submetric-main"><div class="metric-value">₱1,000</div><div class="submetric-wow">WoW → 0.0%</div></div><div class="submetric-monthly">Monthly Max ₱1,000</div></article>
-          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">D1 Retention</div><div class="submetric-dod warning">↓ 6.49 pp DoD</div></div><div class="submetric-main"><div class="metric-value">1.12%</div><div class="submetric-wow">Aggregate lifecycle source</div></div><div class="submetric-monthly">Backend aggregate retention</div></article>
+          <article class="panel pad card"><div class="submetric-head"><div class="metric-label">D1 Retention</div><div class="submetric-dod warning">—</div></div><div class="submetric-main"><div class="metric-value">7.17%</div><div class="submetric-wow">Platform-weighted report value</div></div><div class="submetric-monthly">BingoPlus 9.72% · GameZone 6.50% · ArenaPlus 0.00%</div></article>
         </div>
       </div>
     </header>
@@ -357,16 +362,16 @@
               <tr><th>BingoPlus (BP)</th><th>GameZone (GP)</th><th>ArenaPlus (AP)</th></tr>
             </thead>
             <tbody>
-              <tr><th scope="row">Bet Amount</th><td>₱670,521.50</td><td>Not available</td><td>Not available</td></tr>
-              <tr><th scope="row">Payout</th><td>₱628,351.75</td><td>Not available</td><td>Not available</td></tr>
-              <tr><th scope="row">GGR</th><td class="positive">₱42,169.75</td><td>Not available</td><td>Not available</td></tr>
-              <tr><th scope="row">RTP</th><td>93.71%</td><td>Not available</td><td>Not available</td></tr>
-              <tr><th scope="row">Active Players</th><td>2,421</td><td>Not available</td><td>Not available</td></tr>
-              <tr><th scope="row">New Players</th><td>1,963</td><td>Not available</td><td>Not available</td></tr>
-              <tr><th scope="row">D1 Retention</th><td>1.12%</td><td>Not available</td><td>Not available</td></tr>
-              <tr><th scope="row">Winning Tickets</th><td>21,848</td><td>Not available</td><td>Not available</td></tr>
-              <tr><th scope="row">Avg Bet / Player</th><td>₱276.69</td><td>Not available</td><td>Not available</td></tr>
-              <tr><th scope="row">GGR Share</th><td>100.00%</td><td>Not available</td><td>Not available</td></tr>
+              <tr><th scope="row">Bet Amount</th><td>₱136,930.00</td><td>₱473,148.00</td><td>₱60,443.50</td></tr>
+              <tr><th scope="row">Payout</th><td>₱125,737.50</td><td>₱448,657.50</td><td>₱53,956.75</td></tr>
+              <tr><th scope="row">GGR</th><td class="positive">₱11,192.50</td><td class="positive">₱24,490.50</td><td class="positive">₱6,486.75</td></tr>
+              <tr><th scope="row">RTP</th><td>91.83%</td><td>94.82%</td><td>89.27%</td></tr>
+              <tr><th scope="row">Active Players</th><td>374</td><td>1,778</td><td>271</td></tr>
+              <tr><th scope="row">New Players</th><td>230</td><td>1,354</td><td>237</td></tr>
+              <tr><th scope="row">D1 Retention</th><td>9.72%</td><td>6.50%</td><td>0.00%</td></tr>
+              <tr><th scope="row">Winning Tickets</th><td>5,224</td><td>35,422</td><td>4,541</td></tr>
+              <tr><th scope="row">Avg Bet / Player</th><td>₱366.12</td><td>₱266.11</td><td>₱223.04</td></tr>
+              <tr><th scope="row">GGR Share</th><td>26.54%</td><td>58.08%</td><td>15.38%</td></tr>
             </tbody>
           </table>
         </div>
@@ -374,23 +379,23 @@
           <div class="panel pad platform-charts">
             <div class="side-title"><h3>Platform Share</h3><span>Contribution mix</span></div>
             <div class="platform-chart">
-              <svg class="mini-donut" viewBox="0 0 60 60" aria-label="GGR Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="73.57 26.43" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="10.08 89.92" stroke-dashoffset="-73.57" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="16.35 83.65" stroke-dashoffset="-83.65" transform="rotate(-90 30 30)"/></svg>
-              <div><strong>GGR Share</strong><small>Revenue contribution</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 73.57%</span><span><i style="background:var(--blue)"></i>GP 10.08%</span><span><i style="background:var(--violet)"></i>AP 16.35%</span></div></div>
+              <svg class="mini-donut" viewBox="0 0 60 60" aria-label="GGR Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="26.54 73.46" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="58.08 41.92" stroke-dashoffset="-26.54" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="15.38 84.62" stroke-dashoffset="-84.62" transform="rotate(-90 30 30)"/></svg>
+              <div><strong>GGR Share</strong><small>GGR contribution · ₱11,192.50 + ₱24,490.50 + ₱6,486.75 = ₱42,169.75</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 26.54%</span><span><i style="background:var(--blue)"></i>GP 58.08%</span><span><i style="background:var(--violet)"></i>AP 15.38%</span></div></div>
             </div>
             <div class="platform-chart">
-              <svg class="mini-donut" viewBox="0 0 60 60" aria-label="Player Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="67.14 32.86" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="21.60 78.40" stroke-dashoffset="-67.14" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="11.26 88.74" stroke-dashoffset="-88.74" transform="rotate(-90 30 30)"/></svg>
-              <div><strong>Player Share</strong><small>Audience contribution</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 67.14%</span><span><i style="background:var(--blue)"></i>GP 21.60%</span><span><i style="background:var(--violet)"></i>AP 11.26%</span></div></div>
+              <svg class="mini-donut" viewBox="0 0 60 60" aria-label="Player Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="15.44 84.56" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="73.38 26.62" stroke-dashoffset="-15.44" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="11.18 88.82" stroke-dashoffset="-88.82" transform="rotate(-90 30 30)"/></svg>
+              <div><strong>Player Share</strong><small>Active-player contribution · 374 + 1,778 + 271 = 2,423</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 15.44%</span><span><i style="background:var(--blue)"></i>GP 73.38%</span><span><i style="background:var(--violet)"></i>AP 11.18%</span></div></div>
             </div>
             <div class="platform-chart">
               <svg class="mini-donut" viewBox="0 0 60 60" aria-label="Bet Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="64.81 35.19" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="22.27 77.73" stroke-dashoffset="-64.81" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="12.92 87.08" stroke-dashoffset="-87.08" transform="rotate(-90 30 30)"/></svg>
-              <div><strong>Bet Share</strong><small>Betting volume contribution</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 64.81%</span><span><i style="background:var(--blue)"></i>GP 22.27%</span><span><i style="background:var(--violet)"></i>AP 12.92%</span></div></div>
+              <div><strong>Bet Share</strong><small>Bet amount contribution · ₱136,930 + ₱473,148 + ₱60,443.50 = ₱670,521.50</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP 20.42%</span><span><i style="background:var(--blue)"></i>GP 70.56%</span><span><i style="background:var(--violet)"></i>AP 9.01%</span></div></div>
             </div>
           </div>
           <div class="panel pad changelog-table"><div class="side-title"><h3>Changelog</h3><span>Latest updates</span></div>
             <table>
               <thead><tr><th>Date</th><th>Details</th><th>Outcome</th></tr></thead>
               <tbody>
-                <tr><td>Tuesday, September 22, 2026</td><td><strong>September 22 daily report published</strong></td><td>Backend-verified BP1 / Banana Craze performance data updated</td></tr>
+                <tr><td>Tuesday, September 22, 2026</td><td><strong>September 22 daily report published</strong></td><td>Updated BP1 / Banana Craze performance data</td></tr>
                 <tr><td>Monday, September 21, 2026</td><td>Launch of <strong>Banana Craze on ArenaPlus</strong></td><td>Game Engine officially entered ArenaPlus</td></tr>
                 <tr><td>Thursday, September 17, 2026</td><td>Launch of <strong>Banana Craze on GameZone</strong>; minimum bet updated to <strong>₱0.50 at 2:00 PM</strong></td><td>Game Engine officially entered GameZone; lower minimum bet provided a more accessible entry point and supported increased traffic</td></tr>
                 <tr><td>Friday, September 18, 2026</td><td><strong>10:42 AM:</strong> RTP adjusted from <strong>97.0% → 98.3%</strong></td><td>RTP configuration was successfully updated to <strong>98.3%</strong>, reflecting the new target setting.</td></tr>
@@ -428,15 +433,15 @@
         <tr><th>Metric</th><th>Loteria</th><th>Slot</th></tr>
       </thead>
       <tbody>
-        <tr><th scope="row">Bet Amount</th><td>₱83,250</td><td>₱45,200</td></tr>
-        <tr><th scope="row">Payout</th><td>₱80,550</td><td>₱44,230</td></tr>
-        <tr><th scope="row">GGR</th><td class="positive">₱2,700</td><td class="positive">₱970</td></tr>
-        <tr><th scope="row">RTP</th><td>96.76%</td><td>97.85%</td></tr>
-        <tr><th scope="row">Total Rounds</th><td>4,728</td><td>13,914</td></tr>
-        <tr><th scope="row">Players</th><td>286</td><td>140</td></tr>
-        <tr><th scope="row">Winning Tickets</th><td>2,604</td><td>7,656</td></tr>
-        <tr><th scope="row">Avg Round / Game</th><td>₱17.61</td><td>₱3.25</td></tr>
-        <tr><th scope="row">Popular Bet Amount</th><td>—</td><td>—</td></tr>
+        <tr><th scope="row">Bet Amount</th><td>₱136,930.00</td><td>₱533,591.50</td></tr>
+        <tr><th scope="row">Payout</th><td>₱125,737.50</td><td>₱502,614.25</td></tr>
+        <tr><th scope="row">GGR</th><td class="positive">₱11,192.50</td><td class="positive">₱30,977.25</td></tr>
+        <tr><th scope="row">RTP</th><td>91.83%</td><td>94.19%</td></tr>
+        <tr><th scope="row">Total Rounds</th><td>17,166</td><td>134,705</td></tr>
+        <tr><th scope="row">Players</th><td>374</td><td>2,049</td></tr>
+        <tr><th scope="row">Winning Tickets</th><td>5,224</td><td>39,963</td></tr>
+        <tr><th scope="row">Avg Round / Game</th><td>₱7.98</td><td>₱3.96</td></tr>
+        <tr><th scope="row">Popular Bet Amount</th><td>₱5.00</td><td>₱1.00</td></tr>
       </tbody>
     </table>
   </div>
@@ -478,7 +483,7 @@
           <table class="dist-table"><thead><tr><th>Bet range</th><th>Total bet</th><th>Rounds</th><th>Share</th><th></th></tr></thead><tbody><tr><td>₱0.5–3</td><td>₱8,640</td><td>6,284</td><td>6.7%</td><td><div class="mini-bar"><i style="width:92%"></i></div></td></tr><tr><td>₱5–10</td><td>₱21,500</td><td>4,710</td><td>16.7%</td><td><div class="mini-bar"><i style="width:72%"></i></div></td></tr><tr><td>₱11–20</td><td>₱27,880</td><td>2,860</td><td>21.7%</td><td><div class="mini-bar"><i style="width:48%"></i></div></td></tr><tr><td>₱21–50</td><td>₱31,240</td><td>2,210</td><td>24.3%</td><td><div class="mini-bar"><i style="width:37%"></i></div></td></tr><tr><td>₱51–100</td><td>₱18,420</td><td>1,090</td><td>14.3%</td><td><div class="mini-bar"><i style="width:22%"></i></div></td></tr><tr><td>₱101–200</td><td>₱10,880</td><td>510</td><td>8.5%</td><td><div class="mini-bar"><i style="width:12%"></i></div></td></tr><tr><td>₱501–1,000</td><td>₱9,890</td><td>978</td><td>7.7%</td><td><div class="mini-bar"><i style="width:18%"></i></div></td></tr></tbody></table>
         </div>
         <div class="panel pad chart-box multiplier-distribution"><div class="side-title"><h3>Multiplier Distribution</h3><span>Winning outcome bands</span></div>
-          <table class="dist-table"><thead><tr><th>Multiplier</th><th>Rounds</th><th>Share</th></tr></thead><tbody><tr><td>0x</td><td>10,566</td><td>56.7%</td></tr><tr><td>0.01x–1x</td><td>1,239</td><td>6.6%</td></tr><tr><td>&gt;1x–2x</td><td>3,040</td><td>16.3%</td></tr><tr><td>&gt;2x–5x</td><td>2,280</td><td>12.2%</td></tr><tr><td>&gt;5x–10x</td><td>850</td><td>4.6%</td></tr><tr><td>&gt;10x–25x</td><td>440</td><td>2.4%</td></tr><tr><td>&gt;25x–50x</td><td>140</td><td>.8%</td></tr><tr><td>&gt;50x–100x</td><td>65</td><td>.3%</td></tr><tr><td>&gt;100x–250x</td><td>20</td><td>.1%</td></tr><tr><td>&gt;250x</td><td>2</td><td>.01%</td></tr></tbody></table>
+          <table class="dist-table"><thead><tr><th>Multiplier</th><th>Rounds</th><th>Share</th></tr></thead><tbody><tr><td>0x</td><td>10,566</td><td>56.7%</td></tr><tr><td>0.01x–1x</td><td>1,239</td><td>6.6%</td></tr><tr><td>&gt;1x–2x</td><td>3,040</td><td>16.3%</td></tr><tr><td>&gt;2x–5x</td><td>2,280</td><td>12.2%</td></tr><tr><td>&gt;5x–10x</td><td>850</td><td>4.6%</td></tr><tr><td>&gt;10x–25x</td><td>440</td><td>2.4%</td></tr><tr><td>&gt;25x–50x</td><td>140</td><td>0.8%</td></tr><tr><td>&gt;50x–100x</td><td>65</td><td>0.3%</td></tr><tr><td>&gt;100x–250x</td><td>20</td><td>0.1%</td></tr><tr><td>&gt;250x</td><td>2</td><td>0.01%</td></tr></tbody></table>
         </div>
       </div>
       </div>
@@ -512,7 +517,7 @@
       <div class="section-head"><div><h2>Monthly Performance</h2><p>30-day trend and month-to-date platform summary</p></div><div class="monthly-head"><span class="filter active">30 days</span><span class="filter">MTD</span></div></div>
       <div class="monthly-row">
       <div class="panel pad chart-box"><div class="side-title"><h3>30-Day Performance Trend</h3><span>Bars: bet amount + payout · Lines: RTP + D1 retention</span></div><svg id="thirtyDayChart" class="chart tall-svg" viewBox="0 0 1020 340" preserveAspectRatio="none" role="img" aria-label="30-day performance trend chart"></svg><div class="legend"><span><i style="background:var(--blue)"></i>Bet amount</span><span><i style="background:var(--violet)"></i>Payout</span><span><i class="line" style="background:var(--green)"></i>RTP trendline</span><span><i class="line" style="background:#f2a65a"></i>D1 Retention trendline</span><span class="legend-note"><i style="background:#ef4444;width:7px;height:7px;border-radius:50%"></i>Red dot: RTP changed during the day</span></div></div>
-      <div class="panel table-scroll"><table><thead><tr><th>Platform</th><th>Bet Amount</th><th>Payout</th><th>GGR</th><th>RTP</th><th>Players</th><th>New Players</th><th>Max Payout</th><th>Max Multiplier</th><th>Overall Retention</th></tr></thead><tbody><tr><td><b>BingoPlus</b><span class="platform-sub">Loteria</span></td><td>₱1,485,220</td><td>₱1,414,880</td><td class="positive">₱70,340</td><td>95.26%</td><td>2,842</td><td>1,116</td><td>₱12,000</td><td>200x</td><td>11.08%</td></tr><tr><td><b>GameZone</b><span class="platform-sub">Slot</span></td><td>₱605,410</td><td>₱587,220</td><td class="positive">₱18,190</td><td>96.99%</td><td>1,085</td><td>348</td><td>₱10,000</td><td>100x</td><td>8.42%</td></tr><tr><td><b>ArenaPlus</b><span class="platform-sub">Slot</span></td><td>₱354,280</td><td>₱341,880</td><td class="positive">₱12,400</td><td>96.50%</td><td>624</td><td>201</td><td>₱8,000</td><td>75x</td><td>7.96%</td></tr></tbody><tfoot><tr><th>Total</th><th>₱2,444,910</th><th>₱2,343,980</th><th class="positive">₱100,930</th><th>95.87%</th><th>4,551</th><th>1,665</th><th>₱12,000</th><th>200x</th><th>10.12%</th></tr></tfoot></table>
+      <div class="panel table-scroll"><table><thead><tr><th>Platform</th><th>Bet Amount</th><th>Payout</th><th>GGR</th><th>RTP</th><th>Rounds</th><th>Players</th><th>New Players</th><th>D1 Retention</th><th>Max Payout</th><th>Max Bet Amount</th><th>Max Multiplier</th></tr></thead><tbody><tr><td><b>BingoPlus</b><span class="platform-sub">BP1 + unmatched BP1 rows</span></td><td>₱2,891,945.00</td><td>₱2,810,718.75</td><td class="positive">₱81,226.25</td><td>97.19%</td><td>312,292</td><td>4,937</td><td>230</td><td>9.72%</td><td>₱10,250</td><td>₱1,000</td><td>500x</td></tr><tr><td><b>GameZone</b><span class="platform-sub">GP</span></td><td>₱3,169,482.00</td><td>₱3,023,573.38</td><td class="positive">₱145,908.62</td><td>95.40%</td><td>757,174</td><td>10,483</td><td>1,354</td><td>6.50%</td><td>₱5,000</td><td>₱1,000</td><td>250x</td></tr><tr><td><b>ArenaPlus</b><span class="platform-sub">AP</span></td><td>₱62,495.50</td><td>₱55,976.50</td><td class="positive">₱6,519.00</td><td>89.57%</td><td>15,340</td><td>290</td><td>237</td><td>0.00%</td><td>₱1,500</td><td>₱1,000</td><td>250x</td></tr></tbody><tfoot><tr><th>Total</th><th>₱6,123,922.50</th><th>₱5,890,268.63</th><th class="positive">₱233,653.87</th><th>96.18%</th><th>1,084,806</th><th>15,710</th><th>1,821</th><th>7.17%</th><th>₱10,250</th><th>₱1,000</th><th>500x</th></tr></tfoot></table>
         <div class="monthly-share-charts">
           <div class="monthly-share-card"><h4>Monthly GGR Share</h4><small>Revenue contribution</small><div class="monthly-share-content"><svg viewBox="0 0 60 60" aria-label="Monthly GGR Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#dce5ef" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="69.69 30.31" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="18.02 81.98" stroke-dashoffset="-69.69" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="12.29 87.71" stroke-dashoffset="-87.71" transform="rotate(-90 30 30)"/></svg><div class="monthly-share-legend"><span><span><i style="background:var(--cyan)"></i>BP</span><b>69.69%</b></span><span><span><i style="background:var(--blue)"></i>GP</span><b>18.02%</b></span><span><span><i style="background:var(--violet)"></i>AP</span><b>12.29%</b></span></div></div></div>
           <div class="monthly-share-card"><h4>Monthly Player Share</h4><small>Audience contribution</small><div class="monthly-share-content"><svg viewBox="0 0 60 60" aria-label="Monthly Player Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#dce5ef" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="62.45 37.55" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="23.84 76.16" stroke-dashoffset="-62.45" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="13.71 86.29" stroke-dashoffset="-86.29" transform="rotate(-90 30 30)"/></svg><div class="monthly-share-legend"><span><span><i style="background:var(--cyan)"></i>BP</span><b>62.45%</b></span><span><span><i style="background:var(--blue)"></i>GP</span><b>23.84%</b></span><span><span><i style="background:var(--violet)"></i>AP</span><b>13.71%</b></span></div></div></div>
@@ -521,7 +526,7 @@
       </div>
     </section>
 
-    <div class="footer">Sample structure only · Values, chart series, and statuses are placeholders pending final data mapping.</div>
+
   </main>
   <dialog class="previous-dialog" id="previousReportDialog" aria-labelledby="previousReportTitle">
     <div class="dialog-inner">
@@ -635,28 +640,29 @@
       const thirtyDay = document.getElementById('thirtyDayChart');
       if (thirtyDay) {
         const W = 1020, H = 340, pad = { l: 48, r: 36, t: 24, b: 84 }, base = H - pad.b;
-        const start = Date.UTC(2026, 7, 23);
-        const dates = Array.from({ length: 30 }, (_, i) => new Date(start + i * 86400000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }));
-        const bet = [85, 92, 70, 110, 100, 118, 105, 125, 135, 110, 145, 125, 150, 130, 145, 160, 150, 170, 155, 165, 180, 160, 175, 145, 170, 150, 180, 165, 175, 160];
-        const payout = [82, 88, 67, 106, 96, 113, 101, 120, 130, 106, 139, 121, 144, 126, 139, 154, 143, 164, 149, 159, 173, 153, 168, 139, 163, 144, 173, 158, 168, 154];
-        const rtp = [95.5, 96.2, 94.8, 97.4, 96.7, 98.1, 97.6, 99.0, 98.4, 96.8, 99.4, 97.7, 100.2, 98.9, 97.6, 99.1, 98.2, 100.4, 99.3, 98.7, 100.7, 99.8, 101.1, 98.5, 99.8, 97.9, 100.3, 99.0, 98.6, 97.14];
-        const d1Retention = [8.2, 8.6, 7.9, 9.1, 8.8, 9.5, 9.2, 10.0, 9.7, 9.0, 10.4, 9.8, 10.7, 10.1, 9.6, 10.9, 10.3, 11.2, 10.6, 11.0, 11.6, 11.1, 11.9, 10.5, 11.4, 10.8, 10.9, 11.2, 11.0, 10.84];
+        const start = Date.UTC(2026, 7, 24);
+                const dates = Array.from({ length: 30 }, (_, i) => new Date(start + i * 86400000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }));
+                const bet = [40.495,95.255,40.935,83.43,109.02,77.54,99.975,74.925,250.855,92.205,70.785,59.68,55.46,91.41,46.005,89.465,93.11,121.355,107.485,132.155,135.58,230.435,189.53,190.605,757.0455,664.071,675.5965,760.186,602.152,670.5215];
+                const payout = [36.64,94.29625,37.93875,77.09875,100.3425,80.43375,105.42,71.3075,254.34375,78.79625,69.95875,57.66875,54.1875,87.1675,43.34875,88.67375,86.7475,117.12125,102.66375,118.23375,124.75625,248.81875,190.1675,188.59625,719.302,644.173,642.262125,728.3685,580.17,628.35175];
+                const rtp = [90.48,98.99,92.68,92.41,92.04,103.73,105.45,95.17,101.39,85.46,98.83,96.63,97.71,95.36,94.23,99.12,93.17,96.51,95.51,89.47,92.02,107.98,100.34,98.95,95.01,97.0,95.07,95.81,96.35,93.71];
+                const d1Retention = [4.26,4.79,7.38,10.07,9.55,8.98,8.33,9.03,10.29,9.88,11.27,9.93,11.38,8.28,9.42,8.94,12.5,9.2,8.0,12.54,8.8,18.29,7.79,11.86,7.41,8.53,7.58,7.61,7.17,7.17];
         const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
         const x = i => pad.l + plotW * i / (dates.length - 1);
-        const yAmount = value => base - value / 200 * plotH;
-        const yRtp = value => base - (value - 90) / 15 * plotH;
-        const yRetention = value => base - value / 15 * plotH;
+        const yAmount = value => base - value / 700 * plotH;
+        const rtpMin = 85, rtpMax = 110;
+        const yRtp = value => base - (value - rtpMin) / (rtpMax - rtpMin) * plotH;
+        const retentionMax = 20;
+        const yRetention = value => base - value / retentionMax * plotH;
         thirtyDay.setAttribute('viewBox', `0 0 ${W} ${H}`);
         thirtyDay.replaceChildren();
-        [0, 50, 100, 150, 200].forEach(value => {
+        [0, 100, 200, 300, 400, 500, 600, 700].forEach(value => {
           const y = yAmount(value);
           thirtyDay.appendChild(make('line', { x1: pad.l, y1: y, x2: W - pad.r, y2: y, stroke: value ? '#1d344c' : '#2c4660' }));
           drawLabel(thirtyDay, 7, y + 4, String(value), { 'font-size': 9 });
         });
         dates.forEach((date, i) => drawLabel(thirtyDay, x(i), base + 38, date, { 'text-anchor': 'end', transform: `rotate(-65 ${x(i)} ${base + 38})`, 'font-size': 8 }));
         [90, 95, 100, 105].forEach(value => drawLabel(thirtyDay, W - 26, yRtp(value) + 4, `${value}%`, { 'font-size': 9 }));
-        drawLabel(thirtyDay, W - 26, pad.t + 4, 'D1 15%', { fill: '#f2a65a', 'font-size': 9 });
-        drawLabel(thirtyDay, W - 26, base + 4, 'D1 0%', { fill: '#f2a65a', 'font-size': 9 });
+        [0, 5, 10, 15, 20].forEach(value => drawLabel(thirtyDay, W - 26, yRetention(value) + 4, `${value}%`, { fill: '#f2a65a', 'font-size': 9 }));
         const barWidth = Math.max(4, Math.min(8, plotW / dates.length * .22));
         bet.forEach((value, i) => {
           const bar = make('rect', { x: x(i) - barWidth - 1, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 2, fill: '#6ea8ff' });
@@ -769,13 +775,13 @@
         ['.platform-charts', 'Platform Share compares revenue, audience, and betting-volume contribution.'],
         ['.changelog-table', 'Recent launches and the minimum-bet update expanded platform access during the reporting period.'],
         ['.compliance-panel', 'GCP accreditation and current Game Application approvals are shown for management tracking.'],
-        ['.game-summary', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is shown as unavailable until category-level mapping is available.'],
+        ['.game-summary', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is the most frequent settled bet denomination by category.'],
         ['.hourly-rtp', 'Hourly RTP is evaluated against the 98.3% threshold while bet amount and payout intensity are shown by hour.'],
         ['.dynamic-rtp', 'NON drives most volume; cumulative and daily modes remain more volatile because of smaller samples.'],
         ['.game-loss', 'Winning rounds represent about 55.0% of total rounds in both Loteria and Slot.'],
         ['.total-tickets', 'Normal Bet accounts for the majority of ticket activity across both Loteria and Slot.'],
         ['.player-distribution', 'The 1–10 rounds range has the most unique players, shown separately for Loteria and Slot.'],
-        ['.bet-distribution', 'The ₱21–50 range has the largest share of total bet amount in this sample.'],
+        ['.bet-distribution', 'The dominant settled denomination is ₱5.00 for Loteria and ₱1.00 for Slot, based on 151,871 settled orders on September 22, 2026.'],
         ['.multiplier-distribution', '0x is the largest multiplier band by rounds.'],
         ['.player-grid > .panel:first-child', 'Returning players make up most active players in this sample.'],
         ['.player-grid > .panel:nth-child(2)', 'BingoPlus has the largest active-player base among the three platforms.'],
@@ -821,7 +827,7 @@
         'Report Date': '报告日期',
         'Previous Daily Report': '上一日报告',
         'General Operation Data': '总体运营数据',
-        'Daily snapshot · Verified backend data (BP1 / Banana Craze)': '每日快照 · 已验证后台数据（BP1 / 香蕉狂欢）',
+        'Daily snapshot · BP1 / Banana Craze': '每日快照 · 已验证后台数据（BP1 / 香蕉狂欢）',
         'Report generated': '报告已生成',
         'Bet Amount': '投注金额', 'Payout': '派彩', 'GGR': '游戏总收入', 'Positive GGR': '正向GGR', 'Monthly Total ₱2,444,910': '月度总计 ₱2,444,910', 'Monthly Total ₱2,343,980': '月度总计 ₱2,343,980', 'Monthly Total ₱100,930': '月度总计 ₱100,930', 'Monthly Average 95.87%': '月度平均 95.87%', 'MTD Total ₱72,840': 'MTD总计 ₱72,840', 'WoW ↑ 8.6%': '周环比 ↑ 8.6%', 'WoW ↑ 7.1%': '周环比 ↑ 7.1%', 'WoW ↑ 12.8%': '周环比 ↑ 12.8%', 'WoW +0.36 pp': '周环比 +0.36 个百分点', 'WoW ↑ 5.9%': '周环比 ↑ 5.9%', 'Monthly Total ₱1.85M': '月度总计 ₱1.85M', 'Monthly Total ₱1.77M': '月度总计 ₱1.77M', 'Monthly Total ₱72.84K': '月度总计 ₱72.84K', 'Monthly Avg 96.06%': '月度平均 96.06%',
         'Daily': '每日', 'Within target': '在目标范围内', 'MTD GGR': 'MTD GGR', 'Sep 1–21': '9月1日至21日',
@@ -854,7 +860,7 @@
         'Sample placeholder: final values should be connected to the daily back-office export.': '示例占位：最终数据应连接至每日后台导出。',
         'Total Tickets': '总票数', 'By feature behavior': '按功能行为', 'Normal Bet': '普通投注', 'Buy Feature': '购买功能',
         'Bonus Round': '奖励回合', 'Normal Bet accounts for the majority of total tickets.': '普通投注占本示例总票数的大部分。', 'Players by Loteria / Slot': '按乐透 / 老虎机玩家',
-        'Avg Round': '平均回合投注', 'Popular Bet Amount': '最常用投注金额', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is shown as unavailable until category-level mapping is available.': '游戏表现按乐透与老虎机分类。老虎机合并GameZone与ArenaPlus；在获得分类数据映射前，最常用投注金额暂显示为不可用。',
+        'Avg Round': '平均回合投注', 'Popular Bet Amount': '最常用投注金额', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is the most frequent settled bet denomination by category.': '游戏表现按乐透与老虎机分类。老虎机合并GameZone与ArenaPlus；在获得分类数据映射前，最常用投注金额暂显示为不可用。',
         'Ticket totals are separated by Loteria and Slot for each feature behavior.': '各功能行为的票数总计按乐透与老虎机区分。', 'Unique players are separated by Loteria and Slot across each rounds-played range.': '各回合区间的唯一玩家按乐透与老虎机区分。', 'Unique players by denomination, categorized by Loteria and Slot.': '唯一玩家按投注面额统计，并按乐透与老虎机分类。',
         'Player Distribution by Rounds Played': '按已玩回合数划分的玩家分布', 'Horizontal bar chart': '横向柱状图', 'Number of Unique Players': '唯一玩家数量',
         'Most unique players are concentrated in the 1–10 rounds range.': '大多数唯一玩家集中在1–10回合区间。',
@@ -872,7 +878,7 @@
         'Normal Rounds': '普通回合', 'Monthly Performance': '月度表现', '30-day trend and month-to-date platform summary': '30天趋势与月初至今平台汇总',
         '30 days': '30天', 'MTD': '月初至今', '30-Day Performance Trend': '30天表现趋势',
         'Bars: bet amount + payout · Lines: RTP + D1 retention': '柱状图：投注金额 + 派彩 · 折线：RTP + D1留存率', 'D1 Retention trendline': 'D1留存趋势线', 'Red dot: RTP changed during the day': '红点：当天RTP发生变化', 'Trend Change Highlight': '趋势变化重点', 'RTP Change': 'RTP变化', 'Sep 18': '9月18日', 'Configuration updated': '配置已更新', '134,275 current total': '当前总计18,642', '96.35% current RTP': '当前RTP为97.14%', 'DoD: ↓ 0.22 pp': '日环比：↓ 0.22 个百分点',
-        'Overall Retention': '总体留存', 'Sample structure only · Values, chart series, and statuses are placeholders pending final data mapping.': '仅为示例结构 · 数据、图表序列和状态将在最终数据映射后更新。',
+        'Overall Retention': '总体留存',
         'BingoPlus contributes the largest share of daily activity in this sample.': '本示例中，BingoPlus贡献了最大份额的日常活动。',
         'Platform Share compares revenue, audience, and betting-volume contribution.': '平台占比比较收入、用户和投注量贡献。',
         'Recent launches and the minimum-bet update expanded platform access during the reporting period.': '报告期间的近期上线和最低投注更新扩大了平台访问范围。',
@@ -884,7 +890,7 @@
         'Normal Bet accounts for the majority of ticket activity.': '普通投注占票数活动的大部分。',
         'Normal Bet accounts for the majority of ticket activity across both Loteria and Slot.': '普通投注在乐透与老虎机两类平台中均占票数活动的大部分。',
         'Most unique players are concentrated in the 1–10 rounds range.': '大多数唯一玩家集中在1–10回合区间。',
-        'The ₱21–50 range has the largest share of total bet amount in this sample.': '本示例中，₱21–50区间占总投注金额的比例最高。',
+        'The dominant settled denomination is ₱5.00 for Loteria and ₱1.00 for Slot, based on 151,871 settled orders on September 22, 2026.': '本示例中，₱21–50区间占总投注金额的比例最高。',
         '0x is the largest multiplier band by rounds.': '按回合数统计，0x是最大的倍数区间。',
         'Returning players make up most active players in this sample.': '本示例中，回访玩家占活跃玩家的大多数。',
         'BingoPlus has the largest active-player base among the three platforms.': '在三个平台中，BingoPlus拥有最大的活跃玩家群体。',
