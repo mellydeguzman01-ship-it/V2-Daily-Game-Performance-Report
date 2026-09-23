@@ -645,7 +645,8 @@
         const x = i => pad.l + plotW * i / (dates.length - 1);
         const yAmount = value => base - value / 700 * plotH;
         const yRtp = value => base - (value - 90) / 15 * plotH;
-        const yRetention = value => base - value / 15 * plotH;
+        const retentionMax = 20;
+        const yRetention = value => base - value / retentionMax * plotH;
         thirtyDay.setAttribute('viewBox', `0 0 ${W} ${H}`);
         thirtyDay.replaceChildren();
         [0, 100, 200, 300, 400, 500, 600, 700].forEach(value => {
@@ -655,8 +656,7 @@
         });
         dates.forEach((date, i) => drawLabel(thirtyDay, x(i), base + 38, date, { 'text-anchor': 'end', transform: `rotate(-65 ${x(i)} ${base + 38})`, 'font-size': 8 }));
         [90, 95, 100, 105].forEach(value => drawLabel(thirtyDay, W - 26, yRtp(value) + 4, `${value}%`, { 'font-size': 9 }));
-        drawLabel(thirtyDay, W - 26, pad.t + 4, 'D1 15%', { fill: '#f2a65a', 'font-size': 9 });
-        drawLabel(thirtyDay, W - 26, base + 4, 'D1 0%', { fill: '#f2a65a', 'font-size': 9 });
+        [0, 5, 10, 15, 20].forEach(value => drawLabel(thirtyDay, W - 26, yRetention(value) + 4, `${value}%`, { fill: '#f2a65a', 'font-size': 9 }));
         const barWidth = Math.max(4, Math.min(8, plotW / dates.length * .22));
         bet.forEach((value, i) => {
           const bar = make('rect', { x: x(i) - barWidth - 1, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 2, fill: '#6ea8ff' });
