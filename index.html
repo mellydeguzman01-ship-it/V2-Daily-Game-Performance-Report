@@ -654,9 +654,9 @@
       if (hourly) {
         const W = 900, H = 315, pad = { l: 32, r: 30, t: 24, b: 62 }, base = H - pad.b;
         const hours = Array.from({ length: 24 }, (_, hour) => `${String(hour).padStart(2, '0')}:00`);
-        const bet = [30, 28, 26, 25, 27, 32, 38, 44, 35, 46, 55, 62, 70, 82, 78, 88, 96, 110, 102, 118, 126, 112, 86, 58];
-        const payout = [29, 27, 24, 24, 26, 30, 36, 42, 34, 44, 52, 60, 68, 77, 74, 84, 91, 104, 96, 111, 119, 106, 82, 55];
-        const rtp = [96.8, 96.4, 95.9, 96.2, 96.9, 97.1, 97.4, 97.8, 96.7, 97.2, 98.0, 98.4, 97.9, 98.2, 97.5, 98.9, 99.4, 98.7, 99.1, 100.2, 100.9, 99.5, 98.3, 97.2];
+        const bet = [44.55, 18.72, 10.62, 13.46, 12.20, 25.63, 24.93, 26.44, 12.27, 17.70, 21.94, 21.12, 30.35, 39.79, 23.64, 34.86, 21.91, 25.40, 42.84, 28.77, 43.13, 55.14, 45.89, 31.36];
+        const payout = [43.08, 18.72, 10.05, 15.08, 14.04, 30.36, 23.25, 19.65, 12.84, 18.29, 22.06, 21.22, 31.69, 37.98, 23.01, 33.90, 20.39, 22.59, 41.79, 26.83, 38.61, 51.25, 45.48, 32.52];
+        const rtp = [96.71, 99.98, 94.6, 112.05, 115.06, 118.48, 93.27, 74.32, 104.69, 103.34, 100.56, 100.5, 104.42, 95.46, 97.33, 97.25, 93.06, 88.92, 97.56, 93.25, 89.52, 92.93, 99.09, 103.69];
         const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
         const x = i => pad.l + plotW * i / (hours.length - 1);
         const yAmount = value => base - value / 150 * plotH;
@@ -833,7 +833,7 @@
         ['.compliance-panel', 'GCP accreditation and current Game Application approvals are shown for management tracking.'],
         ['.game-summary', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is the most frequent settled bet denomination by category.'],
         ['.hourly-rtp', 'Hourly RTP is evaluated against the 98.3% target while bet amount and payout intensity are shown by hour.'],
-        ['.dynamic-rtp', 'Normal rounds carry most volume; bonus rounds pay far above their stake on a small share of rounds, which drives daily RTP variance.'],
+        ['.dynamic-rtp', 'NON rounds carry most volume; Cumulative and Daily adjustments apply to a small share of rounds but pay far above their stake, which drives daily RTP variance.'],
         ['.game-loss', 'Winning rounds are rounds with a payout greater than zero.'],
         ['.total-tickets', 'Normal Bet accounts for the majority of ticket activity across both Loteria and Slot.'],
         ['.player-distribution', 'The 1–10 rounds range has the most unique players, shown separately for Loteria and Slot.'],
@@ -972,7 +972,7 @@
         "BingoPlus (Loteria) settled ₱123,900.00 of ₱672,656.50 total bet on September 23, 2026; GameZone and ArenaPlus (Slot) carried the rest.": "BingoPlus（乐透）在 2026 年 9 月 23 日的 ₱672,656.50 总投注额中结算了 ₱123,900.00；其余由 GameZone 与 ArenaPlus（老虎机）承担。",
         "Platform Share compares revenue, audience, and betting-volume contribution from the same settled per-site totals.": "平台占比基于同一批已结算的分站总计，比较收入、用户与投注量贡献。",
         "Hourly RTP is evaluated against the 98.3% target while bet amount and payout intensity are shown by hour.": "每小时 RTP 对照 98.3% 目标进行评估，同时按小时显示投注金额与派彩强度。",
-        "Normal rounds carry most volume; bonus rounds pay far above their stake on a small share of rounds, which drives daily RTP variance.": "普通回合贡献绝大部分交易量；奖励回合在少量回合中以远高于投注的派彩，导致当日 RTP 波动。",
+        "NON rounds carry most volume; Cumulative and Daily adjustments apply to a small share of rounds but pay far above their stake, which drives daily RTP variance.": "普通回合贡献绝大部分交易量；奖励回合在少量回合中以远高于投注的派彩，导致当日 RTP 波动。",
         "Winning rounds are rounds with a payout greater than zero.": "中奖回合指派彩大于零的回合。",
         "Players created on September 23 accounted for most of the day’s activity.": "9 月 23 日当天创建的新玩家贡献了当日大部分活跃度。",
         "New players recorded more rounds than returning players on every platform.": "三个平台中新玩家的回合数均多于回访玩家。",
