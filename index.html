@@ -327,7 +327,7 @@
             <button type="button" data-lang="cn">CN</button>
           </div>
           <button type="button" class="header-button" id="previousReportButton">Previous Daily Report</button>
-          <button type="button" class="header-button" id="backToLatestReportButton" hidden>Back to Latest Report</button>
+          <button type="button" class="header-button" id="backToLatestReportButton" hidden>Back to Present Report</button>
         </div>
       </div>
       <div class="header-right">
@@ -586,7 +586,7 @@
   <dialog class="previous-dialog" id="previousReportDialog" aria-labelledby="previousReportTitle">
     <div class="dialog-inner">
       <div class="side-title"><h3 id="previousReportTitle">Previous Daily Report</h3><span>Archive</span></div>
-      <p id="previousReportHelp">Choose a date below to view its daily report sample on this same page.</p>
+      <p id="previousReportHelp">Choose a date below to open the verified report for that day.</p>
       <div class="report-archive" id="reportArchiveList" aria-label="Previous daily reports"></div>
       <div class="dialog-actions"><button type="button" class="header-button" id="closePreviousReport">Close</button></div>
     </div>
@@ -954,7 +954,7 @@
         'Normal Rounds are the primary feature behavior, while Buy Feature and Bonus Round are smaller segments.': '普通回合是主要功能行为，购买功能和奖励回合占比较小。',
         'The 30-day view compares daily bet and payout bars with RTP and D1 retention trendlines.': '30天视图通过每日投注和派彩柱状图，对比RTP与D1留存率趋势线。',
         'Month-to-date totals cover September 1–23, 2026 and include the September 23 verified day.': '月初至今的平台总计显示，BingoPlus是本示例中最大的贡献者。',
-        'Key Insight:': '关键洞察：', 'Archive': '存档', 'Choose a date below to view its daily report sample on this same page.': '请选择下方日期，在同一页面查看日报示例。', 'Back to Latest Report': '返回最新报告',
+        'Key Insight:': '关键洞察：', 'Archive': '存档', 'Choose a date below to open the verified report for that day.': '请选择下方日期，打开该日的已验证报告。', 'Back to Present Report': '返回当前报告',
         'Daily report archive': '日报存档', 'View report': '查看报告', 'Close': '关闭', '98.3% target': '98.3%目标', 'Aug ': '8月', 'Sep ': '9月'
       };
       Object.assign(cn, {
@@ -1052,7 +1052,7 @@
         currentReportDate = latestReportDate;
         history.replaceState(null, '', `${location.pathname}${location.hash}`);
         renderReportDate();
-        if (previousReportHelp) previousReportHelp.textContent = currentLang === 'cn' ? '请选择下方日期，在同一页面查看日报示例。' : 'Choose a date below to view its daily report sample on this same page.';
+        if (previousReportHelp) previousReportHelp.textContent = currentLang === 'cn' ? '请选择下方日期，打开该日的已验证报告。' : 'Choose a date below to open the verified report for that day.';
       });
       closePrevious?.addEventListener('click', () => previousDialog?.close());
       previousDialog?.addEventListener('click', event => {
