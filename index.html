@@ -913,7 +913,7 @@
         'Winning rounds': '中奖回合', 'Losing rounds': '未中奖回合',
         'Total Tickets': '总票数', 'By feature behavior': '按功能行为', 'Normal Bet': '普通投注', 'Buy Feature': '购买功能',
         'Bonus Round': '奖励回合', 'Normal Bet accounts for the majority of total tickets.': '普通投注占本示例总票数的大部分。', 'Players by Loteria / Slot': '按乐透 / 老虎机玩家',
-        'Avg Round': '平均回合投注', 'Popular Bet Amount': '最常用投注金额', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is the most frequent settled bet denomination by category.': '游戏表现按乐透与老虎机分类。老虎机合并GameZone与ArenaPlus；在获得分类数据映射前，最常用投注金额暂显示为不可用。',
+        'Avg Round': '平均回合投注', 'Popular Bet Amount': '最常用投注金额', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is the most frequent settled bet denomination by category.': '游戏表现按乐透与老虎机分类。老虎机合并 GameZone 与 ArenaPlus。最常用投注额为各类别中已结算订单出现频率最高的投注面额。',
         'Ticket totals are separated by Loteria and Slot for each feature behavior.': '各功能行为的票数总计按乐透与老虎机区分。', 'Unique players are separated by Loteria and Slot across each rounds-played range.': '各回合区间的唯一玩家按乐透与老虎机区分。', 'Unique players by denomination, categorized by Loteria and Slot.': '唯一玩家按投注面额统计，并按乐透与老虎机分类。',
         'Player Distribution by Rounds Played': '按已玩回合数划分的玩家分布', 'Horizontal bar chart': '横向柱状图', 'Number of Unique Players': '唯一玩家数量',
         'Most unique players are concentrated in the 1–10 rounds range.': '大多数唯一玩家集中在1–10回合区间。',
@@ -943,10 +943,10 @@
         'Normal Bet accounts for the majority of ticket activity.': '普通投注占票数活动的大部分。',
         'Normal Bet accounts for the majority of ticket activity across both Loteria and Slot.': '普通投注在乐透与老虎机两类平台中均占票数活动的大部分。',
         'Most unique players are concentrated in the 1–10 rounds range.': '大多数唯一玩家集中在1–10回合区间。',
-        'The dominant settled denomination is ₱5.00 for Loteria and ₱1.00 for Slot, based on 146,140 settled orders on September 23, 2026.': '本示例中，₱21–50区间占总投注金额的比例最高。',
+        'The dominant settled denomination is ₱5.00 for Loteria and ₱1.00 for Slot, based on 146,140 settled orders on September 23, 2026.': '根据 2026 年 9 月 23 日的 146,140 笔已结算订单，乐透最常见的已结算投注面额为 ₱5.00，老虎机为 ₱1.00。',
         '0x is the largest multiplier band by rounds.': '按回合数统计，0x是最大的倍数区间。',
         'Returning players make up most active players in this sample.': '本示例中，回访玩家占活跃玩家的大多数。',
-        'GameZone has the largest active-player base among the three platforms.': '在三个平台中，BingoPlus拥有最大的活跃玩家群体。',
+        'GameZone has the largest active-player base among the three platforms.': '在三个平台中，GameZone 的活跃玩家基数最大。',
         'Unique-player counts are highest at the lower bet denominations, with Loteria and Slot shown separately.': '较低投注面额的唯一玩家数量最高，并分别显示乐透与老虎机数据。',
         'D1 retention is the main player-engagement metric to monitor.': 'D1留存率是需要重点监控的玩家参与度指标。',
         'New players record more rounds than returning players on all three platforms on September 23.': '本示例中，回访玩家在各平台的回合数高于新玩家。',
@@ -965,6 +965,22 @@
         'Loteria winning rounds versus losing rounds': 'Loteria中奖回合与未中奖回合', 'Monthly GGR Share pie chart': '月度GGR占比饼图', 'Monthly Player Share pie chart': '月度玩家占比饼图', 'Player Share pie chart': '玩家占比饼图',
         'Previous daily reports': '上一日报告', 'Report controls': '报告控制', 'Slot winning rounds versus losing rounds': 'Slot中奖回合与未中奖回合', 'Total tickets by Loteria and Slot': 'Loteria和Slot总票数',
         'Horizontal bar chart showing player distribution by rounds played, separated by Loteria and Slot': '按已玩回合数划分的玩家分布横向柱状图，数据按Loteria和Slot分别显示'
+      });
+      // --- CN wording for the injected Key Insights (exact full-string keys) ---
+      Object.assign(cn, {
+        "BingoPlus (Loteria) settled ₱123,900.00 of ₱672,656.50 total bet on September 23, 2026; GameZone and ArenaPlus (Slot) carried the rest.": "BingoPlus（乐透）在 2026 年 9 月 23 日的 ₱672,656.50 总投注额中结算了 ₱123,900.00；其余由 GameZone 与 ArenaPlus（老虎机）承担。",
+        "Platform Share compares revenue, audience, and betting-volume contribution from the same settled per-site totals.": "平台占比基于同一批已结算的分站总计，比较收入、用户与投注量贡献。",
+        "Hourly RTP is evaluated against the 98.3% target while bet amount and payout intensity are shown by hour.": "每小时 RTP 对照 98.3% 目标进行评估，同时按小时显示投注金额与派彩强度。",
+        "Normal rounds carry most volume; bonus rounds pay far above their stake on a small share of rounds, which drives daily RTP variance.": "普通回合贡献绝大部分交易量；奖励回合在少量回合中以远高于投注的派彩，导致当日 RTP 波动。",
+        "Winning rounds are rounds with a payout greater than zero.": "中奖回合指派彩大于零的回合。",
+        "Players created on September 23 accounted for most of the day’s activity.": "9 月 23 日当天创建的新玩家贡献了当日大部分活跃度。",
+        "New players recorded more rounds than returning players on every platform.": "三个平台中新玩家的回合数均多于回访玩家。",
+        "Normal Bet is the primary feature behavior; Buy Feature is a smaller segment.": "普通投注是主要的功能行为；购买功能占比较小。",
+        "MTD platform totals are month-to-date from the per-site archive for September 1–23.": "月初至今平台总计取自各分站存档，覆盖 9 月 1–23 日。",
+        "Winning rounds represent 30.4% of Loteria rounds and 30.2% of Slot rounds on September 23, 2026.": "2026 年 9 月 23 日，中奖回合占乐透回合数的 30.4%，占老虎机回合数的 30.2%。",
+        "GameZone contributes the largest share of September 23 bet amount and GGR.": "GameZone 占 9 月 23 日投注金额与 GGR 的最大份额。",
+        "Month-to-date totals cover September 1–23, 2026 and include the September 23 verified day.": "月初至今总计覆盖 2026 年 9 月 1–23 日，包含 9 月 23 日已验证数据。",
+        "Returning players make up most active players in this sample.": "新玩家占本日活跃玩家的大多数。",
       });
       const entries = Object.entries(cn).sort((a, b) => b[0].length - a[0].length);
 
