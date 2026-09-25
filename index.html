@@ -398,6 +398,7 @@
               <tr><th scope="row">GGR Share</th><td>38.86%</td><td>39.69%</td><td>21.45%</td></tr>
             </tbody>
           </table>
+          <div class="chart-note">New Players here = first day ever seen in the archive (per-site). The New Players tile counts accounts created that day, so the two totals differ.</div>
         </div>
         <div class="side-stack">
           <div class="panel pad platform-charts">
@@ -778,6 +779,12 @@
                 const payout = [37.939, 77.099, 100.343, 80.434, 105.42, 71.308, 254.344, 78.796, 69.959, 57.669, 54.188, 87.168, 79.74, 88.674, 86.748, 117.121, 102.664, 118.234, 124.756, 248.819, 190.167, 188.596, 719.302, 644.173, 642.262, 728.369, 580.17, 628.352, 654.683, 549.307];
                 const rtp = [92.68, 92.41, 92.04, 103.73, 105.45, 95.17, 101.39, 85.46, 98.83, 96.63, 97.71, 95.36, 94.66, 99.12, 93.17, 96.51, 95.51, 89.47, 92.02, 107.98, 100.34, 98.95, 95.01, 97.0, 95.07, 95.81, 96.35, 93.71, 97.33, 95.81];
                 const d1Retention = [4.79, 7.38, 10.07, 9.55, 8.98, 8.33, 9.03, 10.29, 9.88, 11.27, 9.93, 11.38, 8.28, 9.42, 8.94, 12.5, 9.2, 8.0, 12.54, 8.8, 18.29, 7.79, 11.86, 7.41, 8.53, 7.58, 7.61, 7.17, 7.06, 6.49];
+        // Exact daily peso totals for the 30-day window (builder-injected).
+        // The bars stay in ₱ thousands; the tooltip states the real amount so a
+        // bar cannot be misread as ₱40.935 instead of ₱40,935.00.
+        const betPhp30 = [40935.00, 83430.00, 109020.00, 77540.00, 99975.00, 74925.00, 250855.00, 92205.00, 70785.00, 59680.00, 55460.00, 91410.00, 84235.00, 89465.00, 93110.00, 121355.00, 107485.00, 132155.00, 135580.00, 230435.00, 189530.00, 190605.00, 757045.50, 664071.00, 675596.50, 760186.00, 602152.00, 670521.50, 672656.50, 573310.00];
+        const payoutPhp30 = [37938.75, 77098.75, 100342.50, 80433.75, 105420.00, 71307.50, 254343.75, 78796.25, 69958.75, 57668.75, 54187.50, 87167.50, 79740.00, 88673.75, 86747.50, 117121.25, 102663.75, 118233.75, 124756.25, 248818.75, 190167.50, 188596.25, 719302.00, 644173.00, 642262.13, 728368.50, 580170.00, 628351.75, 654682.74, 549307.00];
+        const pesoFmt = v => '₱' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
         const x = i => pad.l + plotW * i / (dates.length - 1);
         const yAmount = value => base - value / 800 * plotH;
@@ -798,12 +805,12 @@
         const barWidth = Math.max(4, Math.min(8, plotW / dates.length * .22));
         bet.forEach((value, i) => {
           const bar = make('rect', { x: x(i) - barWidth - 1, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 2, fill: '#6ea8ff' });
-          setTip(bar, `<b>${dates[i]}</b><br>Bet Amount: ${value}`, `<b>${dates[i]}</b><br>投注金额：${value}`);
+          setTip(bar, `<b>${dates[i]}</b><br>Bet Amount: ${pesoFmt(betPhp30[i])}`, `<b>${dates[i]}</b><br>投注金额：${pesoFmt(betPhp30[i])}`);
           thirtyDay.appendChild(bar);
         });
         payout.forEach((value, i) => {
           const bar = make('rect', { x: x(i) + 1, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 2, fill: '#b78cff' });
-          setTip(bar, `<b>${dates[i]}</b><br>Payout: ${value}`, `<b>${dates[i]}</b><br>派彩：${value}`);
+          setTip(bar, `<b>${dates[i]}</b><br>Payout: ${pesoFmt(payoutPhp30[i])}`, `<b>${dates[i]}</b><br>派彩：${pesoFmt(payoutPhp30[i])}`);
           thirtyDay.appendChild(bar);
         });
         thirtyDay.appendChild(make('polyline', { points: rtp.map((value, i) => `${x(i)},${yRtp(value)}`).join(' '), fill: 'none', stroke: '#55d68b', 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
@@ -998,6 +1005,7 @@
         'Bet Amount Distribution': '投注金额分布', 'Bet amount + rounds + share': '投注金额 + 回合数 + 占比', 'Bet range': '投注区间',
         'Total bet': '总投注', 'Share': '占比', 'Multiplier Distribution': '倍数分布', 'Winning outcome bands': '中奖结果区间',
         'Multiplier': '倍数', 'Player Performance': '玩家表现', 'Acquisition, retention, platform mix, and player behavior': '获客、留存、平台构成与玩家行为',
+        'New Players here = first day ever seen in the archive (per-site). The New Players tile counts accounts created that day, so the two totals differ.': '本表“新玩家”=首次出现在存档中的玩家（按分站）；上方“新玩家”指标统计当日创建的账户，两者总数不同。',
         'New Player vs Returning Player': '新玩家与回访玩家', 'New Player vs Returning Player vs Active Players': '新玩家、回访玩家与活跃玩家', '2,434 active players': '2,434名活跃玩家', 'players': '玩家',
         'New players': '新玩家', 'Returning': '回访玩家', 'Player per Platform': '各平台玩家', 'New vs returning': '新玩家与回访玩家', 'New vs returning + active players': '新玩家、回访玩家与活跃玩家', 
         'Returning players': '回访玩家', 'New share': '新玩家占比', 'Player Retention': '玩家留存', 'D1–D7 sample': 'D1–D7示例',
@@ -1046,7 +1054,7 @@
       });
       // --- CN wording for the injected Key Insights (exact full-string keys) ---
       Object.assign(cn, {
-        "BingoPlus (Loteria) settled ₱101,610.00 of ₱573,310.00 total bet on September 24, 2026; GameZone and ArenaPlus (Slot) carried the rest.": "BingoPlus（乐透）在 2026 年 9 月 23 日的 ₱672,656.50 总投注额中结算了 ₱123,900.00；其余由 GameZone 与 ArenaPlus（老虎机）承担。",
+        "BingoPlus (Loteria) settled ₱101,610.00 of ₱573,310.00 total bet on September 24, 2026; GameZone and ArenaPlus (Slot) carried the rest.": "BingoPlus（乐透）在 2026 年 9 月 24 日的 ₱573,310.00 总投注额中结算了 ₱101,610.00；其余由 GameZone 与 ArenaPlus（老虎机）承担。",
         "Platform Share compares revenue, audience, and betting-volume contribution from the same settled per-site totals.": "平台占比基于同一批已结算的分站总计，比较收入、用户与投注量贡献。",
         "Hourly RTP is evaluated against the 98.3% target while bet amount and payout intensity are shown by hour.": "每小时 RTP 对照 98.3% 目标进行评估，同时按小时显示投注金额与派彩强度。",
         "NON rounds carry most volume; Cumulative and Daily adjustments apply to a small share of rounds but pay far above their stake, which drives daily RTP variance.": "普通回合贡献绝大部分交易量；奖励回合在少量回合中以远高于投注的派彩，导致当日 RTP 波动。",
