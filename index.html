@@ -244,13 +244,19 @@
     .game-loss .legend-list div { align-items: flex-start; flex-wrap: wrap; gap: 4px 8px; font-size: 10px; }
     .game-loss .legend-list div b { white-space: nowrap; }
     .game-loss .chart-note { font-size: 10px; line-height: 1.35; }
-    .player-grid { display: grid; grid-template-columns: 1.5fr 2fr 1.5fr 1.5fr 1.5fr 2fr; gap: 10px; align-items: stretch; }
+    .player-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
     .player-grid > .chart-grid-3 { display: contents; }
     .player-grid > .panel, .player-grid > .chart-grid-3 > .panel { min-width: 0; align-self: stretch; height: 100%; }
+    /* Player Performance row 1: four cards, three columns each. */
+    .player-grid > .panel:nth-child(1), .player-grid > .panel:nth-child(2),
+    .player-grid > .chart-grid-3 > .panel:nth-child(1), .player-grid > .chart-grid-3 > .panel:nth-child(2) { grid-column: span 3; }
+    /* Player Performance row 2: denomination chart and feature-behavior table share the row. */
+    .player-grid > .chart-grid-3 > .panel:nth-child(3), .player-feature-panel { grid-column: span 6; }
     .player-grid > .panel:first-child .compact-pie { grid-template-columns: 1fr; gap: 5px; min-height: 0; }
     .player-grid > .panel:first-child .donut-wrap { min-height: 160px; }
     .player-grid > .chart-grid-3 > .panel:nth-child(2), .player-grid > .chart-grid-3 > .panel:nth-child(3) { padding: 14px; }
-    .player-grid > .chart-grid-3 > .panel:nth-child(2) .chart, .player-grid > .chart-grid-3 > .panel:nth-child(3) .chart { height: 285px; }
+    .player-grid > .chart-grid-3 > .panel:nth-child(2) .chart { height: 285px; }
+    .player-grid > .chart-grid-3 > .panel:nth-child(3) .chart { height: 520px; }
     .player-grid > .chart-grid-3 > .panel:nth-child(2) .side-title, .player-grid > .chart-grid-3 > .panel:nth-child(3) .side-title { margin-bottom: 8px; }
     .player-grid table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .player-grid th, .player-grid td { padding: 8px 5px; white-space: normal; }
@@ -310,6 +316,8 @@
     .platform-matrix thead th { background: #edf7f8; border-color: #c8d5e2; }
     .game-summary tfoot th, .game-summary tfoot td, .monthly-row tfoot th, .monthly-row tfoot td { border-top-color: #b8cce1; }
 
+    /* 12-column spans must collapse when the player grid goes single-column. */
+    @media (max-width: 1180px) { .player-grid > .panel, .player-grid > .chart-grid-3 > .panel { grid-column: 1 / -1; } }
     @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .game-summary, .dynamic-rtp, .game-loss, .total-tickets, .player-distribution, .hourly-rtp, .bet-distribution, .multiplier-distribution { grid-column: 1; grid-row: auto; } .side-stack { display: grid; gap: 10px; } }
     @media (max-width: 700px) { .wrap { width: 100%; padding: 12px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
   /* ---- conditional GGR / RTP colour -------------------------------------
