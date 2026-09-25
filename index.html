@@ -317,6 +317,83 @@
     .platform-matrix thead th { background: #edf7f8; border-color: #c8d5e2; }
     .game-summary tfoot th, .game-summary tfoot td, .monthly-row tfoot th, .monthly-row tfoot td { border-top-color: #b8cce1; }
 
+    /* ---- Night mode ------------------------------------------------
+       The page ships in its approved light theme. Adding `night` to <html>
+       restores the dark palette this stylesheet was originally built around,
+       so the default render is unchanged. Every rule carries an html.night
+       prefix, which lifts it above both the base rules and the light block
+       further up, so no !important is needed -- except on the two rules that
+       already used one to beat the light block. */
+    html.night {
+      --bg: #091321; --panel: #122238; --panel-2: #172b44; --line: #29415d;
+      --text: #eef4fb; --muted: #9fb1c5;
+      --shadow: 0 12px 30px rgba(0, 0, 0, .22);
+    }
+    html.night body { background: var(--bg); }
+    html.night .panel { background: linear-gradient(145deg, #142943, #0f1c2d); box-shadow: var(--shadow); }
+    html.night .card::after { background: rgba(110,168,255,.08); }
+    html.night .small-grid .card { background: #14263c; border-color: #29445f; border-top-color: #385776; }
+    html.night .small-grid .card::after { background: rgba(110,168,255,.12); }
+    html.night .small-grid .submetric-dod, html.night .small-grid .submetric-wow { color: #8ea4bd; }
+    html.night .small-grid .submetric-monthly { color: #8ea4bd; }
+    html.night .big-grid .card { color: var(--text); }
+    html.night .big-grid .accent-blue { background: #16294a; border-color: #2c4f86; }
+    html.night .big-grid .accent-green { background: #142e22; border-color: #2c6b45; }
+    html.night .big-grid .accent-orange { background: #33280f; border-color: #8a5f1e; }
+    html.night .big-grid .accent-red { background: #331a20; border-color: #8a3a46; }
+    html.night .big-grid .accent-violet { background: #241f3d; border-color: #5a4499; }
+    html.night .big-grid .accent-cyan { background: #102e31; border-color: #1f6e6c; }
+    html.night .big-grid .metric-label, html.night .big-grid .metric-foot { color: #9fb1c5; }
+    html.night .metric-subtext, html.night .metric-context { color: #8ea4bd; }
+    html.night .metric-divider { color: #7f95ad; }
+    html.night .platform-charts, html.night .changelog-table { border-color: #477fca; background: linear-gradient(145deg, #162e4d, #102238); }
+    html.night .incident-panel { border-color: #b9792c; background: linear-gradient(145deg, #392b1c, #241d1d); }
+    html.night .incident-panel .side-title h3 { color: #a86100; }
+    html.night .compliance-panel { border-color: #2f6b4a; background: linear-gradient(145deg, #13291f, #0f1e18); }
+    html.night .compliance-panel .side-title h3 { color: #7fd6a4; }
+    html.night .compliance-panel th { color: #8fd0ab; }
+    html.night .compliance-panel td { color: #a8e0c0; }
+    html.night .status.ok { color: #6fdc9e; background: #14301f; }
+    html.night .status.warn { color: #ffca64; background: #332a10; }
+    html.night .status.danger { color: #ff8f9f; background: #331a20; }
+    html.night .dynamic-item { background: #14263c; }
+    html.night .bar-track { background: rgba(148,177,211,.13); }
+    html.night .keynote { border-color: rgba(110,168,255,.24); background: rgba(12,29,48,.72); }
+    html.night .monthly-share-card { border-color: #2c4a6b; background: linear-gradient(145deg, #16283f, #101d30); }
+    html.night .game-loss .round-outcome-card { border-color: #2c4a6b; background: #14263c; }
+    html.night .game-loss .round-outcome-card h4, html.night .game-loss .round-outcome-card .legend-list { color: var(--text); }
+    html.night .game-loss .round-outcome-card .donut-center strong { color: var(--text); }
+    html.night .game-loss .round-outcome-card .donut-center span { color: #8ea4bd; }
+    html.night .report-archive-item:hover { border-color: var(--blue); background: #162e4d; }
+    html.night .language-toggle { background: #10243a; border-color: #3f6b9c; }
+    html.night .header-button { color: #d7e7fb; background: #132b47; border-color: #3f6b9c; }
+    html.night .header-button:hover, html.night .language-toggle button:hover { color: #fff; border-color: #70a9eb; }
+    html.night dialog.previous-dialog { color: var(--text); background: #122238; border-color: #477fca; box-shadow: 0 24px 80px rgba(0,0,0,.55); }
+    html.night dialog.previous-dialog::backdrop { background: rgba(2, 9, 18, .72); }
+    html.night .platform-matrix thead th { background: rgba(64,217,208,.06); border-color: rgba(148,177,211,.28); }
+    html.night .game-summary tfoot th, html.night .game-summary tfoot td,
+    html.night .monthly-row tfoot th, html.night .monthly-row tfoot td { border-top-color: rgba(110,168,255,.35); }
+    /* the two light rules that needed !important must be re-stated the same way */
+    html.night .monthly-row > .table-scroll > table th:first-child,
+    html.night .monthly-row > .table-scroll > table td:first-child { background: #16283f !important; color: var(--text); }
+    html.night .monthly-row > .table-scroll > table tfoot th,
+    html.night .monthly-row > .table-scroll > table tfoot td { background: #172b44 !important; color: var(--text); }
+    /* Chart ink. The SVG charts bake dark ink tuned for white panels. A
+       presentation attribute loses to any CSS rule, so these re-point the
+       ink at the dark surface without touching a single generated chart. */
+    html.night [fill="#243b53"] { fill: #e6eef8; }
+    html.night [fill="#4a5f7d"] { fill: #8ea4bd; }
+    html.night [fill="#2a3a52"] { fill: #47617f; }
+    html.night [stroke="#1d344c"] { stroke: #27405c; }
+    html.night [stroke="#2c4660"] { stroke: #3a5a7d; }
+    html.night [stroke="#243c55"] { stroke: #2c4867; }
+    html.night [stroke="#dce5ef"] { stroke: #2b4460; }
+    /* the toggle itself: the glyph is CSS-only, so the text-node walker that
+       drives EN/CN never sees it and cannot desync it from the label */
+    #nightModeButton::before { content: "\1F319  "; }
+    html.night #nightModeButton::before { content: "\2600\FE0F  "; }
+    html.night #nightModeButton { color: #fff; background: #24466f; border-color: #70a9eb; }
+
     @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .game-summary, .dynamic-rtp, .game-loss, .total-tickets, .player-distribution, .hourly-rtp, .bet-distribution, .multiplier-distribution { grid-column: 1; grid-row: auto; } .side-stack { display: grid; gap: 10px; } }
     @media (max-width: 700px) { .wrap { width: 100%; padding: 12px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
   /* ---- conditional GGR / RTP colour -------------------------------------
@@ -331,6 +408,34 @@
   .monthly-row > .table-scroll > table tfoot th.negative,
   .monthly-row > .table-scroll > table tfoot td.negative { color: var(--red); }
   </style>
+  <script>
+    /* Night mode is applied before first paint so a returning visitor who
+       chose it never sees a flash of the light theme. */
+    (function () {
+      var KEY = 'dashboard-theme';
+      var read = function () {
+        try { return localStorage.getItem(KEY) === 'night'; } catch (e) { return false; }
+      };
+      var apply = function (on) {
+        document.documentElement.classList.toggle('night', on);
+        var b = document.getElementById('nightModeButton');
+        if (b) b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      };
+      apply(read());
+      document.addEventListener('DOMContentLoaded', function () {
+        var b = document.getElementById('nightModeButton');
+        if (!b) return;
+        // the button does not exist yet when the class is applied above, so
+        // its pressed state has to be synced once it is in the DOM
+        apply(document.documentElement.classList.contains('night'));
+        b.addEventListener('click', function () {
+          var on = !document.documentElement.classList.contains('night');
+          apply(on);
+          try { localStorage.setItem(KEY, on ? 'night' : 'light'); } catch (e) {}
+        });
+      });
+    })();
+  </script>
 </head>
 <body>
   <main class="wrap">
@@ -344,6 +449,7 @@
             <button type="button" data-lang="en" class="active">EN</button>
             <button type="button" data-lang="cn">CN</button>
           </div>
+          <button type="button" class="header-button" id="nightModeButton" aria-pressed="false" aria-label="Night Mode" title="Night Mode">Night Mode</button>
           <button type="button" class="header-button" id="previousReportButton">Previous Daily Report</button>
           <button type="button" class="header-button" id="backToLatestReportButton" hidden>Back to Present Report</button>
         </div>
@@ -963,6 +1069,7 @@
       const cn = {
         'Daily Game Performance Report': '每日游戏表现报告',
         'Report Date': '报告日期',
+        'Night Mode': '夜间模式',
         'Previous Daily Report': '上一日报告',
         'General Operation Data': '总体运营数据',
         'Daily snapshot · BP1 / Banana Craze': '每日快照 · 已验证后台数据（BP1 / 香蕉狂欢）',
