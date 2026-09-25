@@ -670,16 +670,60 @@
         const rtp = [90.34, 100.37, 93.37, 94.43, 90.89, 90.71, 86.82, 83.88, 90.75, 92.72, 89.85, 103.96, 90.74, 98.74, 89.3, 98.14, 92.48, 100.16, 95.35, 97.73, 94.24, 90.02, 98.15, 101.78];
         const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
         const x = i => pad.l + plotW * i / (hours.length - 1);
-        const yAmount = value => base - value / 150 * plotH;
-        const yRtp = value => base - (value - 94) / 8 * plotH;
+        // --- axes are derived from the day's data so nothing can overshoot ----
+        // The RTP axis used to be a fixed 94-102% window, so any hour whose RTP
+        // ran above 102% (it reaches 500%+ on volatile days) drew its point and
+        // line outside the plot. Floor is 70% as requested; the ceiling and the
+        // label set now follow the data, and the floor drops further if a day
+        // dips below 70% so the low side cannot overflow either.
+        const rtpLo = Math.min(70, Math.floor(Math.min(...rtp) / 10) * 10);
+        const rtpHi = Math.max(102, Math.ceil(Math.max(...rtp) / 10) * 10);
+        const rtpSpan = (rtpHi - rtpLo) || 1;
+        const yRtp = value => base - (value - rtpLo) / rtpSpan * plotH;
+        const rtpLabels = [];
+        const addRtpLabel = (value, force) => {
+          const y = yRtp(value);
+          if (force || !rtpLabels.some(label => Math.abs(label.y - y) < 9)) {
+            rtpLabels.push({ value, y });
+          }
+        };
+        addRtpLabel(rtpLo, true);
+        addRtpLabel(rtpHi, true);
+        // The 98.3% target is labelled only when it will not collide; its dashed
+        // line is always drawn regardless.
+        addRtpLabel(98.3, Math.abs(yRtp(98.3) - yRtp(rtpLo)) >= 9);
+        {
+          const target = rtpSpan / 5;
+          const mag = Math.pow(10, Math.floor(Math.log10(target)));
+          const norm = target / mag;
+          const step = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * mag;
+          for (let value = rtpLo + step; value < rtpHi; value += step) {
+            addRtpLabel(Math.round(value * 100) / 100, false);
+          }
+        }
+        rtpLabels.sort((a, b) => a.value - b.value);
+        // Amount axis: keeps the approved 0/50/100/150 grid on a normal day and
+        // raises the ceiling instead of letting a heavier day's bars overflow.
+        const amountHi = Math.max(150, Math.ceil(Math.max(...bet, ...payout) / 50) * 50);
+        const yAmount = value => base - value / amountHi * plotH;
+        const amountTicks = [];
+        {
+          const target = amountHi / 4;
+          const mag = Math.pow(10, Math.floor(Math.log10(target)));
+          const norm = target / mag;
+          const step = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * mag;
+          for (let value = 0; value <= amountHi + 1e-9; value += step) {
+            amountTicks.push(Math.round(value * 100) / 100);
+          }
+        }
         hourly.setAttribute('viewBox', `0 0 ${W} ${H}`);
         hourly.replaceChildren();
-        [0, 50, 100, 150].forEach(value => {
+        amountTicks.forEach(value => {
           const y = yAmount(value);
           hourly.appendChild(make('line', { x1: pad.l, y1: y, x2: W - pad.r, y2: y, stroke: value ? '#1d344c' : '#2c4660' }));
           drawLabel(hourly, 8, y + 4, String(value), { 'font-size': 9 });
         });
-        [94, 98.3, 102].forEach(value => drawLabel(hourly, W - 30, yRtp(value) + 4, `${value}%`, { 'font-size': 9 }));
+        rtpLabels.forEach(label => drawLabel(hourly, W - 30, label.y + 4, `${label.value}%`, { 'font-size': 9 }));
         hours.forEach((label, i) => drawLabel(hourly, x(i), base + 30, label, { 'text-anchor': 'end', transform: `rotate(-55 ${x(i)} ${base + 30})`, 'font-size': 8 }));
         const barWidth = Math.min(13, plotW / hours.length * .24);
         bet.forEach((value, i) => {
