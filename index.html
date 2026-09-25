@@ -177,9 +177,9 @@
     .game-loss { grid-column: 9 / span 4; grid-row: 1; }
     .total-tickets { grid-column: 13 / span 4; grid-row: 1; min-height: 230px; }
     .player-distribution { grid-column: 17 / span 4; grid-row: 1; }
-    .hourly-rtp { grid-column: 1 / span 12; grid-row: 2; }
-    .bet-distribution { grid-column: 13 / span 4; grid-row: 2; }
-    .multiplier-distribution { grid-column: 17 / span 4; grid-row: 2; }
+    .hourly-rtp { grid-column: 1 / span 10; grid-row: 2; }
+    .bet-distribution { grid-column: 11 / span 5; grid-row: 2; }
+    .multiplier-distribution { grid-column: 16 / span 5; grid-row: 2; }
     .game-summary table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .game-summary th, .game-summary td { padding: 8px 6px; white-space: normal; }
     .game-summary thead th { text-align: center; }
@@ -596,7 +596,7 @@
       <div class="monthly-row">
       <div class="panel pad chart-box"><div class="side-title"><h3>30-Day Performance Trend</h3><span>Bars: bet amount + payout · Lines: RTP + D1 retention</span></div><svg id="thirtyDayChart" class="chart tall-svg" viewBox="0 0 1020 340" preserveAspectRatio="none" role="img" aria-label="30-day performance trend chart"></svg><div class="legend"><span><i style="background:var(--blue)"></i>Bet amount</span><span><i style="background:var(--violet)"></i>Payout</span><span><i class="line" style="background:var(--green)"></i>RTP trendline</span><span><i class="line" style="background:#f2a65a"></i>D1 Retention trendline</span><span class="legend-note"><i style="background:#ef4444;width:7px;height:7px;border-radius:50%"></i>Red dot: RTP changed during the day</span></div></div>
       <div class="panel table-scroll"><table><thead><tr><th>Platform</th><th>Bet Amount</th><th>Payout</th><th>GGR</th><th>RTP</th><th>Rounds</th><th>Players</th><th>New Players</th><th>D1 Retention</th><th>Max Payout</th><th>Max Bet Amount</th><th>Max Multiplier</th></tr></thead><tbody><tr><td><b>BingoPlus</b><span class="platform-sub">Loteria</span></td><td>₱3,117,455.00</td><td>₱3,026,218.75</td><td class="positive">₱91,236.25</td><td class="positive">97.07%</td><td>342,715</td><td>4,999</td><td>190</td><td>6.73%</td><td>₱615</td><td>₱50</td><td>500x</td></tr><tr><td><b>GameZone</b><span class="platform-sub">Slot</span></td><td>₱3,949,722.00</td><td>₱3,790,089.12</td><td class="positive">₱159,632.88</td><td class="positive">95.96%</td><td>950,977</td><td>11,957</td><td>1,030</td><td>6.66%</td><td>₱7,500</td><td>₱100</td><td>250x</td></tr><tr><td><b>ArenaPlus</b><span class="platform-sub">Slot</span></td><td>₱302,712.00</td><td>₱277,950.50</td><td class="positive">₱24,761.50</td><td class="positive">91.82%</td><td>64,311</td><td>778</td><td>363</td><td>4.60%</td><td>₱1,640</td><td>₱100</td><td>250x</td></tr></tbody><tfoot><tr><th>Total</th><th>₱7,369,889.00</th><th>₱7,094,258.37</th><th class="positive">₱275,630.63</th><th class="positive">96.26%</th><th>1,358,003</th><th>17,657</th><th>1,583</th><th>6.49%</th><th>₱7,500</th><th>₱100</th><th>500x</th></tr></tfoot></table>
-        <div class="chart-note">Bet, Payout, GGR, RTP, Rounds, Players and Max Multiplier are month-to-date (September 1–23). New Players, D1 Retention, Max Payout and Max Bet Amount are for the reporting day, September 24, 2026.</div>
+        <div class="chart-note">Bet, Payout, GGR, RTP, Rounds, Players and Max Multiplier are month-to-date (September 1–24). New Players, D1 Retention, Max Payout and Max Bet Amount are for the reporting day, September 24, 2026.</div>
         <div class="monthly-share-charts">
           <div class="monthly-share-card"><h4>Monthly GGR Share</h4><small>Revenue contribution</small><div class="monthly-share-content"><svg viewBox="0 0 60 60" aria-label="Monthly GGR Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#dce5ef" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="32.55 67.45" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="59.65 40.35" stroke-dashoffset="-32.55" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="7.79 92.21" stroke-dashoffset="-92.21" transform="rotate(-90 30 30)"/></svg><div class="monthly-share-legend"><span><span><i style="background:var(--cyan)"></i>BP</span><b>32.55%</b></span><span><span><i style="background:var(--blue)"></i>GP</span><b>59.65%</b></span><span><span><i style="background:var(--violet)"></i>AP</span><b>7.79%</b></span></div></div></div>
           <div class="monthly-share-card"><h4>Monthly Player Share</h4><small>Audience contribution</small><div class="monthly-share-content"><svg viewBox="0 0 60 60" aria-label="Monthly Player Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#dce5ef" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" stroke="#40d9d0" stroke-width="9" pathLength="100" stroke-dasharray="28.41 71.59" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#6ea8ff" stroke-width="9" pathLength="100" stroke-dasharray="67.86 32.14" stroke-dashoffset="-28.41" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" stroke="#b78cff" stroke-width="9" pathLength="100" stroke-dasharray="4.17 95.83" stroke-dashoffset="-96.27" transform="rotate(-90 30 30)"/></svg><div class="monthly-share-legend"><span><span><i style="background:var(--cyan)"></i>BP</span><b>28.41%</b></span><span><span><i style="background:var(--blue)"></i>GP</span><b>67.86%</b></span><span><span><i style="background:var(--violet)"></i>AP</span><b>4.17%</b></span></div></div></div>
@@ -675,7 +675,7 @@
 
       const hourly = document.getElementById('hourlyRtpChart');
       if (hourly) {
-        const W = 900, H = 315, pad = { l: 32, r: 30, t: 24, b: 62 }, base = H - pad.b;
+        const W = 900, H = 315, pad = { l: 40, r: 62, t: 24, b: 62 }, base = H - pad.b;
         const hours = Array.from({ length: 24 }, (_, hour) => `${String(hour).padStart(2, '0')}:00`);
         const bet = [21.33, 24.62, 13.17, 12.95, 14.55, 7.86, 12.30, 7.21, 14.50, 10.76, 11.44, 43.62, 32.48, 24.41, 29.05, 27.74, 21.56, 20.79, 29.05, 28.81, 28.56, 26.60, 32.32, 77.64];
         const payout = [19.27, 24.71, 12.30, 12.23, 13.23, 7.13, 10.68, 6.04, 13.16, 9.98, 10.28, 45.35, 29.47, 24.10, 25.94, 27.22, 19.94, 20.83, 27.70, 28.15, 26.92, 23.95, 31.73, 79.02];
@@ -695,15 +695,12 @@
         const rtpLabels = [];
         const addRtpLabel = (value, force) => {
           const y = yRtp(value);
-          if (force || !rtpLabels.some(label => Math.abs(label.y - y) < 9)) {
+          if (force || !rtpLabels.some(label => Math.abs(label.y - y) < 13)) {
             rtpLabels.push({ value, y });
           }
         };
         addRtpLabel(rtpLo, true);
         addRtpLabel(rtpHi, true);
-        // The 98.3% target is labelled only when it will not collide; its dashed
-        // line is always drawn regardless.
-        addRtpLabel(98.3, Math.abs(yRtp(98.3) - yRtp(rtpLo)) >= 9);
         {
           const target = rtpSpan / 5;
           const mag = Math.pow(10, Math.floor(Math.log10(target)));
@@ -713,6 +710,9 @@
             addRtpLabel(Math.round(value * 100) / 100, false);
           }
         }
+        // The 98.3% target joins the axis only when it does not collide with a
+        // tick; the dashed line is always drawn and the inline label names it.
+        addRtpLabel(98.3, false);
         rtpLabels.sort((a, b) => a.value - b.value);
         // Amount axis: keeps the approved 0/50/100/150 grid on a normal day and
         // raises the ceiling instead of letting a heavier day's bars overflow.
@@ -735,9 +735,9 @@
           hourly.appendChild(make('line', { x1: pad.l, y1: y, x2: W - pad.r, y2: y, stroke: value ? '#1d344c' : '#2c4660' }));
           drawLabel(hourly, 8, y + 4, String(value), { 'font-size': 9 });
         });
-        rtpLabels.forEach(label => drawLabel(hourly, W - 30, label.y + 4, `${label.value}%`, { 'font-size': 9 }));
-        hours.forEach((label, i) => drawLabel(hourly, x(i), base + 30, label, { 'text-anchor': 'end', transform: `rotate(-55 ${x(i)} ${base + 30})`, 'font-size': 8 }));
-        const barWidth = Math.min(13, plotW / hours.length * .24);
+        rtpLabels.forEach(label => drawLabel(hourly, W - 44, label.y + 4, `${label.value}%`, { 'font-size': 9 }));
+        hours.forEach((label, i) => drawLabel(hourly, x(i), base + 19, label, { 'text-anchor': 'end', transform: `rotate(-55 ${x(i)} ${base + 19})`, 'font-size': 8 }));
+        const barWidth = Math.min(13, plotW / hours.length * .20);
         bet.forEach((value, i) => {
           const bar = make('rect', { x: x(i) - barWidth - 2, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 4, fill: '#6ea8ff' });
           setTip(bar, `<b>${hours[i]}</b><br>Bet Amount: ${value}`, `<b>${hours[i]}</b><br>投注金额：${value}`);
@@ -757,7 +757,7 @@
         });
         const thresholdY = yRtp(98.3);
         hourly.appendChild(make('line', { x1: pad.l, y1: thresholdY, x2: W - pad.r, y2: thresholdY, stroke: '#f2a65a', 'stroke-width': 2, 'stroke-dasharray': '7 6' }));
-        drawLabel(hourly, W - 90, thresholdY - 7, '98.3% target', { fill: '#f2a65a', 'font-size': 9 });
+        drawLabel(hourly, W - 150, thresholdY - 7, '98.3% target', { fill: '#f2a65a', 'font-size': 9 });
       }
 
       const thirtyDay = document.getElementById('thirtyDayChart');
@@ -783,9 +783,9 @@
           thirtyDay.appendChild(make('line', { x1: pad.l, y1: y, x2: W - pad.r, y2: y, stroke: value ? '#1d344c' : '#2c4660' }));
           drawLabel(thirtyDay, 7, y + 4, String(value), { 'font-size': 9 });
         });
-        dates.forEach((date, i) => drawLabel(thirtyDay, x(i), base + 38, date, { 'text-anchor': 'end', transform: `rotate(-65 ${x(i)} ${base + 38})`, 'font-size': 8 }));
+        dates.forEach((date, i) => drawLabel(thirtyDay, x(i), base + 24, date, { 'text-anchor': 'end', transform: `rotate(-65 ${x(i)} ${base + 24})`, 'font-size': 8 }));
         [90, 95, 100, 105].forEach(value => drawLabel(thirtyDay, W - 26, yRtp(value) + 4, `${value}%`, { 'font-size': 9 }));
-        [0, 4, 8, 12, 16, 20].forEach(value => drawLabel(thirtyDay, W - 26, yRetention(value) + 4, `${value}%`, { fill: '#f2a65a', 'font-size': 9 }));
+        [0, 10, 20].forEach(value => drawLabel(thirtyDay, W - 26, yRetention(value) + 4, `${value}%`, { fill: '#f2a65a', 'font-size': 9 }));
         const barWidth = Math.max(4, Math.min(8, plotW / dates.length * .22));
         bet.forEach((value, i) => {
           const bar = make('rect', { x: x(i) - barWidth - 1, y: yAmount(value), width: barWidth, height: base - yAmount(value), rx: 2, fill: '#6ea8ff' });
@@ -906,14 +906,14 @@
         ['.player-distribution', 'The 1–10 rounds range has the most unique players, shown separately for Loteria and Slot.'],
         ['.bet-distribution', 'The dominant settled denomination is ₱5.00 for Loteria and ₱1.00 for Slot, based on 127,057 settled orders on September 24, 2026.'],
         ['.multiplier-distribution', '0x is the largest multiplier band by rounds.'],
-        ['.player-grid > .panel:first-child', 'Players created on September 23 accounted for most of the day’s activity.'],
+        ['.player-grid > .panel:first-child', 'Players created on September 24 accounted for most of the day’s activity.'],
         ['.player-grid > .panel:nth-child(2)', 'GP has the largest active-player base among the three platforms.'],
         ['.player-grid > .chart-grid-3 > .panel:nth-child(1)', 'D1 retention is the main player-engagement metric to monitor.'],
         ['.player-grid > .chart-grid-3 > .panel:nth-child(2)', 'New players recorded more rounds than returning players on every platform.'],
         ['.player-grid > .chart-grid-3 > .panel:nth-child(3)', 'Unique-player counts are highest at the lower bet denominations, with Loteria and Slot shown separately.'],
         ['.player-feature-panel', 'Normal Bet is the primary feature behavior; Buy Feature is a smaller segment.'],
         ['.monthly-row > .panel:first-child', 'The 30-day view compares daily bet and payout bars with RTP and D1 retention trendlines.'],
-        ['.monthly-row > .panel:nth-child(2)', 'MTD platform totals are month-to-date from the per-site archive for September 1–23.'],
+        ['.monthly-row > .panel:nth-child(2)', 'MTD platform totals are month-to-date from the per-site archive for September 1–24.'],
       ];
       notes.forEach(([selector, text]) => {
         const panel = document.querySelector(selector);
@@ -1042,10 +1042,10 @@
         "Hourly RTP is evaluated against the 98.3% target while bet amount and payout intensity are shown by hour.": "每小时 RTP 对照 98.3% 目标进行评估，同时按小时显示投注金额与派彩强度。",
         "NON rounds carry most volume; Cumulative and Daily adjustments apply to a small share of rounds but pay far above their stake, which drives daily RTP variance.": "普通回合贡献绝大部分交易量；奖励回合在少量回合中以远高于投注的派彩，导致当日 RTP 波动。",
         "Winning rounds are rounds with a payout greater than zero.": "中奖回合指派彩大于零的回合。",
-        "Players created on September 23 accounted for most of the day’s activity.": "9 月 23 日当天创建的新玩家贡献了当日大部分活跃度。",
+        "Players created on September 24 accounted for most of the day’s activity.": "9 月 24 日当天创建的新玩家贡献了当日大部分活跃度。",
         "New players recorded more rounds than returning players on every platform.": "三个平台中新玩家的回合数均多于回访玩家。",
         "Normal Bet is the primary feature behavior; Buy Feature is a smaller segment.": "普通投注是主要的功能行为；购买功能占比较小。",
-        "MTD platform totals are month-to-date from the per-site archive for September 1–23.": "月初至今平台总计取自各分站存档，覆盖 9 月 1–23 日。",
+        "MTD platform totals are month-to-date from the per-site archive for September 1–24.": "月初至今平台总计取自各分站存档，覆盖 9 月 1–24 日。",
         "Winning rounds represent 30.4% of Loteria rounds and 30.2% of Slot rounds on September 24, 2026.": "2026 年 9 月 23 日，中奖回合占乐透回合数的 30.4%，占老虎机回合数的 30.2%。",
         "GameZone contributes the largest share of September 23 bet amount and GGR.": "GameZone 占 9 月 23 日投注金额与 GGR 的最大份额。",
         "Month-to-date totals cover September 1–23, 2026 and include the September 23 verified day.": "月初至今总计覆盖 2026 年 9 月 1–23 日，包含 9 月 23 日已验证数据。",
