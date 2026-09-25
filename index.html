@@ -677,7 +677,7 @@
         // label set now follow the data, and the floor drops further if a day
         // dips below 70% so the low side cannot overflow either.
         const rtpLo = Math.min(70, Math.floor(Math.min(...rtp) / 10) * 10);
-        const rtpHi = Math.max(102, Math.ceil(Math.max(...rtp) / 10) * 10);
+        const rtpHi = Math.max(102, Math.ceil(Math.max(...rtp) * 1.02 / 10) * 10);
         const rtpSpan = (rtpHi - rtpLo) || 1;
         const yRtp = value => base - (value - rtpLo) / rtpSpan * plotH;
         const rtpLabels = [];
