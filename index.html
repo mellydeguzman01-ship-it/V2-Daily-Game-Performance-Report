@@ -689,7 +689,7 @@
 
       <div class="chart-grid-3" style="margin-top:14px">
         <div class="panel pad chart-box total-tickets"><div class="side-title"><h3>Total Tickets</h3><span>By feature behavior</span></div>
-          <svg class="chart" viewBox="0 0 390 235" role="img" aria-label="Total tickets by Loteria and Slot"><line x1="42" y1="194" x2="370" y2="194" stroke="#2c4660"/><line x1="42" y1="132" x2="370" y2="132" stroke="#1d344c"/><line x1="42" y1="70" x2="370" y2="70" stroke="#1d344c"/><rect x="52" y="178.555" width="22" height="15.4445" rx="5" fill="#6ea8ff"/><rect x="80" y="70" width="22" height="124" rx="5" fill="#b78cff"/><rect x="159" y="193.953" width="22" height="0.0470302" rx="5" fill="#6ea8ff"/><rect x="187" y="193.456" width="22" height="0.543787" rx="5" fill="#b78cff"/><rect x="266" y="193.679" width="22" height="0.321373" rx="5" fill="#6ea8ff"/><rect x="294" y="191.169" width="22" height="2.83063" rx="5" fill="#b78cff"/><text x="77" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Normal Bet</text><text x="184" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Buy Feature</text><text x="291" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Bonus Round</text></svg>
+          <svg class="chart" viewBox="0 0 390 235" role="img" aria-label="Total tickets by Loteria and Slot"><line x1="42" y1="194" x2="370" y2="194" stroke="#2c4660"/><line x1="42" y1="132" x2="370" y2="132" stroke="#1d344c"/><line x1="42" y1="70" x2="370" y2="70" stroke="#1d344c"/><rect x="52" y="173.658" width="22" height="20.342" rx="5" fill="#6ea8ff"/><rect x="80" y="70" width="22" height="124" rx="5" fill="#b78cff"/><rect x="159" y="193.943" width="22" height="0.0566886" rx="5" fill="#6ea8ff"/><rect x="187" y="193.49" width="22" height="0.510198" rx="5" fill="#b78cff"/><rect x="266" y="193.519" width="22" height="0.481275" rx="5" fill="#6ea8ff"/><rect x="294" y="191.11" width="22" height="2.88996" rx="5" fill="#b78cff"/><text x="77" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Normal Bet</text><text x="184" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Buy Feature</text><text x="291" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Bonus Round</text></svg>
           <div class="legend"><span><i style="background:var(--blue)"></i>Loteria</span><span><i style="background:var(--violet)"></i>Slot</span></div><div class="chart-note">Settled rounds by feature behavior (Loteria = BingoPlus, Slot = GameZone + ArenaPlus).</div>
         </div>
         <div class="panel pad chart-box player-distribution"><div class="side-title"><h3>Player Distribution by Rounds Played</h3><span>Horizontal bar chart · unique players</span></div><svg class="chart" viewBox="0 0 390 235" preserveAspectRatio="none" role="img" aria-label="Horizontal bar chart showing player distribution by rounds played, separated by Loteria and Slot"><line x1="100" y1="18" x2="100" y2="196" stroke="#2c4660"/><text x="100" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">0</text><line x1="205" y1="18" x2="205" y2="196" stroke="#1d344c"/><text x="205" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">300</text><line x1="310" y1="18" x2="310" y2="196" stroke="#1d344c"/><text x="310" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">600</text><text x="4" y="31" fill="#8ea4bd" font-size="8">1–10</text><text x="4" y="61" fill="#8ea4bd" font-size="8">11–20</text><text x="4" y="91" fill="#8ea4bd" font-size="8">21–50</text><text x="4" y="121" fill="#8ea4bd" font-size="8">51–100</text><text x="4" y="151" fill="#8ea4bd" font-size="8">100+</text><rect x="100" y="20" width="51.8" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="30" width="123.9" height="8" rx="4" fill="#b78cff"/><rect x="100" y="50" width="23.1" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="60" width="72.45" height="8" rx="4" fill="#b78cff"/><rect x="100" y="80" width="28.7" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="90" width="173.6" height="8" rx="4" fill="#b78cff"/><rect x="100" y="110" width="18.2" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="120" width="123.55" height="8" rx="4" fill="#b78cff"/><rect x="100" y="140" width="16.45" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="150" width="105.35" height="8" rx="4" fill="#b78cff"/></svg>
@@ -992,32 +992,32 @@
         });
       };
       bindStaticRects('.total-tickets svg', [
-        ['<b>Normal Bet · Loteria</b><br>Tickets: 15,763', '<b>普通投注 · 乐透</b><br>票数：15,763'],
-        ['<b>Normal Bet · Slot</b><br>Tickets: 126,557', '<b>普通投注 · 老虎机</b><br>票数：126,557'],
-        ['<b>Buy Feature · Loteria</b><br>Tickets: 48', '<b>购买功能 · 乐透</b><br>票数：48'],
-        ['<b>Buy Feature · Slot</b><br>Tickets: 555', '<b>购买功能 · 老虎机</b><br>票数：555'],
-        ['<b>Bonus Round · Loteria</b><br>Tickets: 328', '<b>奖励回合 · 乐透</b><br>票数：328'],
-        ['<b>Bonus Round · Slot</b><br>Tickets: 2,889', '<b>奖励回合 · 老虎机</b><br>票数：2,889']
+        ['<b>Normal Bet · Loteria</b><br>Tickets: 17,583', '<b>普通投注 · 乐透</b><br>票数：17,583'],
+        ['<b>Normal Bet · Slot</b><br>Tickets: 107,182', '<b>普通投注 · 老虎机</b><br>票数：107,182'],
+        ['<b>Buy Feature · Loteria</b><br>Tickets: 49', '<b>购买功能 · 乐透</b><br>票数：49'],
+        ['<b>Buy Feature · Slot</b><br>Tickets: 441', '<b>购买功能 · 老虎机</b><br>票数：441'],
+        ['<b>Bonus Round · Loteria</b><br>Tickets: 416', '<b>奖励回合 · 乐透</b><br>票数：416'],
+        ['<b>Bonus Round · Slot</b><br>Tickets: 2,498', '<b>奖励回合 · 老虎机</b><br>票数：2,498']
       ]);
       bindStaticRects('.player-distribution svg', [
-        ['<b>1–10 Rounds · Loteria</b><br>Unique Players: 97', '<b>1–10回合 · 乐透</b><br>唯一玩家：97'],
-        ['<b>1–10 Rounds · Slot</b><br>Unique Players: 419', '<b>1–10回合 · 老虎机</b><br>唯一玩家：419'],
-        ['<b>11–20 Rounds · Loteria</b><br>Unique Players: 65', '<b>11–20回合 · 乐透</b><br>唯一玩家：65'],
-        ['<b>11–20 Rounds · Slot</b><br>Unique Players: 291', '<b>11–20回合 · 老虎机</b><br>唯一玩家：291'],
-        ['<b>21–50 Rounds · Loteria</b><br>Unique Players: 90', '<b>21–50回合 · 乐透</b><br>唯一玩家：90'],
-        ['<b>21–50 Rounds · Slot</b><br>Unique Players: 596', '<b>21–50回合 · 老虎机</b><br>唯一玩家：596'],
-        ['<b>51–100 Rounds · Loteria</b><br>Unique Players: 58', '<b>51–100回合 · 乐透</b><br>唯一玩家：58'],
-        ['<b>51–100 Rounds · Slot</b><br>Unique Players: 443', '<b>51–100回合 · 老虎机</b><br>唯一玩家：443'],
-        ['<b>100+ Rounds · Loteria</b><br>Unique Players: 32', '<b>100+回合 · 乐透</b><br>唯一玩家：32'],
-        ['<b>100+ Rounds · Slot</b><br>Unique Players: 344', '<b>100+回合 · 老虎机</b><br>唯一玩家：344']
+        ['<b>1–10 Rounds · Loteria</b><br>Unique Players: 148', '<b>1–10回合 · 乐透</b><br>唯一玩家：148'],
+        ['<b>1–10 Rounds · Slot</b><br>Unique Players: 354', '<b>1–10回合 · 老虎机</b><br>唯一玩家：354'],
+        ['<b>11–20 Rounds · Loteria</b><br>Unique Players: 66', '<b>11–20回合 · 乐透</b><br>唯一玩家：66'],
+        ['<b>11–20 Rounds · Slot</b><br>Unique Players: 207', '<b>11–20回合 · 老虎机</b><br>唯一玩家：207'],
+        ['<b>21–50 Rounds · Loteria</b><br>Unique Players: 82', '<b>21–50回合 · 乐透</b><br>唯一玩家：82'],
+        ['<b>21–50 Rounds · Slot</b><br>Unique Players: 496', '<b>21–50回合 · 老虎机</b><br>唯一玩家：496'],
+        ['<b>51–100 Rounds · Loteria</b><br>Unique Players: 52', '<b>51–100回合 · 乐透</b><br>唯一玩家：52'],
+        ['<b>51–100 Rounds · Slot</b><br>Unique Players: 353', '<b>51–100回合 · 老虎机</b><br>唯一玩家：353'],
+        ['<b>100+ Rounds · Loteria</b><br>Unique Players: 47', '<b>100+回合 · 乐透</b><br>唯一玩家：47'],
+        ['<b>100+ Rounds · Slot</b><br>Unique Players: 301', '<b>100+回合 · 老虎机</b><br>唯一玩家：301']
       ]);
       bindStaticRects('.pg-rounds svg', [
-        ['<b>BP1 · New Players</b><br>Rounds: 11,448', '<b>BP1 · 新玩家</b><br>回合数：11,448'],
-        ['<b>BP1 · Returning Players</b><br>Rounds: 4,691', '<b>BP1 · 回访玩家</b><br>回合数：4,691'],
-        ['<b>GP · New Players</b><br>Rounds: 81,104', '<b>GP · 新玩家</b><br>回合数：81,104'],
-        ['<b>GP · Returning Players</b><br>Rounds: 22,187', '<b>GP · 回访玩家</b><br>回合数：22,187'],
-        ['<b>AP · New Players</b><br>Rounds: 24,038', '<b>AP · 新玩家</b><br>回合数：24,038'],
-        ['<b>AP · Returning Players</b><br>Rounds: 2,672', '<b>AP · 回访玩家</b><br>回合数：2,672']
+        ['<b>BP1 · New Players</b><br>Rounds: 11,503', '<b>BP1 · 新玩家</b><br>回合数：11,503'],
+        ['<b>BP1 · Returning Players</b><br>Rounds: 6,545', '<b>BP1 · 回访玩家</b><br>回合数：6,545'],
+        ['<b>GP · New Players</b><br>Rounds: 69,049', '<b>GP · 新玩家</b><br>回合数：69,049'],
+        ['<b>GP · Returning Players</b><br>Rounds: 19,726', '<b>GP · 回访玩家</b><br>回合数：19,726'],
+        ['<b>AP · New Players</b><br>Rounds: 18,046', '<b>AP · 新玩家</b><br>回合数：18,046'],
+        ['<b>AP · Returning Players</b><br>Rounds: 3,300', '<b>AP · 回访玩家</b><br>回合数：3,300']
       ]);
       // Player Engagement Distribution hover cards. The array is rewritten from the
       // day's own band counts on every build - a literal here would freeze at the
