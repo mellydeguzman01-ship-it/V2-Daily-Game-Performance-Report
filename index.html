@@ -181,9 +181,10 @@
     .gp-tools { grid-column: 1 / span 10; grid-row: 3; }
     .gp-feature { grid-column: 11 / span 5; grid-row: 3; }
     .gp-passline { grid-column: 16 / span 5; grid-row: 3; }
-    .pp-repeat { grid-column: span 6; }
-    .pp-tiers { grid-column: span 8; }
-    .pp-streaks { grid-column: span 6; }
+    /* Repeat-Round Rate and Day-Level Win/Loss Streaks are ONE card
+       (user, 2026-10-01), so row 3 is 2 panels at 10 / 10 tracks. */
+    .pp-mixed { grid-column: span 10; }
+    .pp-tiers { grid-column: span 10; }
     .game-summary table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .game-summary th, .game-summary td { padding: 8px 6px; white-space: normal; }
     .game-summary thead th { text-align: center; }
@@ -738,12 +739,12 @@
           <div class="table-scroll"><table><thead><tr><th>Player</th><th>Mult.</th><th>Bet site</th><th>Bet → Payout</th><th>RTP</th><th>Rounds</th></tr></thead><tbody><tr><td>bingoplusdgfyg2</td><td>100×</td><td>BP1</td><td>₱100→₱10,000</td><td>661.76%</td><td>17</td></tr><tr><td>bingoplus9nsfk1</td><td>20×</td><td>BP1</td><td>₱100→₱2,000</td><td>124.67%</td><td>218</td></tr><tr><td>bingoplusm594vz</td><td>20×</td><td>BP1</td><td>₱100→₱2,000</td><td>165.91%</td><td>22</td></tr><tr><td>bingoplusggjn96</td><td>17.75×</td><td>BP1</td><td>₱100→₱1,775</td><td>146.59%</td><td>22</td></tr><tr><td>bingoplusc3gmaj</td><td>15.25×</td><td>BP1</td><td>₱100→₱1,525</td><td>160.94%</td><td>16</td></tr></tbody></table></div><div class="chart-note">Biggest single-bet payout, highest first. RTP and Rounds are the player’s whole reporting day, not the winning round.</div>
           <!--PP:TOP5:END-->
         </div>
-        <div class="panel pad pp-repeat">
-          <div class="side-title"><h3>Repeat-Round Player Rate</h3><span>≥2 settled rounds</span></div>
-          <!--PP:REPEAT:START-->
-          <div style="display:flex;gap:18px;flex-wrap:wrap"><div><div class="metric-label">Repeat-round players (≥2 rounds)</div><div class="metric-value positive">1,637</div><div class="metric-subtext">90.1% of 1,816 players</div></div><div><div class="metric-label">One round only</div><div class="metric-value negative">179</div><div class="metric-subtext">9.9% of players</div></div></div>
-          <div class="chart-note" style="margin-top:12px">Repeat-round rate = players with 2 or more settled rounds that day ÷ every player the ledger settled (1,816). 179 players (9.9%) settled exactly one round. A single round is a one-shot visit, not a session.</div>
-          <!--PP:REPEAT:END-->
+        <div class="panel pad pp-mixed">
+          <div class="side-title"><h3>Repeat-Round Rate &amp; Win/Loss Streaks</h3><span>≥2 rounds · longest runs</span></div>
+          <!--PP:MIXED:START-->
+          <div style="display:flex;gap:18px;flex-wrap:wrap"><div><div class="metric-label">Repeat-round players (≥2 rounds)</div><div class="metric-value positive">1,637</div><div class="metric-subtext">90.1% of 1,816 players</div></div><div><div class="metric-label">One round only</div><div class="metric-value negative">179</div><div class="metric-subtext">9.9% of players</div></div><div><div class="metric-label">Longest win streak</div><div class="metric-value positive">9 rounds</div><div class="metric-subtext">consecutive winning rounds, one player</div></div><div><div class="metric-label">Longest losing streak</div><div class="metric-value negative">31 rounds</div><div class="metric-subtext">consecutive losing rounds, one player</div></div></div>
+          <div class="chart-note" style="margin-top:12px">Repeat-round rate = players with 2 or more settled rounds that day ÷ every player the ledger settled (1,816); 179 players (9.9%) settled exactly one round. A win is a settled round with a payout greater than zero, and a streak counts consecutive rounds for one player inside the reporting day: the longest win run anyone reached is 9 rounds and the longest losing run is 31 rounds. Most players never get past a short run — the commonest best win run is 2 rounds, and 1,744 players recorded at least one winning round.</div>
+          <!--PP:MIXED:END-->
         </div>
         <div class="panel pad pp-tiers">
           <div class="side-title"><h3>Players by Spend Tier</h3><span>Per-player daily bet</span></div>
@@ -751,13 +752,6 @@
           <div class="table-scroll"><table><thead><tr><th>Tier</th><th>Daily bet</th><th>Players</th><th>Share</th></tr></thead><tbody><tr><th scope="row">Micro</th><td>&lt;₱100</td><td>1,020</td><td>56.2%</td></tr><tr><th scope="row">Casual</th><td>₱100–₱500</td><td>558</td><td>30.7%</td></tr><tr><th scope="row">Regular</th><td>₱500–₱2,000</td><td>187</td><td>10.3%</td></tr><tr><th scope="row">High</th><td>₱2,000–₱10,000</td><td>49</td><td>2.7%</td></tr><tr><th scope="row">High Value</th><td>₱10,000+</td><td>2</td><td>0.1%</td></tr></tbody></table></div>
           <div class="chart-note" style="margin-top:12px">Tier = the player’s own settled bet for the day, not a single round. Boundaries are exclusive at the lower edge, so every player falls in exactly one tier (1,816 players in total). Median daily bet ₱80.00, largest ₱28,610.00.</div>
           <!--PP:TIERS:END-->
-        </div>
-        <div class="panel pad pp-streaks">
-          <div class="side-title"><h3>Day-Level Win/Loss Streaks</h3><span>Longest consecutive runs</span></div>
-          <!--PP:STREAKS:START-->
-          <div style="display:flex;gap:18px;flex-wrap:wrap"><div><div class="metric-label">Longest win streak</div><div class="metric-value positive">9 rounds</div><div class="metric-subtext">consecutive winning rounds, one player</div></div><div><div class="metric-label">Longest losing streak</div><div class="metric-value negative">31 rounds</div><div class="metric-subtext">consecutive losing rounds, one player</div></div></div>
-          <div class="chart-note" style="margin-top:12px">A win is a settled round with a payout greater than zero; a streak counts consecutive rounds for one player inside the reporting day. Headline only: the longest win run anyone reached is 9 rounds and the longest losing run is 31 rounds. Most players never get past a short run — the commonest best win run is 2 rounds. (top runs: 2 rounds × 539, 3 rounds × 517, 4 rounds × 283) 1,744 players recorded at least one winning round.</div>
-          <!--PP:STREAKS:END-->
         </div>
       </div>
     </section>
@@ -1114,9 +1108,8 @@
         "RTP template = the `rtp_template` (raw `rtpTemplateId`) the round settled under; share is of the day’s 105,434 settled rounds. Template 2 and Template 4 carry 79.91% of rounds; the widest realized RTP is Template 9 at 134.37% on 3,068 rounds, the lowest is Template 8 at 90.56%.": "RTP 模板 = 该回合结算所用的 `rtp_template`（原始字段 `rtpTemplateId`）；占比为当日 105,434 个已结算回合中的份额。模板 2 与模板 4 占回合数的 79.91%；实际 RTP 最高为模板 9，达 134.37%（3,068 个回合）；最低为模板 8，90.56%。",
         "Per settled round: a round that paid an extra win (`otherWinAmount` > 0) counts as a Bonus Round (2,430 rounds, 2.30%); `betType` BUY_FEATURE counts as a Buy Feature (356 rounds, 0.34%). Player entries count a player once per product: 811 saw a bonus and 228 bought a feature.": "按已结算回合计：产生额外奖金的回合（`otherWinAmount` > 0）计为奖励回合（2,430 个回合，2.30%）；`betType` 为 BUY_FEATURE 的计为购买功能（356 个回合，0.34%）。玩家记录按产品分别计入：811 位触发奖励回合，228 位购买功能。",
         "Pass line = a player who settled 100 rounds or more on the reporting day. 260 of 1,816 players (14.3%) crossed it; the ladder shows the stricter lines for context (≥200 rounds: 90, ≥500 rounds: 12, ≥1,000 rounds: 3). Rounds are the settled ledger, one row per round.": "达标线 = 当日结算回合数达到 100 或以上的玩家。1,816 位玩家中有 260 位（14.3%）跨过该线；阶梯列出更严格的线作为参照（≥200 回合：90、≥500 回合：12、≥1,000 回合：3）。回合数取自已结算账本，每回合一行。",
-        "Repeat-round rate = players with 2 or more settled rounds that day ÷ every player the ledger settled (1,816). 179 players (9.9%) settled exactly one round. A single round is a one-shot visit, not a session.": "回合重复率 = 当日结算回合数达 2 次或以上的玩家 ÷ 账本结算的全部玩家（1,816）。有 179 位玩家（9.9%）只结算了一个回合。单回合代表一次性访问，而非一次游玩体验。",
+        "Repeat-round rate = players with 2 or more settled rounds that day ÷ every player the ledger settled (1,816); 179 players (9.9%) settled exactly one round. A win is a settled round with a payout greater than zero, and a streak counts consecutive rounds for one player inside the reporting day: the longest win run anyone reached is 9 rounds and the longest losing run is 31 rounds. Most players never get past a short run — the commonest best win run is 2 rounds, and 1,744 players recorded at least one winning round.": "回合重复率 = 当日结算回合数达 2 次或以上的玩家 ÷ 账本结算的全部玩家（1,816）；有 179 位玩家（9.9%）只结算了一个回合。中奖 = 派彩大于零的已结算回合，连胜/连败指同一位玩家当日内连续的回合：最长连胜为 9 个回合，最长连败为 31 个回合。大多数玩家最佳连胜很短，最常见的最佳连胜为 2 个回合；1,744 位玩家至少记录到一个中奖回合。",
         "Tier = the player’s own settled bet for the day, not a single round. Boundaries are exclusive at the lower edge, so every player falls in exactly one tier (1,816 players in total). Median daily bet ₱80.00, largest ₱28,610.00.": "分层 = 玩家当日自身的已结算投注额，而非单回合。区间下限为开区间，因此每位玩家只归入一个分层（合计 1,816 位玩家）。日投注中位数 ₱80.00，最高 ₱28,610.00。",
-        "A win is a settled round with a payout greater than zero; a streak counts consecutive rounds for one player inside the reporting day. Headline only: the longest win run anyone reached is 9 rounds and the longest losing run is 31 rounds. Most players never get past a short run — the commonest best win run is 2 rounds. (top runs: 2 rounds × 539, 3 rounds × 517, 4 rounds × 283) 1,744 players recorded at least one winning round.": "中奖 = 派彩大于零的已结算回合；连胜/连败指同一位玩家当日内连续的回合。仅列头条数字：最长连胜为 9 个回合，最长连败为 31 个回合。大多数玩家的最佳连胜很短，最常见的最佳连胜为 2 个回合。1,744 位玩家至少记录到一个中奖回合。",
         "RTP by Template": "按模板的 RTP",
         "rtp_template · 7 templates": "rtp_template · 7 个模板",
         "RTP template": "RTP 模板",
@@ -1124,12 +1117,10 @@
         "Per settled round": "按已结算回合计",
         "100 Rounds a Day": "每日 100 回合",
         "Pass line · ≥100 rounds": "达标线 · ≥100 回合",
-        "Repeat-Round Player Rate": "回合重复玩家比例",
-        "≥2 settled rounds": "≥2 个已结算回合",
+        "Repeat-Round Rate & Win/Loss Streaks": "回合重复率与连胜/连败记录",
+        "≥2 rounds · longest runs": "≥2 回合 · 最长连续",
         "Players by Spend Tier": "按投注分层的玩家",
         "Per-player daily bet": "玩家当日投注额",
-        "Day-Level Win/Loss Streaks": "当日连胜/连败记录",
-        "Longest consecutive runs": "最长连续回合数",
         "Tier": "分层",
         "Daily bet": "当日投注",
         "Players": "玩家数",
