@@ -172,14 +172,10 @@
 
     .chart-grid-2, .chart-grid-3 { display: contents; }
     .game-performance-grid { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
-    .game-summary { grid-column: 1 / span 4; grid-row: 1; margin-bottom: 0; }
-    .dynamic-rtp { grid-column: 5 / span 4; grid-row: 1; }
-    .game-loss { grid-column: 9 / span 4; grid-row: 1; }
-    .total-tickets { grid-column: 13 / span 4; grid-row: 1; min-height: 230px; }
-    .player-distribution { grid-column: 17 / span 4; grid-row: 1; }
+    .game-summary { grid-column: 1 / span 10; grid-row: 1; margin-bottom: 0; }
+    .dynamic-rtp { grid-column: 11 / span 10; grid-row: 1; }
     .hourly-rtp { grid-column: 1 / span 10; grid-row: 2; }
-    .bet-distribution { grid-column: 11 / span 5; grid-row: 2; }
-    .multiplier-distribution { grid-column: 16 / span 5; grid-row: 2; }
+    .multiplier-distribution { grid-column: 11 / span 10; grid-row: 2; }
     /* The 8 panelled metrics approved 2026-10-01: Game Performance rows 3-4 and
        Player Performance row 3. Spans are explicit so each row totals 20 tracks. */
     .gp-tools { grid-column: 1 / span 10; grid-row: 3; }
@@ -202,8 +198,8 @@
        given; the two distribution tables spread their slack across rows. */
     .chart-grid-3 > .panel:nth-child(3) { display: flex; flex-direction: column; justify-content: space-between; }
     .chart-grid-3 > .panel:nth-child(3) .chart { flex: 1 1 auto; height: auto; min-height: 300px; }
-    .bet-distribution, .multiplier-distribution { display: flex; flex-direction: column; justify-content: space-between; }
-    .bet-distribution .dist-table, .multiplier-distribution .dist-table { flex: 1 1 auto; height: 100%; }
+    .multiplier-distribution { display: flex; flex-direction: column; justify-content: space-between; }
+    .multiplier-distribution .dist-table { flex: 1 1 auto; height: 100%; }
     .chart { width: 100%; height: 235px; display: block; }
     /* The bet-denomination small multiple is the only chart with a portrait
        viewBox. Given a FIXED height it was letterboxed by preserveAspectRatio:
@@ -240,33 +236,8 @@
     .game-performance-grid .dist-table { min-width: 0; width: 100%; table-layout: fixed; font-size: 9px; }
     .game-performance-grid .dist-table td, .game-performance-grid .dist-table th { padding: 6px 4px; white-space: normal; word-break: break-word; }
     .game-performance-grid .mini-bar { width: 100%; min-width: 18px; }
-    .game-performance-grid .bet-distribution, .game-performance-grid .multiplier-distribution { overflow: visible !important; }
+    .game-performance-grid .multiplier-distribution { overflow: visible !important; }
     .compact-pie { display: grid; grid-template-columns: 190px 1fr; gap: 15px; align-items: center; min-height: 290px; }
-    .game-loss { overflow: hidden; }
-    .game-loss .compact-pie { display: flex; flex-direction: column; gap: 10px; min-height: 0; align-items: stretch; }
-    .game-loss .donut-wrap { min-height: 185px; }
-    .game-loss .donut-wrap svg { width: min(160px, 100%); max-width: 100%; height: auto; }
-    .game-loss .compact-pie > div:last-child { width: 100%; min-width: 0; }
-    .game-loss .side-title { align-items: flex-start; margin-bottom: 9px; }
-    .game-loss .side-title h3 { line-height: 1.25; }
-    .game-loss > .side-title { display: block; }
-    .game-loss > .side-title span { display: block; margin-top: 3px; }
-    .game-loss .round-outcome-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
-    .game-loss .round-outcome-card { min-width: 0; padding: 8px 6px; border: 1px solid #bcd0e4; border-radius: 10px; background: #f4f8fc; }
-    .game-loss .round-outcome-card h4 { margin: 0 0 3px; color: #243b53; font-size: 11px; }
-    .game-loss .round-outcome-card .donut-wrap { min-height: 116px; }
-    .game-loss .round-outcome-card .donut-wrap svg { width: 112px; height: 112px; }
-    .game-loss .round-outcome-card .donut-center strong { color: #162b42; font-size: 16px; }
-    .game-loss .round-outcome-card .donut-center span { color: #607187; font-size: 9px; }
-    .game-loss .round-outcome-card .legend-list { gap: 5px; color: #243b53; }
-    .game-loss .round-outcome-card .legend-list div { display: block; font-size: 9px; line-height: 1.25; }
-    .game-loss .round-outcome-card .legend-list b { display: block; margin-top: 2px; white-space: nowrap; }
-    .game-loss .loss-content { display: grid; grid-template-columns: 1fr; gap: 8px; min-width: 0; }
-    .game-loss .loss-content > div:last-child { width: 100%; min-width: 0; }
-    .game-loss .legend-list { gap: 8px; }
-    .game-loss .legend-list div { align-items: flex-start; flex-wrap: wrap; gap: 4px 8px; font-size: 10px; }
-    .game-loss .legend-list div b { white-space: nowrap; }
-    .game-loss .chart-note { font-size: 10px; line-height: 1.35; }
     /* Player Performance grid (user layout spec, 2026-09-29):
        Row 1 = five panels at 20% each; Row 2 = 35 / 20 / 20 / 25.
        A 20-track grid lets every panel carry its own share as an explicit span
@@ -406,10 +377,6 @@
     html.night .bar-track { background: rgba(148,177,211,.13); }
     html.night .keynote { border-color: rgba(110,168,255,.24); background: rgba(12,29,48,.72); }
     html.night .monthly-share-card { border-color: #2c4a6b; background: linear-gradient(145deg, #16283f, #101d30); }
-    html.night .game-loss .round-outcome-card { border-color: #2c4a6b; background: #14263c; }
-    html.night .game-loss .round-outcome-card h4, html.night .game-loss .round-outcome-card .legend-list { color: var(--text); }
-    html.night .game-loss .round-outcome-card .donut-center strong { color: var(--text); }
-    html.night .game-loss .round-outcome-card .donut-center span { color: #8ea4bd; }
     html.night .report-archive-item:hover { border-color: var(--blue); background: #162e4d; }
     html.night .language-toggle { background: #10243a; border-color: #3f6b9c; }
     html.night .header-button { color: #d7e7fb; background: #132b47; border-color: #3f6b9c; }
@@ -440,7 +407,7 @@
     html.night #nightModeButton::before { content: "\2600\FE0F  "; }
     html.night #nightModeButton { color: #fff; background: #24466f; border-color: #70a9eb; }
 
-    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .game-loss, .total-tickets, .player-distribution, .hourly-rtp, .bet-distribution, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline { grid-column: 1; grid-row: auto; } .side-stack { display: grid; gap: 10px; } }
+    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline { grid-column: 1; grid-row: auto; } .side-stack { display: grid; gap: 10px; } }
     @media (max-width: 700px) { .wrap { width: 100%; padding: 12px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
   /* ---- conditional GGR / RTP colour -------------------------------------
      .positive (green) / .negative (red) are the page's existing signal colours.
@@ -691,21 +658,9 @@
           </div>
           <div class="chart-note" style="margin-top:18px">Interpretation: NON carries most volume; Cumulative and Daily have smaller volume but higher realized RTP and negative GGR because their payout exceeds their bet amount for the reporting day.</div>
         </div>
-        <div class="panel pad game-loss"><div class="side-title"><h3>Winning Rounds vs Losing Rounds</h3><span>Loss vs win rounds</span></div><div class="round-outcome-grid"><article class="round-outcome-card"><h4>Loteria</h4><div class="donut-wrap"><svg class="round-outcome-chart" width="210" height="210" viewBox="0 0 210 210" role="img" aria-label="Loteria winning rounds versus losing rounds"><circle cx="105" cy="105" r="72" fill="none" stroke="#243c55" stroke-width="27"/><circle cx="105" cy="105" r="72" fill="none" stroke="#55d68b" stroke-width="27" stroke-dasharray="134 452" stroke-linecap="butt" transform="rotate(-90 105 105)"/><circle cx="105" cy="105" r="72" fill="none" stroke="#ff7388" stroke-width="27" stroke-dasharray="318 318" stroke-dashoffset="-134" stroke-linecap="butt" transform="rotate(-90 105 105)"/></svg><div class="donut-center"><strong>22,301</strong><span>Total rounds</span></div></div><div class="legend-list"><div><span><i class="dot positive" style="display:inline-block;margin-right:5px"></i>Winning rounds</span><b class="positive">6,627 · 29.7%</b></div><div><span><i class="dot negative" style="display:inline-block;margin-right:5px"></i>Losing rounds</span><b class="negative">15,674 · 70.3%</b></div></div></article><article class="round-outcome-card"><h4>Slot</h4><div class="donut-wrap"><svg class="round-outcome-chart" width="210" height="210" viewBox="0 0 210 210" role="img" aria-label="Slot winning rounds versus losing rounds"><circle cx="105" cy="105" r="72" fill="none" stroke="#243c55" stroke-width="27"/><circle cx="105" cy="105" r="72" fill="none" stroke="#55d68b" stroke-width="27" stroke-dasharray="135 452" stroke-linecap="butt" transform="rotate(-90 105 105)"/><circle cx="105" cy="105" r="72" fill="none" stroke="#ff7388" stroke-width="27" stroke-dasharray="317 317" stroke-dashoffset="-135" stroke-linecap="butt" transform="rotate(-90 105 105)"/></svg><div class="donut-center"><strong>83,133</strong><span>Total rounds</span></div></div><div class="legend-list"><div><span><i class="dot positive" style="display:inline-block;margin-right:5px"></i>Winning rounds</span><b class="positive">24,813 · 29.8%</b></div><div><span><i class="dot negative" style="display:inline-block;margin-right:5px"></i>Losing rounds</span><b class="negative">58,320 · 70.2%</b></div></div></article></div><div class="chart-note" style="margin-top:10px">Winning rounds are settled rounds with a payout greater than zero, verified against the September 30, 2026 settled-order export.</div></div>
       </div>
 
       <div class="chart-grid-3" style="margin-top:14px">
-        <div class="panel pad chart-box total-tickets"><div class="side-title"><h3>Total Tickets</h3><span>By feature behavior</span></div>
-          <svg class="chart" viewBox="0 0 390 235" role="img" aria-label="Total tickets by Loteria and Slot"><line x1="42" y1="194" x2="370" y2="194" stroke="#2c4660"/><line x1="42" y1="132" x2="370" y2="132" stroke="#1d344c"/><line x1="42" y1="70" x2="370" y2="70" stroke="#1d344c"/><rect x="52" y="160.687" width="22" height="33.313" rx="5" fill="#6ea8ff"/><rect x="80" y="70" width="22" height="124" rx="5" fill="#b78cff"/><rect x="159" y="193.916" width="22" height="0.0842901" rx="5" fill="#6ea8ff"/><rect x="187" y="193.539" width="22" height="0.461297" rx="5" fill="#b78cff"/><rect x="266" y="193.22" width="22" height="0.780067" rx="5" fill="#6ea8ff"/><rect x="294" y="191.056" width="22" height="2.94402" rx="5" fill="#b78cff"/><text x="77" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Normal Bet</text><text x="184" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Buy Feature</text><text x="291" y="217" fill="#8ea4bd" font-size="9" text-anchor="middle">Bonus Round</text></svg>
-          <div class="legend"><span><i style="background:var(--blue)"></i>Loteria</span><span><i style="background:var(--violet)"></i>Slot</span></div><div class="chart-note">Settled rounds by feature behavior (Loteria = BingoPlus, Slot = GameZone + ArenaPlus).</div>
-        </div>
-        <div class="panel pad chart-box player-distribution"><div class="side-title"><h3>Player Distribution by Rounds Played</h3><span>Horizontal bar chart · unique players</span></div><svg class="chart" viewBox="0 0 390 235" preserveAspectRatio="none" role="img" aria-label="Horizontal bar chart showing player distribution by rounds played, separated by Loteria and Slot"><line x1="100" y1="18" x2="100" y2="196" stroke="#2c4660"/><text x="100" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">0</text><line x1="205" y1="18" x2="205" y2="196" stroke="#1d344c"/><text x="205" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">300</text><line x1="310" y1="18" x2="310" y2="196" stroke="#1d344c"/><text x="310" y="211" fill="#8ea4bd" font-size="8" text-anchor="middle">600</text><text x="4" y="31" fill="#8ea4bd" font-size="8">1–10</text><text x="4" y="61" fill="#8ea4bd" font-size="8">11–20</text><text x="4" y="91" fill="#8ea4bd" font-size="8">21–50</text><text x="4" y="121" fill="#8ea4bd" font-size="8">51–100</text><text x="4" y="151" fill="#8ea4bd" font-size="8">100+</text><rect x="100" y="20" width="56.35" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="30" width="112.35" height="8" rx="4" fill="#b78cff"/><rect x="100" y="50" width="17.5" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="60" width="57.05" height="8" rx="4" fill="#b78cff"/><rect x="100" y="80" width="37.45" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="90" width="147.7" height="8" rx="4" fill="#b78cff"/><rect x="100" y="110" width="22.05" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="120" width="97.3" height="8" rx="4" fill="#b78cff"/><rect x="100" y="140" width="15.4" height="8" rx="4" fill="#6ea8ff"/><rect x="100" y="150" width="73.5" height="8" rx="4" fill="#b78cff"/></svg>
-          <div class="legend"><span><i style="background:var(--blue)"></i>Loteria</span><span><i style="background:var(--violet)"></i>Slot</span></div><div class="chart-note">Unique settled players per rounds-played band, September 30, 2026.</div>
-        </div>
-        <div class="panel pad chart-box bet-distribution"><div class="side-title"><h3>Bet Amount Distribution</h3><span>Bet amount + rounds + share</span></div>
-          <table class="dist-table"><thead><tr><th>Bet amount band</th><th>Total bet</th><th>Rounds</th><th>Share</th><th></th></tr></thead><tbody><tr><td>₱0.50</td><td>₱5,771.50</td><td>11,543</td><td>11.0%</td><td><div class="mini-bar"><i style="width:30%"></i></div></td></tr><tr><td>₱1.00</td><td>₱23,549</td><td>23,549</td><td>22.3%</td><td><div class="mini-bar"><i style="width:60%"></i></div></td></tr><tr><td>₱2.00</td><td>₱32,462</td><td>16,231</td><td>15.4%</td><td><div class="mini-bar"><i style="width:42%"></i></div></td></tr><tr><td>₱3.00</td><td>₱31,464</td><td>10,488</td><td>10.0%</td><td><div class="mini-bar"><i style="width:27%"></i></div></td></tr><tr><td>₱5.00</td><td>₱140,535</td><td>28,107</td><td>26.7%</td><td><div class="mini-bar"><i style="width:72%"></i></div></td></tr><tr><td>₱10.00 - ₱20.00</td><td>₱163,760</td><td>13,350</td><td>12.7%</td><td><div class="mini-bar"><i style="width:34%"></i></div></td></tr><tr><td>>₱20.00 - ₱80.00</td><td>₱45,990</td><td>1,165</td><td>1.1%</td><td><div class="mini-bar"><i style="width:3%"></i></div></td></tr><tr><td>>₱80.00 - ₱200.00</td><td>₱100,700</td><td>986</td><td>0.9%</td><td><div class="mini-bar"><i style="width:3%"></i></div></td></tr><tr><td>>₱200.00 - ₱500.00</td><td>₱1,200</td><td>3</td><td>0.0%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>₱500.00 - ₱1000.00</td><td>₱7,600</td><td>8</td><td>0.0%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>₱1000.00</td><td>₱8,000</td><td>4</td><td>0.0%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr></tbody></table>
-          <div class="chart-note">Settled rounds by bet denomination, Loteria and Slot combined; 11 bet amount bands covering 105,434 of 105,434 settled rounds and ₱561,031.50 of ₱561,031.50 bet; the tail ends at ₱2,000.00 for this day.</div>
-        </div>
         <div class="panel pad chart-box multiplier-distribution"><div class="side-title"><h3>Multiplier Distribution</h3><span>Winning outcome bands</span></div>
           <table class="dist-table"><thead><tr><th>Multiplier band</th><th>Rounds</th><th>Share</th><th></th></tr></thead><tbody><tr><td>0x</td><td>73,994</td><td>70.18%</td><td><div class="mini-bar"><i style="width:72%"></i></div></td></tr><tr><td>>0x - 5x</td><td>27,198</td><td>25.80%</td><td><div class="mini-bar"><i style="width:26%"></i></div></td></tr><tr><td>>5x - 20x</td><td>3,732</td><td>3.54%</td><td><div class="mini-bar"><i style="width:4%"></i></div></td></tr><tr><td>>20x - 50x</td><td>462</td><td>0.44%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>50x - 100x</td><td>38</td><td>0.04%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>100x - 300x</td><td>10</td><td>0.01%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>300x - 500x</td><td>0</td><td>0.00%</td><td><div class="mini-bar"><i style="width:0%"></i></div></td></tr><tr><td>>500x - 1000x</td><td>0</td><td>0.00%</td><td><div class="mini-bar"><i style="width:0%"></i></div></td></tr><tr><td>>1000x</td><td>0</td><td>0.00%</td><td><div class="mini-bar"><i style="width:0%"></i></div></td></tr></tbody></table>
           <div class="chart-note">Source multiplier bands covering 105,434 of 105,434 settled rounds; the tail ends at 250x for this day.</div>
@@ -750,15 +705,14 @@
         <div class="panel pad pg-4"><div class="side-title"><h3>New Player vs Returning Player</h3><span>1,816 distinct active players</span></div><div class="compact-pie"><div class="donut-wrap"><svg width="180" height="180" viewBox="0 0 180 180"><circle cx="90" cy="90" r="61" fill="none" stroke="#243c55" stroke-width="25"/><circle cx="90" cy="90" r="61" fill="none" stroke="#6ea8ff" stroke-width="25" stroke-dasharray="267 383" stroke-linecap="butt" transform="rotate(-90 90 90)"/><circle cx="90" cy="90" r="61" fill="none" stroke="#b78cff" stroke-width="25" stroke-dasharray="116 383" stroke-dashoffset="-267" stroke-linecap="butt" transform="rotate(-90 90 90)"/></svg><div class="donut-center"><strong>1,816</strong><span>players</span></div></div><div class="legend-list"><div><span><i class="dot" style="display:inline-block;margin-right:7px;color:var(--blue)"></i>New players</span><b>1,265 · 69.7%</b></div><div><span><i class="dot" style="display:inline-block;margin-right:7px;color:var(--violet)"></i>Returning</span><b>551 · 30.3%</b></div></div></div><div class="chart-note">New = accounts created on September 30, 2026 (per-site sum).</div></div>
         <div class="panel pad pg-4"><div class="side-title"><h3>Player per Platform</h3><span>New vs returning + active players</span></div><div class="table-scroll"><table><thead><tr><th>Platform</th><th>New players</th><th>Returning players</th><th>Active Players</th><th>New share</th></tr></thead><tbody><tr><td><b>BP1</b><span class="platform-sub">BingoPlus</span></td><td>279</td><td>146</td><td>425</td><td>65.6%</td></tr><tr><td><b>GP</b><span class="platform-sub">GameZone</span></td><td>650</td><td>313</td><td>963</td><td>67.5%</td></tr><tr><td><b>AP</b><span class="platform-sub">ArenaPlus</span></td><td>336</td><td>95</td><td>431</td><td>78.0%</td></tr></tbody></table></div><div class="chart-note">Returning = active players minus accounts created that day.</div></div>
         <div class="panel pad pg-4 pg-retention"><div class="side-title"><h3>Player Retention</h3><span>Combined all-active return rate</span></div><div class="retention-row"><div><strong>D1 Retention</strong><small>Next-day returning players</small><svg class="spark" viewBox="0 0 160 28"><polyline points="1,4 27.3333,23.4687 53.6667,18.5688 80,22.725 106.333,22.5937 132.667,24.5187 159,25" fill="none" stroke="#ffca64" stroke-width="2"/></svg></div><div class="retention-value warning">6.77%</div></div><div class="retention-row"><div><strong>D3 Retention</strong><small>Third-day returning players</small><svg class="spark" viewBox="0 0 160 28"><polyline points="1,4 27.3333,10.2508 53.6667,6.8796 80,19.6622 106.333,15.1672 132.667,21.4883 159,25" fill="none" stroke="#6ea8ff" stroke-width="2"/></svg></div><div class="retention-value ">2.52%</div></div><div class="retention-row"><div><strong>D7 Retention</strong><small>Seventh-day returning players</small><svg class="spark" viewBox="0 0 160 28"><polyline points="1,9.4 27.3333,14.44 53.6667,18.82 80,10.66 106.333,4 132.667,25 159,8.38" fill="none" stroke="#b78cff" stroke-width="2"/></svg></div><div class="retention-value ">1.97%</div></div></div>
-        <div class="panel pad chart-box pg-4 pg-rounds pg-chart"><div class="side-title"><h3>Rounds Comparison</h3><span>New vs returning players · rounds played</span></div><svg class="chart" viewBox="0 0 390 235" preserveAspectRatio="none"><line x1="42" y1="194" x2="370" y2="194" stroke="#2c4660"/><rect x="65" y="140.335" width="28" height="53.6647" rx="5" fill="#6ea8ff"/><rect x="95" y="151.999" width="28" height="42.0009" rx="5" fill="#b78cff"/><rect x="155" y="19" width="28" height="175" rx="5" fill="#6ea8ff"/><rect x="185" y="126.844" width="28" height="67.1559" rx="5" fill="#b78cff"/><rect x="245" y="106.944" width="28" height="87.056" rx="5" fill="#6ea8ff"/><rect x="275" y="166.593" width="28" height="27.4072" rx="5" fill="#b78cff"/><text x="66" y="217" fill="#8ea4bd" font-size="11">BP</text><text x="156" y="217" fill="#8ea4bd" font-size="11">GP</text><text x="246" y="217" fill="#8ea4bd" font-size="11">AP</text></svg><div class="legend"><span><i style="background:var(--blue)"></i>New players</span><span><i style="background:var(--violet)"></i>Returning players</span></div><div class="chart-note">New = first day ever seen in the archive; bar heights are relative across the six series.</div></div>
       <div class="panel pad table-scroll player-feature-panel pg-4">
         <div class="side-title"><h3>Players by Game Feature Behavior</h3><span>Players may appear in more than one category</span></div>
         <table>
-          <thead><tr><th>Feature Behavior</th><th>Players</th><th>Share of Active Players</th><th>Average Rounds / Player</th></tr></thead>
+          <thead><tr><th>Feature Behavior</th><th>Players</th><th>Share of Active Players</th><th>Average Rounds / Player</th><th>Rounds</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Normal Bet</th><td>1,796</td><td>98.9%</td><td>58.5</td></tr>
-            <tr><th scope="row">Buy Feature</th><td>228</td><td>12.6%</td><td>1.6</td></tr>
-            <tr><th scope="row">Bonus Round</th><td>811</td><td>44.7%</td><td>3.0</td></tr>
+            <tr><th scope="row">Normal Bet</th><td>1,796</td><td>98.9%</td><td>58.5</td><td>102,648</td></tr>
+            <tr><th scope="row">Buy Feature</th><td>228</td><td>12.6%</td><td>1.6</td><td>356</td></tr>
+            <tr><th scope="row">Bonus Round</th><td>811</td><td>44.7%</td><td>3.0</td><td>2,430</td></tr>
           </tbody>
         </table>
       
@@ -1048,34 +1002,6 @@
           if (tips[index]) setTip(rect, tips[index][0], tips[index][1]);
         });
       };
-      bindStaticRects('.total-tickets svg', [
-        ['<b>Normal Bet · Loteria</b><br>Tickets: 21,737', '<b>普通投注 · 乐透</b><br>票数：21,737'],
-        ['<b>Normal Bet · Slot</b><br>Tickets: 80,911', '<b>普通投注 · 老虎机</b><br>票数：80,911'],
-        ['<b>Buy Feature · Loteria</b><br>Tickets: 55', '<b>购买功能 · 乐透</b><br>票数：55'],
-        ['<b>Buy Feature · Slot</b><br>Tickets: 301', '<b>购买功能 · 老虎机</b><br>票数：301'],
-        ['<b>Bonus Round · Loteria</b><br>Tickets: 509', '<b>奖励回合 · 乐透</b><br>票数：509'],
-        ['<b>Bonus Round · Slot</b><br>Tickets: 1,921', '<b>奖励回合 · 老虎机</b><br>票数：1,921']
-      ]);
-      bindStaticRects('.player-distribution svg', [
-        ['<b>1–10 Rounds · Loteria</b><br>Unique Players: 161', '<b>1–10回合 · 乐透</b><br>唯一玩家：161'],
-        ['<b>1–10 Rounds · Slot</b><br>Unique Players: 321', '<b>1–10回合 · 老虎机</b><br>唯一玩家：321'],
-        ['<b>11–20 Rounds · Loteria</b><br>Unique Players: 50', '<b>11–20回合 · 乐透</b><br>唯一玩家：50'],
-        ['<b>11–20 Rounds · Slot</b><br>Unique Players: 163', '<b>11–20回合 · 老虎机</b><br>唯一玩家：163'],
-        ['<b>21–50 Rounds · Loteria</b><br>Unique Players: 107', '<b>21–50回合 · 乐透</b><br>唯一玩家：107'],
-        ['<b>21–50 Rounds · Slot</b><br>Unique Players: 422', '<b>21–50回合 · 老虎机</b><br>唯一玩家：422'],
-        ['<b>51–100 Rounds · Loteria</b><br>Unique Players: 63', '<b>51–100回合 · 乐透</b><br>唯一玩家：63'],
-        ['<b>51–100 Rounds · Slot</b><br>Unique Players: 278', '<b>51–100回合 · 老虎机</b><br>唯一玩家：278'],
-        ['<b>100+ Rounds · Loteria</b><br>Unique Players: 44', '<b>100+回合 · 乐透</b><br>唯一玩家：44'],
-        ['<b>100+ Rounds · Slot</b><br>Unique Players: 210', '<b>100+回合 · 老虎机</b><br>唯一玩家：210']
-      ]);
-      bindStaticRects('.pg-rounds svg', [
-        ['<b>BP1 · New Players</b><br>Rounds: 12,510', '<b>BP1 · 新玩家</b><br>回合数：12,510'],
-        ['<b>BP1 · Returning Players</b><br>Rounds: 9,791', '<b>BP1 · 回访玩家</b><br>回合数：9,791'],
-        ['<b>GP · New Players</b><br>Rounds: 40,795', '<b>GP · 新玩家</b><br>回合数：40,795'],
-        ['<b>GP · Returning Players</b><br>Rounds: 15,655', '<b>GP · 回访玩家</b><br>回合数：15,655'],
-        ['<b>AP · New Players</b><br>Rounds: 20,294', '<b>AP · 新玩家</b><br>回合数：20,294'],
-        ['<b>AP · Returning Players</b><br>Rounds: 6,389', '<b>AP · 回访玩家</b><br>回合数：6,389']
-      ]);
       // Player Engagement Distribution hover cards. The array is rewritten from the
       // day's own band counts on every build - a literal here would freeze at the
       // day the template was last edited.
@@ -1112,15 +1038,6 @@
         const values = label.startsWith('GGR') ? [['BingoPlus (BP): 3.80%', 'BingoPlus (BP): 3.80%'], ['GameZone (BP): 23.36%', 'GameZone (BP): 23.36%'], ['ArenaPlus (BP): 72.85%', 'ArenaPlus (BP): 72.85%']] : label.startsWith('Player') ? [['BingoPlus (BP): 14.05%', 'BingoPlus (BP): 14.05%'], ['GameZone (BP): 67.19%', 'GameZone (BP): 67.19%'], ['ArenaPlus (BP): 18.77%', 'ArenaPlus (BP): 18.77%']] : [['BingoPlus (BP): 18.42%', 'BingoPlus (BP): 18.42%'], ['GameZone (BP): 59.23%', 'GameZone (BP): 59.23%'], ['ArenaPlus (BP): 22.35%', 'ArenaPlus (BP): 22.35%']];
         svg.querySelectorAll('circle').forEach((circle, index) => { if (index > 0 && values[index - 1]) setTip(circle, values[index - 1][0], values[index - 1][1]); });
       });
-      const roundOutcomeTips = [
-        [['<b>Loteria · Winning Rounds</b><br>6,627 · 29.7%', '<b>乐透 · 中奖回合</b><br>6,627 · 29.7%'], ['<b>Loteria · Losing Rounds</b><br>15,674 · 70.3%', '<b>乐透 · 未中奖回合</b><br>15,674 · 70.3%']], [['<b>Slot · Winning Rounds</b><br>24,813 · 29.8%', '<b>老虎机 · 中奖回合</b><br>24,813 · 29.8%'], ['<b>Slot · Losing Rounds</b><br>58,320 · 70.2%', '<b>老虎机 · 未中奖回合</b><br>58,320 · 70.2%']]
-      ];
-      document.querySelectorAll('.game-loss .round-outcome-chart').forEach((svg, chartIndex) => {
-        const circles = svg.querySelectorAll('circle');
-        const tips = roundOutcomeTips[chartIndex] || [];
-        if (circles[1] && tips[0]) setTip(circles[1], tips[0][0], tips[0][1]);
-        if (circles[2] && tips[1]) setTip(circles[2], tips[1][0], tips[1][1]);
-      });
       const playerDonutCircles = document.querySelectorAll('.player-grid > .panel:first-child svg circle');
       if (playerDonutCircles[1]) setTip(playerDonutCircles[1], '<b>New Players</b><br>1,265 · 69.7%', '<b>新玩家</b><br>1,265 · 69.7%');
       if (playerDonutCircles[2]) setTip(playerDonutCircles[2], '<b>Returning Players</b><br>551 · 30.3%', '<b>回访玩家</b><br>551 · 30.3%');
@@ -1149,15 +1066,14 @@
         ['.game-summary', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is the most frequent settled bet denomination by category.'],
         ['.hourly-rtp', 'Hourly RTP is evaluated against the 98.3% target while bet amount and payout intensity are shown by hour.'],
         ['.dynamic-rtp', 'NON rounds carry most volume; Cumulative and Daily adjustments apply to a small share of rounds but pay far above their stake, which drives daily RTP variance.'],
-        ['.game-loss', 'Winning rounds are rounds with a payout greater than zero.'],
-        ['.total-tickets', 'Normal Bet accounts for the majority of ticket activity across both Loteria and Slot.'],
-        ['.player-distribution', 'The 1–10 rounds range has the most unique players, shown separately for Loteria and Slot.'],
-        ['.bet-distribution', 'The dominant settled denomination is ₱5.00 for Loteria and ₱1.00 for Slot, based on 105,434 settled orders on September 30, 2026.'],
+
+
+
         ['.multiplier-distribution', '0x is the largest multiplier band by rounds.'],
         ['.player-grid > .panel:first-child', 'Players created on September 30, 2026 accounted for most of the day’s activity.'],
         ['.player-grid > .panel:nth-child(2)', 'GP has the largest active-player base among the three platforms.'],
         ['.pg-retention', 'D1 retention is the main player-engagement metric to monitor.'],
-        ['.pg-rounds', 'New players recorded more rounds than returning players on every platform.'],
+
         ['.pg-denom', 'Unique-player counts are highest at the lower bet denominations, with Loteria and Slot shown separately.'],
         ['.player-feature-panel', 'Normal Bet is the primary feature behavior; Buy Feature is a smaller segment.'],
         ['.pp-avg', 'The average rounds per player sits above the median on both Loteria and Slot, so a small group of high-frequency accounts pulls the average up.'],
