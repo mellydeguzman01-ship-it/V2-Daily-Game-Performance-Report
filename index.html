@@ -185,11 +185,7 @@
     .gp-tools { grid-column: 1 / span 10; grid-row: 3; }
     .gp-feature { grid-column: 11 / span 5; grid-row: 3; }
     .gp-passline { grid-column: 16 / span 5; grid-row: 3; }
-    .gp-rolling { grid-column: 1 / span 20; grid-row: 4; }
     .pp-repeat, .pp-tiers, .pp-streaks, .pp-react { grid-column: span 5; }
-    /* A generated chart's height must FOLLOW its viewBox; a fixed height on a
-       wide panel letterboxes the drawing or squashes its labels. */
-    .chart.gp-svg { width: 100%; height: auto; flex: 0 0 auto; }
     .game-summary table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .game-summary th, .game-summary td { padding: 8px 6px; white-space: normal; }
     .game-summary thead th { text-align: center; }
@@ -442,7 +438,7 @@
     html.night #nightModeButton::before { content: "\2600\FE0F  "; }
     html.night #nightModeButton { color: #fff; background: #24466f; border-color: #70a9eb; }
 
-    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .game-loss, .total-tickets, .player-distribution, .hourly-rtp, .bet-distribution, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-rolling { grid-column: 1; grid-row: auto; } .side-stack { display: grid; gap: 10px; } }
+    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .game-loss, .total-tickets, .player-distribution, .hourly-rtp, .bet-distribution, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline { grid-column: 1; grid-row: auto; } .side-stack { display: grid; gap: 10px; } }
     @media (max-width: 700px) { .wrap { width: 100%; padding: 12px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
   /* ---- conditional GGR / RTP colour -------------------------------------
      .positive (green) / .negative (red) are the page's existing signal colours.
@@ -741,13 +737,6 @@
           </div>
           <div class="chart-note" style="margin-top:12px">Pass line = a player who settled 100 rounds or more on the reporting day. 260 of 1,816 players (14.3%) crossed it; the ladder shows the stricter lines for context (≥200 rounds: 90, ≥500 rounds: 12, ≥1,000 rounds: 3). Rounds are the settled ledger, one row per round.</div>
           <!--GP:PASSLINE:END-->
-        </div>
-        <div class="panel pad chart-box gp-rolling">
-          <div class="side-title"><h3>Rolling RTP by Round Volume</h3><span>Running RTP · 1,000-round checkpoints</span></div>
-          <!--GP:ROLLING:START-->
-          <svg class="chart gp-svg" viewBox="0 0 1400 236" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Rolling RTP by round volume: running RTP after every thousand settled rounds"><line x1="52.0" y1="202.0" x2="1382.0" y2="202.0" style="stroke:var(--line)"/><text x="46.0" y="206.0" text-anchor="end" style="fill:var(--muted)" font-size="11">87%</text><line x1="52.0" y1="110.0" x2="1382.0" y2="110.0" style="stroke:var(--line)"/><text x="46.0" y="114.0" text-anchor="end" style="fill:var(--muted)" font-size="11">97%</text><line x1="52.0" y1="18.0" x2="1382.0" y2="18.0" style="stroke:var(--line)"/><text x="46.0" y="22.0" text-anchor="end" style="fill:var(--muted)" font-size="11">107%</text><line x1="52.0" y1="98.0" x2="1382.0" y2="98.0" style="stroke:var(--yellow)" stroke-width="2" stroke-dasharray="7 6"/><text x="1382.0" y="92.0" text-anchor="end" style="fill:var(--yellow)" font-size="11">98.3% target</text><text x="52.0" y="220.0" text-anchor="middle" style="fill:var(--muted)" font-size="11">0k</text><text x="318.0" y="220.0" text-anchor="middle" style="fill:var(--muted)" font-size="11">21k</text><text x="584.0" y="220.0" text-anchor="middle" style="fill:var(--muted)" font-size="11">42k</text><text x="850.0" y="220.0" text-anchor="middle" style="fill:var(--muted)" font-size="11">63k</text><text x="1116.0" y="220.0" text-anchor="middle" style="fill:var(--muted)" font-size="11">84k</text><text x="1382.0" y="220.0" text-anchor="middle" style="fill:var(--muted)" font-size="11">105k</text><polyline points="64.6,40.6 77.2,154.3 89.8,135.7 102.5,69.8 115.1,161.0 127.7,141.6 140.3,156.6 152.9,158.7 165.5,175.0 178.1,180.6 190.8,175.8 203.4,152.0 216.0,144.2 228.6,129.1 241.2,140.5 253.8,133.6 266.4,131.4 279.1,127.3 291.7,135.7 304.3,135.6 316.9,129.4 329.5,134.7 342.1,138.2 354.7,137.3 367.4,135.3 380.0,137.0 392.6,134.7 405.2,131.4 417.8,130.8 430.4,128.9 443.1,124.8 455.7,119.5 468.3,124.6 480.9,110.8 493.5,101.7 506.1,101.7 518.7,96.7 531.4,98.4 544.0,99.1 556.6,104.1 569.2,109.4 581.8,111.7 594.4,111.1 607.0,108.3 619.7,66.8 632.3,71.9 644.9,73.5 657.5,66.6 670.1,70.6 682.7,72.7 695.3,73.3 708.0,74.0 720.6,72.2 733.2,73.8 745.8,71.4 758.4,69.5 771.0,68.8 783.6,66.3 796.3,63.4 808.9,62.2 821.5,65.1 834.1,59.8 846.7,61.8 859.3,54.3 871.9,49.4 884.6,57.6 897.2,56.9 909.8,57.2 922.4,58.0 935.0,58.7 947.6,57.8 960.2,58.2 972.9,58.8 985.5,59.2 998.1,60.0 1010.7,60.0 1023.3,57.7 1035.9,57.8 1048.5,59.1 1061.2,60.6 1073.8,60.6 1086.4,61.4 1099.0,61.5 1111.6,61.7 1124.2,61.9 1136.8,59.4 1149.5,59.2 1162.1,60.5 1174.7,62.5 1187.3,62.6 1199.9,64.7 1212.5,63.7 1225.2,64.4 1237.8,64.4 1250.4,64.9 1263.0,65.2 1275.6,66.0 1288.2,65.7 1300.8,67.4 1313.5,61.3 1326.1,65.1 1338.7,66.5 1351.3,67.5 1363.9,66.9 1376.5,66.3 1382.0,67.7" fill="none" style="stroke:var(--blue)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="1382.0" cy="67.7" r="4" style="fill:var(--blue)"/><text x="1382.0" y="57.7" text-anchor="end" style="fill:var(--text)" font-size="12" font-weight="800">101.60% full day</text><text x="717.0" y="232.0" text-anchor="middle" style="fill:var(--muted)" font-size="11">Settled rounds accumulated</text></svg>
-          <div class="chart-note" style="margin-top:12px">X = settled rounds accumulated; Y = RTP of every round settled so far, so this is a RUNNING total and the last point is the day’s 101.60% by construction (106 checkpoints: every 1,000 rounds plus the full day). Across the first 10,000 rounds the running RTP ranged 89.33%–104.54% (a 15.21 pp spread); across the last 10,000 rounds it never left 101.60%–102.29% (0.69 pp), which is the convergence this panel exists to show.</div>
-          <!--GP:ROLLING:END-->
         </div>
       </div>
     </section>
@@ -1215,7 +1204,6 @@
         "Adjust mode = the RTP template the round settled under (`rtp_template`); share is of the day’s 105,434 settled rounds. Mode 2 and Mode 4 carry 79.91% of rounds; the widest realized RTP is Mode 9 at 134.37% on 3,068 rounds, the lowest is Mode 8 at 90.56%.": "调整模式 = 该回合结算所用的 RTP 模板（`rtp_template`）；占比为当日 105,434 个已结算回合中的份额。模式 2 与模式 4 占回合数的 79.91%；实际 RTP 最高为模式 9，达 134.37%（3,068 个回合）；最低为模式 8，90.56%。",
         "Per settled round: a round that paid an extra win (`otherWinAmount` > 0) counts as a Bonus Round (2,430 rounds, 2.30%); `betType` BUY_FEATURE counts as a Buy Feature (356 rounds, 0.34%). Player entries count a player once per product: 811 saw a bonus and 228 bought a feature.": "按已结算回合计：产生额外奖金的回合（`otherWinAmount` > 0）计为奖励回合（2,430 个回合，2.30%）；`betType` 为 BUY_FEATURE 的计为购买功能（356 个回合，0.34%）。玩家记录按产品分别计入：811 位触发奖励回合，228 位购买功能。",
         "Pass line = a player who settled 100 rounds or more on the reporting day. 260 of 1,816 players (14.3%) crossed it; the ladder shows the stricter lines for context (≥200 rounds: 90, ≥500 rounds: 12, ≥1,000 rounds: 3). Rounds are the settled ledger, one row per round.": "达标线 = 当日结算回合数达到 100 或以上的玩家。1,816 位玩家中有 260 位（14.3%）跨过该线；阶梯列出更严格的线作为参照（≥200 回合：90、≥500 回合：12、≥1,000 回合：3）。回合数取自已结算账本，每回合一行。",
-        "X = settled rounds accumulated; Y = RTP of every round settled so far, so this is a RUNNING total and the last point is the day’s 101.60% by construction (106 checkpoints: every 1,000 rounds plus the full day). Across the first 10,000 rounds the running RTP ranged 89.33%–104.54% (a 15.21 pp spread); across the last 10,000 rounds it never left 101.60%–102.29% (0.69 pp), which is the convergence this panel exists to show.": "X = 累计已结算回合数；Y = 截至目前所有回合的 RTP，因此为累计值，最后一点即当日 101.60%（共 106 个检查点：每 1,000 个回合一个，加上全天）。前 10,000 个回合的累计 RTP 介于 89.33%–104.54%（差异 15.21 个百分点）；后 10,000 个回合则始终在 101.60%–102.29%（0.69 个百分点），这正是本面板所展示的收敛现象。",
         "Repeat-round rate = players with 2 or more settled rounds that day ÷ every player the ledger settled (1,816). 179 players (9.9%) settled exactly one round. A single round is a one-shot visit, not a session.": "回合重复率 = 当日结算回合数达 2 次或以上的玩家 ÷ 账本结算的全部玩家（1,816）。有 179 位玩家（9.9%）只结算了一个回合。单回合代表一次性访问，而非一次游玩体验。",
         "Tier = the player’s own settled bet for the day, not a single round. Boundaries are exclusive at the lower edge, so every player falls in exactly one tier (1,816 players in total). Median daily bet ₱80.00, largest ₱28,610.00.": "分层 = 玩家当日自身的已结算投注额，而非单回合。区间下限为开区间，因此每位玩家只归入一个分层（合计 1,816 位玩家）。日投注中位数 ₱80.00，最高 ₱28,610.00。",
         "A win is a settled round with a payout greater than zero; a streak counts consecutive rounds for one player inside the reporting day. Headline only: the longest win run anyone reached is 9 rounds and the longest losing run is 31 rounds. Most players never get past a short run — the commonest best win run is 2 rounds. (top runs: 2 rounds × 539, 3 rounds × 517, 4 rounds × 283) 1,744 players recorded at least one winning round.": "中奖 = 派彩大于零的已结算回合；连胜/连败指同一位玩家当日内连续的回合。仅列头条数字：最长连胜为 9 个回合，最长连败为 31 个回合。大多数玩家的最佳连胜很短，最常见的最佳连胜为 2 个回合。1,744 位玩家至少记录到一个中奖回合。",
@@ -1227,7 +1215,6 @@
         "100 Rounds a Day": "每日 100 回合",
         "Pass line · ≥100 rounds": "达标线 · ≥100 回合",
         "Rolling RTP by Round Volume": "按回合量的累计 RTP",
-        "Running RTP · 1,000-round checkpoints": "累计 RTP · 每 1,000 个回合一个检查点",
         "Repeat-Round Player Rate": "回合重复玩家比例",
         "≥2 settled rounds": "≥2 个已结算回合",
         "Players by Spend Tier": "按投注分层的玩家",
@@ -1248,9 +1235,7 @@
         "One round only": "仅一个回合",
         "Gap since previous active day": "距上次活跃日的间隔",
         "Seen before at all": "曾出现过的玩家",
-        "Settled rounds accumulated": "累计已结算回合数",
-        "Adjust mode": "调整模式",
-        "RTP by round volume": "按回合量的 RTP"
+        "Adjust mode": "调整模式"
         });
         /*CN:PANELS:END*/
       });
