@@ -710,10 +710,10 @@
         </div>
       </div>
         <div class="panel pad chart-box gp-tools">
-          <div class="side-title"><h3>RTP by Adjust Mode</h3><span>rtp_template · 7 modes</span></div>
+          <div class="side-title"><h3>RTP by Template</h3><span>rtp_template · 7 templates</span></div>
           <!--GP:RTPMODE:START-->
-          <div class="table-scroll"><table class="dist-table"><thead><tr><th>Adjust mode</th><th>Rounds</th><th>Share</th><th>RTP</th><th>GGR</th><th></th></tr></thead><tbody><tr><th scope="row">Mode 1</th><td>4,072</td><td>3.86%</td><td class="negative">105.41%</td><td class="negative">-₱929.75</td><td><div class="mini-bar"><i style="width:10%"></i></div></td></tr><tr><th scope="row">Mode 2</th><td>42,564</td><td>40.37%</td><td class="positive">98.50%</td><td class="positive">₱3,348.75</td><td><div class="mini-bar"><i style="width:100%"></i></div></td></tr><tr><th scope="row">Mode 4</th><td>41,688</td><td>39.54%</td><td class="negative">102.32%</td><td class="negative">-₱4,557.25</td><td><div class="mini-bar"><i style="width:98%"></i></div></td></tr><tr><th scope="row">Mode 6</th><td>3,882</td><td>3.68%</td><td class="negative">100.28%</td><td class="negative">-₱90.62</td><td><div class="mini-bar"><i style="width:9%"></i></div></td></tr><tr><th scope="row">Mode 7</th><td>3,570</td><td>3.39%</td><td class="negative">119.00%</td><td class="negative">-₱5,023.38</td><td><div class="mini-bar"><i style="width:8%"></i></div></td></tr><tr><th scope="row">Mode 8</th><td>6,590</td><td>6.25%</td><td class="positive">90.56%</td><td class="positive">₱4,365.62</td><td><div class="mini-bar"><i style="width:15%"></i></div></td></tr><tr><th scope="row">Mode 9</th><td>3,068</td><td>2.91%</td><td class="negative">134.37%</td><td class="negative">-₱6,081.62</td><td><div class="mini-bar"><i style="width:7%"></i></div></td></tr></tbody></table></div>
-          <div class="chart-note" style="margin-top:12px">Adjust mode = the RTP template the round settled under (`rtp_template`); share is of the day’s 105,434 settled rounds. Mode 2 and Mode 4 carry 79.91% of rounds; the widest realized RTP is Mode 9 at 134.37% on 3,068 rounds, the lowest is Mode 8 at 90.56%.</div>
+          <div class="table-scroll"><table class="dist-table"><thead><tr><th>RTP template</th><th>Rounds</th><th>Share</th><th>RTP</th><th>GGR</th><th></th></tr></thead><tbody><tr><th scope="row">Template 1</th><td>4,072</td><td>3.86%</td><td class="negative">105.41%</td><td class="negative">-₱929.75</td><td><div class="mini-bar"><i style="width:10%"></i></div></td></tr><tr><th scope="row">Template 2</th><td>42,564</td><td>40.37%</td><td class="positive">98.50%</td><td class="positive">₱3,348.75</td><td><div class="mini-bar"><i style="width:100%"></i></div></td></tr><tr><th scope="row">Template 4</th><td>41,688</td><td>39.54%</td><td class="negative">102.32%</td><td class="negative">-₱4,557.25</td><td><div class="mini-bar"><i style="width:98%"></i></div></td></tr><tr><th scope="row">Template 6</th><td>3,882</td><td>3.68%</td><td class="negative">100.28%</td><td class="negative">-₱90.62</td><td><div class="mini-bar"><i style="width:9%"></i></div></td></tr><tr><th scope="row">Template 7</th><td>3,570</td><td>3.39%</td><td class="negative">119.00%</td><td class="negative">-₱5,023.38</td><td><div class="mini-bar"><i style="width:8%"></i></div></td></tr><tr><th scope="row">Template 8</th><td>6,590</td><td>6.25%</td><td class="positive">90.56%</td><td class="positive">₱4,365.62</td><td><div class="mini-bar"><i style="width:15%"></i></div></td></tr><tr><th scope="row">Template 9</th><td>3,068</td><td>2.91%</td><td class="negative">134.37%</td><td class="negative">-₱6,081.62</td><td><div class="mini-bar"><i style="width:7%"></i></div></td></tr></tbody></table></div>
+          <div class="chart-note" style="margin-top:12px">RTP template = the `rtp_template` (raw `rtpTemplateId`) the round settled under; share is of the day’s 105,434 settled rounds. Template 2 and Template 4 carry 79.91% of rounds; the widest realized RTP is Template 9 at 134.37% on 3,068 rounds, the lowest is Template 8 at 90.56%.</div>
           <!--GP:RTPMODE:END-->
         </div>
         <div class="panel pad chart-box gp-feature">
@@ -1201,15 +1201,16 @@
       Object.assign(window.__dynCN, {
         /*CN:PANELS:START*/
         Object.assign(window.__dynCN, {
-        "Adjust mode = the RTP template the round settled under (`rtp_template`); share is of the day’s 105,434 settled rounds. Mode 2 and Mode 4 carry 79.91% of rounds; the widest realized RTP is Mode 9 at 134.37% on 3,068 rounds, the lowest is Mode 8 at 90.56%.": "调整模式 = 该回合结算所用的 RTP 模板（`rtp_template`）；占比为当日 105,434 个已结算回合中的份额。模式 2 与模式 4 占回合数的 79.91%；实际 RTP 最高为模式 9，达 134.37%（3,068 个回合）；最低为模式 8，90.56%。",
+        "RTP template = the `rtp_template` (raw `rtpTemplateId`) the round settled under; share is of the day’s 105,434 settled rounds. Template 2 and Template 4 carry 79.91% of rounds; the widest realized RTP is Template 9 at 134.37% on 3,068 rounds, the lowest is Template 8 at 90.56%.": "RTP 模板 = 该回合结算所用的 `rtp_template`（原始字段 `rtpTemplateId`）；占比为当日 105,434 个已结算回合中的份额。模板 2 与模板 4 占回合数的 79.91%；实际 RTP 最高为模板 9，达 134.37%（3,068 个回合）；最低为模板 8，90.56%。",
         "Per settled round: a round that paid an extra win (`otherWinAmount` > 0) counts as a Bonus Round (2,430 rounds, 2.30%); `betType` BUY_FEATURE counts as a Buy Feature (356 rounds, 0.34%). Player entries count a player once per product: 811 saw a bonus and 228 bought a feature.": "按已结算回合计：产生额外奖金的回合（`otherWinAmount` > 0）计为奖励回合（2,430 个回合，2.30%）；`betType` 为 BUY_FEATURE 的计为购买功能（356 个回合，0.34%）。玩家记录按产品分别计入：811 位触发奖励回合，228 位购买功能。",
         "Pass line = a player who settled 100 rounds or more on the reporting day. 260 of 1,816 players (14.3%) crossed it; the ladder shows the stricter lines for context (≥200 rounds: 90, ≥500 rounds: 12, ≥1,000 rounds: 3). Rounds are the settled ledger, one row per round.": "达标线 = 当日结算回合数达到 100 或以上的玩家。1,816 位玩家中有 260 位（14.3%）跨过该线；阶梯列出更严格的线作为参照（≥200 回合：90、≥500 回合：12、≥1,000 回合：3）。回合数取自已结算账本，每回合一行。",
         "Repeat-round rate = players with 2 or more settled rounds that day ÷ every player the ledger settled (1,816). 179 players (9.9%) settled exactly one round. A single round is a one-shot visit, not a session.": "回合重复率 = 当日结算回合数达 2 次或以上的玩家 ÷ 账本结算的全部玩家（1,816）。有 179 位玩家（9.9%）只结算了一个回合。单回合代表一次性访问，而非一次游玩体验。",
         "Tier = the player’s own settled bet for the day, not a single round. Boundaries are exclusive at the lower edge, so every player falls in exactly one tier (1,816 players in total). Median daily bet ₱80.00, largest ₱28,610.00.": "分层 = 玩家当日自身的已结算投注额，而非单回合。区间下限为开区间，因此每位玩家只归入一个分层（合计 1,816 位玩家）。日投注中位数 ₱80.00，最高 ₱28,610.00。",
         "A win is a settled round with a payout greater than zero; a streak counts consecutive rounds for one player inside the reporting day. Headline only: the longest win run anyone reached is 9 rounds and the longest losing run is 31 rounds. Most players never get past a short run — the commonest best win run is 2 rounds. (top runs: 2 rounds × 539, 3 rounds × 517, 4 rounds × 283) 1,744 players recorded at least one winning round.": "中奖 = 派彩大于零的已结算回合；连胜/连败指同一位玩家当日内连续的回合。仅列头条数字：最长连胜为 9 个回合，最长连败为 31 个回合。大多数玩家的最佳连胜很短，最常见的最佳连胜为 2 个回合。1,744 位玩家至少记录到一个中奖回合。",
         "Window = 30 days: the player’s previous active day was at least that long before the reporting day. 62 of 1,816 active players (3.4%) qualify. 425 players had been seen before at all and 1,391 had no earlier record. The product was offline 8 Jun–16 Aug 2026, so the 31+ day bucket is relaunch returners; a player whose last visit predates 10 Mar 2026 has no older record to measure against.": "窗口 = 30 天：玩家上一次活跃日距当日至少该天数。1,816 位活跃玩家中有 62 位（3.4%）符合。共 425 位玩家曾出现过，1,391 位无更早记录。产品在 2026 年 6 月 8 日至 8 月 16 日期间下线，因此 31 天以上区间为重启后回流玩家；若玩家最后一次到访早于 2026 年 3 月 10 日，则无更早记录可供对比。",
-        "RTP by Adjust Mode": "按调整模式的 RTP",
-        "rtp_template · 7 modes": "rtp_template · 7 个模式",
+        "RTP by Template": "按模板的 RTP",
+        "rtp_template · 7 templates": "rtp_template · 7 个模板",
+        "RTP template": "RTP 模板",
         "Feature Trigger Rate": "功能触发率",
         "Per settled round": "按已结算回合计",
         "100 Rounds a Day": "每日 100 回合",
@@ -1233,8 +1234,7 @@
         "Repeat-round players (≥2 rounds)": "回合重复玩家（≥2 回合）",
         "One round only": "仅一个回合",
         "Gap since previous active day": "距上次活跃日的间隔",
-        "Seen before at all": "曾出现过的玩家",
-        "Adjust mode": "调整模式"
+        "Seen before at all": "曾出现过的玩家"
         });
         /*CN:PANELS:END*/
       });
