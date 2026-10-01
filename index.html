@@ -108,7 +108,12 @@
     .accent-blue { border-top: 3px solid var(--blue); } .accent-green { border-top: 3px solid var(--green); }
     .accent-red { border-top: 3px solid var(--red); } .accent-violet { border-top: 3px solid var(--violet); } .accent-cyan { border-top: 3px solid var(--cyan); }
 
-    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 25fr 15fr 20fr; gap: 10px; align-items: stretch; }
+    /* User request 2026-10-01 (mockup: "ganito dapat"): the band stacks at every
+       width, so matrix / charts / changelog / Compliance / Alerts are each full
+       width with Compliance above Alerts. The previous desktop row template is
+       kept here for a one-line revert:
+         grid-template-columns: 25fr 15fr 25fr 15fr 20fr; */
+    .platform-layout { display: grid; grid-template-columns: 1fr; gap: 10px; align-items: stretch; }
     .platform-layout table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .platform-layout th, .platform-layout td { padding: 8px 5px; white-space: normal; word-break: break-word; }
     .platform-layout .platform-sub { font-size: 9px; }
@@ -130,7 +135,10 @@
     .platform-name { font-weight: 800; } .platform-sub { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; }
     .tag { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 8px; color: var(--muted); font-size: 11px; }
     .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-    .side-stack { display: contents; }
+    /* Was `display: contents`, which made the panels grid COLUMNS of the row above.
+       As a real grid they stack full width in DOM order (charts, changelog,
+       compliance, alerts) - the arrangement the user asked for. */
+    .side-stack { display: grid; gap: 10px; }
     .side-stack > .panel { min-width: 0; }
     .platform-charts { display: grid; align-content: start; gap: 9px; }
     .platform-charts { border-color: #477fca; background: linear-gradient(145deg, #162e4d, #102238); }
