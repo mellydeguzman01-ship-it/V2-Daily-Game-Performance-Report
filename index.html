@@ -112,9 +112,12 @@
        column is a vertical stack of Alerts over Compliance ("asa baba ng alert yung
        compliance"), both still separate cards in their own colours. */
     /* User spec 2026-10-01: one row, five columns, no wrap.
-       1 Platform table 30fr | 2 Platform Share 10fr | 3 Changelog 20fr
-       4 Player/Game highlights 15fr | 5 Compliance + Alerts 15fr */
-    .platform-layout { display: grid; grid-template-columns: 30fr 10fr 20fr 15fr 15fr; gap: 10px; align-items: stretch; grid-auto-flow: row; }
+       1 Platform table 25fr | 2 Platform Share 15fr | 3 Changelog 20fr
+       4 Player/Game highlights 25fr | 5 Compliance + Alerts 15fr
+       Weights are the user's spec (2026-10-01): 25 / 15 / 20 / 25 / 15. Each
+       column is one card, except 4 and 5, which are each two compact cards
+       stacked and sized 1fr / 1fr so the pair is genuinely equal height. */
+    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 20fr 25fr 15fr; gap: 10px; align-items: stretch; grid-auto-flow: row; }
     .platform-layout table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .platform-layout th, .platform-layout td { padding: 8px 5px; white-space: normal; word-break: break-word; }
     .platform-layout .platform-sub { font-size: 9px; }
@@ -138,7 +141,24 @@
     .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
     .side-stack { display: contents; }
     /* Columns 4 and 5: two compact cards stacked in each. */
-    .hl-stack, .status-stack { display: grid; gap: 10px; align-content: start; min-width: 0; }
+    /* "Pantay yung height ng mga cards": both cards in a stack are 1fr, so the
+       pair splits the column exactly in half at whatever height the band is. */
+    .hl-stack, .status-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 10px;
+                              align-content: stretch; align-items: stretch; min-width: 0; }
+    /* Changelog <-> Top 5 Winning Players / 100 Rounds a Day swap.
+       Each band item carries an explicit order: auto-placement sorts by
+       order first and only then by DOM position, so leaving any item at
+       the default 0 would jump it ahead of .platform-matrix.
+       .side-stack is display:contents, so .platform-charts and
+       .changelog-table are the band's own grid items at full width; below
+       1180px the stack re-forms a 1-column grid and these same two orders
+       keep charts-then-changelog inside it. */
+    .platform-layout > .platform-matrix { order: 1; }
+    .platform-layout .platform-charts { order: 2; }
+    .platform-layout > .side-stack { order: 2; }
+    .platform-layout .changelog-table { order: 3; }
+    .platform-layout > .hl-stack { order: 4; }
+    .platform-layout > .status-stack { order: 5; }
     /* Compact cards: the spec asks for two small cards per column, and these two
        panels arrive with full-size typography plus a 305px chart-box min-height
        that made the whole band 1301px tall. */
@@ -626,13 +646,7 @@
           <!--GP:PASSLINE:END-->
         </div>
           </div>
-          <div class="status-stack">
-            <div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
-            <div class="alert-row"><div><strong>GGR Status</strong><small>Negative daily GGR ₱-8,968.25</small></div><span class="status danger">Negative</span></div>
-            <div class="alert-row"><div><strong>RTP Status</strong><small>101.60% vs target ≈ 98.3%</small></div><span class="status danger">Above 100%</span></div>
-            <div class="incident-notes"><strong>Notes</strong><p>Fuse-breaker GC notifications were not scanned for this date.</p></div>
-          </div>
-            <div class="panel pad compliance-panel"><div class="side-title"><h3>Compliance &amp; PAGCOR Update</h3><span>Current status</span></div>
+          <div class="status-stack"><div class="panel pad compliance-panel"><div class="side-title"><h3>Compliance &amp; PAGCOR Update</h3><span>Current status</span></div>
             <table>
               <tbody>
                 <tr><th scope="row">GCP Accreditation</th><td><span class="compliance-status">✅ Approved — Numerical &amp; ECG</span></td></tr>
@@ -640,6 +654,10 @@
                 <tr><th scope="row">Next Games for Application</th><td><span class="compliance-status">🔄 BLAZING 7S, LUCKY COLOR, GINTO MATCH</span></td></tr>
               </tbody>
             </table>
+          </div><div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
+            <div class="alert-row"><div><strong>GGR Status</strong><small>Negative daily GGR ₱-8,968.25</small></div><span class="status danger">Negative</span></div>
+            <div class="alert-row"><div><strong>RTP Status</strong><small>101.60% vs target ≈ 98.3%</small></div><span class="status danger">Above 100%</span></div>
+            <div class="incident-notes"><strong>Notes</strong><p>Fuse-breaker GC notifications were not scanned for this date.</p></div>
           </div>
           </div>
       </div>
