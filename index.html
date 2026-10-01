@@ -575,8 +575,7 @@
           <div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
             <div class="alert-row"><div><strong>GGR Status</strong><small>Negative daily GGR ₱-8,968.25</small></div><span class="status danger">Negative</span></div>
             <div class="alert-row"><div><strong>RTP Status</strong><small>101.60% vs target ≈ 98.3%</small></div><span class="status danger">Above 100%</span></div>
-            <div class="alert-row"><div style="min-width:0"><strong>Fusebreak / Alarm</strong><small>High Winning Defense Alert · BANANA CRAZE (GP)</small></div><span class="status danger">Alert</span></div>
-            <div class="incident-notes"><strong>Notes</strong><p>High Winning Defense Alert logged for this date — details in the alarm row above.</p></div>
+            <div class="incident-notes"><strong>Notes</strong><p>Fuse-breaker GC notifications were not scanned for this date.</p></div>
           </div>
           <div class="panel pad compliance-panel"><div class="side-title"><h3>Compliance &amp; PAGCOR Update</h3><span>Current status</span></div>
             <table>
@@ -1369,7 +1368,7 @@
       // Performance notes) live on window.__dynCN: `cn` is IIFE-scoped here, so
       // an earlier block cannot reach it directly.
       Object.assign(cn, window.__dynCN || {});
-      /* gc-alerts-i18n */ Object.assign(cn, {"High Winning Defense Alert logged for this date — details in the alarm row above.": "此日期已记录高倍中奖防御警报 — 详情见上方告警行。"});
+      /* gc-alerts-i18n */ Object.assign(cn, {"Fuse-breaker GC notifications were not scanned for this date.": "本日期未扫描保险丝告警通知。"});
       /* incident-panel-i18n */ Object.assign(cn, {"High Winning Defense Alert": "高倍中奖防御警报", "High Winning Defense": "高倍中奖防御", "day RTP": "当日RTP", "Original": "原始", "Repeat": "重复", "Retries": "重试", "Trigger Repeat": "重复触发", "Trigger": "触发"});
       const entries = Object.entries(cn).sort((a, b) => b[0].length - a[0].length);
 
