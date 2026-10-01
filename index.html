@@ -111,7 +111,10 @@
     /* User mockup 2026-10-01: matrix | charts | changelog stay a row, and the last
        column is a vertical stack of Alerts over Compliance ("asa baba ng alert yung
        compliance"), both still separate cards in their own colours. */
-    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 25fr 20fr; gap: 10px; align-items: stretch; }
+    /* User spec 2026-10-01: one row, five columns, no wrap.
+       1 Platform table 30fr | 2 Platform Share 10fr | 3 Changelog 20fr
+       4 Player/Game highlights 15fr | 5 Compliance + Alerts 15fr */
+    .platform-layout { display: grid; grid-template-columns: 30fr 10fr 20fr 15fr 15fr; gap: 10px; align-items: stretch; grid-auto-flow: row; }
     .platform-layout table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .platform-layout th, .platform-layout td { padding: 8px 5px; white-space: normal; word-break: break-word; }
     .platform-layout .platform-sub { font-size: 9px; }
@@ -134,9 +137,23 @@
     .tag { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 8px; color: var(--muted); font-size: 11px; }
     .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
     .side-stack { display: contents; }
-    /* The last grid column holds the two status cards, Alerts above Compliance. */
-    .status-stack { display: grid; gap: 10px; align-content: start; min-width: 0; }
-    .status-stack > .panel { min-width: 0; }
+    /* Columns 4 and 5: two compact cards stacked in each. */
+    .hl-stack, .status-stack { display: grid; gap: 10px; align-content: start; min-width: 0; }
+    /* Compact cards: the spec asks for two small cards per column, and these two
+       panels arrive with full-size typography plus a 305px chart-box min-height
+       that made the whole band 1301px tall. */
+    .hl-stack > .panel, .status-stack > .panel {
+      grid-column: auto !important; grid-row: auto !important;
+      min-width: 0; min-height: 0 !important; padding: 9px; }
+    .hl-stack > .panel .side-title, .status-stack > .panel .side-title {
+      margin-bottom: 6px; gap: 6px; }
+    .hl-stack > .panel .side-title h3, .status-stack > .panel .side-title h3 { font-size: 11px; }
+    .hl-stack > .panel .side-title span, .status-stack > .panel .side-title span { font-size: 9px; }
+    .hl-stack > .panel table, .status-stack > .panel table { font-size: 8px; }
+    .hl-stack > .panel th, .hl-stack > .panel td,
+    .status-stack > .panel th, .status-stack > .panel td { padding: 2px 3px; }
+    .hl-stack > .panel svg, .status-stack > .panel svg { max-width: 100%; height: auto; }
+    .hl-stack > .panel .keynote, .status-stack > .panel .keynote { font-size: 9px; margin-top: 6px; }
     .side-stack > .panel { min-width: 0; }
     .platform-charts { display: grid; align-content: start; gap: 9px; }
     .platform-charts { border-color: #477fca; background: linear-gradient(145deg, #162e4d, #102238); }
@@ -185,7 +202,7 @@
     /* The 8 panelled metrics approved 2026-10-01: Game Performance rows 3-4 and
        Player Performance row 3. Spans are explicit so each row totals 20 tracks. */
     .gp-tools { grid-column: 1 / span 10; grid-row: 3; }
-    .gp-feature { grid-column: 11 / span 5; grid-row: 3; }
+    .gp-feature { grid-column: 11 / span 10; grid-row: 3; }
     .gp-passline { grid-column: 16 / span 5; grid-row: 3; }
     /* Repeat-Round Rate and Day-Level Win/Loss Streaks are ONE card
        (user, 2026-10-01), so row 3 is 2 panels at 10 / 10 tracks. */
@@ -253,6 +270,8 @@
     .player-grid { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
     .player-grid > .panel { min-width: 0; align-self: stretch; height: 100%; }
     .player-grid > .pg-4 { grid-column: span 4; }
+    /* pp-top5 moved into the Platform Performance band, so row B is 6+7+7. */
+    .player-grid > .pp-avg, .player-grid > .pp-engage { grid-column: span 7; }
     .player-grid > .pg-5 { grid-column: span 5; }
     .player-grid > .pg-7 { grid-column: span 7; }
     .player-grid > .pg-6 { grid-column: span 6; }
@@ -557,6 +576,26 @@
           
           
         </div>
+          <div class="hl-stack">
+            <div class="panel pad pg-6 pp-top5">
+          <div class="side-title"><h3>Top 5 Winning Players</h3><span>Biggest single-bet payout</span></div>
+          <!--PP:TOP5:START-->
+          <div class="table-scroll"><table><thead><tr><th>Player</th><th>Mult.</th><th>Bet site</th><th>Bet → Payout</th><th>RTP</th><th>Rounds</th></tr></thead><tbody><tr><td>bingoplusdgfyg2</td><td>100×</td><td>BP1</td><td>₱100→₱10,000</td><td>661.76%</td><td>17</td></tr><tr><td>bingoplus9nsfk1</td><td>20×</td><td>BP1</td><td>₱100→₱2,000</td><td>124.67%</td><td>218</td></tr><tr><td>bingoplusm594vz</td><td>20×</td><td>BP1</td><td>₱100→₱2,000</td><td>165.91%</td><td>22</td></tr><tr><td>bingoplusggjn96</td><td>17.75×</td><td>BP1</td><td>₱100→₱1,775</td><td>146.59%</td><td>22</td></tr><tr><td>bingoplusc3gmaj</td><td>15.25×</td><td>BP1</td><td>₱100→₱1,525</td><td>160.94%</td><td>16</td></tr></tbody></table></div><div class="chart-note">Biggest single-bet payout, highest first. RTP and Rounds are the player’s whole reporting day, not the winning round.</div>
+          <!--PP:TOP5:END-->
+        </div>
+            <div class="panel pad chart-box gp-passline">
+          <div class="side-title"><h3>100 Rounds a Day</h3><span>Pass line · ≥100 rounds</span></div>
+          <!--GP:PASSLINE:START-->
+          <div class="dynamic-list">
+            <div class="dynamic-item"><div class="dynamic-head"><b>≥ 100 rounds</b><span>260 players · 14.3%</span></div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--cyan)"></div></div><div class="dynamic-foot"><span>14.3% of 1,816</span><b>260 players</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>≥ 200 rounds</b><span>90 players · 5.0%</span></div><div class="bar-track"><div class="bar-fill" style="width:35%;background:var(--blue)"></div></div><div class="dynamic-foot"><span>5.0% of 1,816</span><b>90 players</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>≥ 500 rounds</b><span>12 players · 0.7%</span></div><div class="bar-track"><div class="bar-fill" style="width:5%;background:var(--violet)"></div></div><div class="dynamic-foot"><span>0.7% of 1,816</span><b>12 players</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>≥ 1,000 rounds</b><span>3 players · 0.2%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span>0.2% of 1,816</span><b>3 players</b></div></div>
+          </div>
+          <div class="chart-note" style="margin-top:12px">Pass line = a player who settled 100 rounds or more on the reporting day. 260 of 1,816 players (14.3%) crossed it; the ladder shows the stricter lines for context (≥200 rounds: 90, ≥500 rounds: 12, ≥1,000 rounds: 3). Rounds are the settled ledger, one row per round.</div>
+          <!--GP:PASSLINE:END-->
+        </div>
+          </div>
           <div class="status-stack">
             <div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
             <div class="alert-row"><div><strong>GGR Status</strong><small>Negative daily GGR ₱-8,968.25</small></div><span class="status danger">Negative</span></div>
@@ -634,18 +673,7 @@
           <div class="chart-note" style="margin-top:12px">Per settled round: a round that paid an extra win (`otherWinAmount` > 0) counts as a Bonus Round (2,430 rounds, 2.30%); `betType` BUY_FEATURE counts as a Buy Feature (356 rounds, 0.34%). Player entries count a player once per product: 811 saw a bonus and 228 bought a feature.</div>
           <!--GP:FEATURE:END-->
         </div>
-        <div class="panel pad chart-box gp-passline">
-          <div class="side-title"><h3>100 Rounds a Day</h3><span>Pass line · ≥100 rounds</span></div>
-          <!--GP:PASSLINE:START-->
-          <div class="dynamic-list">
-            <div class="dynamic-item"><div class="dynamic-head"><b>≥ 100 rounds</b><span>260 players · 14.3%</span></div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--cyan)"></div></div><div class="dynamic-foot"><span>14.3% of 1,816</span><b>260 players</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>≥ 200 rounds</b><span>90 players · 5.0%</span></div><div class="bar-track"><div class="bar-fill" style="width:35%;background:var(--blue)"></div></div><div class="dynamic-foot"><span>5.0% of 1,816</span><b>90 players</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>≥ 500 rounds</b><span>12 players · 0.7%</span></div><div class="bar-track"><div class="bar-fill" style="width:5%;background:var(--violet)"></div></div><div class="dynamic-foot"><span>0.7% of 1,816</span><b>12 players</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>≥ 1,000 rounds</b><span>3 players · 0.2%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span>0.2% of 1,816</span><b>3 players</b></div></div>
-          </div>
-          <div class="chart-note" style="margin-top:12px">Pass line = a player who settled 100 rounds or more on the reporting day. 260 of 1,816 players (14.3%) crossed it; the ladder shows the stricter lines for context (≥200 rounds: 90, ≥500 rounds: 12, ≥1,000 rounds: 3). Rounds are the settled ledger, one row per round.</div>
-          <!--GP:PASSLINE:END-->
-        </div>
+        
       </div>
     </section>
 
@@ -683,12 +711,7 @@
           <div class="legend"><span><i style="background:var(--blue)"></i>Loteria</span><span><i style="background:var(--violet)"></i>Slot</span></div>
           <!--PP:ENGAGE:END-->
         </div>
-        <div class="panel pad pg-6 pp-top5">
-          <div class="side-title"><h3>Top 5 Winning Players</h3><span>Biggest single-bet payout</span></div>
-          <!--PP:TOP5:START-->
-          <div class="table-scroll"><table><thead><tr><th>Player</th><th>Mult.</th><th>Bet site</th><th>Bet → Payout</th><th>RTP</th><th>Rounds</th></tr></thead><tbody><tr><td>bingoplusdgfyg2</td><td>100×</td><td>BP1</td><td>₱100→₱10,000</td><td>661.76%</td><td>17</td></tr><tr><td>bingoplus9nsfk1</td><td>20×</td><td>BP1</td><td>₱100→₱2,000</td><td>124.67%</td><td>218</td></tr><tr><td>bingoplusm594vz</td><td>20×</td><td>BP1</td><td>₱100→₱2,000</td><td>165.91%</td><td>22</td></tr><tr><td>bingoplusggjn96</td><td>17.75×</td><td>BP1</td><td>₱100→₱1,775</td><td>146.59%</td><td>22</td></tr><tr><td>bingoplusc3gmaj</td><td>15.25×</td><td>BP1</td><td>₱100→₱1,525</td><td>160.94%</td><td>16</td></tr></tbody></table></div><div class="chart-note">Biggest single-bet payout, highest first. RTP and Rounds are the player’s whole reporting day, not the winning round.</div>
-          <!--PP:TOP5:END-->
-        </div>
+        
         <div class="panel pad pp-mixed">
           <div class="side-title"><h3>Repeat-Round Rate &amp; Win/Loss Streaks</h3><span>≥2 rounds · longest runs</span></div>
           <!--PP:MIXED:START-->
