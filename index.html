@@ -185,7 +185,9 @@
     .gp-tools { grid-column: 1 / span 10; grid-row: 3; }
     .gp-feature { grid-column: 11 / span 5; grid-row: 3; }
     .gp-passline { grid-column: 16 / span 5; grid-row: 3; }
-    .pp-repeat, .pp-tiers, .pp-streaks, .pp-react { grid-column: span 5; }
+    .pp-repeat { grid-column: span 6; }
+    .pp-tiers { grid-column: span 8; }
+    .pp-streaks { grid-column: span 6; }
     .game-summary table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .game-summary th, .game-summary td { padding: 8px 6px; white-space: normal; }
     .game-summary thead th { text-align: center; }
@@ -803,14 +805,6 @@
           <div class="chart-note" style="margin-top:12px">A win is a settled round with a payout greater than zero; a streak counts consecutive rounds for one player inside the reporting day. Headline only: the longest win run anyone reached is 9 rounds and the longest losing run is 31 rounds. Most players never get past a short run — the commonest best win run is 2 rounds. (top runs: 2 rounds × 539, 3 rounds × 517, 4 rounds × 283) 1,744 players recorded at least one winning round.</div>
           <!--PP:STREAKS:END-->
         </div>
-        <div class="panel pad pp-react">
-          <div class="side-title"><h3>Reactivated Players</h3><span>30-day rolling window</span></div>
-          <!--PP:REACT:START-->
-          <div style="display:flex;gap:18px;flex-wrap:wrap"><div><div class="metric-label">Reactivated ≥30 days</div><div class="metric-value positive">62</div><div class="metric-subtext">3.4% of 1,816 active players</div></div><div><div class="metric-label">Seen before at all</div><div class="metric-value">425</div><div class="metric-subtext">of 1,816 · 1,391 first-timers</div></div></div>
-          <div class="table-scroll"><table><thead><tr><th>Gap since previous active day</th><th>Players</th></tr></thead><tbody><tr><th scope="row">1–3 days</th><td>194</td></tr><tr><th scope="row">4–7 days</th><td>93</td></tr><tr><th scope="row">8–14 days</th><td>67</td></tr><tr><th scope="row">15–30 days</th><td>9</td></tr><tr><th scope="row">31–60 days</th><td>4</td></tr><tr><th scope="row">61+ days</th><td>58</td></tr></tbody></table></div>
-          <div class="chart-note" style="margin-top:12px">Window = 30 days: the player’s previous active day was at least that long before the reporting day. 62 of 1,816 active players (3.4%) qualify. 425 players had been seen before at all and 1,391 had no earlier record. The product was offline 8 Jun–16 Aug 2026, so the 31+ day bucket is relaunch returners; a player whose last visit predates 10 Mar 2026 has no older record to measure against.</div>
-          <!--PP:REACT:END-->
-        </div>
       </div>
     </section>
 
@@ -1207,7 +1201,6 @@
         "Repeat-round rate = players with 2 or more settled rounds that day ÷ every player the ledger settled (1,816). 179 players (9.9%) settled exactly one round. A single round is a one-shot visit, not a session.": "回合重复率 = 当日结算回合数达 2 次或以上的玩家 ÷ 账本结算的全部玩家（1,816）。有 179 位玩家（9.9%）只结算了一个回合。单回合代表一次性访问，而非一次游玩体验。",
         "Tier = the player’s own settled bet for the day, not a single round. Boundaries are exclusive at the lower edge, so every player falls in exactly one tier (1,816 players in total). Median daily bet ₱80.00, largest ₱28,610.00.": "分层 = 玩家当日自身的已结算投注额，而非单回合。区间下限为开区间，因此每位玩家只归入一个分层（合计 1,816 位玩家）。日投注中位数 ₱80.00，最高 ₱28,610.00。",
         "A win is a settled round with a payout greater than zero; a streak counts consecutive rounds for one player inside the reporting day. Headline only: the longest win run anyone reached is 9 rounds and the longest losing run is 31 rounds. Most players never get past a short run — the commonest best win run is 2 rounds. (top runs: 2 rounds × 539, 3 rounds × 517, 4 rounds × 283) 1,744 players recorded at least one winning round.": "中奖 = 派彩大于零的已结算回合；连胜/连败指同一位玩家当日内连续的回合。仅列头条数字：最长连胜为 9 个回合，最长连败为 31 个回合。大多数玩家的最佳连胜很短，最常见的最佳连胜为 2 个回合。1,744 位玩家至少记录到一个中奖回合。",
-        "Window = 30 days: the player’s previous active day was at least that long before the reporting day. 62 of 1,816 active players (3.4%) qualify. 425 players had been seen before at all and 1,391 had no earlier record. The product was offline 8 Jun–16 Aug 2026, so the 31+ day bucket is relaunch returners; a player whose last visit predates 10 Mar 2026 has no older record to measure against.": "窗口 = 30 天：玩家上一次活跃日距当日至少该天数。1,816 位活跃玩家中有 62 位（3.4%）符合。共 425 位玩家曾出现过，1,391 位无更早记录。产品在 2026 年 6 月 8 日至 8 月 16 日期间下线，因此 31 天以上区间为重启后回流玩家；若玩家最后一次到访早于 2026 年 3 月 10 日，则无更早记录可供对比。",
         "RTP by Template": "按模板的 RTP",
         "rtp_template · 7 templates": "rtp_template · 7 个模板",
         "RTP template": "RTP 模板",
@@ -1221,8 +1214,6 @@
         "Per-player daily bet": "玩家当日投注额",
         "Day-Level Win/Loss Streaks": "当日连胜/连败记录",
         "Longest consecutive runs": "最长连续回合数",
-        "Reactivated Players": "回流玩家",
-        "30-day rolling window": "30 天滚动窗口",
         "Tier": "分层",
         "Daily bet": "当日投注",
         "Players": "玩家数",
@@ -1232,9 +1223,7 @@
         "consecutive winning rounds, one player": "同一玩家连续中奖回合",
         "consecutive losing rounds, one player": "同一玩家连续未中奖回合",
         "Repeat-round players (≥2 rounds)": "回合重复玩家（≥2 回合）",
-        "One round only": "仅一个回合",
-        "Gap since previous active day": "距上次活跃日的间隔",
-        "Seen before at all": "曾出现过的玩家"
+        "One round only": "仅一个回合"
         });
         /*CN:PANELS:END*/
       });
