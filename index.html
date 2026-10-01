@@ -112,12 +112,12 @@
        column is a vertical stack of Alerts over Compliance ("asa baba ng alert yung
        compliance"), both still separate cards in their own colours. */
     /* User spec 2026-10-01: one row, five columns, no wrap.
-       1 Platform table 25fr | 2 Platform Share 15fr | 3 Changelog 20fr
-       4 Player/Game highlights 25fr | 5 Compliance + Alerts 15fr
-       Weights are the user's spec (2026-10-01): 25 / 15 / 20 / 25 / 15. Each
+       1 Platform table 25fr | 2 Platform Share 15fr | 3 Top 5 + 100 Rounds 25fr
+       4 Changelog 20fr | 5 Compliance + Alerts 15fr
+       Weights are the user's spec (2026-10-01): 25 / 15 / 25 / 20 / 15. Each
        column is one card, except 4 and 5, which are each two compact cards
        stacked and sized 1fr / 1fr so the pair is genuinely equal height. */
-    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 20fr 25fr 15fr; gap: 10px; align-items: stretch; grid-auto-flow: row; }
+    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 25fr 20fr 15fr; gap: 10px; align-items: stretch; grid-auto-flow: row; }
     .platform-layout table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .platform-layout th, .platform-layout td { padding: 8px 5px; white-space: normal; word-break: break-word; }
     .platform-layout .platform-sub { font-size: 9px; }
@@ -152,12 +152,14 @@
        .side-stack is display:contents, so .platform-charts and
        .changelog-table are the band's own grid items at full width; below
        1180px the stack re-forms a 1-column grid and these same two orders
+       Columns 3 and 4 swap position and take their widths with them:
+       Top 5 / 100 Rounds 25fr moves to slot 3, Changelog 20fr to slot 4.
        keep charts-then-changelog inside it. */
     .platform-layout > .platform-matrix { order: 1; }
     .platform-layout .platform-charts { order: 2; }
     .platform-layout > .side-stack { order: 2; }
-    .platform-layout .changelog-table { order: 3; }
-    .platform-layout > .hl-stack { order: 4; }
+    .platform-layout .changelog-table { order: 4; }
+    .platform-layout > .hl-stack { order: 3; }
     .platform-layout > .status-stack { order: 5; }
     /* Compact cards: the spec asks for two small cards per column, and these two
        panels arrive with full-size typography plus a 305px chart-box min-height
