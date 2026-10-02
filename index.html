@@ -117,7 +117,7 @@
        Weights are the user's spec (2026-10-01): 25 / 15 / 25 / 20 / 15. Each
        column is one card, except 4 and 5, which are each two compact cards
        stacked and sized 1fr / 1fr so the pair is genuinely equal height. */
-    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 25fr 20fr 15fr; gap: 10px; align-items: stretch; grid-auto-flow: row; }
+    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 25fr 20fr 15fr; gap: 10px; align-items: start; grid-auto-flow: row; }
     .platform-layout table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .platform-layout th, .platform-layout td { padding: 4px 6px; white-space: normal; word-break: break-word; }
     .platform-layout .platform-sub { font-size: 9px; }
@@ -143,8 +143,8 @@
     /* Columns 4 and 5: two compact cards stacked in each. */
     /* "Pantay yung height ng mga cards": both cards in a stack are 1fr, so the
        pair splits the column exactly in half at whatever height the band is. */
-    .hl-stack, .status-stack { display: grid; grid-template-rows: 1fr 1fr; gap: 10px;
-                              align-content: stretch; align-items: stretch; min-width: 0; }
+    .hl-stack, .status-stack { display: grid; grid-template-rows: auto auto; gap: 10px;
+                              align-content: start; align-items: start; min-width: 0; }
     /* Changelog <-> Top 5 Winning Players / 100 Rounds a Day swap.
        Each band item carries an explicit order: auto-placement sorts by
        order first and only then by DOM position, so leaving any item at
@@ -172,7 +172,7 @@
        column, so each one carried ~26px of empty space under its text (58px for a
        16px line). Rows size to their content now. */
     .platform-matrix table { height: auto; }
-    .platform-charts { align-content: space-between; }
+    .platform-charts { align-content: start; }
     .platform-charts .platform-chart { grid-template-columns: 128px 1fr; }
     .platform-charts .mini-donut { width: 128px; height: 128px; }
     .hl-stack > .panel table, .status-stack > .panel table { height: auto; }
@@ -180,7 +180,7 @@
                                 justify-content: space-between; }
     .incident-panel { display: flex; flex-direction: column; }
     .incident-panel .alert-row { padding: 14px 0; }
-    .incident-panel .incident-notes { margin-top: auto; }
+    .incident-panel .incident-notes { margin-top: 0; }
     /* Repeat-Round Rate pie (user spec 2026-10-01) */
     .pp-mixed .mix-pie { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
                          gap: 12px; align-items: center; min-width: 0; }
@@ -222,6 +222,12 @@
     .changelog-table table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .changelog-table th, .changelog-table td { padding: 4px 7px; white-space: normal; word-break: break-word; vertical-align: top; }
     .changelog-table { border-color: #477fca; background: linear-gradient(145deg, #162e4d, #102238); }
+    /* User 2026-10-02 (screenshot with red boxes): every red box is a pocket of
+       empty card - the gap the pinned insight left under the table / share / changelog,
+       the slack under the short card of each stack, and the spread donuts. Cards hug
+       their own content now: nothing is stretched to a common band height and no
+       insight is pushed to a card foot, so none of those pockets exists. The trade is
+       that the columns no longer end on one level line - content over level bottoms. */
     /* User 2026-10-01: "alisin mo yung space sa baba ng insight ng table, tapos
        imatch mo dun sa kahelera niyang mga panels or cards". The table card's Key
        Insight sat 286px above the card's bottom edge - a third of the card empty
@@ -234,7 +240,7 @@
     .platform-layout .changelog-table { display: flex; flex-direction: column; }
     .platform-layout > .platform-matrix > .keynote,
     .platform-layout .platform-charts > .keynote,
-    .platform-layout .changelog-table > .keynote { margin-top: auto; }
+    .platform-layout .changelog-table > .keynote { margin-top: 0; }
 
     /* User 2026-10-01: "masyadong malaki yung spaces per metrics... sobrang haba ng
        height ng panels". The metric rows no longer stretch (58px -> 25px each),
@@ -253,7 +259,7 @@
        the card still ends flush with the one above it. */
     .hl-stack > .gp-passline { display: flex; flex-direction: column; }
     .gp-passline .dynamic-list { height: auto; justify-content: flex-start; }
-    .gp-passline .chart-note { margin-top: auto; }
+    .gp-passline .chart-note { margin-top: 12px; }
 
     .incident-panel { border-color: #b9792c; background: linear-gradient(145deg, #392b1c, #241d1d); }
     .incident-panel .side-title h3 { color: #a86100; }
