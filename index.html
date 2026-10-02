@@ -117,7 +117,7 @@
        Weights are the user's spec (2026-10-01): 25 / 15 / 25 / 20 / 15. Each
        column is one card, except 4 and 5, which are each two compact cards
        stacked and sized 1fr / 1fr so the pair is genuinely equal height. */
-    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 25fr 20fr 15fr; gap: 10px; align-items: start; grid-auto-flow: row; }
+    .platform-layout { display: grid; grid-template-columns: 25fr 15fr 25fr 20fr 15fr; gap: 10px; align-items: stretch; grid-auto-flow: row; }
     .platform-layout table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .platform-layout th, .platform-layout td { padding: 4px 6px; white-space: normal; word-break: break-word; }
     .platform-layout .platform-sub { font-size: 9px; }
@@ -144,7 +144,7 @@
     /* "Pantay yung height ng mga cards": both cards in a stack are 1fr, so the
        pair splits the column exactly in half at whatever height the band is. */
     .hl-stack, .status-stack { display: grid; grid-template-rows: auto auto; gap: 10px;
-                              align-content: start; align-items: start; min-width: 0; }
+                              align-content: space-between; align-items: start; min-width: 0; }
     /* Changelog <-> Top 5 Winning Players / 100 Rounds a Day swap.
        Each band item carries an explicit order: auto-placement sorts by
        order first and only then by DOM position, so leaving any item at
@@ -222,19 +222,17 @@
     .changelog-table table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .changelog-table th, .changelog-table td { padding: 4px 7px; white-space: normal; word-break: break-word; vertical-align: top; }
     .changelog-table { border-color: #477fca; background: linear-gradient(145deg, #162e4d, #102238); }
-    /* User 2026-10-02 (screenshot with red boxes): every red box is a pocket of
-       empty card - the gap the pinned insight left under the table / share / changelog,
-       the slack under the short card of each stack, and the spread donuts. Cards hug
-       their own content now: nothing is stretched to a common band height and no
-       insight is pushed to a card foot, so none of those pockets exists. The trade is
-       that the columns no longer end on one level line - content over level bottoms. */
-    /* User 2026-10-01: "alisin mo yung space sa baba ng insight ng table, tapos
-       imatch mo dun sa kahelera niyang mga panels or cards". The table card's Key
-       Insight sat 286px above the card's bottom edge - a third of the card empty
-       under the text - while the cards beside it ended at 142 / 125 / 0px. Each
-       single-card column now pins its closing insight to the card's bottom edge, so
-       the footers line up across the band and no card keeps a dead zone beneath its
-       last line. Nothing is added, removed or re-ordered. */
+    /* User 2026-10-02: "gawin mong basis yung height ng table sa platform
+       performance, then ipantay mo sa kahilera niya." The Platform Performance
+       table card is the basis for the whole band, and the row is level again -
+       but levelled at the table's own height, not at the tallest column's. The
+       other four columns are compacted (spacing, padding, type only - no text
+       added, cut or re-ordered) until none of them is taller than the table, so
+       the table is what every bottom edge lines up with, at any width:
+       1912px -> 502, 1700 -> 558, 1600 -> 619, 1440 -> 706, 1280 -> 829.
+       Where a column cannot fill the level line with content, the leftover goes
+       into the gap between the two stacked cards, never into dead space inside a
+       card - that is the pocket the red boxes marked. */
     .platform-layout > .platform-matrix,
     .platform-layout .platform-charts,
     .platform-layout .changelog-table { display: flex; flex-direction: column; }
@@ -242,16 +240,42 @@
     .platform-layout .platform-charts > .keynote,
     .platform-layout .changelog-table > .keynote { margin-top: 0; }
 
+    /* The compaction that keeps the other four columns at or under the table. */
+    .platform-charts { gap: 7px; padding: 12px; }
+    .platform-charts .side-title { margin-bottom: 4px; }
+    .platform-charts .platform-chart { grid-template-columns: 110px 1fr; gap: 9px; padding: 6px 0; }
+    .platform-charts .mini-donut { width: 110px; height: 110px; }
+    .platform-chart strong { font-size: 10.5px; }
+    .platform-chart small { font-size: 9.5px; line-height: 1.25; margin-top: 2px; }
+    .share-values { gap: 2px; margin-top: 4px; font-size: 9.5px; line-height: 1.3; }
+    .platform-charts > .keynote { font-size: 9px; line-height: 1.3; margin-top: 6px; }
+    .changelog-table { padding: 12px; }
+    .changelog-table table { font-size: 9px; line-height: 1.2; }
+    .changelog-table th, .changelog-table td { padding: 4px 6px; }
+    .changelog-table > .keynote { font-size: 9px; line-height: 1.3; margin-top: 6px; }
+    .hl-stack > .panel { padding: 6px 9px; }
+    .hl-stack > .panel .side-title { margin-bottom: 4px; }
+    .hl-stack > .panel table { font-size: 8px; }
+    .hl-stack > .panel th, .hl-stack > .panel td { padding: 1px 3px; }
+    .hl-stack .dynamic-list { gap: 1px; margin-top: 3px; }
+    .hl-stack .dynamic-item { padding: 1px 6px; }
+    .hl-stack .dynamic-head { font-size: 9.5px; }
+    .hl-stack .bar-track { margin: 1px 0 1px; }
+    .hl-stack .dynamic-foot { font-size: 8px; }
+    .hl-stack > .panel .keynote, .hl-stack .chart-note { font-size: 8.5px; line-height: 1.2; }
+
     /* User 2026-10-01: "masyadong malaki yung spaces per metrics... sobrang haba ng
        height ng panels". The metric rows no longer stretch (58px -> 25px each),
        and the band's two tallest blocks are tightened so the cards aren't padded
-       out either. Leading, padding and gaps only - no text added, cut or hidden. */
-    .changelog-table table { font-size: 9px; line-height: 1.25; }
-    .hl-stack .dynamic-list { gap: 5px; margin-top: 5px; }
-    .hl-stack .dynamic-item { padding: 3px 9px; }
-    .hl-stack .dynamic-head { font-size: 11px; }
-    .hl-stack .bar-track { margin: 3px 0 2px; }
-    .hl-stack .gp-passline .chart-note { font-size: 9.5px; }
+       out either. Leading, padding and gaps only - no text added, cut or hidden.
+       Retuned 2026-10-02 to the level-at-the-table numbers: these are the values
+       that hold the ladder and the changelog under the table's own height. */
+    .changelog-table table { font-size: 9px; line-height: 1.2; }
+    .hl-stack .dynamic-list { gap: 1px; margin-top: 3px; }
+    .hl-stack .dynamic-item { padding: 1px 6px; }
+    .hl-stack .dynamic-head { font-size: 9.5px; }
+    .hl-stack .bar-track { margin: 1px 0 1px; }
+    .hl-stack .gp-passline .chart-note { font-size: 8.5px; }
     /* User 2026-10-01: "liitan mo rin yung spacing dito ng mga rounds". The ladder
        was told to fill the card (space-between), so the five rows were prised apart
        to soak up the leftover height and each one stood 68px tall. The rows keep
@@ -259,7 +283,7 @@
        the card still ends flush with the one above it. */
     .hl-stack > .gp-passline { display: flex; flex-direction: column; }
     .gp-passline .dynamic-list { height: auto; justify-content: flex-start; }
-    .gp-passline .chart-note { margin-top: 12px; }
+    .gp-passline .chart-note { margin-top: 2px; }
 
     .incident-panel { border-color: #b9792c; background: linear-gradient(145deg, #392b1c, #241d1d); }
     .incident-panel .side-title h3 { color: #a86100; }
