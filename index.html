@@ -331,9 +331,18 @@
     .gp-row-2 { display: grid; grid-template-columns: 60fr 20fr 20fr; gap: 10px; align-items: stretch; }
     /* every child carried explicit row/column placement from the old 20-track grid */
     .gp-row-1 > .panel, .gp-row-2 > .panel { grid-column: auto !important; grid-row: auto !important; min-width: 0; }
-    .gp-compact { display: grid; gap: 10px; align-content: start; min-width: 0; }
+    /* User 2026-10-02: "sa row ng hourly rtp, ipanatay mo din yung cards/panel".
+       In the Hourly RTP row (gp-row-2) the two columns beside it stretch to the row,
+       but this third column's two cards were content-sized, so they stopped ~140px
+       above the row bottom and the column looked unfinished next to the Hourly RTP
+       and Multiplier cards. Both cards now split the column exactly (1fr / 1fr, the
+       same "pantay" convention the platform band's stacks use) and each spreads its
+       own content over the height it was given, so no card keeps a dead pocket. */
+    .gp-compact { display: grid; grid-template-rows: 1fr 1fr; gap: 10px;
+                  align-content: stretch; min-width: 0; }
     .gp-compact > .panel { grid-column: auto !important; grid-row: auto !important;
-      min-width: 0; min-height: 0 !important; padding: 9px; }
+      min-width: 0; min-height: 0 !important; padding: 9px;
+      display: flex; flex-direction: column; justify-content: space-between; }
     .gp-compact > .panel .side-title { margin-bottom: 6px; gap: 6px; }
     .gp-compact > .panel .side-title h3 { font-size: 11px; }
     .gp-compact > .panel .side-title span { font-size: 9px; }
@@ -815,12 +824,13 @@
     </table>
   </div>
           <div class="panel pad chart-box dynamic-rtp"><div class="side-title"><h3>Dynamic RTP</h3><span>Mode contribution</span></div>
+          <!--GP:DYNRT:START-->
           <div class="dynamic-list">
-            <div class="dynamic-item"><div class="dynamic-head"><b>NON</b><span>102,051 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:97%;background:var(--cyan)"></div></div><div class="dynamic-foot"><span class="positive">94.49% RTP</span><b class="positive">₱29,680.50 GGR</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>Cumulative</b><span>1,243 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span class="negative">295.66% RTP</span><b class="negative">-₱20,990.00 GGR</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>Daily</b><span>1,584 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--red)"></div></div><div class="dynamic-foot"><span class="negative">305.36% RTP</span><b class="negative">-₱18,205.50 GGR</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>NON</b><span>99,724 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:97%;background:var(--cyan)"></div></div><div class="dynamic-foot"><span class="positive">90.01% RTP</span><b class="positive">₱73,383.88 GGR</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Cumulative</b><span>1,216 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span class="negative">316.22% RTP</span><b class="negative">-₱28,673.88 GGR</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Daily</b><span>1,525 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--red)"></div></div><div class="dynamic-foot"><span class="negative">361.64% RTP</span><b class="negative">-₱26,300.38 GGR</b></div></div>
           </div>
-          <div class="chart-note" style="margin-top:18px">Interpretation: NON carries most volume; Cumulative and Daily have smaller volume but higher realized RTP and negative GGR because their payout exceeds their bet amount for the reporting day.</div>
+        <!--GP:DYNRT:END-->
         </div>
           <div class="panel pad chart-box gp-tools">
           <div class="side-title"><h3>RTP by Template</h3><span>rtp_template · 7 templates</span></div>
@@ -1379,7 +1389,6 @@
         'Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. The line is hourly RTP against the 98.3% target.': '报告日每小时合计 — 每对柱形表示该小时的投注金额与派彩总额，覆盖所有平台（BingoPlus、GameZone、ArenaPlus）及全部已结算回合；将鼠标悬停在柱形上可查看精确金额。折线为每小时 RTP，对照 98.3% 目标。',
         'Bet amount': '投注金额', 'RTP trendline': 'RTP趋势线', 'RTP threshold 98.3%': 'RTP阈值 98.3%',
         'Dynamic RTP': '动态RTP', 'Mode contribution': '模式贡献', 'rounds': '回合数',
-        'Interpretation: NON drives most volume; cumulative and daily modes remain more volatile because of smaller samples.': '说明：普通模式贡献大部分交易量；累计模式和每日模式样本较小，波动性更高。',
         'Winning Rounds vs Losing Rounds': '中奖回合与未中奖回合', 'Loss vs win rounds': '未中奖与中奖回合', 'Total rounds': '总回合数',
         'Winning rounds': '中奖回合', 'Losing rounds': '未中奖回合',
         'Total Tickets': '总票数', 'By feature behavior': '按功能行为', 'Normal Bet': '普通投注', 'Buy Feature': '购买功能',
