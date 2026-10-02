@@ -241,9 +241,19 @@
        and the band's two tallest blocks are tightened so the cards aren't padded
        out either. Leading, padding and gaps only - no text added, cut or hidden. */
     .changelog-table table { font-size: 9px; line-height: 1.25; }
-    .hl-stack .dynamic-list { gap: 7px; margin-top: 6px; }
-    .hl-stack .dynamic-item { padding: 6px 9px; }
+    .hl-stack .dynamic-list { gap: 5px; margin-top: 5px; }
+    .hl-stack .dynamic-item { padding: 3px 9px; }
     .hl-stack .dynamic-head { font-size: 11px; }
+    .hl-stack .bar-track { margin: 3px 0 2px; }
+    .hl-stack .gp-passline .chart-note { font-size: 9.5px; }
+    /* User 2026-10-01: "liitan mo rin yung spacing dito ng mga rounds". The ladder
+       was told to fill the card (space-between), so the five rows were prised apart
+       to soak up the leftover height and each one stood 68px tall. The rows keep
+       their natural spacing now and the closing note takes the leftover height, so
+       the card still ends flush with the one above it. */
+    .hl-stack > .gp-passline { display: flex; flex-direction: column; }
+    .gp-passline .dynamic-list { height: auto; justify-content: flex-start; }
+    .gp-passline .chart-note { margin-top: auto; }
 
     .incident-panel { border-color: #b9792c; background: linear-gradient(145deg, #392b1c, #241d1d); }
     .incident-panel .side-title h3 { color: #a86100; }
