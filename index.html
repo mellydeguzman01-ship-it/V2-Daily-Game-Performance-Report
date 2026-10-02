@@ -222,6 +222,20 @@
     .changelog-table table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .changelog-table th, .changelog-table td { padding: 4px 7px; white-space: normal; word-break: break-word; vertical-align: top; }
     .changelog-table { border-color: #477fca; background: linear-gradient(145deg, #162e4d, #102238); }
+    /* User 2026-10-01: "alisin mo yung space sa baba ng insight ng table, tapos
+       imatch mo dun sa kahelera niyang mga panels or cards". The table card's Key
+       Insight sat 286px above the card's bottom edge - a third of the card empty
+       under the text - while the cards beside it ended at 142 / 125 / 0px. Each
+       single-card column now pins its closing insight to the card's bottom edge, so
+       the footers line up across the band and no card keeps a dead zone beneath its
+       last line. Nothing is added, removed or re-ordered. */
+    .platform-layout > .platform-matrix,
+    .platform-layout .platform-charts,
+    .platform-layout .changelog-table { display: flex; flex-direction: column; }
+    .platform-layout > .platform-matrix > .keynote,
+    .platform-layout .platform-charts > .keynote,
+    .platform-layout .changelog-table > .keynote { margin-top: auto; }
+
     /* User 2026-10-01: "masyadong malaki yung spaces per metrics... sobrang haba ng
        height ng panels". The metric rows no longer stretch (58px -> 25px each),
        and the band's two tallest blocks are tightened so the cards aren't padded
