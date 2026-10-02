@@ -141,10 +141,24 @@
     .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
     .side-stack { display: contents; }
     /* Columns 4 and 5: two compact cards stacked in each. */
-    /* "Pantay yung height ng mga cards": both cards in a stack are 1fr, so the
-       pair splits the column exactly in half at whatever height the band is. */
+    /* User 2026-10-02: "medyo iadjust mo yung height ng top 5 winning players and
+       Alerts & Incident Report." Both cards are the ones the red boxes sit on: Top 5
+       Winning Players had a 43px empty band between it and 100 Rounds a Day, and
+       Alerts & Incident Report had a 90px one between it and Compliance & PAGCOR.
+       space-between used to park a stack's leftover as that blank band; now the
+       marked card takes the leftover itself, so each pair closes down to the normal
+       10px gap and no empty band survives:
+         Top 5 Winning Players  -> 1fr, grows downward into the band under it
+         Alerts & Incident Report -> 1fr (second row), grows up into its band
+       100 Rounds a Day and Compliance & PAGCOR keep their natural height, and the
+       grown card spreads its own content over the height it was given, so the extra
+       space is distributed between its parts instead of pooling in one dead pocket. */
     .hl-stack, .status-stack { display: grid; grid-template-rows: auto auto; gap: 10px;
-                              align-content: space-between; align-items: start; min-width: 0; }
+                              align-content: stretch; align-items: stretch; min-width: 0; }
+    .hl-stack { grid-template-rows: 1fr auto; }
+    .status-stack { grid-template-rows: auto 1fr; }
+    .hl-stack > .pp-top5, .status-stack > .incident-panel {
+      display: flex; flex-direction: column; justify-content: space-between; }
     /* Changelog <-> Top 5 Winning Players / 100 Rounds a Day swap.
        Each band item carries an explicit order: auto-placement sorts by
        order first and only then by DOM position, so leaving any item at
