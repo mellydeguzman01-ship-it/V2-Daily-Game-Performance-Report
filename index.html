@@ -1210,33 +1210,164 @@
         ['<b>>100 Rounds · Slot</b><br>Players: 194', '<b>>100 回合 · 老虎机</b><br>玩家：194']
         /*PP:ENGAGE_TIPS:END*/
       ]);
-      bindStaticRects('.pg-denom svg .daily-bars', [
-        ['<b>₱0.50–1 · Loteria</b><br>Unique Players: 0', '<b>₱0.50–1 · 乐透</b><br>唯一玩家：0'],
-        ['<b>₱0.50–1 · Slot</b><br>Unique Players: 2,036', '<b>₱0.50–1 · 老虎机</b><br>唯一玩家：2,036'],
-        ['<b>₱2–5 · Loteria</b><br>Unique Players: 325', '<b>₱2–5 · 乐透</b><br>唯一玩家：325'],
-        ['<b>₱2–5 · Slot</b><br>Unique Players: 1,316', '<b>₱2–5 · 老虎机</b><br>唯一玩家：1,316'],
-        ['<b>₱10 · Loteria</b><br>Unique Players: 56', '<b>₱10 · 乐透</b><br>唯一玩家：56'],
-        ['<b>₱10 · Slot</b><br>Unique Players: 182', '<b>₱10 · 老虎机</b><br>唯一玩家：182'],
-        ['<b>₱20 · Loteria</b><br>Unique Players: 19', '<b>₱20 · 乐透</b><br>唯一玩家：19'],
-        ['<b>₱20 · Slot</b><br>Unique Players: 78', '<b>₱20 · 老虎机</b><br>唯一玩家：78'],
-        ['<b>₱30–50 · Loteria</b><br>Unique Players: 5', '<b>₱30–50 · 乐透</b><br>唯一玩家：5'],
-        ['<b>₱30–50 · Slot</b><br>Unique Players: 39', '<b>₱30–50 · 老虎机</b><br>唯一玩家：39'],
-        ['<b>₱100 · Loteria</b><br>Unique Players: 1', '<b>₱100 · 乐透</b><br>唯一玩家：1'],
-        ['<b>₱100 · Slot</b><br>Unique Players: 7', '<b>₱100 · 老虎机</b><br>唯一玩家：7']
-      ]);
-      document.querySelectorAll('.platform-charts .mini-donut').forEach(svg => {
-        const label = svg.getAttribute('aria-label') || '';
-        const values = label.startsWith('GGR') ? [['BingoPlus (BP): 3.80%', 'BingoPlus (BP): 3.80%'], ['GameZone (BP): 23.36%', 'GameZone (BP): 23.36%'], ['ArenaPlus (BP): 72.85%', 'ArenaPlus (BP): 72.85%']] : label.startsWith('Player') ? [['BingoPlus (BP): 14.05%', 'BingoPlus (BP): 14.05%'], ['GameZone (BP): 67.19%', 'GameZone (BP): 67.19%'], ['ArenaPlus (BP): 18.77%', 'ArenaPlus (BP): 18.77%']] : [['BingoPlus (BP): 18.42%', 'BingoPlus (BP): 18.42%'], ['GameZone (BP): 59.23%', 'GameZone (BP): 59.23%'], ['ArenaPlus (BP): 22.35%', 'ArenaPlus (BP): 22.35%']];
-        svg.querySelectorAll('circle').forEach((circle, index) => { if (index > 0 && values[index - 1]) setTip(circle, values[index - 1][0], values[index - 1][1]); });
+      // ---- Universal hover coverage (user spec, 2026-10-02) --------------------
+      // "Every chart must show its data on hover." Each binder below reads its
+      // numbers off the panel's OWN printed markup: the share donuts take their
+      // slices from the legend beside the ring, the denomination chart from the
+      // two panels' own bar labels and value texts, the retention sparks from
+      // their row, and the table mini-bars from their row plus that table's own
+      // header. Nothing is copied into a literal, so a rebuilt page cannot leave
+      // a hover card reporting an earlier day - which is what the three share
+      // donuts and the denomination chart were doing.
+      const flatText = el => ((el && el.textContent) || '').replace(/\s+/g, ' ').trim();
+      const CNTIP = {
+        'GGR Share': 'GGR占比', 'Player Share': '玩家占比', 'Bet Share': '投注占比',
+        'Monthly GGR Share': '月度GGR占比', 'Monthly Player Share': '月度玩家占比',
+        'Loteria': '乐透', 'Slot': '老虎机',
+        'Rounds': '回合数', 'Share': '占比', 'Players': '玩家数',
+        'Multiplier band': '倍数区间', 'RTP template': 'RTP 模板',
+        'Micro': '微型', 'Casual': '休闲', 'Regular': '常规',
+        'High': '高额', 'High Value': '高价值',
+        'D1 Retention': 'D1留存率', 'D3 Retention': 'D3留存率', 'D7 Retention': 'D7留存率',
+        'Next-day returning players': '次日回访玩家',
+        'Third-day returning players': '第三日回访玩家',
+        'Seventh-day returning players': '第七日回访玩家'
+      };
+      const cnTip = s => CNTIP[s] || s;
+
+      // Bet denomination: both panels label every bar with its own band and its
+      // own count, so the hover card is read straight off the drawing.
+      document.querySelectorAll('.pg-denom svg').forEach(svg => {
+        const texts = Array.from(svg.querySelectorAll('text'));
+        const heads = texts.filter(t => t.getAttribute('font-weight') === '800').map(flatText);
+        const vbox = (svg.getAttribute('viewBox') || '0 0 576 195').split(/\s+/);
+        const mid = (Number(vbox[2]) || 576) / 2;
+        svg.querySelectorAll('rect').forEach(rect => {
+          const x = Number(rect.getAttribute('x'));
+          const cy = Number(rect.getAttribute('y')) + Number(rect.getAttribute('height')) / 2;
+          const near = t => Math.abs(Number(t.getAttribute('y')) - cy) < 5;
+          const band = texts.find(t => t.getAttribute('text-anchor') === 'end' && near(t));
+          if (!band) return;
+          const count = texts.find(t => near(t) && t !== band && Number(t.getAttribute('x')) >= x);
+          const series = ((x < mid ? heads[0] : heads[1]) || '').replace(/\s*\(.*\)\s*$/, '');
+          const value = count ? flatText(count) : '0';
+          setTip(rect, `<b>${flatText(band)} · ${series}</b><br>Unique Players: ${value}`,
+                       `<b>${flatText(band)} · ${cnTip(series)}</b><br>唯一玩家：${value}`);
+        });
       });
+
+      // Platform Share: each donut prints its three slice percentages in the
+      // legend beside the circle, in arc order (circle 0 is the track).
+      document.querySelectorAll('.platform-charts .mini-donut').forEach(svg => {
+        const card = svg.closest('.platform-chart');
+        const metric = flatText(card && card.querySelector('strong')) || svg.getAttribute('aria-label') || 'Share';
+        const rows = Array.from((card && card.querySelectorAll('.share-values span')) || []);
+        Array.from(svg.querySelectorAll('circle')).slice(1).forEach((arc, i) => {
+          if (!rows[i]) return;
+          const bits = flatText(rows[i]).split(' ');
+          const value = bits.pop();
+          setTip(arc, `<b>${metric}</b><br>${bits.join(' ')}: ${value}`,
+                      `<b>${cnTip(metric)}</b><br>${bits.join(' ')}: ${value}`);
+        });
+      });
+
+      // Monthly share donuts: same rule, the ring's own legend owns the numbers.
+      document.querySelectorAll('.monthly-share-card').forEach(card => {
+        const metric = flatText(card.querySelector('h4')) || 'Monthly share';
+        const rows = Array.from(card.querySelectorAll('.monthly-share-legend > span'));
+        Array.from(card.querySelectorAll('svg circle')).slice(1).forEach((arc, i) => {
+          if (!rows[i]) return;
+          const who = flatText(rows[i].querySelector('span'));
+          const value = flatText(rows[i].querySelector('b'));
+          setTip(arc, `<b>${metric}</b><br>${who}: ${value}`, `<b>${cnTip(metric)}</b><br>${who}: ${value}`);
+        });
+      });
+
+      // Player Retention: each sparkline sits in a row that already names the
+      // metric, prints the rate and says what the rate means.
+      document.querySelectorAll('.pg-retention .retention-row').forEach(row => {
+        const name = flatText(row.querySelector('strong'));
+        const value = flatText(row.querySelector('.retention-value'));
+        const what = flatText(row.querySelector('small'));
+        const en = `<b>${name}</b><br>${value}<br>${what}`;
+        const cn = `<b>${cnTip(name)}</b><br>${value}<br>${cnTip(what)}`;
+        setTip(row.querySelector('svg.spark'), en, cn);
+        setTip(row.querySelector('.retention-value'), en, cn);
+      });
+
+      // Players by Spend Tier: the ring is a conic-gradient, so the hovered tier
+      // is resolved from the cursor's angle; the legend rows are targets too.
+      document.querySelectorAll('.pp-tiers .tiers-donut').forEach(donut => {
+        const legend = Array.from(donut.parentElement.querySelectorAll('.tiers-legend > div'));
+        const rows = legend.map(div => {
+          const stats = flatText(div.querySelector('b'));
+          return {
+            name: flatText(div.querySelector('span')),
+            stats,
+            share: parseFloat((stats.split('·').pop() || '').trim()) || 0,
+            node: div
+          };
+        });
+        if (!rows.length) return;
+        let acc = 0;
+        rows.forEach(r => { acc += r.share; r.upto = acc; });
+        setTip(donut, '\u00a0', '\u00a0');
+        const paint = event => {
+          const box = donut.getBoundingClientRect();
+          // conic-gradient starts at 12 o'clock and runs clockwise, the same
+          // order as the legend rows, so the cursor's bearing converts straight
+          // to a 0-100 share and is matched against the rows' cumulative share.
+          const bearing = (Math.atan2(event.clientY - (box.top + box.height / 2),
+                                      event.clientX - (box.left + box.width / 2)) * 180 / Math.PI + 450) % 360;
+          // Pointer coordinates arrive as whole pixels while the ring's centre is
+          // fractional, so a cursor on the top edge of the ring measures a hair
+          // clockwise of 12 o'clock (359.75 on a 170px ring) and would resolve to
+          // the 0.4% sliver rather than the arc the top of the ring shows. Snap
+          // one rim pixel's worth of slop back to the first slice.
+          const slop = Math.atan(1 / (box.width / 2)) * 180 / Math.PI;
+          const pct = bearing > 360 - slop ? 0 : bearing / 3.6;
+          const tier = rows.find(r => pct <= r.upto + 1e-4) || rows[rows.length - 1];
+          donut.setAttribute('data-tooltip-en', `<b>${tier.name} tier</b><br>${tier.stats}`);
+          donut.setAttribute('data-tooltip-cn', `<b>${cnTip(tier.name)}分层</b><br>${tier.stats}`);
+          if (activeTooltipTarget === donut) {
+            tooltip.innerHTML = donut.getAttribute(tooltipLanguage === 'cn' ? 'data-tooltip-cn' : 'data-tooltip-en');
+            positionTooltip(event);
+          }
+        };
+        donut.addEventListener('mouseenter', paint);
+        donut.addEventListener('mousemove', paint);
+        rows.forEach(r => setTip(r.node, `<b>${r.name} tier</b><br>${r.stats}`,
+                                        `<b>${cnTip(r.name)}分层</b><br>${r.stats}`));
+      });
+
+      // Table mini-bars (RTP by Template, Multiplier Distribution): the row plus
+      // that table's own header already carry every figure the bar stands for.
+      document.querySelectorAll('table .mini-bar').forEach(bar => {
+        const row = bar.closest('tr');
+        const table = bar.closest('table');
+        if (!row || !table) return;
+        const heads = Array.from(table.querySelectorAll('thead th')).map(flatText);
+        const cells = Array.from(row.children);
+        const name = flatText(cells[0]);
+        const parts = [];
+        cells.forEach((cell, i) => {
+          if (i === 0 || cell.contains(bar)) return;
+          const head = heads[i] || '';
+          const value = flatText(cell);
+          if (head && value) parts.push(`${head}: ${value}`);
+        });
+        if (!parts.length) return;
+        const cn = parts.map(part => {
+          const key = part.slice(0, part.indexOf(': '));
+          return `${cnTip(key)}：${part.slice(key.length + 2)}`;
+        }).join('<br>');
+        setTip(bar, `<b>${name}</b><br>${parts.join('<br>')}`, `<b>${name}</b><br>${cn}`);
+      });
+
       const playerDonutCircles = document.querySelectorAll('.player-grid > .panel:first-child svg circle');
       if (playerDonutCircles[1]) setTip(playerDonutCircles[1], '<b>New Players</b><br>1,255 · 71.3%', '<b>新玩家</b><br>1,255 · 71.3%');
       if (playerDonutCircles[2]) setTip(playerDonutCircles[2], '<b>Returning Players</b><br>506 · 28.7%', '<b>回访玩家</b><br>506 · 28.7%');
-      document.querySelectorAll('.monthly-share-card svg').forEach(svg => {
-        const label = svg.getAttribute('aria-label') || '';
-        const values = label.startsWith('Monthly GGR') ? [['BingoPlus (BP): 32.55%', 'BingoPlus (BP): 32.55%'], ['GameZone (BP): 59.65%', 'GameZone (BP): 59.65%'], ['ArenaPlus (BP): 7.79%', 'ArenaPlus (BP): 7.79%']] : [['BingoPlus (BP): 28.41%', 'BingoPlus (BP): 28.41%'], ['GameZone (BP): 67.86%', 'GameZone (BP): 67.86%'], ['ArenaPlus (BP): 4.17%', 'ArenaPlus (BP): 4.17%']];
-        svg.querySelectorAll('circle').forEach((circle, index) => { if (index > 0 && values[index - 1]) setTip(circle, values[index - 1][0], values[index - 1][1]); });
-      });
+
       document.querySelectorAll('.dynamic-item').forEach(item => {
         const head = item.querySelector('.dynamic-head')?.textContent.trim() || '';
         const foot = item.querySelector('.dynamic-foot')?.textContent.trim() || '';
