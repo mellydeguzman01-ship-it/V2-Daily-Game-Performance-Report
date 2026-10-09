@@ -779,6 +779,41 @@
     @media (prefers-reduced-motion: reduce) {
       .small-grid .submetric-ico svg { animation: none !important }
     }
+
+    /* ---- chart motion (2026-10-09) ----
+       Rings spin forever; bars and lines draw in once on load (see the module docstring:
+       a looping grow would periodically display 0 as the value). */
+    @keyframes ch-spin  { to { transform: rotate(360deg) } }
+    @keyframes ch-growY { from { transform: scaleY(.02) } to { transform: scaleY(1) } }
+    @keyframes ch-growX { from { transform: scaleX(.02) } to { transform: scaleX(1) } }
+    @keyframes ch-draw  { from { stroke-dashoffset: 200 } to { stroke-dashoffset: 0 } }
+
+    .mini-donut { animation: ch-spin 26s linear infinite; }
+    .compact-pie .donut-wrap > svg { animation: ch-spin 44s linear infinite; }
+    .monthly-share-card svg { animation: ch-spin 34s linear infinite; }
+    .tiers-donut { animation: ch-spin 44s linear infinite; }
+
+    .bar-fill, .mini-bar > i {
+        transform-origin: left center;
+        animation: ch-growX .9s cubic-bezier(.2,.7,.3,1) both;
+    }
+    .denom-svg rect {
+        transform-box: fill-box; transform-origin: left center;
+        animation: ch-growX .9s cubic-bezier(.2,.7,.3,1) both;
+    }
+    .eng-svg rect, .tall-svg rect {
+        transform-box: fill-box; transform-origin: bottom;
+        animation: ch-growY .9s cubic-bezier(.2,.7,.3,1) both;
+    }
+    .spark polyline {
+        stroke-dasharray: 200;
+        animation: ch-draw 1.4s ease-out both;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .mini-donut, .compact-pie .donut-wrap > svg, .monthly-share-card svg, .tiers-donut,
+      .bar-fill, .mini-bar > i, .denom-svg rect, .eng-svg rect, .tall-svg rect,
+      .spark polyline { animation: none !important; transform: none !important; }
+    }
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
@@ -1498,8 +1533,24 @@
           // conic-gradient starts at 12 o'clock and runs clockwise, the same
           // order as the legend rows, so the cursor's bearing converts straight
           // to a 0-100 share and is matched against the rows' cumulative share.
-          const bearing = (Math.atan2(event.clientY - (box.top + box.height / 2),
-                                      event.clientX - (box.left + box.width / 2)) * 180 / Math.PI + 450) % 360;
+          // The ring SPINS (CSS animation), so the gradient's 12 o'clock has moved away
+          // from the top. Read the element's live rotation off its computed matrix and take
+          // it back out of the cursor bearing first - without this the ring resolves the
+          // cursor to the WRONG tier and the tooltip names the wrong band.
+          let spin = 0;
+          {
+            const _tr = getComputedStyle(donut).transform;
+            if (_tr && _tr !== 'none') {
+              const _m = _tr.match(/matrix\(([^)]+)\)/);
+              if (_m) {
+                const _v = _m[1].split(',').map(Number);
+                spin = Math.atan2(_v[1], _v[0]) * 180 / Math.PI;
+              }
+            }
+          }
+          const bearing = ((Math.atan2(event.clientY - (box.top + box.height / 2),
+                                      event.clientX - (box.left + box.width / 2)) * 180 / Math.PI
+                           + 450 - spin) % 360 + 360) % 360;
           // Pointer coordinates arrive as whole pixels while the ring's centre is
           // fractional, so a cursor on the top edge of the ring measures a hair
           // clockwise of 12 o'clock (359.75 on a 170px ring) and would resolve to
