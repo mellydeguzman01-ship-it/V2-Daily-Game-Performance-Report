@@ -552,6 +552,62 @@
     .monthly-share-legend i { display: inline-block; width: 6px; height: 6px; margin-right: 4px; border-radius: 50%; }
     .legend-list { display: grid; gap: 12px; } .legend-list div { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; } .legend-list span { color: var(--muted); }
 
+    /* ---- Ring charts restyled to the reference (2026-10-09) --------------------------
+       "gusto ko yung desing ng charts is ganito": the percentage sits INSIDE each segment
+       and the ring carries a big centred total, and "yung color is dapat nag complement sa
+       dark and light background". The shared accents were tuned for the dark panel
+       (--blue #6ea8ff, --yellow #ffca64, --violet #b78cff) and wash out against white, so
+       the ring charts get their own mid-tone set that reads on BOTH: dark enough on white,
+       bright enough on navy. Redefining the variables on the ring containers means every
+       var(--blue)/var(--cyan)/var(--violet) inside them (legend dots, conic-gradient
+       stops) picks up the new hue, and nothing else on the page shifts. */
+    :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) {
+      --blue: #2f7fe0; --cyan: #0e9aa7; --violet: #8b5cf6;
+      --yellow: #c07a12; --red: #dd4a52; --green: #1a9a5e;
+      --ring-track: #e3eaf2;
+      position: relative;
+    }
+    html.night :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) {
+      --ring-track: #22364f;
+    }
+    .platform-chart { --ring-lbl-size: 11px; --ring-centre: 12px; }
+    .compact-pie { --ring-lbl-size: 10.5px; --ring-centre: 26px; }
+    /* the reference puts a big total in the middle; this is the donut that already had one */
+    .player-grid > .panel:first-child .donut-center strong { font-size: var(--ring-centre, 26px); }
+    .monthly-share-card { --ring-lbl-size: 8.5px; }
+    .pp-tiers .tiers-pie { --ring-lbl-size: 11.5px; --ring-centre: 17px; }
+    /* The arcs carry hard-coded hex strokes, so re-point them here. A presentation
+       attribute loses to any CSS rule, so no markup has to change - which matters because
+       build_v2_dashboard.py splices fresh arcs into this markup every day. */
+    :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) svg circle[stroke="#40d9d0"] { stroke: var(--cyan); }
+    :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) svg circle[stroke="#6ea8ff"] { stroke: var(--blue); }
+    :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) svg circle[stroke="#b78cff"] { stroke: var(--violet); }
+    :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) svg circle[stroke="#ffca64"] { stroke: var(--yellow); }
+    :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) svg circle[stroke="#ff7388"] { stroke: var(--red); }
+    :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) svg circle[stroke="#55d68b"] { stroke: var(--green); }
+    :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) svg circle[stroke="#243c55"],
+    :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) svg circle[stroke="#dce5ef"] { stroke: var(--ring-track); }
+    /* Spend Tier was a solid disc; the reference rings all have a hole, so give it one. */
+    .pp-tiers .tiers-donut::after {
+      content: ''; position: absolute; inset: 22%; border-radius: 50%; background: var(--panel);
+    }
+    html.night .pp-tiers .tiers-donut::after { background: linear-gradient(145deg, #142943, #0f1c2d); }
+    /* The % that rides each arc. Positioned from JS every frame so it stays locked to its
+       own wedge while the ring spins (ch-spin) and the text stays upright, and coloured
+       from the wedge it sits on so it legible on either panel. */
+    .ring-lbl {
+      position: absolute; transform: translate(-50%, -50%); z-index: 3;
+      font-size: var(--ring-lbl-size, 11px); font-weight: 800;
+      pointer-events: none; white-space: nowrap;
+      text-shadow: 0 1px 2px rgba(6, 16, 30, .3);
+    }
+    .ring-centre {
+      position: absolute; transform: translate(-50%, -50%); z-index: 3;
+      text-align: center; pointer-events: none; line-height: 1.15;
+    }
+    .ring-centre strong { display: block; font-size: var(--ring-centre, 13px); }
+    .ring-centre span { color: var(--muted); font-size: 7.5px; letter-spacing: .04em; }
+
     .retention-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); } .retention-row:first-child { border-top: 0; padding-top: 0; }
     .retention-row strong { display: block; font-size: 12px; } .retention-row small { color: var(--muted); } .retention-value { text-align: right; font-weight: 800; }
     .spark { width: 100%; height: 28px; display: block; margin-top: 5px; }
@@ -1705,6 +1761,148 @@
           svg.appendChild(dot);
         });
       });
+
+      // ---- Ring charts: % inside each wedge + a big centred total (reference, 2026-10-09)
+      // Every number here is DERIVED from the geometry actually drawn - each arc's own
+      // dasharray against its own pathLength/circumference, or the conic-gradient's own
+      // stops - never from a literal. build_v2_dashboard.py splices fresh arcs into this
+      // markup every day, so a label placed from a hard-coded copy would eventually sit on
+      // the wrong wedge. These rings also spin (ch-spin, 26-44s), so each label is
+      // re-positioned every frame rather than once: that keeps it locked to its own segment
+      // while the text stays upright, which a label baked into the rotating SVG cannot do.
+      (function ringCharts() {
+        const HOSTS = ':is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie)';
+        const followers = [];
+
+        // Label ink is picked from the wedge it sits on, so it is legible on either panel.
+        const inkFor = css => {
+          const m = (css || '').match(/(\d+(?:\.\d+)?)\D+(\d+(?:\.\d+)?)\D+(\d+(?:\.\d+)?)/);
+          if (!m) return '#0b1a2b';
+          const ch = i => { const v = (+m[i]) / 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+          const L = 0.2126 * ch(1) + 0.7152 * ch(2) + 0.0722 * ch(3);
+          return L < 0.52 ? '#ffffff' : '#0b1a2b';
+        };
+        // Shrink a centred total until it fits the hole it has to live in.
+        const fit = (el, max, start, min) => {
+          let size = start;
+          el.style.fontSize = size + 'px';
+          while (size > min && el.offsetWidth > max) { size -= 1; el.style.fontSize = size + 'px'; }
+          return el.offsetWidth <= max;
+        };
+
+        document.querySelectorAll(HOSTS).forEach(host => {
+          const ring = host.querySelector('.tiers-donut') || host.querySelector('svg');
+          if (!ring) return;
+          const hb = host.getBoundingClientRect();
+          const bb = ring.getBoundingClientRect();
+          if (!bb.width || !bb.height) return;
+          const segs = [];
+          let cx, cy, rMid, holeW;
+
+          if (ring.tagName.toLowerCase() === 'svg') {
+            const vb = (ring.getAttribute('viewBox') || '0 0 100 100').split(/\s+/).map(Number);
+            const vw = vb[2] || 100, vh = vb[3] || 100;
+            const sc = Math.min(bb.width / vw, bb.height / vh);
+            const ox = bb.left - hb.left + (bb.width - vw * sc) / 2;
+            const oy = bb.top - hb.top + (bb.height - vh * sc) / 2;
+            const arcs = [...ring.querySelectorAll('circle[stroke-dasharray]')];
+            arcs.forEach(arc => {
+              const r = +arc.getAttribute('r') || 0;
+              const total = +arc.getAttribute('pathLength') || (2 * Math.PI * r);
+              const dash = +((arc.getAttribute('stroke-dasharray') || '').split(/[\s,]+/)[0]);
+              if (!(dash > 0) || !(total > 0)) return;
+              const start = (((-(+arc.getAttribute('stroke-dashoffset') || 0)) / total) % 1 + 1) % 1;
+              segs.push({ frac: Math.min(dash / total, 1), start, colour: getComputedStyle(arc).stroke });
+            });
+            const arc0 = arcs[0];
+            const r = arc0 ? (+arc0.getAttribute('r') || 0) : 0;
+            const sw = arc0 ? (+arc0.getAttribute('stroke-width') || 0) : 0;
+            cx = ox + (vb[0] + vw / 2) * sc;
+            cy = oy + (vb[1] + vh / 2) * sc;
+            rMid = r * sc;
+            holeW = Math.max(24, 2 * Math.max(0, r - sw / 2) * sc);
+          } else {
+            const stops = (getComputedStyle(ring).backgroundImage || '')
+              .match(/rgba?\([^)]*\)\s*[\d.]+%(?:\s*[\d.]+%)?/g) || [];
+            let prev = 0;
+            stops.forEach(stop => {
+              const col = (stop.match(/rgba?\([^)]*\)/) || [''])[0];
+              const ps = (stop.match(/[\d.]+%/g) || []).map(v => parseFloat(v) / 100);
+              const start = ps.length > 1 ? ps[0] : prev;
+              const end = ps.length > 1 ? ps[1] : (ps[0] !== undefined ? ps[0] : 1);
+              prev = end;
+              if (end - start > 0) segs.push({ frac: end - start, start, colour: col });
+            });
+            cx = bb.left - hb.left + bb.width / 2;
+            cy = bb.top - hb.top + bb.height / 2;
+            rMid = bb.width / 2 * 0.78;          // matches the 22% inset hole
+            holeW = bb.width * 0.56;
+          }
+          if (!segs.length) return;
+
+          // one dot per wedge, gated on whether the text actually fits that wedge
+          segs.forEach(seg => {
+            if (seg.frac < 0.045) return;                       // too thin to hold a number
+            const chord = 2 * rMid * Math.sin(Math.min(seg.frac, 0.5) * Math.PI);
+            const el = document.createElement('span');
+            el.className = 'ring-lbl';
+            el.textContent = (seg.frac * 100).toFixed(1) + '%';
+            el.style.color = inkFor(seg.colour);
+            el.style.left = '0px'; el.style.top = '0px';
+            host.appendChild(el);
+            if (el.offsetWidth > chord * 0.92) { el.remove(); return; }
+            followers.push({ el, cx, cy, r: rMid, base: (seg.start + seg.frac / 2) * 360, spin: ring });
+          });
+
+          // centred total, where the chart actually carries one
+          let totalEl = null, caption = '';
+          const small = host.querySelector('small');
+          if (host.matches('.platform-chart')) {
+            const m = /=\s*(₱?[\d,]+(?:\.\d+)?)/.exec(small ? small.textContent : '');
+            const title = (host.querySelector('strong') || {}).textContent || '';
+            if (m) {
+              totalEl = m[1];
+              caption = 'TOTAL ' + title.replace(/\s*share\s*$/i, '').toUpperCase().replace(/^PLAYER$/, 'PLAYERS');
+            }
+          } else if (host.matches('.pp-tiers .tiers-pie')) {
+            const n = [...host.querySelectorAll('.tiers-legend b')]
+              .reduce((a, b) => a + (parseInt((b.textContent.match(/[\d,]+/) || ['0'])[0].replace(/,/g, ''), 10) || 0), 0);
+            if (n > 0) { totalEl = n.toLocaleString('en-US'); caption = 'PLAYERS'; }
+          }
+          if (totalEl) {
+            const box = document.createElement('div');
+            box.className = 'ring-centre';
+            const strong = document.createElement('strong');
+            strong.textContent = totalEl;
+            const cap = document.createElement('span');
+            cap.textContent = caption;
+            box.appendChild(strong); box.appendChild(cap);
+            box.style.left = cx + 'px'; box.style.top = cy + 'px';
+            host.appendChild(box);
+            const size = parseFloat(getComputedStyle(strong).fontSize) || 13;
+            fit(strong, holeW * 0.94, size, 7.5);
+          }
+        });
+
+        if (!followers.length) return;
+        const tick = () => {
+          const seen = new Map();
+          followers.forEach(f => {
+            if (!seen.has(f.spin)) {
+              let a = 0;
+              const m = getComputedStyle(f.spin).transform;
+              const p = m && m.match(/matrix\(([^)]+)\)/);
+              if (p) { const v = p[1].split(',').map(Number); a = Math.atan2(v[1], v[0]) * 180 / Math.PI; }
+              seen.set(f.spin, a);
+            }
+            const th = (f.base + seen.get(f.spin)) * Math.PI / 180;
+            f.el.style.left = (f.cx + f.r * Math.sin(th)) + 'px';
+            f.el.style.top = (f.cy - f.r * Math.cos(th)) + 'px';
+          });
+          requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      })();
 
       // Players by Spend Tier: the ring is a conic-gradient, so the hovered tier
       // is resolved from the cursor's angle; the legend rows are targets too.
