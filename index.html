@@ -884,6 +884,16 @@
     /* Second light, on the Players trace: same pass, half a cycle behind, so the two
        read as independent flows rather than one light hopping between lines. */
     .tp-flow.alt { animation-delay: -2.3s; }
+    /* The glint is white in the NIGHT theme, where it pops off the dark panel. The page
+       SHIPS LIGHT (see the night-mode block above), and there a white dash paints the
+       line it rides pure white - measured: the green trace goes (85,214,139) ->
+       (255,255,255), the panel's own colour - so instead of reading as a light it reads
+       as the trendline being cut. In the default theme the travelling dash therefore
+       takes an ink version of its own line's hue, which is legible on white and still
+       unmistakably a current running along the trace. */
+    .tp-flow     { stroke: #0a7a45; }
+    .tp-flow.alt { stroke: #c2185b; }
+    html.night .tp-flow, html.night .tp-flow.alt { stroke: #ffffff; }
     .tp-blink { animation: tp-blink 1.5s ease-in-out infinite; }
     .tp-halo  { animation: tp-halo 1.5s ease-in-out infinite; }
 
