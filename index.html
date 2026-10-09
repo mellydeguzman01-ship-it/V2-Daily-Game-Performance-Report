@@ -1804,10 +1804,13 @@
           if (ring.tagName.toLowerCase() === 'svg') {
             const vb = (ring.getAttribute('viewBox') || '0 0 100 100').split(/\s+/).map(Number);
             const vw = vb[2] || 100, vh = vb[3] || 100;
-            // offsetWidth/Height, NOT the bounding rect: these rings spin, and the
-            // axis-aligned box of a rotated square grows by up to 41%, which would push
-            // every label off the ring. The box CENTRE is still the true centre.
-            const rw = ring.offsetWidth || bb.width, rh = ring.offsetHeight || bb.height;
+            // The computed width/height, NOT the bounding rect: these rings spin, and the
+            // axis-aligned box of a rotated square grows by up to 41%, which would push every
+            // label off the ring (and make a centred total look like it fits when it does
+            // not). offsetWidth is undefined on SVG, so it must come from the computed style.
+            // The box CENTRE is unaffected by rotation, so the bounding rect is still right.
+            const cs = getComputedStyle(ring);
+            const rw = parseFloat(cs.width) || bb.width, rh = parseFloat(cs.height) || bb.height;
             const sc = Math.min(rw / vw, rh / vh);
             const ox = bb.left + bb.width / 2 - hb.left - (vw * sc) / 2;
             const oy = bb.top + bb.height / 2 - hb.top - (vh * sc) / 2;
@@ -1844,7 +1847,7 @@
               prev = end;
               if (end - start > 0) segs.push({ frac: end - start, start, colour: col });
             });
-            const rw = ring.offsetWidth || bb.width;
+            const rw = parseFloat(getComputedStyle(ring).width) || bb.width;
             cx = bb.left - hb.left + bb.width / 2;
             cy = bb.top - hb.top + bb.height / 2;
             rMid = rw / 2 * 0.78;                // matches the 22% inset hole
