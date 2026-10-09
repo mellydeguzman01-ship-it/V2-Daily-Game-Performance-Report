@@ -570,7 +570,9 @@
     html.night :is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie) {
       --ring-track: #22364f;
     }
-    .platform-chart { --ring-lbl-size: 11px; --ring-centre: 12px; }
+    /* The platform donuts are only 110px across, so their centre caption is kept small
+       enough that an orbiting % label never touches it. */
+    .platform-chart { --ring-lbl-size: 11px; --ring-centre: 12px; --ring-cap: 6.5px; }
     .compact-pie { --ring-lbl-size: 10.5px; --ring-centre: 26px; }
     /* the reference puts a big total in the middle; this is the donut that already had one */
     .player-grid > .panel:first-child .donut-center strong { font-size: var(--ring-centre, 26px); }
@@ -606,7 +608,7 @@
       text-align: center; pointer-events: none; line-height: 1.15;
     }
     .ring-centre strong { display: block; font-size: var(--ring-centre, 13px); }
-    .ring-centre span { color: var(--muted); font-size: 7.5px; letter-spacing: .04em; }
+    .ring-centre span { color: var(--muted); font-size: var(--ring-cap, 7.5px); letter-spacing: .04em; }
 
     .retention-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); } .retention-row:first-child { border-top: 0; padding-top: 0; }
     .retention-row strong { display: block; font-size: 12px; } .retention-row small { color: var(--muted); } .retention-value { text-align: right; font-weight: 800; }
