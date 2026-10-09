@@ -674,7 +674,66 @@
   .monthly-row > .table-scroll > table tfoot td.positive { color: var(--green); }
   .monthly-row > .table-scroll > table tfoot th.negative,
   .monthly-row > .table-scroll > table tfoot td.negative { color: var(--red); }
-  </style>
+  
+    /* ---- animated KPI icons (preview only) ---- */
+    .header-metrics .metric-label { display: flex; align-items: center; gap: 8px; }
+    .kpi-ico { width: 21px; height: 21px; flex: 0 0 21px; display: inline-block; }
+    .kpi-ico svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .kpi-ico svg * { transform-box: fill-box; transform-origin: center; }
+    .kpi-ico.c-blue { color: #2f6fd0; } .kpi-ico.c-green { color: #1f9d5a; }
+    .kpi-ico.c-orange { color: #c97706; } .kpi-ico.c-violet { color: #7a4fd6; }
+    .kpi-ico.c-cyan { color: #0f8f8a; }
+    html.night .kpi-ico.c-blue { color: var(--blue); }
+    html.night .kpi-ico.c-green { color: var(--green); }
+    html.night .kpi-ico.c-orange { color: #f0a93c; }
+    html.night .kpi-ico.c-violet { color: var(--violet); }
+    html.night .kpi-ico.c-cyan { color: var(--cyan); }
+    @keyframes kpi-bob   { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-2.6px) } }
+    @keyframes kpi-float { 0%,100% { transform: translateY(1.6px) } 50% { transform: translateY(-2.6px) } }
+    @keyframes kpi-draw  { 0% { stroke-dashoffset: 64 } 60% { stroke-dashoffset: 0 } 100% { stroke-dashoffset: 0 } }
+    @keyframes kpi-dot   { 0%,100% { transform: scale(.75); opacity: .55 } 50% { transform: scale(1.25); opacity: 1 } }
+    @keyframes kpi-sweep { 0%,100% { transform: rotate(-26deg) } 50% { transform: rotate(26deg) } }
+    @keyframes kpi-grow  { 0%,100% { transform: scaleY(.42) } 50% { transform: scaleY(1) } }
+    .kpi-ico.coin   { animation: kpi-bob 2.8s ease-in-out infinite; }
+    .kpi-ico.payout { animation: kpi-float 3.4s ease-in-out infinite; }
+    .kpi-ico.ggr .trend { stroke-dasharray: 64; animation: kpi-draw 3.6s ease-in-out infinite; }
+    .kpi-ico.ggr .dot   { animation: kpi-dot 1.8s ease-in-out infinite; }
+    .kpi-ico.rtp .needle { animation: kpi-sweep 3.2s ease-in-out infinite; }
+    .kpi-ico.mtd .bar { animation: kpi-grow 2.6s ease-in-out infinite; }
+    .kpi-ico.mtd .bar:nth-of-type(2) { animation-delay: .16s; }
+    .kpi-ico.mtd .bar:nth-of-type(3) { animation-delay: .32s; }
+    .kpi-ico.mtd .bar:nth-of-type(4) { animation-delay: .48s; }
+    @media (prefers-reduced-motion: reduce) { .kpi-ico, .kpi-ico * { animation: none !important } }
+
+    /* ---- KPI card interior, v2: icon+label left, detail rows right-aligned ----
+       v1 gave the details their own grid COLUMN. Measured at these card widths
+       (264-334px) the big value (170px) + the MTD line (~150px) cannot share a row,
+       so the value overflowed its track and painted over the details. v2 puts every
+       element on its own row - overlap is impossible by construction - and right-aligns
+       the two detail rows so they still occupy the right-hand side of the card. */
+    .header-metrics .card { display: flex; flex-direction: column; justify-content: center;
+        align-items: flex-start; gap: 2px; }
+    .header-metrics .metric-label { display: flex; align-items: center; gap: 8px; }
+    .header-metrics .metric-subtext { align-self: flex-end; text-align: right; margin-top: 3px; }
+    .header-metrics .metric-foot { align-self: flex-end; text-align: right;
+        justify-content: flex-end; flex-wrap: wrap; gap: 2px 10px; margin-top: 3px; }
+    /* each delta stays whole: the line may wrap BETWEEN deltas (right-aligned) but never
+       mid-phrase, which is what produced "…vs prior / day" and "WoW ↑ 1.46 / pp" */
+    .header-metrics .metric-foot span { white-space: nowrap; }
+    @media (max-width: 1699px) {
+      /* the RTP card carries the longest pair ("↑ 0.86 pp vs prior day" + "WoW ↑ 1.46 pp");
+         at 217px cards it wrapped to two lines and made that card taller inside than its
+         siblings. 10.5px is above this dashboard's existing 9px precedent, and 6px gap buys
+         back the ~14px needed to keep all five cards uniform. */
+      .header-metrics .metric-foot { gap: 2px 6px; font-size: 10.5px; }
+    }
+    @media (max-width: 1599px) {
+      /* the 21px icon makes the label line taller than the plain-text label and ate 4px
+         of the fixed 128px card, so give it back: 17px icon + tighter label line-height */
+      .kpi-ico { width: 17px; height: 17px; flex: 0 0 17px; }
+      .header-metrics .metric-label { line-height: 1.15; }
+    }
+</style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
        chose it never sees a flash of the light theme. */
@@ -724,11 +783,11 @@
       <div class="header-right">
         <div class="header-section-head"><div><h2>General Operation Data</h2><p>Daily snapshot · BP1 / Banana Craze</p></div><span class="tag"><i class="dot positive"></i>Report generated</span></div>
         <div class="grid big-grid header-metrics" aria-label="Main operating metrics">
-          <article class="panel pad card accent-blue"><div class="metric-label">Bet Amount</div><div class="metric-value">₱390,248.00</div><div class="metric-subtext">October MTD ₱4,613,161.00</div><div class="metric-foot"><span class="warning">↓ 25.1% DoD</span><span class="warning">WoW ↓ 48.8%</span></div></article>
-          <article class="panel pad card accent-green"><div class="metric-label">Payout</div><div class="metric-value">₱385,499.87</div><div class="metric-subtext">October MTD ₱4,604,214.74</div><div class="metric-foot"><span class="warning">↓ 24.5% DoD</span><span class="warning">WoW ↓ 48.0%</span></div></article>
-          <article class="panel pad card accent-orange"><div class="metric-label">GGR</div><div class="metric-value positive">₱4,748.13</div><div class="metric-subtext">October MTD ₱8,946.26</div><div class="metric-foot"><span class="warning">↓ 56.1% DoD</span><span class="warning">WoW ↓ 76.7%</span></div></article>
-          <article class="panel pad card accent-violet"><div class="metric-label">RTP</div><div class="metric-value positive">98.78%</div><div class="metric-subtext">October MTD average 99.81%</div><div class="metric-foot"><span class="positive">↑ 0.86 pp vs prior day</span><span class="positive">WoW ↑ 1.46 pp</span></div></article>
-          <article class="panel pad card accent-cyan"><div class="metric-label">MTD GGR</div><div class="metric-value positive">₱8,946.26</div><div class="metric-subtext">October 1–8 · per-site archive</div><div class="metric-foot"><span class="positive">Sep MTD ₱312,114.13</span></div></article>
+          <article class="panel pad card accent-blue"><div class="metric-label"><span class="kpi-ico coin c-blue" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="7.5" rx="7.2" ry="3.4" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.8 7.5v9c0 1.9 3.2 3.4 7.2 3.4s7.2-1.5 7.2-3.4v-9" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.8 12c0 1.9 3.2 3.4 7.2 3.4s7.2-1.5 7.2-3.4" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Bet Amount</div><div class="metric-value">₱390,248.00</div><div class="metric-subtext">October MTD ₱4,613,161.00</div><div class="metric-foot"><span class="warning">↓ 25.1% DoD</span><span class="warning">WoW ↓ 48.8%</span></div></article>
+          <article class="panel pad card accent-green"><div class="metric-label"><span class="kpi-ico payout c-green" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16.4V7.6" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.4 11.2 12 7.6l3.6 3.6" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Payout</div><div class="metric-value">₱385,499.87</div><div class="metric-subtext">October MTD ₱4,604,214.74</div><div class="metric-foot"><span class="warning">↓ 24.5% DoD</span><span class="warning">WoW ↓ 48.0%</span></div></article>
+          <article class="panel pad card accent-orange"><div class="metric-label"><span class="kpi-ico ggr c-orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 19.4h18" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><polyline class="trend" points="3.6,16.2 8.4,11.4 12.4,14.2 20.4,5.6" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle class="dot" cx="20.4" cy="5.6" r="2" fill="currentColor" stroke="none"/></svg></span>GGR</div><div class="metric-value positive">₱4,748.13</div><div class="metric-subtext">October MTD ₱8,946.26</div><div class="metric-foot"><span class="warning">↓ 56.1% DoD</span><span class="warning">WoW ↓ 76.7%</span></div></article>
+          <article class="panel pad card accent-violet"><div class="metric-label"><span class="kpi-ico rtp c-violet" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3.4 18.2a9.4 9.4 0 1 1 17.2 0" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path class="needle" d="M12 18.2 16.4 11" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="18.2" r="1.5" fill="currentColor" stroke="none"/></svg></span>RTP</div><div class="metric-value positive">98.78%</div><div class="metric-subtext">October MTD average 99.81%</div><div class="metric-foot"><span class="positive">↑ 0.86 pp vs prior day</span><span class="positive">WoW ↑ 1.46 pp</span></div></article>
+          <article class="panel pad card accent-cyan"><div class="metric-label"><span class="kpi-ico mtd c-cyan" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 20.4h18" stroke="currentColor" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><rect class="bar" x="4.6" y="12.6" width="3.4" height="7.8" rx="1.1" fill="currentColor" stroke="none"/><rect class="bar" x="10.3" y="8.6" width="3.4" height="11.8" rx="1.1" fill="currentColor" stroke="none"/><rect class="bar" x="16" y="5.2" width="3.4" height="15.2" rx="1.1" fill="currentColor" stroke="none"/></svg></span>MTD GGR</div><div class="metric-value positive">₱8,946.26</div><div class="metric-subtext">October 1–8 · per-site archive</div><div class="metric-foot"><span class="positive">Sep MTD ₱312,114.13</span></div></article>
         </div>
         <div class="grid small-grid">
           <article class="panel pad card"><div class="submetric-head"><div class="metric-label">Total Rounds</div><div class="submetric-dod warning"></div></div><div class="submetric-main"><div class="metric-value">56,130</div><div class="submetric-wow">DoD ↓ 3.0%<br><span class="warning">WoW ↓ 45.5%</span></div></div><div class="submetric-monthly">MTD 648,882</div></article>
