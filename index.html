@@ -1811,6 +1811,11 @@
               const total = +arc.getAttribute('pathLength') || (2 * Math.PI * r);
               const dash = +((arc.getAttribute('stroke-dasharray') || '').split(/[\s,]+/)[0]);
               if (!(dash > 0) || !(total > 0)) return;
+              // An arc longer than the circle no longer encodes a share - the GGR donut hits
+              // this because one platform's share is negative (-185.65%), so the next arc
+              // over-fills and would be labelled "100.0%". Say nothing rather than a number
+              // that contradicts the legend beside it.
+              if (dash > total * 1.001) return;
               const start = (((-(+arc.getAttribute('stroke-dashoffset') || 0)) / total) % 1 + 1) % 1;
               segs.push({ frac: Math.min(dash / total, 1), start, colour: getComputedStyle(arc).stroke });
             });
