@@ -872,6 +872,23 @@
       .spark polyline { animation: none !important; transform: none !important; }
       .bar-fill::after, .mini-bar > i::after { animation: none !important; }
     }
+
+    /* ---- trend-line flow + blinking peak markers (2026-10-09) ---- */
+    @keyframes tp-dash  { from { stroke-dashoffset: 2070 } to { stroke-dashoffset: 0 } }
+    @keyframes tp-blink { 0%, 100% { opacity: 1 } 50% { opacity: .16 } }
+    @keyframes tp-halo  { 0%, 100% { opacity: .30 } 50% { opacity: .04 } }
+
+    /* 70 + 2000 covers the longest of these polylines (~950 viewBox units), so the light
+       appears exactly once per cycle on any day's data. */
+    .tp-flow { stroke-dasharray: 70 2000; animation: tp-dash 4.6s linear infinite; }
+    .tp-blink { animation: tp-blink 1.5s ease-in-out infinite; }
+    .tp-halo  { animation: tp-halo 1.5s ease-in-out infinite; }
+
+    @media (prefers-reduced-motion: reduce) {
+      /* HIDDEN, not frozen - see the module docstring. */
+      .tp-flow { display: none !important; }
+      .tp-blink, .tp-halo { animation: none !important; }
+    }
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
@@ -1375,6 +1392,10 @@
         });
         const points = rtp.map((value, i) => `${x(i)},${yRtp(value)}`).join(' ');
         hourly.appendChild(make('polyline', { points, fill: 'none', stroke: '#55d68b', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+        // Travelling highlight along the RTP trendline. A SECOND polyline with identical
+        // points over the real one: the trend never moves, only a light travels through
+        // it. Hidden entirely under prefers-reduced-motion (see the stylesheet).
+        hourly.appendChild(make('polyline', { points, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'class': 'tp-flow' }));
         rtp.forEach((value, i) => {
           const point = make('circle', { cx: x(i), cy: yRtp(value), r: 3.5, fill: '#55d68b' });
           setTip(point, `<b>${hours[i]}</b><br>RTP: ${value.toFixed(1)}%`, `<b>${hours[i]}</b><br>RTP：${value.toFixed(1)}%`);
@@ -1390,6 +1411,22 @@
           setTip(point, `<b>${hours[i]}</b><br>Players: ${intFmt(value)}<br>Rounds: ${intFmt(hourRounds[i])}`, `<b>${hours[i]}</b><br>玩家数：${intFmt(value)}<br>回合数：${intFmt(hourRounds[i])}`);
           hourly.appendChild(point);
         });
+        // --- blinking peaks: highest RTP hour + busiest hour -----------------
+        // The index comes from the DATA, never a hard-coded hour, so a rebuild on another
+        // day marks that day's peak. Each marker carries a hover card like every other
+        // point on this chart.
+        const peakHr = (series, yOf, colour, en, cn, unit) => {
+          const i = series.indexOf(Math.max(...series));
+          const cx = x(i), cy = yOf(series[i]);
+          const v = unit === '%' ? `${series[i].toFixed(1)}%` : intFmt(series[i]);
+          hourly.appendChild(make('circle', { cx, cy, r: 9, fill: colour, opacity: .3, 'class': 'tp-halo' }));
+          const dot = make('circle', { cx, cy, r: 5.2, fill: colour, stroke: '#ffffff', 'stroke-width': 1.6, 'class': 'tp-blink' });
+          setTip(dot, `<b>Highest ${en} \u00b7 ${hours[i]}</b><br>${en}: ${v}`,
+                      `<b>\u6700\u9ad8${cn} \u00b7 ${hours[i]}</b><br>${cn}\uff1a${v}`);
+          hourly.appendChild(dot);
+        };
+        peakHr(hourPlayers, yPlayers, '#ff79c6', 'Players', '\u73a9\u5bb6\u6570', '');
+        peakHr(rtp, yRtp, '#55d68b', 'RTP', 'RTP', '%');
         const thresholdY = yRtp(98.3);
         hourly.appendChild(make('line', { x1: pad.l, y1: thresholdY, x2: W - pad.r, y2: thresholdY, stroke: '#f2a65a', 'stroke-width': 2, 'stroke-dasharray': '7 6' }));
         drawLabel(hourly, W - 150, thresholdY - 7, '98.3% target', { fill: '#f2a65a', 'font-size': 9 });
@@ -1452,7 +1489,7 @@
         thirtyDay.appendChild(make('polyline', { points: d1Retention.map((value, i) => `${x(i)},${yRetention(value)}`).join(' '), fill: 'none', stroke: '#f2a65a', 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
         [rtp, d1Retention].forEach((series, seriesIndex) => series.forEach((value, i) => {
           const isRtpChange = !seriesIndex && dates[i] === 'Sep 18';
-          const point = make('circle', { cx: x(i), cy: seriesIndex ? yRetention(value) : yRtp(value), r: isRtpChange ? 4.8 : 2.4, fill: isRtpChange ? '#ef4444' : (seriesIndex ? '#f2a65a' : '#55d68b'), stroke: isRtpChange ? '#ffffff' : 'none', 'stroke-width': isRtpChange ? 1.5 : 0 });
+          const point = make('circle', { cx: x(i), cy: seriesIndex ? yRetention(value) : yRtp(value), r: isRtpChange ? 4.8 : 2.4, fill: isRtpChange ? '#ef4444' : (seriesIndex ? '#f2a65a' : '#55d68b'), stroke: isRtpChange ? '#ffffff' : 'none', 'stroke-width': isRtpChange ? 1.5 : 0, 'class': isRtpChange ? 'tp-blink' : '' });
           const rtpChange = isRtpChange ? '<br>RTP change: 97.0% → 98.3%' : (!seriesIndex && i === rtp.length - 1 ? '<br>DoD: ↑ 3.62 pp' : '');
           const rtpChangeCn = isRtpChange ? '<br>RTP变化：97.0% → 98.3%' : (!seriesIndex && i === rtp.length - 1 ? '<br>日环比：↑ 3.62 个百分点' : '');
           const english = seriesIndex ? `<b>${dates[i]}</b><br>D1 Retention: ${value.toFixed(2)}%` : `<b>${dates[i]}</b><br>RTP: ${value.toFixed(2)}%${rtpChange}`;
@@ -1460,6 +1497,21 @@
           setTip(point, english, chinese);
           thirtyDay.appendChild(point);
         }));
+        // --- blinking peaks: highest RTP day + highest D1 retention day ---------
+        // Data-driven, so a rebuild moves the marker to the new peak instead of freezing
+        // on the day this was written.
+        const peak30 = (series, yOf, colour, en, cn) => {
+          const i = series.indexOf(Math.max(...series));
+          const cx = x(i), cy = yOf(series[i]);
+          const v = `${series[i].toFixed(2)}%`;
+          thirtyDay.appendChild(make('circle', { cx, cy, r: 10, fill: colour, opacity: .3, 'class': 'tp-halo' }));
+          const dot = make('circle', { cx, cy, r: 5.6, fill: colour, stroke: '#ffffff', 'stroke-width': 1.8, 'class': 'tp-blink' });
+          setTip(dot, `<b>Highest ${en} \u00b7 ${dates[i]}</b><br>${en}: ${v}`,
+                      `<b>\u6700\u9ad8${cn} \u00b7 ${dates[i]}</b><br>${cn}\uff1a${v}`);
+          thirtyDay.appendChild(dot);
+        };
+        peak30(d1Retention, yRetention, '#f2a65a', 'D1 Retention', 'D1\u7559\u5b58\u7387');
+        peak30(rtp, yRtp, '#55d68b', 'RTP', 'RTP');
       }
 
       const bindStaticRects = (selector, tips) => {
