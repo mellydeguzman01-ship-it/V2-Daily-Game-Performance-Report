@@ -851,17 +851,27 @@
     .monthly-share-card svg { animation: ch-spin 34s linear infinite; }
     .tiers-donut { animation: ch-spin 44s linear infinite; }
 
-    .bar-fill, .mini-bar > i {
-        transform-origin: left center;
-        animation: ch-growX .9s cubic-bezier(.2,.7,.3,1) both;
+    /* Bars keyframe the transform, never the measured length: a looping grow would show
+       the value as 0 several times a minute, which an audited page cannot do. */
+    .bar-fill, .mini-bar > i { transform-origin: left center; }
+    .denom-svg rect { transform-box: fill-box; transform-origin: left center; }
+    .eng-svg rect, .tall-svg rect { transform-box: fill-box; transform-origin: bottom; }
+
+    /* ARMED BY .bars-live, added by barMotion() while a chart is on screen and dropped
+       when it leaves. The draw-in used to run at page load, so scrolling down to a bar
+       chart showed every bar already grown. Now the bars draw in as you reach them and
+       again each time you scroll back. Dropping the class only ever leaves a bar at its
+       true length, so a chart that is never observed still reads correctly. */
+    .bars-live .bar-fill,
+    .bars-live .mini-bar > i { animation: ch-growX .9s cubic-bezier(.2,.7,.3,1) both; }
+    .bars-live.denom-svg rect {
+        animation: ch-growX .9s cubic-bezier(.2,.7,.3,1) both,
+                   ch-wave 2.8s ease-in-out infinite;
     }
-    .denom-svg rect {
-        transform-box: fill-box; transform-origin: left center;
-        animation: ch-growX .9s cubic-bezier(.2,.7,.3,1) both;
-    }
-    .eng-svg rect, .tall-svg rect {
-        transform-box: fill-box; transform-origin: bottom;
-        animation: ch-growY .9s cubic-bezier(.2,.7,.3,1) both;
+    .bars-live.eng-svg rect,
+    .bars-live.tall-svg rect {
+        animation: ch-growY .9s cubic-bezier(.2,.7,.3,1) both,
+                   ch-wave 2.8s ease-in-out infinite;
     }
     .spark polyline {
         stroke-dasharray: 200;
@@ -876,18 +886,23 @@
        never briefly wrong. This is the one way to run forever on a page whose numbers are
        audited. The entrance above still runs once; these two never stop. */
     @keyframes ch-sheen { from { background-position: -60% 0 } to { background-position: 160% 0 } }
-    @keyframes ch-wave  { 0%, 100% { opacity: .74 } 50% { opacity: 1 } }
+    @keyframes ch-wave  { 0%, 100% { opacity: .55 } 50% { opacity: 1 } }
 
     .bar-fill, .mini-bar > i { position: relative; overflow: hidden; }
     .bar-fill::after, .mini-bar > i::after {
         content: ""; position: absolute; inset: 0; pointer-events: none;
-        background-image: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
-        background-size: 45% 100%; background-repeat: no-repeat;
-        animation: ch-sheen 3.2s linear infinite;
+        background-image: linear-gradient(90deg, transparent, rgba(255,255,255,.78), transparent);
+        background-size: 38% 100%; background-repeat: no-repeat;
     }
+    .bars-live .bar-fill::after,
+    .bars-live .mini-bar > i::after { animation: ch-sheen 3.2s linear infinite; }
     /* stagger by ROW so the highlight travels down the panel rather than blinking in
        unison. The fills are only children of their own track, so the offset has to come
        from the row, not from :nth-child on the fill itself. */
+    .dynamic-item:nth-child(2) .bar-fill { animation-delay: .08s }
+    .dynamic-item:nth-child(3) .bar-fill { animation-delay: .16s }
+    .dynamic-item:nth-child(4) .bar-fill { animation-delay: .24s }
+    .dynamic-item:nth-child(5) .bar-fill { animation-delay: .32s }
     .dynamic-item:nth-child(2) .bar-fill::after { animation-delay: .14s }
     .dynamic-item:nth-child(3) .bar-fill::after { animation-delay: .28s }
     .dynamic-item:nth-child(4) .bar-fill::after { animation-delay: .42s }
@@ -906,23 +921,18 @@
        bars instead - also length-preserving, also continuous. Two animations on two
        different properties: transform for the one-shot draw-in, opacity for the wave.
        The delay list is comma-matched to the shorthand above (entrance 0s, wave staggered). */
-    .denom-svg rect, .eng-svg rect, .tall-svg rect {
-        animation: ch-growY .9s cubic-bezier(.2,.7,.3,1) both,
-                   ch-wave 2.8s ease-in-out infinite;
-    }
-    .denom-svg rect { animation-name: ch-growX, ch-wave; }
     .denom-svg rect:nth-of-type(6n+1), .eng-svg rect:nth-of-type(6n+1),
     .tall-svg rect:nth-of-type(6n+1) { animation-delay: 0s, 0s }
     .denom-svg rect:nth-of-type(6n+2), .eng-svg rect:nth-of-type(6n+2),
-    .tall-svg rect:nth-of-type(6n+2) { animation-delay: 0s, .11s }
+    .tall-svg rect:nth-of-type(6n+2) { animation-delay: 0s, .18s }
     .denom-svg rect:nth-of-type(6n+3), .eng-svg rect:nth-of-type(6n+3),
-    .tall-svg rect:nth-of-type(6n+3) { animation-delay: 0s, .22s }
+    .tall-svg rect:nth-of-type(6n+3) { animation-delay: 0s, .36s }
     .denom-svg rect:nth-of-type(6n+4), .eng-svg rect:nth-of-type(6n+4),
-    .tall-svg rect:nth-of-type(6n+4) { animation-delay: 0s, .33s }
+    .tall-svg rect:nth-of-type(6n+4) { animation-delay: 0s, .54s }
     .denom-svg rect:nth-of-type(6n+5), .eng-svg rect:nth-of-type(6n+5),
-    .tall-svg rect:nth-of-type(6n+5) { animation-delay: 0s, .44s }
+    .tall-svg rect:nth-of-type(6n+5) { animation-delay: 0s, .72s }
     .denom-svg rect:nth-of-type(6n), .eng-svg rect:nth-of-type(6n),
-    .tall-svg rect:nth-of-type(6n) { animation-delay: 0s, .55s }
+    .tall-svg rect:nth-of-type(6n) { animation-delay: 0s, .90s }
 
     @media (prefers-reduced-motion: reduce) {
       .mini-donut, .compact-pie .donut-wrap > svg, .monthly-share-card svg, .tiers-donut,
@@ -1932,6 +1942,30 @@
       // a label keeps the radius it was born with - so re-measure once the page has settled.
       window.addEventListener('load', setupRings);
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(setupRings);
+
+      // ---- bars move while they are on screen (2026-10-09) ----------------------
+      // The draw-in used to fire at page load, so by the time anyone scrolled down to a
+      // bar chart every bar was already grown and the chart read as a still image.
+      // .bars-live is added while a bar chart is in the viewport and removed once it
+      // leaves, so the bars draw in as you reach them and again on every scroll back.
+      // Dropping the class only ever leaves a bar at its true length, so a chart that is
+      // never observed still reads correctly.
+      const barMotion = function () {
+        const hosts = document.querySelectorAll(
+          '.dynamic-list, table, svg.denom-svg, #hourlyRtpChart, #thirtyDayChart');
+        if (!hosts.length) return;
+        if (!('IntersectionObserver' in window)) {
+          hosts.forEach(el => el.classList.add('bars-live'));
+          return;
+        }
+        // The root is trimmed at the bottom so a chart arms only once it is properly on
+        // screen; a chart taller than the window still counts as intersecting.
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(entry => entry.target.classList.toggle('bars-live', entry.isIntersecting));
+        }, { threshold: 0, rootMargin: '-6% 0px -12% 0px' });
+        hosts.forEach(el => io.observe(el));
+      };
+      barMotion();
 
       // Players by Spend Tier: the ring is a conic-gradient, so the hovered tier
       // is resolved from the cursor's angle; the legend rows are targets too.
