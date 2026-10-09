@@ -881,6 +881,9 @@
     /* 70 + 2000 covers the longest of these polylines (~950 viewBox units), so the light
        appears exactly once per cycle on any day's data. */
     .tp-flow { stroke-dasharray: 70 2000; animation: tp-dash 4.6s linear infinite; }
+    /* Second light, on the Players trace: same pass, half a cycle behind, so the two
+       read as independent flows rather than one light hopping between lines. */
+    .tp-flow.alt { animation-delay: -2.3s; }
     .tp-blink { animation: tp-blink 1.5s ease-in-out infinite; }
     .tp-halo  { animation: tp-halo 1.5s ease-in-out infinite; }
 
@@ -1406,6 +1409,12 @@
         // can cross without either reading as wrong.
         const playerPoints = hourPlayers.map((value, i) => `${x(i)},${yPlayers(value)}`).join(' ');
         hourly.appendChild(make('polyline', { points: playerPoints, fill: 'none', stroke: '#ff79c6', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+        // Travelling highlight along the Players trace - the same treatment as the RTP
+        // line above, so BOTH trendlines on this chart are alive, not just RTP. Offset
+        // half a cycle (see .tp-flow.alt) so the two lights do not move as one. Appended
+        // before the player dots so the dots still sit on top, and hidden entirely under
+        // prefers-reduced-motion by the same rule that hides the RTP light.
+        hourly.appendChild(make('polyline', { points: playerPoints, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'class': 'tp-flow alt' }));
         hourPlayers.forEach((value, i) => {
           const point = make('circle', { cx: x(i), cy: yPlayers(value), r: 3.5, fill: '#ff79c6' });
           setTip(point, `<b>${hours[i]}</b><br>Players: ${intFmt(value)}<br>Rounds: ${intFmt(hourRounds[i])}`, `<b>${hours[i]}</b><br>玩家数：${intFmt(value)}<br>回合数：${intFmt(hourRounds[i])}`);
