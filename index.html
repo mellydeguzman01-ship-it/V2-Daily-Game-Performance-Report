@@ -869,7 +869,7 @@
     @media (prefers-reduced-motion: reduce) {
       .mini-donut, .compact-pie .donut-wrap > svg, .monthly-share-card svg, .tiers-donut,
       .bar-fill, .mini-bar > i, .denom-svg rect, .eng-svg rect, .tall-svg rect,
-      .spark polyline { animation: none !important; transform: none !important; }
+      .spark polyline, .spark circle.tp-dot { animation: none !important; transform: none !important; }
       .bar-fill::after, .mini-bar > i::after { animation: none !important; }
     }
 
@@ -895,7 +895,7 @@
        as the trendline being cut. In the default theme the travelling dash therefore
        takes an ink version of its own line's hue, which is legible on white and still
        unmistakably a current running along the trace. */
-    .tp-flow     { stroke: #0a7a45; }
+    .tp-flow     { stroke: var(--tp-ink, #0a7a45); }
     .tp-flow.alt { stroke: #c2185b; }
     /* Third trace - the 30-day D1 retention line (orange): same half-cycle offset, ink of
        its own hue so it stays legible on the default white panel. */
@@ -903,6 +903,20 @@
     html.night .tp-flow, html.night .tp-flow.alt, html.night .tp-flow.d1 { stroke: #ffffff; }
     .tp-blink { animation: tp-blink 1.5s ease-in-out infinite; }
     .tp-halo  { animation: tp-halo 1.5s ease-in-out infinite; }
+
+    /* ---- Player Retention sparklines, 2026-10-09: "may line, lagyan mo ng movements
+       tapos may dot din... nagalaw din yung dots" ------------------------------------
+       Same travelling current, but a sparkline renders ~160px wide, so the dash takes 15%
+       of the lap instead of 7% or the light is too short to read at that size. Note
+       `.spark polyline` is (0,1,1) and outranks `.tp-flow` at (0,1,0), so this rule has to
+       name both or the spark's entrance draw (ch-draw, dasharray 200) wins instead. */
+    .spark polyline.tp-flow { stroke-dasharray: 150 850; animation: tp-dash 4.6s linear infinite; }
+    /* A dot on every data point of the sparkline, pulsing in sequence - the lit dot runs
+       point to point in step with the current (same 4.6s lap), so the row reads as
+       travelling rather than merely blinking. Base opacity keeps them visible when the
+       animation is off. */
+    @keyframes tp-dot { 0%, 100% { opacity: .25 } 28% { opacity: 1 } }
+    .spark circle.tp-dot { animation: tp-dot 4.6s ease-in-out infinite; }
 
     @media (prefers-reduced-motion: reduce) {
       /* HIDDEN, not frozen - see the module docstring. */
@@ -1656,6 +1670,40 @@
         const cn = `<b>${cnTip(name)}</b><br>${value}<br>${cnTip(what)}`;
         setTip(row.querySelector('svg.spark'), en, cn);
         setTip(row.querySelector('.retention-value'), en, cn);
+      });
+
+      // ---- Player Retention: travelling current + dots that move -------------------
+      // Both the light and the dots are DERIVED from each sparkline's own polyline points,
+      // never hard-coded, so a dot can never drift off the line it marks when the day's
+      // shape changes. The dots pulse in sequence, which is what makes the row read as
+      // travelling: each one lights as the current reaches it, on the same 4.6s lap.
+      document.querySelectorAll('.pg-retention .spark').forEach(svg => {
+        const trace = svg.querySelector('polyline:not(.tp-flow)');
+        if (!trace) return;
+        const pts = (trace.getAttribute('points') || '').trim().split(/\s+/).filter(Boolean);
+        if (pts.length < 2) return;
+        const stroke = (trace.getAttribute('stroke') || '').toLowerCase();
+        // Ink version of the trace's own hue: a white light would erase the line on the
+        // default white panel (see the trend-line rules). Keyed by the trace's own colour,
+        // so re-colouring a sparkline in the template cannot silently mismatch the light.
+        const SPARK_INK = { '#ffca64': '#8f5200', '#6ea8ff': '#0d4a9c', '#b78cff': '#5a2fa8' };
+        const flow = make('polyline', {
+          points: pts.join(' '), fill: 'none', stroke: '#ffffff', 'stroke-width': 2,
+          'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+          'pathLength': '1000', 'class': 'tp-flow'
+        });
+        flow.style.setProperty('--tp-ink', SPARK_INK[stroke] || '#0a7a45');
+        svg.appendChild(flow);
+        pts.forEach((pt, i) => {
+          const pair = pt.split(',');
+          const cx = Number(pair[0]), cy = Number(pair[1]);
+          if (!isFinite(cx) || !isFinite(cy)) return;
+          const dot = make('circle', {
+            cx, cy, r: 2.6, fill: stroke || '#8ea4bd', opacity: .85, 'class': 'tp-dot'
+          });
+          dot.style.animationDelay = (-(i / pts.length) * 4.6).toFixed(2) + 's';
+          svg.appendChild(dot);
+        });
       });
 
       // Players by Spend Tier: the ring is a conic-gradient, so the hovered tier
