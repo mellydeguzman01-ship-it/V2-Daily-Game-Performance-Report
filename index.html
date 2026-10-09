@@ -1952,7 +1952,7 @@
       // never observed still reads correctly.
       const barMotion = function () {
         const hosts = document.querySelectorAll(
-          '.dynamic-list, table, svg.denom-svg, #hourlyRtpChart, #thirtyDayChart');
+          '.dynamic-list, table, svg.denom-svg, svg.eng-svg, #hourlyRtpChart, #thirtyDayChart');
         if (!hosts.length) return;
         if (!('IntersectionObserver' in window)) {
           hosts.forEach(el => el.classList.add('bars-live'));
