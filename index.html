@@ -1770,7 +1770,9 @@
       // the wrong wedge. These rings also spin (ch-spin, 26-44s), so each label is
       // re-positioned every frame rather than once: that keeps it locked to its own segment
       // while the text stays upright, which a label baked into the rotating SVG cannot do.
-      (function ringCharts() {
+      const setupRings = function ringCharts() {
+        if (window.__ringRAF) cancelAnimationFrame(window.__ringRAF);
+        document.querySelectorAll('.ring-lbl, .ring-centre').forEach(el => el.remove());
         const HOSTS = ':is(.platform-chart, .compact-pie, .monthly-share-card, .pp-tiers .tiers-pie)';
         const followers = [];
 
@@ -1802,9 +1804,13 @@
           if (ring.tagName.toLowerCase() === 'svg') {
             const vb = (ring.getAttribute('viewBox') || '0 0 100 100').split(/\s+/).map(Number);
             const vw = vb[2] || 100, vh = vb[3] || 100;
-            const sc = Math.min(bb.width / vw, bb.height / vh);
-            const ox = bb.left - hb.left + (bb.width - vw * sc) / 2;
-            const oy = bb.top - hb.top + (bb.height - vh * sc) / 2;
+            // offsetWidth/Height, NOT the bounding rect: these rings spin, and the
+            // axis-aligned box of a rotated square grows by up to 41%, which would push
+            // every label off the ring. The box CENTRE is still the true centre.
+            const rw = ring.offsetWidth || bb.width, rh = ring.offsetHeight || bb.height;
+            const sc = Math.min(rw / vw, rh / vh);
+            const ox = bb.left + bb.width / 2 - hb.left - (vw * sc) / 2;
+            const oy = bb.top + bb.height / 2 - hb.top - (vh * sc) / 2;
             const arcs = [...ring.querySelectorAll('circle[stroke-dasharray]')];
             arcs.forEach(arc => {
               const r = +arc.getAttribute('r') || 0;
@@ -1838,10 +1844,11 @@
               prev = end;
               if (end - start > 0) segs.push({ frac: end - start, start, colour: col });
             });
+            const rw = ring.offsetWidth || bb.width;
             cx = bb.left - hb.left + bb.width / 2;
             cy = bb.top - hb.top + bb.height / 2;
-            rMid = bb.width / 2 * 0.78;          // matches the 22% inset hole
-            holeW = bb.width * 0.56;
+            rMid = rw / 2 * 0.78;                // matches the 22% inset hole
+            holeW = rw * 0.56;
           }
           if (!segs.length) return;
 
@@ -1906,8 +1913,13 @@
           });
           requestAnimationFrame(tick);
         };
-        requestAnimationFrame(tick);
-      })();
+        window.__ringRAF = requestAnimationFrame(tick);
+      };
+      setupRings();
+      // A resize re-flows the panels, so the centres and radii measured at setup go stale
+      // and the labels would drift off their wedges. Rebuild instead of leaving them wrong.
+      let ringRT = null;
+      window.addEventListener('resize', () => { clearTimeout(ringRT); ringRT = setTimeout(setupRings, 150); });
 
       // Players by Spend Tier: the ring is a conic-gradient, so the hovered tier
       // is resolved from the cursor's angle; the legend rows are targets too.
