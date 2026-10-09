@@ -874,13 +874,17 @@
     }
 
     /* ---- trend-line flow + blinking peak markers (2026-10-09) ---- */
-    @keyframes tp-dash  { from { stroke-dashoffset: 2070 } to { stroke-dashoffset: 0 } }
+    /* 1000 is the normalised path length every flow polyline declares via pathLength, so
+       one pass sweeps the dash from end to end with no stretch where the light is off-path. */
+    @keyframes tp-dash  { from { stroke-dashoffset: 1000 } to { stroke-dashoffset: 0 } }
     @keyframes tp-blink { 0%, 100% { opacity: 1 } 50% { opacity: .16 } }
     @keyframes tp-halo  { 0%, 100% { opacity: .30 } 50% { opacity: .04 } }
 
-    /* 70 + 2000 covers the longest of these polylines (~950 viewBox units), so the light
-       appears exactly once per cycle on any day's data. */
-    .tp-flow { stroke-dasharray: 70 2000; animation: tp-dash 4.6s linear infinite; }
+    /* 70 of ink then a 930 gap = exactly one lap of the normalised (pathLength="1000") path,
+       so the light is on the line for the whole cycle. The original 70 2000 tiled once over
+       2070 units of a ~950-1270 unit path, which left the light off-path for 40-58% of every
+       pass: it vanished mid-line and restarted instead of flowing. */
+    .tp-flow { stroke-dasharray: 70 930; animation: tp-dash 4.6s linear infinite; }
     /* Second light, on the Players trace: same pass, half a cycle behind, so the two
        read as independent flows rather than one light hopping between lines. */
     .tp-flow.alt { animation-delay: -2.3s; }
@@ -893,7 +897,10 @@
        unmistakably a current running along the trace. */
     .tp-flow     { stroke: #0a7a45; }
     .tp-flow.alt { stroke: #c2185b; }
-    html.night .tp-flow, html.night .tp-flow.alt { stroke: #ffffff; }
+    /* Third trace - the 30-day D1 retention line (orange): same half-cycle offset, ink of
+       its own hue so it stays legible on the default white panel. */
+    .tp-flow.d1  { animation-delay: -2.3s; stroke: #9a5200; }
+    html.night .tp-flow, html.night .tp-flow.alt, html.night .tp-flow.d1 { stroke: #ffffff; }
     .tp-blink { animation: tp-blink 1.5s ease-in-out infinite; }
     .tp-halo  { animation: tp-halo 1.5s ease-in-out infinite; }
 
@@ -1408,7 +1415,7 @@
         // Travelling highlight along the RTP trendline. A SECOND polyline with identical
         // points over the real one: the trend never moves, only a light travels through
         // it. Hidden entirely under prefers-reduced-motion (see the stylesheet).
-        hourly.appendChild(make('polyline', { points, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'class': 'tp-flow' }));
+        hourly.appendChild(make('polyline', { points, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'pathLength': '1000', 'class': 'tp-flow' }));
         rtp.forEach((value, i) => {
           const point = make('circle', { cx: x(i), cy: yRtp(value), r: 3.5, fill: '#55d68b' });
           setTip(point, `<b>${hours[i]}</b><br>RTP: ${value.toFixed(1)}%`, `<b>${hours[i]}</b><br>RTP：${value.toFixed(1)}%`);
@@ -1424,7 +1431,7 @@
         // half a cycle (see .tp-flow.alt) so the two lights do not move as one. Appended
         // before the player dots so the dots still sit on top, and hidden entirely under
         // prefers-reduced-motion by the same rule that hides the RTP light.
-        hourly.appendChild(make('polyline', { points: playerPoints, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'class': 'tp-flow alt' }));
+        hourly.appendChild(make('polyline', { points: playerPoints, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'pathLength': '1000', 'class': 'tp-flow alt' }));
         hourPlayers.forEach((value, i) => {
           const point = make('circle', { cx: x(i), cy: yPlayers(value), r: 3.5, fill: '#ff79c6' });
           setTip(point, `<b>${hours[i]}</b><br>Players: ${intFmt(value)}<br>Rounds: ${intFmt(hourRounds[i])}`, `<b>${hours[i]}</b><br>玩家数：${intFmt(value)}<br>回合数：${intFmt(hourRounds[i])}`);
@@ -1504,8 +1511,19 @@
           setTip(bar, `<b>${dates[i]}</b><br>Payout: ${pesoFmt(payoutPhp30[i])}`, `<b>${dates[i]}</b><br>派彩：${pesoFmt(payoutPhp30[i])}`);
           thirtyDay.appendChild(bar);
         });
-        thirtyDay.appendChild(make('polyline', { points: rtp.map((value, i) => `${x(i)},${yRtp(value)}`).join(' '), fill: 'none', stroke: '#55d68b', 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
-        thirtyDay.appendChild(make('polyline', { points: d1Retention.map((value, i) => `${x(i)},${yRetention(value)}`).join(' '), fill: 'none', stroke: '#f2a65a', 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+        // Both 30-day trendlines carry the same travelling current as the hourly chart.
+        // Each flow is a SECOND polyline with points identical to its own trace, laid over
+        // it, so the trend itself can never move or reshape - only a light runs through it.
+        // pathLength normalises the dash maths to 1000 units whatever the real path length
+        // is (see the tp-dash keyframes); without it the light falls off the end mid-cycle.
+        const rtp30 = rtp.map((value, i) => `${x(i)},${yRtp(value)}`).join(' ');
+        const d1_30  = d1Retention.map((value, i) => `${x(i)},${yRetention(value)}`).join(' ');
+        const trace30 = (points, stroke) => make('polyline', { points, fill: 'none', stroke, 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+        const flow30  = (points, cls) => make('polyline', { points, fill: 'none', stroke: '#ffffff', 'stroke-width': 2.3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'pathLength': '1000', 'class': cls });
+        thirtyDay.appendChild(trace30(rtp30, '#55d68b'));
+        thirtyDay.appendChild(flow30(rtp30, 'tp-flow'));     // RTP - same green ink as the hourly chart
+        thirtyDay.appendChild(trace30(d1_30, '#f2a65a'));
+        thirtyDay.appendChild(flow30(d1_30, 'tp-flow d1'));  // D1 retention - orange ink, half a cycle behind
         [rtp, d1Retention].forEach((series, seriesIndex) => series.forEach((value, i) => {
           const isRtpChange = !seriesIndex && dates[i] === 'Sep 18';
           const point = make('circle', { cx: x(i), cy: seriesIndex ? yRetention(value) : yRtp(value), r: isRtpChange ? 4.8 : 2.4, fill: isRtpChange ? '#ef4444' : (seriesIndex ? '#f2a65a' : '#55d68b'), stroke: isRtpChange ? '#ffffff' : 'none', 'stroke-width': isRtpChange ? 1.5 : 0, 'class': isRtpChange ? 'tp-blink' : '' });
