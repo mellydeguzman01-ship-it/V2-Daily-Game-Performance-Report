@@ -703,7 +703,7 @@
     .kpi-ico.mtd .bar:nth-of-type(2) { animation-delay: .16s; }
     .kpi-ico.mtd .bar:nth-of-type(3) { animation-delay: .32s; }
     .kpi-ico.mtd .bar:nth-of-type(4) { animation-delay: .48s; }
-    /* KPI card icons: motion deliberately NOT gated by prefers-reduced-motion (2026-10-09). */
+    @media (prefers-reduced-motion: reduce) { .kpi-ico, .kpi-ico * { animation: none !important } }
 
     /* ---- KPI card interior, v2: icon+label left, detail rows right-aligned ----
        v1 gave the details their own grid COLUMN. Measured at these card widths
@@ -776,7 +776,9 @@
     .small-grid .submetric-ico.a-bolt svg    { animation: kpi-pop 2.4s ease-in-out infinite; }
     .small-grid .submetric-ico.a-stack svg   { animation: kpi-bob 3.2s ease-in-out .2s infinite; }
     .small-grid .submetric-ico.a-return svg  { animation: kpi-spin 12s linear infinite; }
-    /* Sub-card KPI icons: motion deliberately NOT gated by prefers-reduced-motion (2026-10-09). */
+    @media (prefers-reduced-motion: reduce) {
+      .small-grid .submetric-ico svg { animation: none !important }
+    }
 
     /* ---- chart motion (2026-10-09) ----
        Rings spin forever; bars and lines draw in once on load (see the module docstring:
@@ -807,8 +809,69 @@
         stroke-dasharray: 200;
         animation: ch-draw 1.4s ease-out both;
     }
-    /* Chart motion: deliberately NOT gated by prefers-reduced-motion (2026-10-09) so
-       every viewer sees the same rendered motion as the shipped clips. */
+
+    /* ---- CONTINUOUS bar movement (2026-10-09: "ng mga bar sa dashboard, gusto ko may
+       movement din") ----
+       A travelling highlight, deliberately NOT a re-grow loop. Animating the bar's LENGTH
+       in a loop would claim the value was 0 several times a minute; sliding a highlight
+       across a bar leaves its measured length untouched at every instant, so the bar is
+       never briefly wrong. This is the one way to run forever on a page whose numbers are
+       audited. The entrance above still runs once; these two never stop. */
+    @keyframes ch-sheen { from { background-position: -60% 0 } to { background-position: 160% 0 } }
+    @keyframes ch-wave  { 0%, 100% { opacity: .74 } 50% { opacity: 1 } }
+
+    .bar-fill, .mini-bar > i { position: relative; overflow: hidden; }
+    .bar-fill::after, .mini-bar > i::after {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background-image: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+        background-size: 45% 100%; background-repeat: no-repeat;
+        animation: ch-sheen 3.2s linear infinite;
+    }
+    /* stagger by ROW so the highlight travels down the panel rather than blinking in
+       unison. The fills are only children of their own track, so the offset has to come
+       from the row, not from :nth-child on the fill itself. */
+    .dynamic-item:nth-child(2) .bar-fill::after { animation-delay: .14s }
+    .dynamic-item:nth-child(3) .bar-fill::after { animation-delay: .28s }
+    .dynamic-item:nth-child(4) .bar-fill::after { animation-delay: .42s }
+    .dynamic-item:nth-child(5) .bar-fill::after { animation-delay: .56s }
+    .dynamic-item:nth-child(6) .bar-fill::after { animation-delay: .70s }
+    .dynamic-item:nth-child(7) .bar-fill::after { animation-delay: .84s }
+    tbody tr:nth-child(2) .mini-bar > i::after { animation-delay: .14s }
+    tbody tr:nth-child(3) .mini-bar > i::after { animation-delay: .28s }
+    tbody tr:nth-child(4) .mini-bar > i::after { animation-delay: .42s }
+    tbody tr:nth-child(5) .mini-bar > i::after { animation-delay: .56s }
+    tbody tr:nth-child(6) .mini-bar > i::after { animation-delay: .70s }
+    tbody tr:nth-child(7) .mini-bar > i::after { animation-delay: .84s }
+    tbody tr:nth-child(8) .mini-bar > i::after { animation-delay: .98s }
+
+    /* SVG bars cannot carry a pseudo-element, so they get a light wave sweeping across the
+       bars instead - also length-preserving, also continuous. Two animations on two
+       different properties: transform for the one-shot draw-in, opacity for the wave.
+       The delay list is comma-matched to the shorthand above (entrance 0s, wave staggered). */
+    .denom-svg rect, .eng-svg rect, .tall-svg rect {
+        animation: ch-growY .9s cubic-bezier(.2,.7,.3,1) both,
+                   ch-wave 2.8s ease-in-out infinite;
+    }
+    .denom-svg rect { animation-name: ch-growX, ch-wave; }
+    .denom-svg rect:nth-of-type(6n+1), .eng-svg rect:nth-of-type(6n+1),
+    .tall-svg rect:nth-of-type(6n+1) { animation-delay: 0s, 0s }
+    .denom-svg rect:nth-of-type(6n+2), .eng-svg rect:nth-of-type(6n+2),
+    .tall-svg rect:nth-of-type(6n+2) { animation-delay: 0s, .11s }
+    .denom-svg rect:nth-of-type(6n+3), .eng-svg rect:nth-of-type(6n+3),
+    .tall-svg rect:nth-of-type(6n+3) { animation-delay: 0s, .22s }
+    .denom-svg rect:nth-of-type(6n+4), .eng-svg rect:nth-of-type(6n+4),
+    .tall-svg rect:nth-of-type(6n+4) { animation-delay: 0s, .33s }
+    .denom-svg rect:nth-of-type(6n+5), .eng-svg rect:nth-of-type(6n+5),
+    .tall-svg rect:nth-of-type(6n+5) { animation-delay: 0s, .44s }
+    .denom-svg rect:nth-of-type(6n), .eng-svg rect:nth-of-type(6n),
+    .tall-svg rect:nth-of-type(6n) { animation-delay: 0s, .55s }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mini-donut, .compact-pie .donut-wrap > svg, .monthly-share-card svg, .tiers-donut,
+      .bar-fill, .mini-bar > i, .denom-svg rect, .eng-svg rect, .tall-svg rect,
+      .spark polyline { animation: none !important; transform: none !important; }
+      .bar-fill::after, .mini-bar > i::after { animation: none !important; }
+    }
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
