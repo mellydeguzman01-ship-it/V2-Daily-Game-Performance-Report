@@ -1897,7 +1897,10 @@
             box.style.left = cx + 'px'; box.style.top = cy + 'px';
             host.appendChild(box);
             const size = parseFloat(getComputedStyle(strong).fontSize) || 13;
-            fit(strong, holeW * 0.94, size, 7.5);
+            // 0.84 of the hole, not 0.94: a % label orbits at the ring's midline, and at the
+            // 3 o'clock and 9 o'clock points its inner glyph edge reaches toward this number.
+            // Filling the hole edge-to-edge would make the two touch as the ring turns.
+            fit(strong, holeW * 0.84, size, 7.5);
           }
         });
 
