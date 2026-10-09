@@ -703,7 +703,7 @@
     .kpi-ico.mtd .bar:nth-of-type(2) { animation-delay: .16s; }
     .kpi-ico.mtd .bar:nth-of-type(3) { animation-delay: .32s; }
     .kpi-ico.mtd .bar:nth-of-type(4) { animation-delay: .48s; }
-    @media (prefers-reduced-motion: reduce) { .kpi-ico, .kpi-ico * { animation: none !important } }
+    /* KPI card icons: motion deliberately NOT gated by prefers-reduced-motion (2026-10-09). */
 
     /* ---- KPI card interior, v2: icon+label left, detail rows right-aligned ----
        v1 gave the details their own grid COLUMN. Measured at these card widths
@@ -776,9 +776,7 @@
     .small-grid .submetric-ico.a-bolt svg    { animation: kpi-pop 2.4s ease-in-out infinite; }
     .small-grid .submetric-ico.a-stack svg   { animation: kpi-bob 3.2s ease-in-out .2s infinite; }
     .small-grid .submetric-ico.a-return svg  { animation: kpi-spin 12s linear infinite; }
-    @media (prefers-reduced-motion: reduce) {
-      .small-grid .submetric-ico svg { animation: none !important }
-    }
+    /* Sub-card KPI icons: motion deliberately NOT gated by prefers-reduced-motion (2026-10-09). */
 
     /* ---- chart motion (2026-10-09) ----
        Rings spin forever; bars and lines draw in once on load (see the module docstring:
@@ -809,11 +807,8 @@
         stroke-dasharray: 200;
         animation: ch-draw 1.4s ease-out both;
     }
-    @media (prefers-reduced-motion: reduce) {
-      .mini-donut, .compact-pie .donut-wrap > svg, .monthly-share-card svg, .tiers-donut,
-      .bar-fill, .mini-bar > i, .denom-svg rect, .eng-svg rect, .tall-svg rect,
-      .spark polyline { animation: none !important; transform: none !important; }
-    }
+    /* Chart motion: deliberately NOT gated by prefers-reduced-motion (2026-10-09) so
+       every viewer sees the same rendered motion as the shipped clips. */
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
