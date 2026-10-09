@@ -1920,6 +1920,10 @@
       // and the labels would drift off their wedges. Rebuild instead of leaving them wrong.
       let ringRT = null;
       window.addEventListener('resize', () => { clearTimeout(ringRT); ringRT = setTimeout(setupRings, 150); });
+      // Web fonts and other late layout work move the panels after the first measurement, and
+      // a label keeps the radius it was born with - so re-measure once the page has settled.
+      window.addEventListener('load', setupRings);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(setupRings);
 
       // Players by Spend Tier: the ring is a conic-gradient, so the hovered tier
       // is resolved from the cursor's angle; the legend rows are targets too.
