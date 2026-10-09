@@ -1172,7 +1172,7 @@
             <div class="alert-row"><div><strong>GGR Status</strong><small>Positive daily GGR ₱4,748.13</small></div><span class="status ok">Healthy</span></div>
             <div class="alert-row"><div><strong>RTP Status</strong><small>98.78% vs target ≈ 98.3%</small></div><span class="status ok">Healthy</span></div>
             <div class="alert-row"><div style="min-width:0"><strong>Top Winning Player Alerts</strong><small>No high-multiplier win reached the alert threshold.</small></div><span class="status ok">Clear</span></div>
-            <div class="incident-notes"><strong>Notes</strong><p>Fuse-breaker GC notifications were not scanned for this date.</p></div>
+            <div class="incident-notes"><strong>Notes</strong><p>No incident report or important operational note recorded for this date.</p></div>
           </div>
           </div>
       </div>
@@ -2474,8 +2474,8 @@
       // Performance notes) live on window.__dynCN: `cn` is IIFE-scoped here, so
       // an earlier block cannot reach it directly.
       Object.assign(cn, window.__dynCN || {});
-      /* gc-alerts-i18n */ Object.assign(cn, {"Fuse-breaker GC notifications were not scanned for this date.": "本日期未扫描保险丝告警通知。"});
-      /* incident-panel-i18n */ Object.assign(cn, {"High Winning Defense Alert": "高倍中奖防御警报", "High Winning Defense": "高倍中奖防御", "Top Winning Player Alerts": "高额中奖玩家警报", "No high-multiplier win reached the alert threshold.": "当日无高倍中奖达到警报阈值。", "day RTP": "当日RTP", "Original": "原始", "Repeat": "重复", "Retries": "重试", "Trigger Repeat": "重复触发", "Trigger": "触发"});
+      /* gc-alerts-i18n */ Object.assign(cn, {"No incident report or important operational note recorded for this date.": "此日期暂无事件报告或重要运营备注。"});
+      /* incident-panel-i18n */ Object.assign(cn, {"Fuse-breaker Alert": "熔断警报", "High Winning Defense Alert": "高倍中奖防御警报", "High Winning Defense": "高倍中奖防御", "Top Winning Player Alerts": "高额中奖玩家警报", "No high-multiplier win reached the alert threshold.": "当日无高倍中奖达到警报阈值。", "day RTP": "当日RTP", "Original": "原始", "Repeat": "重复", "Retries": "重试", "Trigger Repeat": "重复触发", "Trigger": "触发"});
       const entries = Object.entries(cn).sort((a, b) => b[0].length - a[0].length);
 
       const translateText = (source, lang) => {
