@@ -864,11 +864,9 @@
        true length, so a chart that is never observed still reads correctly. */
     .bars-live .bar-fill,
     .bars-live .mini-bar > i { animation: ch-growX .9s cubic-bezier(.2,.7,.3,1) both; }
-    .bars-live.denom-svg rect {
-        animation: ch-growX .9s cubic-bezier(.2,.7,.3,1) both,
-                   ch-wave 2.8s ease-in-out infinite;
-    }
-    .bars-live.eng-svg rect,
+    .bars-live.denom-svg rect:not(.bar-shine),
+    .bars-live.eng-svg rect:not(.bar-shine) { animation: ch-growY .9s cubic-bezier(.2,.7,.3,1) both; }
+    .bars-live.denom-svg rect:not(.bar-shine) { animation-name: ch-growX; }
     .bars-live.tall-svg rect {
         animation: ch-growY .9s cubic-bezier(.2,.7,.3,1) both,
                    ch-wave 2.8s ease-in-out infinite;
@@ -917,22 +915,42 @@
     tbody tr:nth-child(7) .mini-bar > i::after { animation-delay: .84s }
     tbody tr:nth-child(8) .mini-bar > i::after { animation-delay: .98s }
 
-    /* SVG bars cannot carry a pseudo-element, so they get a light wave sweeping across the
-       bars instead - also length-preserving, also continuous. Two animations on two
-       different properties: transform for the one-shot draw-in, opacity for the wave.
-       The delay list is comma-matched to the shorthand above (entrance 0s, wave staggered). */
-    .denom-svg rect:nth-of-type(6n+1), .eng-svg rect:nth-of-type(6n+1),
+    /* The tall charts' bars are vertical and sit under two trend lines, so a light wave
+       sweeping across the series reads well there - also length-preserving, also
+       continuous. Two animations on two properties: transform for the one-shot draw-in,
+       opacity for the wave. The delay list is comma-matched to the shorthand (entrance 0s,
+       wave staggered). The flat-bar charts get a light per bar instead - see .bar-shine. */
     .tall-svg rect:nth-of-type(6n+1) { animation-delay: 0s, 0s }
-    .denom-svg rect:nth-of-type(6n+2), .eng-svg rect:nth-of-type(6n+2),
     .tall-svg rect:nth-of-type(6n+2) { animation-delay: 0s, .18s }
-    .denom-svg rect:nth-of-type(6n+3), .eng-svg rect:nth-of-type(6n+3),
     .tall-svg rect:nth-of-type(6n+3) { animation-delay: 0s, .36s }
-    .denom-svg rect:nth-of-type(6n+4), .eng-svg rect:nth-of-type(6n+4),
     .tall-svg rect:nth-of-type(6n+4) { animation-delay: 0s, .54s }
-    .denom-svg rect:nth-of-type(6n+5), .eng-svg rect:nth-of-type(6n+5),
     .tall-svg rect:nth-of-type(6n+5) { animation-delay: 0s, .72s }
-    .denom-svg rect:nth-of-type(6n), .eng-svg rect:nth-of-type(6n),
     .tall-svg rect:nth-of-type(6n) { animation-delay: 0s, .90s }
+
+    /* ---- a light along each flat bar (2026-10-09) ------------------------------
+       The denomination and engagement bars are SVG, and an SVG shape cannot carry a
+       ::after, so they cannot use the sliding highlight the row bars have. Each bar gets
+       one highlight rect of its own instead, added by barShine(), sized to that bar and
+       swept along the bar's own axis. It is never larger than its bar, and it moves only
+       its own opacity and transform, so the bar's measured length is the real value in
+       every frame. A bar too short for a light to travel in is left alone. */
+    @keyframes bar-shine-x {
+        0%   { transform: translateX(0); opacity: 0 }
+        14%  { opacity: .6 }
+        72%  { opacity: .6 }
+        86%  { opacity: 0 }
+        100% { transform: translateX(var(--travel)); opacity: 0 }
+    }
+    @keyframes bar-shine-y {
+        0%   { transform: translateY(0); opacity: 0 }
+        14%  { opacity: .6 }
+        72%  { opacity: .6 }
+        86%  { opacity: 0 }
+        100% { transform: translateY(var(--travel)); opacity: 0 }
+    }
+    .bar-shine { opacity: 0; pointer-events: none; }
+    .bars-live .bar-shine { animation: bar-shine-x 2.4s ease-in-out infinite; }
+    .bars-live.eng-svg .bar-shine { animation-name: bar-shine-y; }
 
     @media (prefers-reduced-motion: reduce) {
       .mini-donut, .compact-pie .donut-wrap > svg, .monthly-share-card svg, .tiers-donut,
@@ -1966,6 +1984,72 @@
         hosts.forEach(el => io.observe(el));
       };
       barMotion();
+
+      // ---- a light travelling along each flat bar (2026-10-09) ------------------
+      // The denomination and engagement charts are SVG, so their bars cannot carry the
+      // ::after the row bars use. Each bar gets one highlight rect of its own, sized to
+      // that bar and swept along the bar's own axis, which leaves the bar's geometry
+      // untouched - the highlight is never wider or longer than the bar it belongs to.
+      const barShine = function () {
+        const NS = 'http://www.w3.org/2000/svg';
+        const charts = document.querySelectorAll('svg.denom-svg, svg.eng-svg');
+        if (!charts.length) return;
+        // One gradient per axis, shared by every highlight on the page.
+        const host = charts[0];
+        if (!host.querySelector('#barShineGradX')) {
+          const defs = document.createElementNS(NS, 'defs');
+          [['barShineGradX', 'x1', 'x2'], ['barShineGradY', 'y1', 'y2']].forEach(pair => {
+            const g = document.createElementNS(NS, 'linearGradient');
+            g.setAttribute('id', pair[0]);
+            g.setAttribute(pair[1], '0');
+            g.setAttribute(pair[2], '1');
+            [[0, 0], [0.5, 0.62], [1, 0]].forEach(stop => {
+              const s = document.createElementNS(NS, 'stop');
+              s.setAttribute('offset', stop[0]);
+              s.setAttribute('stop-color', '#ffffff');
+              s.setAttribute('stop-opacity', stop[1]);
+              g.appendChild(s);
+            });
+            defs.appendChild(g);
+          });
+          host.insertBefore(defs, host.firstChild);
+        }
+        charts.forEach(svg => {
+          if (svg.querySelector('.bar-shine')) return;
+          const vertical = svg.classList.contains('eng-svg');
+          Array.from(svg.querySelectorAll('rect')).forEach((bar, i) => {
+            const bx = +bar.getAttribute('x'), by = +bar.getAttribute('y');
+            const bw = +bar.getAttribute('width'), bh = +bar.getAttribute('height');
+            if (![bx, by, bw, bh].every(Number.isFinite)) return;
+            const rx = +(bar.getAttribute('rx') || 0);
+            let len, thick, travel, sx, sy;
+            if (vertical) {
+              thick = bw;                                  // share the bar's own column
+              len = Math.min(bh * 0.45, 30);
+              travel = -(bh - len);                        // rise from the baseline
+              sx = bx; sy = by + bh - len;
+            } else {
+              thick = bh;
+              len = Math.min(bw * 0.45, 46);
+              travel = bw - len;
+              sx = bx; sy = by;
+            }
+            if (len + 16 > (vertical ? bh : bw)) return;    // no room to travel in
+            const shine = document.createElementNS(NS, 'rect');
+            shine.setAttribute('class', 'bar-shine');
+            shine.setAttribute('x', sx.toFixed(2));
+            shine.setAttribute('y', sy.toFixed(2));
+            shine.setAttribute('width', (vertical ? thick : len).toFixed(2));
+            shine.setAttribute('height', (vertical ? len : thick).toFixed(2));
+            shine.setAttribute('rx', Math.min(rx, len / 2).toFixed(2));
+            shine.setAttribute('fill', vertical ? 'url(#barShineGradY)' : 'url(#barShineGradX)');
+            shine.setAttribute('style',
+              '--travel:' + travel.toFixed(2) + 'px; animation-delay:' + (i * 0.14).toFixed(2) + 's');
+            svg.appendChild(shine);
+          });
+        });
+      };
+      barShine();
 
       // Players by Spend Tier: the ring is a conic-gradient, so the hovered tier
       // is resolved from the cursor's angle; the legend rows are targets too.
