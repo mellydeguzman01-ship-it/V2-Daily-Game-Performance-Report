@@ -18,6 +18,8 @@
       --yellow: #ffca64;
       --red: #ff7388;
       --violet: #b78cff;
+      --pink: #ff8fc7;
+      --orange: #ffab5c;
       --shadow: 0 12px 30px rgba(0, 0, 0, .22);
       --radius: 18px;
     }
@@ -327,10 +329,21 @@
        Row 1 is 20/15/30/35: the two Feature Trigger Rate cards were merged back
        into one card, so it takes the 20 + 15 tracks they used to hold. */
     .game-performance-grid { display: grid; grid-template-columns: 1fr; gap: 10px; align-items: stretch; }
-    .gp-row-1 { display: grid; grid-template-columns: 20fr 15fr 30fr 35fr; gap: 10px; align-items: stretch; }
+    .gp-row-1 { display: grid; grid-template-columns: 20fr 15fr 25fr 20fr 20fr; gap: 10px; align-items: stretch; }
     .gp-row-2 { display: grid; grid-template-columns: 60fr 20fr 20fr; gap: 10px; align-items: stretch; }
     /* every child carried explicit row/column placement from the old 20-track grid */
     .gp-row-1 > .panel, .gp-row-2 > .panel { grid-column: auto !important; grid-row: auto !important; min-width: 0; }
+    /* Game Modes (user spec 2026-10-12): two 100% stacked bars, Loteria vs Slot.
+       PLOT ONLY - no data is wired yet, so the segments sit at an even placeholder
+       split and the panel says so; do not read these widths as values. */
+    .gp-modes .mode-row + .mode-row { margin-top: 14px; }
+    .gp-modes .mode-label { font-size: 10px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .gp-modes .mode-track { display: flex; height: 15px; border-radius: 8px; overflow: hidden;
+                            background: var(--panel-2); border: 1px solid var(--line); }
+    .gp-modes .mode-track .seg { height: 100%; }
+    .gp-modes .mode-legend { display: flex; gap: 14px; font-size: 9px; color: var(--muted); margin-top: 6px; }
+    .gp-modes .mode-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
+                               margin-right: 5px; vertical-align: -1px; }
     /* User 2026-10-02: "sa row ng hourly rtp, ipanatay mo din yung cards/panel".
        In the Hourly RTP row (gp-row-2) the two columns beside it stretch to the row,
        but this third column's two cards were content-sized, so they stopped ~140px
@@ -719,7 +732,7 @@
     html.night #nightModeButton::before { content: "\2600\FE0F  "; }
     html.night #nightModeButton { color: #fff; background: #24466f; border-color: #70a9eb; }
 
-    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2 { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
+    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-modes { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2 { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
     @media (max-width: 700px) { .wrap { width: 100%; padding: 12px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
   /* ---- conditional GGR / RTP colour -------------------------------------
      .positive (green) / .negative (red) are the page's existing signal colours.
@@ -1226,6 +1239,22 @@
           </div>
           <div class="chart-note" style="margin-top:12px">Per settled round: 70,763 rounds (97.32%) triggered no feature; a round that paid an extra win (`otherWinAmount` > 0) counts as a Bonus Round (1,644 rounds, 2.26%) and `betType` BUY_FEATURE counts as a Buy Feature (304 rounds, 0.42%). The three blocks partition the day's 72,711 settled rounds. Player entries count a player once per product: 1,161 played normal rounds, 475 saw a bonus and 158 bought a feature.</div>
           <!--GP:FEATURE:END-->
+        </div>
+          <div class="panel pad chart-box gp-modes">
+          <div class="side-title"><h3>Game Modes</h3><span>plot · no data yet</span></div>
+          <!--GP:MODES:START-->
+          <div class="mode-row">
+            <div class="mode-label">Operation Mode</div>
+            <div class="mode-track" role="img" aria-label="Operation Mode, 100% stacked bar, Loteria versus Slot"><div class="seg" style="width:50%;background:var(--blue)"></div><div class="seg" style="width:50%;background:var(--pink)"></div></div>
+            <div class="mode-legend"><span><i style="background:var(--blue)"></i>Loteria</span><span><i style="background:var(--pink)"></i>Slot</span></div>
+          </div>
+          <div class="mode-row">
+            <div class="mode-label">Speed Mode</div>
+            <div class="mode-track" role="img" aria-label="Speed Mode, 100% stacked bar, Loteria versus Slot"><div class="seg" style="width:50%;background:var(--yellow)"></div><div class="seg" style="width:50%;background:var(--orange)"></div></div>
+            <div class="mode-legend"><span><i style="background:var(--yellow)"></i>Loteria</span><span><i style="background:var(--orange)"></i>Slot</span></div>
+          </div>
+          <div class="chart-note" style="margin-top:12px">Two 100% stacked bars — Operation Mode and Speed Mode, each split between Loteria and Slot. Structure only: the mode source has not been wired, so the segments are drawn at an even placeholder split and are not measurements.</div>
+          <!--GP:MODES:END-->
         </div>
         </div>
         <div class="gp-row-2">
