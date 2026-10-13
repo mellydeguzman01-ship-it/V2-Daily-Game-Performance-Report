@@ -323,6 +323,22 @@
     .alert-row strong { font-size: 12px; } .alert-row small { display: block; color: var(--muted); margin-top: 2px; }
     .status { border-radius: 999px; padding: 5px 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; white-space: nowrap; }
     .status.ok { color: #167a45; background: #e9f8ef; } .status.warn { color: #8a5c00; background: #fff4d8; } .status.danger { color: #b4233a; background: #ffebee; }
+    /* 2026-10-13 (user request): a row reporting an incident right now blinks, so
+       an alert/melt is obvious at a glance instead of reading like the calm rows.
+       The row fades and the badge throws a red halo. Motion is suppressed for
+       anyone whose system asks for reduced motion. */
+    @keyframes incident-blink { 0%, 100% { opacity: 1 } 50% { opacity: .45 } }
+    @keyframes incident-halo {
+      0%   { box-shadow: 0 0 0 0 rgba(180, 35, 58, .55); }
+      70%  { box-shadow: 0 0 0 7px rgba(180, 35, 58, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(180, 35, 58, 0); }
+    }
+    .alert-row.incident-live { animation: incident-blink 1.8s ease-in-out infinite; }
+    .alert-row.incident-live .status.danger { animation: incident-halo 1.4s ease-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .alert-row.incident-live,
+      .alert-row.incident-live .status.danger { animation: none; }
+    }
 
     .chart-grid-2, .chart-grid-3 { display: contents; }
     /* User spec 2026-10-01: two rows, row 2 60/20/20.
@@ -1209,10 +1225,9 @@
             </table>
           </div><div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
             <div class="alert-row"><div><strong>GGR Status</strong><small>Positive daily GGR ₱5,101.12</small></div><span class="status ok">Healthy</span></div>
-            <div class="alert-row"><div><strong>RTP Status</strong><small>98.65% vs target ≈ 97.5%</small></div><span class="status ok">Healthy</span></div>
-            <div class="alert-row"><div style="min-width:0"><strong>Fusebreak Alarm / Melt</strong><small>None</small></div><span class="status ok">None</span></div>
-            <div class="alert-row"><div style="min-width:0"><strong>High Winning Defense Alert</strong><small>BANANA CRAZE · max 250×</small></div><span class="status danger">Alert</span></div>
-            <div class="incident-notes"><strong>Notes</strong><p>Top-winning-player alerts are read from the day's settled high-multiplier wins; the production notification console was not read for this date.</p></div>
+          <div class="alert-row"><div><strong>RTP Status</strong><small>98.65% vs target ≈ 97.5%</small></div><span class="status ok">Healthy</span></div>
+          <div class="alert-row"><div style="min-width:0"><strong>Fusebreak Alarm / Melt</strong><small>None</small></div><span class="status ok">None</span></div>
+          <div class="alert-row incident-live"><div style="min-width:0"><strong>High Winning Defense Alert</strong><small>BANANA CRAZE · max 250×</small></div><span class="status danger">Alert</span></div>
           </div>
           </div>
       </div>
@@ -2528,7 +2543,6 @@
       // Performance notes) live on window.__dynCN: `cn` is IIFE-scoped here, so
       // an earlier block cannot reach it directly.
       Object.assign(cn, window.__dynCN || {});
-      /* gc-alerts-i18n */ Object.assign(cn, {"Top-winning-player alerts are read from the day's settled high-multiplier wins; the production notification console was not read for this date.": "高额中奖玩家警报取自当日已结算的高倍中奖记录；本日期未读取生产通知控制台。"});
       /* incident-panel-i18n */ Object.assign(cn, {"Fuse-breaker Alert": "熔断警报", "Fusebreak Alarm / Melt": "熔断警报 / 熔毁", "Fusebreak Alarm": "熔断警报", "Melt": "熔毁", "None": "无", "max ": "最大 ", "High Winning Defense Alert": "高倍中奖防御警报", "High Winning Defense": "高倍中奖防御", "Top Winning Player Alerts": "高额中奖玩家警报", "No high-multiplier win reached the alert threshold.": "当日无高倍中奖达到警报阈值。", "day RTP": "当日RTP", "Original": "原始", "Repeat": "重复", "Retries": "重试", "Trigger Repeat": "重复触发", "Trigger": "触发"});
       const entries = Object.entries(cn).sort((a, b) => b[0].length - a[0].length);
 
