@@ -1185,7 +1185,7 @@
             </table>
           </div><div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
             <div class="alert-row"><div><strong>GGR Status</strong><small>Positive daily GGR ₱5,101.12</small></div><span class="status ok">Healthy</span></div>
-            <div class="alert-row"><div><strong>RTP Status</strong><small>98.65% vs target ≈ 98.3%</small></div><span class="status ok">Healthy</span></div>
+            <div class="alert-row"><div><strong>RTP Status</strong><small>98.65% vs target ≈ 97.5%</small></div><span class="status ok">Healthy</span></div>
             <div class="alert-row"><div style="min-width:0"><strong>Top Winning Player Alerts</strong><small>High Winning Defense Alert · BANANA CRAZE · max 250×</small></div><span class="status danger">Alert</span></div>
             <div class="incident-notes"><strong>Notes</strong><p>Top-winning-player alerts are read from the day's settled high-multiplier wins; the production notification console was not read for this date.</p></div>
           </div>
@@ -1259,9 +1259,9 @@
         </div>
         </div>
         <div class="gp-row-2">
-          <div class="panel pad chart-box tall hourly-rtp"><div class="side-title"><h3>Hourly RTP (00:00–23:59)</h3><span>Bars: bet amount + payout (₱000s) · Lines: RTP + players + 98.3% threshold</span></div>
+          <div class="panel pad chart-box tall hourly-rtp"><div class="side-title"><h3>Hourly RTP (00:00–23:59)</h3><span>Bars: bet amount + payout (₱000s) · Lines: RTP + players + 97.5% threshold</span></div>
           <svg id="hourlyRtpChart" class="chart tall-svg" viewBox="0 0 760 315" preserveAspectRatio="none" role="img" aria-label="Hourly RTP combo chart"></svg>
-          <div class="legend"><span><i style="background:var(--blue)"></i>Bet amount</span><span><i style="background:var(--violet)"></i>Payout</span><span><i class="line" style="background:var(--green)"></i>RTP trendline</span><span><i class="line" style="background:#ff79c6"></i>Players</span><span><i class="line" style="background:#f2a65a"></i>RTP threshold 98.3%</span></div><div class="chart-note">Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. The green line is hourly RTP against the 98.3% target. The pink line counts the distinct players who settled at least one round in that hour; it is a headcount, not a partition of the day, so a player who plays in two hours counts in both and the 24 values must not be added up.</div>
+          <div class="legend"><span><i style="background:var(--blue)"></i>Bet amount</span><span><i style="background:var(--violet)"></i>Payout</span><span><i class="line" style="background:var(--green)"></i>RTP trendline</span><span><i class="line" style="background:#ff79c6"></i>Players</span><span><i class="line" style="background:#f2a65a"></i>RTP threshold 97.5%</span></div><div class="chart-note">Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. The green line is hourly RTP against the 97.5% target. The pink line counts the distinct players who settled at least one round in that hour; it is a headcount, not a partition of the day, so a player who plays in two hours counts in both and the 24 values must not be added up.</div>
         </div>
           <div class="panel pad chart-box multiplier-distribution"><div class="side-title"><h3>Multiplier Distribution</h3><span>Winning outcome bands</span></div>
           <table class="dist-table"><thead><tr><th>Multiplier band</th><th>Rounds</th><th>Share</th><th></th></tr></thead><tbody><tr><td>0x</td><td>29,450</td><td>70.17%</td><td><div class="mini-bar"><i style="width:72%"></i></div></td></tr><tr><td>>0x - 5x</td><td>10,857</td><td>25.87%</td><td><div class="mini-bar"><i style="width:27%"></i></div></td></tr><tr><td>>5x - 20x</td><td>1,442</td><td>3.44%</td><td><div class="mini-bar"><i style="width:4%"></i></div></td></tr><tr><td>>20x - 50x</td><td>199</td><td>0.47%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>50x - 100x</td><td>19</td><td>0.05%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>100x - 300x</td><td>3</td><td>0.01%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>300x - 500x</td><td>0</td><td>0.00%</td><td><div class="mini-bar"><i style="width:0%"></i></div></td></tr><tr><td>>500x - 1000x</td><td>0</td><td>0.00%</td><td><div class="mini-bar"><i style="width:0%"></i></div></td></tr><tr><td>>1000x</td><td>0</td><td>0.00%</td><td><div class="mini-bar"><i style="width:0%"></i></div></td></tr></tbody></table>
@@ -1476,9 +1476,9 @@
             addRtpLabel(Math.round(value * 100) / 100, false);
           }
         }
-        // The 98.3% target joins the axis only when it does not collide with a
+        // The 97.5% target joins the axis only when it does not collide with a
         // tick; the dashed line is always drawn and the inline label names it.
-        addRtpLabel(98.3, false);
+        addRtpLabel(97.5, false);
         rtpLabels.sort((a, b) => a.value - b.value);
         // Ceiling used to be pinned at 150 while the day's peak hour settled 50.35k,
         // so the tallest bar filled 33.6% of the plot and the shortest stood 8.7px
@@ -1584,9 +1584,9 @@
         };
         peakHr(hourPlayers, yPlayers, '#ff79c6', 'Players', '\u73a9\u5bb6\u6570', '');
         peakHr(rtp, yRtp, '#55d68b', 'RTP', 'RTP', '%');
-        const thresholdY = yRtp(98.3);
+        const thresholdY = yRtp(97.5);
         hourly.appendChild(make('line', { x1: pad.l, y1: thresholdY, x2: W - pad.r, y2: thresholdY, stroke: '#f2a65a', 'stroke-width': 2, 'stroke-dasharray': '7 6' }));
-        drawLabel(hourly, W - 150, thresholdY - 7, '98.3% target', { fill: '#f2a65a', 'font-size': 9 });
+        drawLabel(hourly, W - 150, thresholdY - 7, '97.5% target', { fill: '#f2a65a', 'font-size': 9 });
       }
 
       const thirtyDay = document.getElementById('thirtyDayChart');
@@ -1655,11 +1655,17 @@
         thirtyDay.appendChild(flow30(rtp30, 'tp-flow'));     // RTP - same green ink as the hourly chart
         thirtyDay.appendChild(trace30(d1_30, '#f2a65a'));
         thirtyDay.appendChild(flow30(d1_30, 'tp-flow d1'));  // D1 retention - orange ink, half a cycle behind
+        // Days on which the configured RTP target moved. The red dot marks the day; the
+        // tooltip names the move. 2026-09-18: 97.0% -> 98.3%. 2026-10-12: 98.3% -> 97.5%.
+        // Keyed by the same 'Mon D' label the dates array produces, and declared AFTER
+        // the window block so the builder's array splice cannot touch it.
+        const RTP_CHANGE_LABELS = { 'Sep 18': '97.0% → 98.3%', 'Oct 12': '98.3% → 97.5%' };
         [rtp, d1Retention].forEach((series, seriesIndex) => series.forEach((value, i) => {
-          const isRtpChange = !seriesIndex && dates[i] === 'Sep 18';
+          const changeLabel = seriesIndex ? undefined : RTP_CHANGE_LABELS[dates[i]];
+          const isRtpChange = changeLabel !== undefined;
           const point = make('circle', { cx: x(i), cy: seriesIndex ? yRetention(value) : yRtp(value), r: isRtpChange ? 4.8 : 2.4, fill: isRtpChange ? '#ef4444' : (seriesIndex ? '#f2a65a' : '#55d68b'), stroke: isRtpChange ? '#ffffff' : 'none', 'stroke-width': isRtpChange ? 1.5 : 0, 'class': isRtpChange ? 'tp-blink' : '' });
-          const rtpChange = isRtpChange ? '<br>RTP change: 97.0% → 98.3%' : (!seriesIndex && i === rtp.length - 1 ? '<br>DoD: ↑ 3.62 pp' : '');
-          const rtpChangeCn = isRtpChange ? '<br>RTP变化：97.0% → 98.3%' : (!seriesIndex && i === rtp.length - 1 ? '<br>日环比：↑ 3.62 个百分点' : '');
+          const rtpChange = isRtpChange ? `<br>RTP change: ${changeLabel}` : (!seriesIndex && i === rtp.length - 1 ? '<br>DoD: ↑ 3.62 pp' : '');
+          const rtpChangeCn = isRtpChange ? `<br>RTP变化：${changeLabel}` : (!seriesIndex && i === rtp.length - 1 ? '<br>日环比：↑ 3.62 个百分点' : '');
           const english = seriesIndex ? `<b>${dates[i]}</b><br>D1 Retention: ${value.toFixed(2)}%` : `<b>${dates[i]}</b><br>RTP: ${value.toFixed(2)}%${rtpChange}`;
           const chinese = seriesIndex ? `<b>${dates[i]}</b><br>D1留存率：${value.toFixed(2)}%` : `<b>${dates[i]}</b><br>RTP：${value.toFixed(2)}%${rtpChangeCn}`;
           setTip(point, english, chinese);
@@ -2189,7 +2195,7 @@
         ['.changelog-table', 'Recent launches and the minimum-bet update expanded platform access during the reporting period.'],
         ['.compliance-panel', 'GCP accreditation and current Game Application approvals are shown for management tracking.'],
         ['.game-summary', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is the most frequent settled bet denomination by category.'],
-        ['.hourly-rtp', 'Hourly RTP is evaluated against the 98.3% target while bet amount and payout intensity are shown by hour.'],
+        ['.hourly-rtp', 'Hourly RTP is evaluated against the 97.5% target while bet amount and payout intensity are shown by hour.'],
         ['.dynamic-rtp', 'NON rounds carry most volume; Cumulative and Daily adjustments apply to a small share of rounds but pay far above their stake, which drives daily RTP variance.'],
 
 
@@ -2322,9 +2328,9 @@
         'Notes': '备注', 'No incident report or important operational note recorded for this date.': '此日期暂无事件报告或重要运营备注。',
         'Game Performance': '游戏表现', 'Banana Craze operating behavior and outcome distribution': 'Banana Craze运营行为与结果分布',
         'Rounds': '回合数', 'Total': '总计', 'Avg Round / Game': '平均每局回合投注', 'Hourly RTP (00:00–23:59)': '每小时RTP（00:00–23:59）', 'Hourly RTP': '每小时RTP',
-        'Bars: bet amount + payout (₱000s) · Lines: RTP + players + 98.3% threshold': '柱状图：投注金额 + 派彩（₱千元）· 折线：RTP + 玩家数 + 98.3%阈值',
-        'Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. The green line is hourly RTP against the 98.3% target. The pink line counts the distinct players who settled at least one round in that hour; it is a headcount, not a partition of the day, so a player who plays in two hours counts in both and the 24 values must not be added up.': '报告日每小时合计 — 每对柱形表示该小时的投注金额与派彩总额，覆盖所有平台（BingoPlus、GameZone、ArenaPlus）及全部已结算回合；将鼠标悬停在柱形上可查看精确金额。绿线为每小时 RTP，对照 98.3% 目标。粉线统计该小时内有已结算回合的去重玩家人数；此为人数统计，并非当日玩家的划分，因此在两个小时内游玩过的玩家会被重复计入，24 个数值不可相加。',
-        'Bet amount': '投注金额', 'RTP trendline': 'RTP趋势线', 'RTP threshold 98.3%': 'RTP阈值 98.3%',
+        'Bars: bet amount + payout (₱000s) · Lines: RTP + players + 97.5% threshold': '柱状图：投注金额 + 派彩（₱千元）· 折线：RTP + 玩家数 + 97.5%阈值',
+        'Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. The green line is hourly RTP against the 97.5% target. The pink line counts the distinct players who settled at least one round in that hour; it is a headcount, not a partition of the day, so a player who plays in two hours counts in both and the 24 values must not be added up.': '报告日每小时合计 — 每对柱形表示该小时的投注金额与派彩总额，覆盖所有平台（BingoPlus、GameZone、ArenaPlus）及全部已结算回合；将鼠标悬停在柱形上可查看精确金额。绿线为每小时 RTP，对照 97.5% 目标。粉线统计该小时内有已结算回合的去重玩家人数；此为人数统计，并非当日玩家的划分，因此在两个小时内游玩过的玩家会被重复计入，24 个数值不可相加。',
+        'Bet amount': '投注金额', 'RTP trendline': 'RTP趋势线', 'RTP threshold 97.5%': 'RTP阈值 97.5%',
         'Dynamic RTP': '动态RTP', 'Mode contribution': '模式贡献', 'rounds': '回合数',
         'Winning Rounds vs Losing Rounds': '中奖回合与未中奖回合', 'Loss vs win rounds': '未中奖与中奖回合', 'Total rounds': '总回合数',
         'Winning rounds': '中奖回合', 'Losing rounds': '未中奖回合',
@@ -2357,7 +2363,7 @@
         'Recent launches and the minimum-bet update expanded platform access during the reporting period.': '报告期间的近期上线和最低投注更新扩大了平台访问范围。',
         'GCP accreditation and current Game Application approvals are shown for management tracking.': '此处显示GCP认证和当前游戏申请批准状态，供管理层追踪。',
         'GameZone carries the highest rounds and BingoPlus leads monthly GGR.': 'GameZone回合数最高，BingoPlus的月初至今GGR最高。',
-        'Hourly RTP is evaluated against the 98.3% threshold while bet amount and payout intensity are shown by hour.': '每小时RTP根据98.3%阈值进行评估，同时按小时显示投注金额和派彩强度。',
+        'Hourly RTP is evaluated against the 97.5% threshold while bet amount and payout intensity are shown by hour.': '每小时RTP根据97.5%阈值进行评估，同时按小时显示投注金额和派彩强度。',
         'NON drives most volume; cumulative and daily modes remain more volatile because of smaller samples.': '普通模式贡献大部分交易量；累计模式和每日模式因样本较小而波动更高。',
         'Winning rounds represent 29.7% of Loteria rounds and 29.8% of Slot rounds on October 12, 2026.': '2026 年 9 月 30 日，中奖回合占乐透回合数的 29.7%，占老虎机回合数的 29.8%。',
         'Normal Bet accounts for the majority of ticket activity.': '普通投注占票数活动的大部分。',
@@ -2372,7 +2378,7 @@
         'Normal Rounds are the primary feature behavior, while Buy Feature and Bonus Round are smaller segments.': '普通回合是主要功能行为，购买功能和奖励回合占比较小。',
         'The 30-day view compares daily bet and payout bars with RTP and D1 retention trendlines.': '30天视图通过每日投注和派彩柱状图，对比RTP与D1留存率趋势线。',
         'Key Insight:': '关键洞察：', 'Archive': '存档', 'Choose a date below to open the verified report for that day.': '请选择下方日期，打开该日的已验证报告。', 'Back to Present Report': '返回当前报告',
-        'Daily report archive': '日报存档', 'View report': '查看报告', 'Close': '关闭', '98.3% target': '98.3%目标', 'Aug ': '8月', 'Sep ': '9月'
+        'Daily report archive': '日报存档', 'View report': '查看报告', 'Close': '关闭', '97.5% target': '97.5%目标', 'Aug ': '8月', 'Sep ': '9月'
       };
       Object.assign(cn, {
         'DoD': '日环比', 'WoW': '周环比', 'pp': '百分点', 'Monthly Total': '月度总计', 'Monthly Average': '月度平均', 'Monthly Avg': '月度平均', 'Monthly Max': '月度最高',
@@ -2387,7 +2393,7 @@
       Object.assign(cn, {
         "BingoPlus (Loteria) settled ₱306,605.00 of ₱378,876.50 total bet on October 12, 2026; GameZone and ArenaPlus (Slot) carried the rest.": "BingoPlus（乐透）在 2026 年 10 月 12 日的 ₱378,876.50 总投注额中结算了 ₱306,605.00；其余由 GameZone 与 ArenaPlus（老虎机）承担。",
         "Platform Share compares revenue, audience, and betting-volume contribution from the same settled per-site totals.": "平台占比基于同一批已结算的分站总计，比较收入、用户与投注量贡献。",
-        "Hourly RTP is evaluated against the 98.3% target while bet amount and payout intensity are shown by hour.": "每小时 RTP 对照 98.3% 目标进行评估，同时按小时显示投注金额与派彩强度。",
+        "Hourly RTP is evaluated against the 97.5% target while bet amount and payout intensity are shown by hour.": "每小时 RTP 对照 97.5% 目标进行评估，同时按小时显示投注金额与派彩强度。",
         "NON rounds carry most volume; Cumulative and Daily adjustments apply to a small share of rounds but pay far above their stake, which drives daily RTP variance.": "普通回合贡献绝大部分交易量；奖励回合在少量回合中以远高于投注的派彩，导致当日 RTP 波动。",
         "Winning rounds are rounds with a payout greater than zero.": "中奖回合指派彩大于零的回合。",
         "Players created on October 12, 2026 accounted for most of the day’s activity.": "10 月 12 日当天创建的新玩家贡献了当日大部分活跃度。",
