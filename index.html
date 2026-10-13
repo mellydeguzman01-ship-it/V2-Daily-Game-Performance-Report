@@ -341,6 +341,30 @@
     .gp-modes .mode-track { display: flex; height: 15px; border-radius: 8px; overflow: hidden;
                             background: var(--panel-2); border: 1px solid var(--line); }
     .gp-modes .mode-track .seg { height: 100%; }
+    /* The stacked fill lives in a wrapper so the entrance can wipe the WHOLE split in.
+       Clipping each segment instead would move the boundary while the two grew at
+       different rates; clipping the wrapper keeps the split correct at every frame,
+       and the resting state is the measured width. */
+    .gp-modes .mode-track { position: relative; }
+    .gp-modes .mode-track .mode-fill { display: flex; height: 100%; width: 100%; }
+    @keyframes gm-wipe  { from { clip-path: inset(0 100% 0 0) } to { clip-path: inset(0 0 0 0) } }
+    @keyframes gm-sheen { from { background-position: -60% 0 } to { background-position: 160% 0 } }
+    /* ARMED BY .bars-live: barMotion observes .gp-modes, so the bars draw in as the panel
+       is reached and again each time you scroll back - the same contract the row bars use. */
+    .gp-modes.bars-live .mode-fill { animation: gm-wipe .85s cubic-bezier(.2,.7,.3,1) both; }
+    .gp-modes.bars-live .mode-row + .mode-row .mode-fill { animation-delay: .16s; }
+    /* Continuous movement, LENGTH-PRESERVING: a highlight slides along the track and never
+       changes a segment's width, so the bar is never briefly showing the wrong split. */
+    .gp-modes .mode-track::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(90deg, transparent, rgba(255,255,255,.78), transparent);
+      background-size: 38% 100%; background-repeat: no-repeat;
+    }
+    .gp-modes.bars-live .mode-track::after { animation: gm-sheen 3.2s linear infinite; }
+    .gp-modes.bars-live .mode-row + .mode-row .mode-track::after { animation-delay: .55s; }
+    @media (prefers-reduced-motion: reduce) {
+      .gp-modes .mode-fill, .gp-modes .mode-track::after { animation: none !important; }
+    }
     .gp-modes .mode-legend { display: flex; gap: 14px; font-size: 9px; color: var(--muted); margin-top: 6px; }
     .gp-modes .mode-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
                                margin-right: 5px; vertical-align: -1px; }
@@ -1244,8 +1268,8 @@
           <div class="panel pad chart-box gp-modes">
           <div class="side-title"><h3>Game Modes</h3><span>share of settled rounds</span></div>
           <!--GP:MODES:START-->
-          <div class="mode-row"><div class="mode-label">Operation Mode</div><div class="mode-track" role="img" aria-label="Operation Mode, 100% stacked bar, Manual versus Autoplay"><div class="seg" style="width:76.5%;background:var(--blue)"></div><div class="seg" style="width:23.5%;background:var(--pink)"></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 76.5%</span><span><i style="background:var(--pink)"></i>Autoplay 23.5%</span></div></div>
-          <div class="mode-row"><div class="mode-label">Speed Mode</div><div class="mode-track" role="img" aria-label="Speed Mode, 100% stacked bar, Normal versus Turbo"><div class="seg" style="width:58.5%;background:var(--yellow)"></div><div class="seg" style="width:41.5%;background:var(--orange)"></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 58.5%</span><span><i style="background:var(--orange)"></i>Turbo 41.5%</span></div></div>
+          <div class="mode-row"><div class="mode-label">Operation Mode</div><div class="mode-track" role="img" aria-label="Operation Mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg" style="width:76.5%;background:var(--blue)"></div><div class="seg" style="width:23.5%;background:var(--pink)"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 76.5%</span><span><i style="background:var(--pink)"></i>Autoplay 23.5%</span></div></div>
+          <div class="mode-row"><div class="mode-label">Speed Mode</div><div class="mode-track" role="img" aria-label="Speed Mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg" style="width:58.5%;background:var(--yellow)"></div><div class="seg" style="width:41.5%;background:var(--orange)"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 58.5%</span><span><i style="background:var(--orange)"></i>Turbo 41.5%</span></div></div>
           <div class="chart-note" style="margin-top:12px">Share of settled rounds by mode. Operation Mode is how a round was started; Speed Mode is how fast it played. The two settings are independent, so each bar is its own 100% split — they are not halves of one total and must not be added together. Classified 28,940 of 41,970 rounds (69.0%): the Operation/Speed field went live during this day, so rounds settled before it carry no mode and are excluded from both bars.</div>
           <!--GP:MODES:END-->
         </div>
@@ -1999,7 +2023,7 @@
       // never observed still reads correctly.
       const barMotion = function () {
         const hosts = document.querySelectorAll(
-          '.dynamic-list, table, svg.denom-svg, svg.eng-svg, #hourlyRtpChart, #thirtyDayChart');
+          '.dynamic-list, table, .gp-modes, svg.denom-svg, svg.eng-svg, #hourlyRtpChart, #thirtyDayChart');
         if (!hosts.length) return;
         if (!('IntersectionObserver' in window)) {
           hosts.forEach(el => el.classList.add('bars-live'));
