@@ -345,7 +345,7 @@
        Row 1 is 20/15/30/35: the two Feature Trigger Rate cards were merged back
        into one card, so it takes the 20 + 15 tracks they used to hold. */
     .game-performance-grid { display: grid; grid-template-columns: 1fr; gap: 10px; align-items: stretch; }
-    .gp-row-1 { display: grid; grid-template-columns: 20fr 15fr 25fr 20fr 20fr; gap: 10px; align-items: stretch; }
+    .gp-row-1 { display: grid; grid-template-columns: 22fr 18fr 30fr 30fr; gap: 10px; align-items: stretch; }
     .gp-row-2 { display: grid; grid-template-columns: 60fr 20fr 20fr; gap: 10px; align-items: stretch; }
     /* every child carried explicit row/column placement from the old 20-track grid */
     .gp-row-1 > .panel, .gp-row-2 > .panel { grid-column: auto !important; grid-row: auto !important; min-width: 0; }
@@ -407,7 +407,33 @@
     .multiplier-distribution { grid-column: 11 / span 10; grid-row: 2; }
     /* The 8 panelled metrics approved 2026-10-01: Game Performance rows 3-4 and
        Player Performance row 3. Spans are explicit so each row totals 20 tracks. */
-    .gp-tools { grid-column: 1 / span 10; grid-row: 3; }
+    /* ---- Performance by Game (added 2026-10-14) -------------------------
+       Replaces the RTP by Template panel. Two game cards + a three-donut
+       Game Share row. Donuts reuse .mini-donut (ch-spin) and sit in a
+       .platform-charts wrapper so the existing tooltip wiring picks them up;
+       colours come from theme vars, never hardcoded. */
+    .byg-block { display: grid; gap: 10px; }
+    .byg-row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+    .byg-card { display: grid; align-content: start; }
+    .byg-card.byg-yellow { border-top: 3px solid var(--yellow); }
+    .byg-card.byg-green { border-top: 3px solid var(--green); }
+    .byg-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+    .byg-name { font-size: 14px; font-weight: 800; }
+    .byg-badge { font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+    .byg-badge.top { background: rgba(255,202,100,.18); color: var(--yellow); }
+    .byg-badge.new { background: rgba(85,214,139,.18); color: var(--green); }
+    .byg-metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+    .byg-metrics .lb { font-size: 9.5px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+    .byg-metrics .vl { font-size: 15px; font-weight: 800; margin-top: 4px; }
+    .byg-share { background: none; border: 0; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+    /* Same 128px ring as the Platform Share donuts on this page: the ring
+       engine's centre-fit guard (0.84 of the hole) is tuned to that size, so a
+       smaller ring with a larger --ring-centre lets the orbiting % label clip
+       the centred total. Match the geometry, do not retune the guard. */
+    .byg-share .platform-chart .mini-donut { width: 128px; height: 128px; }
+    /* The column must match the ring width: at 96px the 128px ring spilled 37px
+       into the label column and sat on the "Bet Share" heading. */
+    .byg-share .platform-chart { grid-template-columns: 128px minmax(0, 1fr); gap: 12px; padding: 0; align-items: center; }
     .gp-feature { grid-column: 11 / span 10; grid-row: 3; }
     .gp-passline { grid-column: 16 / span 5; grid-row: 3; }
     /* Repeat-Round Rate and Day-Level Win/Loss Streaks are ONE card
@@ -773,7 +799,7 @@
     html.night #nightModeButton::before { content: "\2600\FE0F  "; }
     html.night #nightModeButton { color: #fff; background: #24466f; border-color: #70a9eb; }
 
-    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-modes { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2 { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
+    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(4, 1fr); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-modes { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2, .byg-row, .byg-share { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
     @media (max-width: 700px) { .wrap { width: 100%; padding: 12px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
   /* ---- conditional GGR / RTP colour -------------------------------------
      .positive (green) / .negative (red) are the page's existing signal colours.
@@ -1235,7 +1261,17 @@
 
     <section class="section">
   <div class="section-head"><div><h2>Game Performance</h2><p>Banana Craze operating behavior and outcome distribution</p></div></div>
-  <div class="game-performance-grid">
+  <div class="game-performance-grid">
+        <div class="byg-block">
+          <!--GP:BYGAME:START-->
+          <div class="section-head" style="margin-bottom:10px"><div><h2>Performance by Game</h2><p>Per-game metrics and share &middot; Banana Craze vs Lucky Color Classic</p></div></div>
+          <div class="byg-row">
+            <div class="byg-card-in"><article class="panel pad byg-card byg-yellow"><div class="byg-head"><div class="byg-name">Banana Craze</div><span class="byg-badge top">Top GGR</span></div><div class="byg-metrics"><div class="m"><div class="lb">Bet Amount</div><div class="vl">₱565,391.00</div></div><div class="m"><div class="lb">Payout</div><div class="vl">₱549,520.75</div></div><div class="m"><div class="lb">GGR</div><div class="vl positive">₱15,870.25</div></div><div class="m"><div class="lb">RTP</div><div class="vl positive">97.19%</div></div><div class="m"><div class="lb">New Players</div><div class="vl">424</div></div><div class="m"><div class="lb">ARPP</div><div class="vl">56.06</div></div></div><div class="chart-note" style="margin-top:12px">All sites (BP1 + GP + AP) &middot; 43,275 rounds &middot; 772 players. ARPP = rounds &divide; players. New Players = backend newUsers (accounts created that day), summed over the three sites.</div></article></div>
+            <div class="byg-card-in"><article class="panel pad byg-card byg-green"><div class="byg-head"><div class="byg-name">Lucky Color Classic</div><span class="byg-badge new">New Launch</span></div><div class="byg-metrics"><div class="m"><div class="lb">Bet Amount</div><div class="vl">—</div></div><div class="m"><div class="lb">Payout</div><div class="vl">—</div></div><div class="m"><div class="lb">GGR</div><div class="vl">—</div></div><div class="m"><div class="lb">RTP</div><div class="vl">—</div></div><div class="m"><div class="lb">New Players</div><div class="vl">—</div></div><div class="m"><div class="lb">ARPP</div><div class="vl">—</div></div></div><div class="chart-note" style="margin-top:12px">gameId 1953690564088442882 &middot; betSite GP + AP. No settled rounds yet, so every figure is — and not zero. It fills in on the first day the game has settled rounds.</div></article></div>
+          </div>
+          <div class="panel pad"><div class="side-title"><h3>Game Share</h3><span>Banana Craze vs Lucky Color Classic</span></div><div class="platform-charts byg-share"><div class="platform-chart"><svg class="mini-donut" viewBox="0 0 60 60" aria-label="Bet Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" style="stroke:var(--yellow)" stroke-width="9" pathLength="100" stroke-dasharray="100.00 0.00" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" style="stroke:var(--green)" stroke-width="9" pathLength="100" stroke-dasharray="0.00 100.00" stroke-dashoffset="-100.00" transform="rotate(-90 30 30)"/></svg><div><strong>Bet Share</strong><small>Bet amount contribution &middot; ₱565,391.00 + ₱0.00 = ₱565,391.00</small><div class="share-values"><span><i style="background:var(--yellow)"></i>Banana Craze 100.00%</span><span><i style="background:var(--green)"></i>Lucky Color 0.00%</span></div></div></div><div class="platform-chart"><svg class="mini-donut" viewBox="0 0 60 60" aria-label="Player Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" style="stroke:var(--yellow)" stroke-width="9" pathLength="100" stroke-dasharray="100.00 0.00" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" style="stroke:var(--green)" stroke-width="9" pathLength="100" stroke-dasharray="0.00 100.00" stroke-dashoffset="-100.00" transform="rotate(-90 30 30)"/></svg><div><strong>Player Share</strong><small>Player contribution &middot; 772 + 0 = 772</small><div class="share-values"><span><i style="background:var(--yellow)"></i>Banana Craze 100.00%</span><span><i style="background:var(--green)"></i>Lucky Color 0.00%</span></div></div></div><div class="platform-chart"><svg class="mini-donut" viewBox="0 0 60 60" aria-label="Round Share pie chart"><circle cx="30" cy="30" r="22" fill="none" stroke="#243c55" stroke-width="9"/><circle cx="30" cy="30" r="22" fill="none" style="stroke:var(--yellow)" stroke-width="9" pathLength="100" stroke-dasharray="100.00 0.00" transform="rotate(-90 30 30)"/><circle cx="30" cy="30" r="22" fill="none" style="stroke:var(--green)" stroke-width="9" pathLength="100" stroke-dasharray="0.00 100.00" stroke-dashoffset="-100.00" transform="rotate(-90 30 30)"/></svg><div><strong>Round Share</strong><small>Round contribution &middot; 43,275 + 0 = 43,275</small><div class="share-values"><span><i style="background:var(--yellow)"></i>Banana Craze 100.00%</span><span><i style="background:var(--green)"></i>Lucky Color 0.00%</span></div></div></div></div><div class="chart-note" style="margin-top:12px">Lucky Color Classic has no settled rounds yet, so all three rings read 100% / 0%. That 0% is an absence of data, not a measurement, and the split will move on its first settled day.</div></div>
+          <!--GP:BYGAME:END-->
+        </div>
         <div class="gp-row-1">
           <div class="panel table-scroll game-summary">
     <table>
@@ -1262,13 +1298,6 @@
             <div class="dynamic-item"><div class="dynamic-head"><b>Daily</b><span>392 rounds</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--red)"></div></div><div class="dynamic-foot"><span class="negative">225.12% RTP</span><b class="negative">-₱14,899.50 GGR</b></div></div>
           </div>
         <!--GP:DYNRT:END-->
-        </div>
-          <div class="panel pad chart-box gp-tools">
-          <div class="side-title"><h3>RTP by Template</h3><span>rtp_template · 7 templates</span></div>
-          <!--GP:RTPMODE:START-->
-          <div class="table-scroll"><table class="dist-table"><thead><tr><th>RTP template</th><th>Rounds</th><th>Share</th><th>RTP</th><th>GGR</th><th></th></tr></thead><tbody><tr><th scope="row">Template 1</th><td>3,980</td><td>9.20%</td><td class="negative">112.08%</td><td class="negative">-₱5,627.00</td><td><div class="mini-bar"><i style="width:20%"></i></div></td></tr><tr><th scope="row">Template 2</th><td>13,053</td><td>30.16%</td><td class="positive">88.65%</td><td class="positive">₱26,133.62</td><td><div class="mini-bar"><i style="width:65%"></i></div></td></tr><tr><th scope="row">Template 4</th><td>20,058</td><td>46.35%</td><td class="negative">102.94%</td><td class="negative">-₱7,170.00</td><td><div class="mini-bar"><i style="width:100%"></i></div></td></tr><tr><th scope="row">Template 6</th><td>1,409</td><td>3.26%</td><td class="negative">100.96%</td><td class="negative">-₱108.12</td><td><div class="mini-bar"><i style="width:7%"></i></div></td></tr><tr><th scope="row">Template 7</th><td>1,297</td><td>3.00%</td><td class="negative">106.88%</td><td class="negative">-₱616.75</td><td><div class="mini-bar"><i style="width:6%"></i></div></td></tr><tr><th scope="row">Template 8</th><td>2,359</td><td>5.45%</td><td class="positive">73.35%</td><td class="positive">₱4,307.50</td><td><div class="mini-bar"><i style="width:12%"></i></div></td></tr><tr><th scope="row">Template 9</th><td>1,119</td><td>2.59%</td><td class="negative">112.46%</td><td class="negative">-₱1,049.00</td><td><div class="mini-bar"><i style="width:6%"></i></div></td></tr></tbody></table></div>
-          <div class="chart-note" style="margin-top:12px">RTP template = the `rtp_template` (raw `rtpTemplateId`) the round settled under; share is of the day’s 43,275 settled rounds. Template 4 and Template 2 carry 76.51% of rounds; the widest realized RTP is Template 9 at 112.46% on 1,119 rounds, the lowest is Template 8 at 73.35%.</div>
-          <!--GP:RTPMODE:END-->
         </div>
           <div class="panel pad chart-box gp-feature">
           <div class="side-title"><h3>Feature Trigger Rate</h3><span>Per settled round</span></div>
@@ -1976,7 +2005,7 @@
             const title = (host.querySelector('strong') || {}).textContent || '';
             if (m) {
               totalEl = m[1];
-              caption = 'TOTAL ' + title.replace(/\s*share\s*$/i, '').toUpperCase().replace(/^PLAYER$/, 'PLAYERS');
+              caption = 'TOTAL ' + title.replace(/\s*share\s*$/i, '').toUpperCase().replace(/^PLAYER$/, 'PLAYERS').replace(/^ROUND$/, 'ROUNDS');
             }
           } else if (host.matches('.pp-tiers .tiers-pie')) {
             const n = [...host.querySelectorAll('.tiers-legend b')]
