@@ -125,6 +125,9 @@
     .platform-layout .platform-sub { font-size: 9px; }
     .platform-matrix thead th { color: var(--text); text-align: center; background: rgba(64,217,208,.06); border-color: rgba(148,177,211,.28); }
     .platform-matrix tbody th { color: var(--text); font-weight: 700; text-align: left; }
+    /* 2026-10-15 (user): the Bingo column header carries no platform sub-label,
+       so its two blank header cells must not draw a box of their own. */
+    .platform-matrix thead th.hdr-blank { background: transparent !important; border-color: transparent !important; }
     .table-scroll { overflow: visible; }
     .monthly-row > .table-scroll { min-width: 0; overflow: visible; }
     .monthly-row > .table-scroll > table { width: 100%; min-width: 0; table-layout: fixed; font-size: 9px; }
@@ -1167,9 +1170,9 @@
         <div class="panel table-scroll platform-matrix">
           <table><colgroup><col style="width:29%"><col><col><col><col></colgroup>
             <thead>
-              <tr><th rowspan="3">Metric</th><th colspan="3">Platform</th><th rowspan="3">Bingo</th></tr>
-              <tr><th>Loteria</th><th colspan="2">Slot</th></tr>
-              <tr><th>BingoPlus (BP)</th><th>GameZone (GP)</th><th>ArenaPlus (AP)</th></tr>
+              <tr><th rowspan="3">Metric</th><th colspan="3">Platform</th><th class="hdr-blank"></th></tr>
+              <tr><th>Loteria</th><th colspan="2">Slot</th><th>Bingo</th></tr>
+              <tr><th>BingoPlus (BP)</th><th>GameZone (GP)</th><th>ArenaPlus (AP)</th><th class="hdr-blank"></th></tr>
             </thead>
             <tbody>
               <tr><th scope="row">Bet Amount</th><td>₱580,080.00</td><td>₱16,507.00</td><td>₱3,710.50</td><td>₱3,261.00</td></tr>
