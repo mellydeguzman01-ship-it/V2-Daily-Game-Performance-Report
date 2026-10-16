@@ -1106,6 +1106,29 @@
       .tp-flow { display: none !important; }
       .tp-blink, .tp-halo { animation: none !important; }
     }
+    /* 2026-10-16 (user, with a screenshot): the MTD line and the DoD/WoW line were sitting at
+       the BOTTOM of the four main KPI cards. They now ride on the RIGHT of the big value, with the
+       MTD line's baseline matching the value's (same treatment as the sub-metric tiles below).
+       Measured at her 2050px viewport: the widest card needs 305px (value 172 + 6 gap + deltas
+       126 at 10px) against 321px of content, so it fits from ~1950px up; below that the details
+       drop back under the value, which is what the base rules already do. */
+    @media (min-width: 2000px) {
+      .header-metrics .card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto auto;
+        align-content: center;
+        align-items: baseline;
+        column-gap: 6px;
+        row-gap: 2px;
+      }
+      .header-metrics .metric-label   { grid-column: 1 / -1; grid-row: 1; }
+      .header-metrics .metric-value   { grid-column: 1; grid-row: 2; }
+      .header-metrics .metric-subtext { grid-column: 2; grid-row: 2; justify-self: end;
+                                        text-align: right; margin-top: 0; }
+      .header-metrics .metric-foot    { grid-column: 2; grid-row: 3; justify-self: end;
+                                        justify-content: flex-end; margin-top: 0; font-size: 10px; }
+    }
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
