@@ -75,7 +75,7 @@
     .pad { padding: 18px; }
     .grid { display: grid; gap: 14px; }
     .big-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .small-grid { grid-template-columns: repeat(auto-fit, minmax(166px, 1fr)); margin-top: 8px; }
+    .small-grid { grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); margin-top: 8px; }
     .small-grid .pad { padding: 10px 11px; }
     .small-grid .metric-value { margin-top: 4px; font-size: 18px; }
     .small-grid .metric-label { padding-right: 54px; }
@@ -84,11 +84,11 @@
     .small-grid .submetric-head .metric-label { padding-right: 0; }
     .small-grid .submetric-dod, .small-grid .submetric-wow { color: #5f7894; font-size: 9px; font-weight: 800; line-height: 1.2; white-space: nowrap; }
     /* 2026-10-16: DoD + WoW live on the RIGHT of the value and never wrap under it.
-       The 166px card floor keeps room for the widest pair (ABPU ~136px of content).
+       The 165px card floor keeps room for the widest pair (ABPU needs ~135px of content).
        MTD stays pinned to the card's bottom, so it lines up across the row. */
     .small-grid .submetric-wow { margin-left: auto; text-align: right; }
     .small-grid .card { display: flex; flex-direction: column; }
-    .small-grid .submetric-main { margin-top: 3px; flex-wrap: nowrap; }
+    .small-grid .submetric-main { margin-top: 3px; gap: 6px; flex-wrap: nowrap; }
     .small-grid .submetric-main .metric-value { margin-top: 0; }
     .small-grid .submetric-monthly { margin-top: auto; padding-top: 5px; color: #607187; font-size: 9px; line-height: 1.2; white-space: nowrap; }
     .card { position: relative; overflow: hidden; }
@@ -810,7 +810,7 @@
     html.night #nightModeButton::before { content: "\2600\FE0F  "; }
     html.night #nightModeButton { color: #fff; background: #24466f; border-color: #70a9eb; }
 
-    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(auto-fit, minmax(166px, 1fr)); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-modes { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2, .byg-shares { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
+    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-modes { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2, .byg-shares { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
     @media (max-width: 700px) { .wrap { width: 100%; padding: 12px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
   /* ---- conditional GGR / RTP colour -------------------------------------
      .positive (green) / .negative (red) are the page's existing signal colours.
