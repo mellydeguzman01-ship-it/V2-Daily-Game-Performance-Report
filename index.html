@@ -42,10 +42,10 @@
     .header-right .small-grid { margin-top: 8px; }
     /* 2026-10-16: the nine sub-metric tiles stay INSIDE .header-right, directly under the four
        main KPI cards (user, with a screenshot). The column is ~1470px at her viewport, so a
-       nine-tile row means ~150px per tile: value 16px, deltas 8px, 10px padding, 12px gap and
-       a 5px value/delta gap keep the widest pair (ABPU 439.26 + its DoD/WoW stack ~140px) on
-       one line. auto-fit keeps that 140px floor, so the row can never wrap or overhang - it
-       just uses fewer columns when the column is narrow. */
+       nine-tile row means ~153px per tile: value 16px, deltas 9px, 10px padding, 12px gap and a
+       5px value/delta gap keep the widest pair (ABPU 439.26 + its DoD/WoW stack = 147px) on one
+       line. The auto-fit floor IS that 147px, so a nine-tile row can never wrap or overhang; a
+       narrower column simply uses fewer columns. Verified at 2050px: 9 tiles, 1 row, 0 clip. */
     .eyebrow { color: var(--cyan); font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
     h1, h2, h3, p { margin: 0; }
     h1 { margin-top: 4px; font-size: clamp(24px, 2.4vw, 34px); letter-spacing: -.04em; }
@@ -81,14 +81,14 @@
     .pad { padding: 18px; }
     .grid { display: grid; gap: 14px; }
     .big-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .small-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 8px; }
+    .small-grid { grid-template-columns: repeat(auto-fit, minmax(147px, 1fr)); gap: 12px; margin-top: 8px; }
     .small-grid .pad { padding: 10px 10px; }
     .small-grid .metric-value { margin-top: 4px; font-size: 16px; }
     .small-grid .metric-label { padding-right: 54px; }
     .small-grid .metric-foot { position: absolute; top: 10px; right: 11px; z-index: 1; margin: 0; font-size: 10px; }
     .small-grid .submetric-head, .small-grid .submetric-main { display: flex; justify-content: space-between; align-items: baseline; gap: 7px; }
     .small-grid .submetric-head .metric-label { padding-right: 0; }
-    .small-grid .submetric-dod, .small-grid .submetric-wow { color: #5f7894; font-size: 8px; font-weight: 800; line-height: 1.2; white-space: nowrap; }
+    .small-grid .submetric-dod, .small-grid .submetric-wow { color: #5f7894; font-size: 9px; font-weight: 800; line-height: 1.2; white-space: nowrap; }
     /* 2026-10-16: DoD + WoW live on the RIGHT of the value and never wrap under it.
        The 165px card floor keeps room for the widest pair (ABPU needs ~135px of content).
        MTD stays pinned to the card's bottom, so it lines up across the row. */
@@ -816,7 +816,7 @@
     html.night #nightModeButton::before { content: "\2600\FE0F  "; }
     html.night #nightModeButton { color: #fff; background: #24466f; border-color: #70a9eb; }
 
-    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-modes { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2, .byg-shares { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
+    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(auto-fit, minmax(147px, 1fr)); gap: 12px; } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-modes { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2, .byg-shares { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
     @media (max-width: 700px) { .wrap { width: 100%; padding: 12px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
   /* ---- conditional GGR / RTP colour -------------------------------------
      .positive (green) / .negative (red) are the page's existing signal colours.
