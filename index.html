@@ -1123,10 +1123,16 @@
         row-gap: 2px;
       }
       .header-metrics .metric-label   { grid-column: 1 / -1; grid-row: 1; }
-      .header-metrics .metric-value   { grid-column: 1; grid-row: 2; }
+      .header-metrics .metric-value   { grid-column: 1; grid-row: 2 / span 2;
+                                        align-self: center; }
+      /* the pair straddles the 2/3 row boundary: subtext to the END of row 2,
+         foot to the START of row 3 -> the block is centred on the big number and
+         both lines stay inside the value's own 43px line box (nothing hangs below) */
       .header-metrics .metric-subtext { grid-column: 2; grid-row: 2; justify-self: end;
+                                        align-self: end;
                                         text-align: right; margin-top: 0; }
       .header-metrics .metric-foot    { grid-column: 2; grid-row: 3; justify-self: end;
+                                        align-self: start;
                                         justify-content: flex-end; margin-top: 0; font-size: 10px; }
     }
 </style>
