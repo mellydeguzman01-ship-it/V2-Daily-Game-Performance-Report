@@ -1328,7 +1328,7 @@
             <div class="panel pad pg-6 pp-top5">
           <div class="side-title"><h3>Top 5 Winning Players</h3><span>Biggest single-bet payout</span></div>
           <!--PP:TOP5:START-->
-          <div class="table-scroll"><table><thead><tr><th>Player</th><th>Mult.</th><th>Bet site</th><th>Bet amount range</th><th>Highest payout</th><th>RTP</th><th>Rounds</th><th>IP</th></tr></thead><tbody><tr><td>bingoplusfarc33</td><td>11×</td><td>BP1</td><td>₱5–₱1,000</td><td>₱11,000</td><td>67.19%</td><td>354</td><td>—</td></tr><tr><td>bingoplus6tqjqv</td><td>25×</td><td>BP1</td><td>₱100</td><td>₱2,500</td><td>295.00%</td><td>10</td><td>—</td></tr><tr><td>bingoplusd2qypq</td><td>50×</td><td>BP1</td><td>₱5–₱1,000</td><td>₱2,000</td><td>94.19%</td><td>383</td><td>—</td></tr><tr><td>bingoplusz83fby</td><td>51×</td><td>BP1</td><td>₱5–₱30</td><td>₱1,530</td><td>127.34%</td><td>625</td><td>—</td></tr><tr><td>lp7kmz3ha</td><td>75×</td><td>BP1</td><td>₱10–₱20</td><td>₱1,500</td><td>329.69%</td><td>47</td><td>—</td></tr></tbody></table></div><div class="chart-note">One row per player, ranked by that player’s biggest single-bet payout, highest first. Scope is every player with a settled round that day, on any bet site (BingoPlus, GameZone, ArenaPlus) — not a single brand. Bet amount range is that player’s own lowest–highest settled stake for the day; RTP and Rounds are the player’s whole reporting day, not the winning round.</div>
+          <div class="table-scroll"><table><thead><tr><th>Player</th><th>Mult.</th><th>Bet site</th><th>Bet amount range</th><th>Highest payout</th><th>RTP</th><th>Rounds</th><th>IP</th></tr></thead><tbody><tr><td>bingoplusfarc33</td><td>11×</td><td>BP1</td><td>₱5–₱1,000</td><td>₱11,000</td><td>67.19%</td><td>354</td><td>—</td></tr><tr><td>bingoplus6tqjqv</td><td>25×</td><td>BP1</td><td>₱100</td><td>₱2,500</td><td>295.00%</td><td>10</td><td>—</td></tr><tr><td>bingoplusd2qypq</td><td>50×</td><td>BP1</td><td>₱5–₱1,000</td><td>₱2,000</td><td>94.19%</td><td>383</td><td>—</td></tr><tr><td>bingoplusz83fby</td><td>51×</td><td>BP1</td><td>₱5–₱30</td><td>₱1,530</td><td>127.34%</td><td>625</td><td>—</td></tr><tr><td>lp7kmz3ha</td><td>75×</td><td>BP1</td><td>₱10–₱20</td><td>₱1,500</td><td>329.69%</td><td>47</td><td>—</td></tr></tbody></table></div>
           <!--PP:TOP5:END-->
         </div>
             <div class="panel pad chart-box gp-passline">
@@ -2361,26 +2361,19 @@
       const notes = [
         ['.platform-matrix', 'BingoPlus settled ₱440,920.00 of ₱481,810.00 total bet on October 20, 2026; GameZone ₱28,020.50 and ArenaPlus ₱3,846.50.'],
         ['.platform-charts', 'Platform Share compares revenue, audience, and betting-volume contribution from the same settled per-site totals.'],
-        ['.changelog-table', 'Recent launches and the minimum-bet update expanded platform access during the reporting period.'],
-        ['.compliance-panel', 'GCP accreditation and current Game Application approvals are shown for management tracking.'],
         ['.game-summary', 'Game Performance is grouped into Loteria and Slot. Slot combines GameZone and ArenaPlus. Popular bet amount is the most frequent settled bet denomination by category.'],
         ['.hourly-rtp', 'Hourly RTP is evaluated against the 97.5% target while bet amount and payout intensity are shown by hour.'],
         ['.dynamic-rtp', 'NON rounds carry most volume; Cumulative and Daily adjustments apply to a small share of rounds but pay far above their stake, which drives daily RTP variance.'],
-
-
-
         ['.multiplier-distribution', '0x is the largest multiplier band by rounds.'],
         ['.player-grid > .panel:first-child', 'Players created on October 20, 2026 accounted for most of the day’s activity.'],
         ['.player-grid > .panel:nth-child(2)', 'GP has the largest active-player base among the three platforms.'],
         ['.pg-retention', 'D1 retention is the main player-engagement metric to monitor.'],
-
         ['.pg-denom', 'Unique-player counts are highest at the lower bet denominations, with Loteria and Slot shown separately.'],
         ['.player-feature-panel', 'Normal Bet is the primary feature behavior; Buy Feature is a smaller segment.'],
         ['.pp-avg', 'The average rounds per player sits above the median on both Loteria and Slot, so a small group of high-frequency accounts pulls the average up.'],
         /*PP:ENGAGE_INSIGHT:START*/
         ['.pp-engage', 'Loteria carries the larger player group in the 1–10 and 11–20 and 21–50 and 51–100 and >100 bands; the largest band overall is 21–50 rounds with 167 Loteria and 26 Slot player entries.'],
         /*PP:ENGAGE_INSIGHT:END*/
-        ['.pp-top5', 'Top 5 winning players by single-bet payout; RTP and Rounds are each player’s whole reporting day.'],
         ['.monthly-row > .panel:first-child', 'The 30-day view compares daily bet and payout bars with RTP and D1 retention trendlines.'],
         ['.monthly-row > .panel:nth-child(2)', 'MTD platform totals are month-to-date from the per-site settled-order ledger for October 1–20. Each site row and the month total are each rounded to the centavo, with the total rounded once from the full-precision ledger, so the rows can miss the total by ₱0.01.'],
       ];
@@ -2402,10 +2395,8 @@
       Object.assign(window.__dynCN, {
         /*CN:PPNOTES:START*/
         "Loteria = BP1 · Slot = GP + AP · Bingo = Lucky Color (GP + AP). Average = total rounds ÷ distinct players: 29,000 ÷ 618 and 7,392 ÷ 101. Bingo: 1,515 ÷ 65. Median = the middle player’s rounds for the day.": "乐透 = BP1 · 老虎机 = GP + AP · 宾果 = Lucky Color (GP + AP)。平均值 = 总回合数 ÷ 去重玩家人数：29,000 ÷ 618，7,392 ÷ 101。 宾果：1,515 ÷ 65。 中位数 = 当日处于中间位置玩家的回合数。",
-        "One row per player, ranked by that player’s biggest single-bet payout, highest first. Scope is every player with a settled round that day, on any bet site (BingoPlus, GameZone, ArenaPlus) — not a single brand. Bet amount range is that player’s own lowest–highest settled stake for the day; RTP and Rounds are the player’s whole reporting day, not the winning round.": "每位玩家一行，按各自单注最大派彩排序，金额最高者在前。范围为当日有已结算回合的全部玩家，不限单一品牌（BingoPlus / GameZone / ArenaPlus）。投注金额区间为该玩家当日自身的最低至最高投注；RTP 与回合数为该玩家当日的整体数据，而非中奖回合。",
         "The average rounds per player sits above the median on both Loteria and Slot, so a small group of high-frequency accounts pulls the average up.": "乐透与老虎机的人均回合数均高于中位数，说明少数高频玩家拉高了平均值。",
-        "Loteria carries the larger player group in the 1–10 and 11–20 and 21–50 and 51–100 and >100 bands; the largest band overall is 21–50 rounds with 167 Loteria and 26 Slot player entries.": "乐透在 1–10、11–20、21–50、51–100、>100 回合区间的玩家数高于老虎机；最大的区间为 21–50 回合，乐透 167 条、老虎机 26 条玩家记录。",
-        "Top 5 winning players by single-bet payout; RTP and Rounds are each player’s whole reporting day.": "按单注派彩排名的前 5 名盈利玩家；RTP 与回合数为每位玩家当日的整体数据。"
+        "Loteria carries the larger player group in the 1–10 and 11–20 and 21–50 and 51–100 and >100 bands; the largest band overall is 21–50 rounds with 167 Loteria and 26 Slot player entries.": "乐透在 1–10、11–20、21–50、51–100、>100 回合区间的玩家数高于老虎机；最大的区间为 21–50 回合，乐透 167 条、老虎机 26 条玩家记录。"
         /*CN:PPNOTES:END*/
       });
       /*CN:PANELS:START*/
