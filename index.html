@@ -197,6 +197,16 @@
     .platform-layout .changelog-table { grid-column: 1 / span 3; grid-row: 2; }
     .platform-layout > .status-stack { grid-column: 4 / span 2; grid-row: 2;
       grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    /* 2026-10-21 (user): Changelog, Compliance & PAGCOR and Alerts & Incident
+       Report belong at the very bottom of the page. One band, three cards. */
+    .bottom-band { display: grid; grid-template-columns: 36fr 30fr 34fr; gap: 10px; align-items: stretch; }
+    .bottom-band > .panel { min-width: 0; padding: 12px; }
+    .bottom-band > .panel .side-title { margin-bottom: 8px; gap: 8px; }
+    .bottom-band > .panel .side-title h3 { font-size: 12px; }
+    .bottom-band > .panel .side-title span { font-size: 9px; }
+    .bottom-band > .panel table { min-width: 0; table-layout: fixed; font-size: 9px; }
+    .bottom-band > .panel th, .bottom-band > .panel td { padding: 5px 6px; white-space: normal; word-break: break-word; vertical-align: top; }
+    .bottom-band > .panel .alert-row { padding: 10px 0; }
     .side-stack { display: contents; }
     /* Columns 4 and 5: two compact cards stacked in each. */
     /* User 2026-10-02: "medyo iadjust mo yung height ng top 5 winning players and
@@ -941,7 +951,7 @@
     html.night #nightModeButton::before { content: "\2600\FE0F  "; }
     html.night #nightModeButton { color: #fff; background: #24466f; border-color: #70a9eb; }
 
-    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(auto-fit, minmax(147px, 1fr)); gap: 12px; } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .plat-card, .platform-layout .platform-charts, .platform-layout .changelog-table, .platform-layout > .hl-stack, .platform-layout > .status-stack { grid-column: 1 !important; grid-row: auto !important; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-modes { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2, .byg-shares { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
+    @media (max-width: 1180px) { .big-grid { grid-template-columns: repeat(3, 1fr); } .header-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } .small-grid { grid-template-columns: repeat(auto-fit, minmax(147px, 1fr)); gap: 12px; } .platform-layout, .game-performance-grid, .player-grid, .monthly-row { grid-template-columns: 1fr; } .plat-card, .platform-layout .platform-charts, .platform-layout .changelog-table, .platform-layout > .hl-stack, .platform-layout > .status-stack { grid-column: 1 !important; grid-row: auto !important; } .bottom-band { grid-template-columns: 1fr; } .player-grid > .panel { grid-column: auto !important; } .game-summary, .dynamic-rtp, .hourly-rtp, .multiplier-distribution { grid-column: 1; grid-row: auto; } .gp-tools, .gp-feature, .gp-passline, .gp-modes { grid-column: 1; grid-row: auto; } .gp-row-1, .gp-row-2, .byg-shares { grid-template-columns: 1fr; } .side-stack { display: grid; gap: 10px; } }
     @media (max-width: 700px) { .wrap { width: 100%; padding: 12px; } .topbar { display: block; } .big-grid, .small-grid, .chart-grid-3, .distribution { grid-template-columns: 1fr; } .header-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; } .compact-pie { grid-template-columns: 1fr; } h1 { font-size: 30px; } .panel { border-radius: 14px; } .platform-charts .platform-chart { grid-template-columns: 96px 1fr; } .platform-charts .mini-donut { width: 96px; height: 96px; } .monthly-row .chart.tall-svg { height: 300px; } .monthly-share-charts { grid-template-columns: 1fr; } }
   /* ---- conditional GGR / RTP colour -------------------------------------
      .positive (green) / .negative (red) are the page's existing signal colours.
@@ -1349,21 +1359,7 @@
               <div><strong>Bet Share</strong><small>Bet amount contribution · ₱440,920.00 + ₱29,096.50 + ₱11,793.50 = ₱481,810.00</small><div class="share-values"><span><i style="background:var(--cyan)"></i>BP1 91.51%</span><span><i style="background:var(--blue)"></i>GP 6.04%</span><span><i style="background:var(--violet)"></i>AP 2.45%</span></div></div>
             </div>
           </div>
-          <div class="panel pad changelog-table"><div class="side-title"><h3>Changelog</h3><span>Latest updates</span></div>
-            <table>
-              <thead><tr><th>Date</th><th>Details</th><th>Outcome</th></tr></thead>
-              <tbody>
-                <tr><td>Monday, October 12, 2026</td><td>RTP adjusted from <strong>98.3% → 97.5%</strong></td><td>RTP configuration updated to <strong>97.5%</strong>, reflecting the new target setting.</td></tr>
-                <tr><td>Wednesday, September 23, 2026</td><td>At around <strong>1:00–2:00 PM</strong>, Banana Craze on ArenaPlus was added to Better Entry and featured in the New Game section</td><td>Better Entry improved game visibility and accessibility</td></tr>
-                <tr><td>Monday, September 21, 2026</td><td>Launch of <strong>Banana Craze on ArenaPlus</strong></td><td>Game Engine officially entered ArenaPlus</td></tr>
-                <tr><td>Thursday, September 17, 2026</td><td>Launch of <strong>Banana Craze on GameZone</strong>; minimum bet updated to <strong>₱0.50 at 2:00 PM</strong></td><td>Game Engine officially entered GameZone; lower minimum bet provided a more accessible entry point and supported increased traffic</td></tr>
-                <tr><td>Friday, September 18, 2026</td><td><strong>10:42 AM:</strong> RTP adjusted from <strong>97.0% → 98.3%</strong></td><td>RTP configuration was successfully updated to <strong>98.3%</strong>, reflecting the new target setting.</td></tr>
-                <tr><td>Monday, September 14, 2026</td><td>System maintenance for <strong>v2.17 upgrade</strong>, 9:00 AM–10:30 AM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
-                <tr><td>Thursday, September 10, 2026</td><td>Improved <strong>Banana Craze placement in BingoPlus Loteria</strong>, around 3:00 PM</td><td>Improved game visibility and accessibility within the Loteria section</td></tr>
-                <tr><td>Tuesday, September 1, 2026</td><td>System maintenance for <strong>v2.16 upgrade</strong>, 9:30 AM–1:15 PM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
-              </tbody>
-            </table>
-          </div>
+          
           
           
         </div>
@@ -1388,22 +1384,7 @@
           <!--GP:PASSLINE:END-->
         </div>
           </div>
-          <div class="status-stack"><div class="panel pad compliance-panel"><div class="side-title"><h3>Compliance &amp; PAGCOR Update</h3><span>Current status</span></div>
-            <table>
-              <tbody>
-                <tr><th scope="row">GCP Accreditation</th><td><span class="compliance-status">✅ Approved — Numerical &amp; ECG</span></td></tr>
-                <tr><th scope="row">GCP Walkthrough</th><td><span class="compliance-status">📅 Oct 26, 2026 — Walkthrough for GCP Accreditation</span></td></tr>
-                <tr><th scope="row">Game Application</th><td><span class="compliance-status">✅ Approved — Banana Craze, PikaPika</span></td></tr>
-                <tr><th scope="row">Next Games for Application</th><td><span class="compliance-status">🔄 BLAZING 7S, LUCKY COLOR, GINTO MATCH</span></td></tr>
-              </tbody>
-            </table>
-          </div><div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
-            <div class="alert-row"><div><strong>GGR Status</strong><small>Positive daily GGR ₱80,415.57</small></div><span class="status ok">Healthy</span></div>
-          <div class="alert-row"><div><strong>RTP Status</strong><small>83.31% vs target ≈ 97.5%</small></div><span class="status warn">Below target</span></div>
-          <div class="alert-row"><div style="min-width:0"><strong>Fusebreak Alarm / Melt</strong><small>None</small></div><span class="status ok">None</span></div>
-          <div class="alert-row"><div style="min-width:0"><strong>High Winning Defense Alert</strong><small>None</small></div><span class="status ok">None</span></div>
-          </div>
-          </div>
+          
       </div>
     </section>
 
@@ -1554,6 +1535,38 @@
     </section>
 
 
+
+    <section class="section bottom-section">
+      <div class="bottom-band"><div class="panel pad changelog-table"><div class="side-title"><h3>Changelog</h3><span>Latest updates</span></div>
+            <table>
+              <thead><tr><th>Date</th><th>Details</th><th>Outcome</th></tr></thead>
+              <tbody>
+                <tr><td>Monday, October 12, 2026</td><td>RTP adjusted from <strong>98.3% → 97.5%</strong></td><td>RTP configuration updated to <strong>97.5%</strong>, reflecting the new target setting.</td></tr>
+                <tr><td>Wednesday, September 23, 2026</td><td>At around <strong>1:00–2:00 PM</strong>, Banana Craze on ArenaPlus was added to Better Entry and featured in the New Game section</td><td>Better Entry improved game visibility and accessibility</td></tr>
+                <tr><td>Monday, September 21, 2026</td><td>Launch of <strong>Banana Craze on ArenaPlus</strong></td><td>Game Engine officially entered ArenaPlus</td></tr>
+                <tr><td>Thursday, September 17, 2026</td><td>Launch of <strong>Banana Craze on GameZone</strong>; minimum bet updated to <strong>₱0.50 at 2:00 PM</strong></td><td>Game Engine officially entered GameZone; lower minimum bet provided a more accessible entry point and supported increased traffic</td></tr>
+                <tr><td>Friday, September 18, 2026</td><td><strong>10:42 AM:</strong> RTP adjusted from <strong>97.0% → 98.3%</strong></td><td>RTP configuration was successfully updated to <strong>98.3%</strong>, reflecting the new target setting.</td></tr>
+                <tr><td>Monday, September 14, 2026</td><td>System maintenance for <strong>v2.17 upgrade</strong>, 9:00 AM–10:30 AM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
+                <tr><td>Thursday, September 10, 2026</td><td>Improved <strong>Banana Craze placement in BingoPlus Loteria</strong>, around 3:00 PM</td><td>Improved game visibility and accessibility within the Loteria section</td></tr>
+                <tr><td>Tuesday, September 1, 2026</td><td>System maintenance for <strong>v2.16 upgrade</strong>, 9:30 AM–1:15 PM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
+              </tbody>
+            </table>
+          </div><div class="panel pad compliance-panel"><div class="side-title"><h3>Compliance &amp; PAGCOR Update</h3><span>Current status</span></div>
+            <table>
+              <tbody>
+                <tr><th scope="row">GCP Accreditation</th><td><span class="compliance-status">✅ Approved — Numerical &amp; ECG</span></td></tr>
+                <tr><th scope="row">GCP Walkthrough</th><td><span class="compliance-status">📅 Oct 26, 2026 — Walkthrough for GCP Accreditation</span></td></tr>
+                <tr><th scope="row">Game Application</th><td><span class="compliance-status">✅ Approved — Banana Craze, PikaPika</span></td></tr>
+                <tr><th scope="row">Next Games for Application</th><td><span class="compliance-status">🔄 BLAZING 7S, LUCKY COLOR, GINTO MATCH</span></td></tr>
+              </tbody>
+            </table>
+          </div><div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
+            <div class="alert-row"><div><strong>GGR Status</strong><small>Positive daily GGR ₱80,415.57</small></div><span class="status ok">Healthy</span></div>
+          <div class="alert-row"><div><strong>RTP Status</strong><small>83.31% vs target ≈ 97.5%</small></div><span class="status warn">Below target</span></div>
+          <div class="alert-row"><div style="min-width:0"><strong>Fusebreak Alarm / Melt</strong><small>None</small></div><span class="status ok">None</span></div>
+          <div class="alert-row"><div style="min-width:0"><strong>High Winning Defense Alert</strong><small>None</small></div><span class="status ok">None</span></div>
+          </div></div>
+    </section>
   </main>
   <dialog class="previous-dialog" id="previousReportDialog" aria-labelledby="previousReportTitle">
     <div class="dialog-inner">
