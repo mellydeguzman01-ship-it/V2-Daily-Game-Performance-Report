@@ -130,7 +130,7 @@
        Weights are the user's spec (2026-10-01): 25 / 15 / 25 / 20 / 15. Each
        column is one card, except 4 and 5, which are each two compact cards
        stacked and sized 1fr / 1fr so the pair is genuinely equal height. */
-    .platform-layout { display: grid; grid-template-columns: 15fr 15fr 15fr 15fr 25fr 15fr; gap: 10px; align-items: stretch; grid-auto-flow: row; }
+    .platform-layout { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; align-items: stretch; grid-auto-flow: row; }
     .platform-layout table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .platform-layout th, .platform-layout td { padding: 4px 6px; white-space: normal; word-break: break-word; }
     .platform-layout .platform-sub { font-size: 9px; }
@@ -155,11 +155,12 @@
     .platform-name { font-weight: 800; } .platform-sub { display: block; color: var(--muted); font-size: 11px; margin-top: 2px; }
     .tag { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 5px 8px; color: var(--muted); font-size: 11px; }
     .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-    /* 2026-10-21 (user, final split): ONE row, six slots, 100% exactly.
-         1 BingoPlus 15 | 2 GameZone 15 | 3 ArenaPlus 15 | 4 Platform Share 15
-         5 Top 5 Winning Players + 100 Rounds a Day 25
-         6 Compliance & PAGCOR Update + Alerts & Incident Report 15
-       Changelog is the only card left in .bottom-band (full width). */
+    /* User spec 2026-10-21 (latest): ONE row, five columns, EQUAL widths, no wrap.
+         1 BingoPlus 20 | 2 GameZone 20 | 3 ArenaPlus 20 | 4 Platform Share 20 |
+         5 Top 5 Winning Players + 100 Rounds a Day 20
+       Five columns x 20% = 100%, so Compliance & PAGCOR Update and Alerts &
+       Incident Report leave the row and sit in .bottom-band with Changelog.
+       (Replaces the 2026-10-21 six-slot split: 15/15/15/15/25/15.) */
     .plat-card { display: flex; flex-direction: column; gap: 7px; min-width: 0; padding: 10px 9px; }
     .plat-head { display: flex; align-items: center; gap: 7px; min-width: 0; }
     .plat-emblem { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 9px; display: grid;
@@ -245,7 +246,8 @@
     .platform-layout .platform-charts .share-values span { white-space: normal; }
     /* 2026-10-21 (user): Changelog, Compliance & PAGCOR and Alerts & Incident
        Report belong at the very bottom of the page. One band, three cards. */
-    .bottom-band { display: grid; grid-template-columns: 1fr; gap: 10px; align-items: stretch; }
+    .bottom-band > .status-stack { min-width: 0; grid-template-rows: auto auto; }
+    .bottom-band { display: grid; grid-template-columns: 58fr 42fr; gap: 10px; align-items: stretch; }
     .bottom-band > .panel { min-width: 0; padding: 12px; }
     .bottom-band > .panel .side-title { margin-bottom: 8px; gap: 8px; }
     .bottom-band > .panel .side-title h3 { font-size: 12px; }
@@ -806,6 +808,31 @@
     .pp-tiers .tiers-legend b { color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
     .pp-tiers .tiers-legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; }
     .pp-top5 tbody td:first-child { font-weight: 700; }
+    /* 2026-10-21 (user): five equal 20% columns. The Top 5 panel is ~300px wide
+       and an 8-column table broke words mid-word there, so each player is one
+       stacked block: name + multiplier, then Payout / RTP / Rounds, then site,
+       stake range and IP. All eight fields survive, nothing wraps mid-word. */
+    .pp-top5 .top5-list { display: grid; align-content: space-between; height: 100%; min-width: 0; }
+    .pp-top5 .top5-item { padding: 5px 0; border-top: 1px solid var(--line); min-width: 0; }
+    .pp-top5 .top5-item:first-child { border-top: 0; padding-top: 1px; }
+    .pp-top5 .top5-head { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+    .pp-top5 .top5-player { flex: 1 1 auto; min-width: 0; font-size: 8.5px; font-weight: 800;
+                            color: var(--text); white-space: nowrap; overflow: hidden;
+                            text-overflow: ellipsis; }
+    .pp-top5 .top5-mult { flex: 0 0 auto; font-size: 7.5px; font-weight: 800; color: var(--cyan);
+                          font-variant-numeric: tabular-nums; }
+    .pp-top5 .top5-vals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+                          gap: 0 6px; margin-top: 3px; }
+    .pp-top5 .top5-vals div { min-width: 0; }
+    .pp-top5 .top5-vals span { display: block; font-size: 6px; font-weight: 700; letter-spacing: .03em;
+                               text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+    .pp-top5 .top5-vals b { display: block; font-size: 8px; font-weight: 800; color: var(--text);
+                            white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .pp-top5 .top5-meta { display: flex; gap: 6px; margin-top: 2px; font-size: 6.5px;
+                          color: var(--muted); min-width: 0; }
+    .pp-top5 .top5-meta span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pp-top5 .top5-site { flex: 0 0 auto; font-weight: 800; color: var(--text); }
+    .pp-top5 .top5-ip { margin-left: auto; flex: 0 0 auto; }
     .player-grid table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .player-grid th, .player-grid td { padding: 8px 3px; font-size: 9px; white-space: normal; overflow-wrap: anywhere; word-break: break-word; }
     .player-feature-panel { margin-top: 0; }
@@ -1412,7 +1439,7 @@
             <div class="panel pad pg-6 pp-top5">
           <div class="side-title"><h3>Top 5 Winning Players</h3><span>Biggest single-bet payout</span></div>
           <!--PP:TOP5:START-->
-          <div class="table-scroll"><table><thead><tr><th>Player</th><th>Mult.</th><th>Bet site</th><th>Bet amount range</th><th>Highest payout</th><th>RTP</th><th>Rounds</th><th>IP</th></tr></thead><tbody><tr><td>bingoplusfarc33</td><td>11×</td><td>BP1</td><td>₱5–₱1,000</td><td>₱11,000</td><td>67.19%</td><td>354</td><td>—</td></tr><tr><td>bingoplus6tqjqv</td><td>25×</td><td>BP1</td><td>₱100</td><td>₱2,500</td><td>295.00%</td><td>10</td><td>—</td></tr><tr><td>bingoplusd2qypq</td><td>50×</td><td>BP1</td><td>₱5–₱1,000</td><td>₱2,000</td><td>94.19%</td><td>383</td><td>—</td></tr><tr><td>bingoplusz83fby</td><td>51×</td><td>BP1</td><td>₱5–₱30</td><td>₱1,530</td><td>127.34%</td><td>625</td><td>—</td></tr><tr><td>lp7kmz3ha</td><td>75×</td><td>BP1</td><td>₱10–₱20</td><td>₱1,500</td><td>329.69%</td><td>47</td><td>—</td></tr></tbody></table></div>
+          <div class="top5-list"><div class="top5-item"><div class="top5-head"><b class="top5-player" title="bingoplusfarc33">bingoplusfarc33</b><span class="top5-mult">11×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱11,000</b></div><div><span>RTP</span><b>67.19%</b></div><div><span>Rounds</span><b>354</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱5–₱1,000</span><span class="top5-ip">IP —</span></div></div><div class="top5-item"><div class="top5-head"><b class="top5-player" title="bingoplus6tqjqv">bingoplus6tqjqv</b><span class="top5-mult">25×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱2,500</b></div><div><span>RTP</span><b>295.00%</b></div><div><span>Rounds</span><b>10</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱100</span><span class="top5-ip">IP —</span></div></div><div class="top5-item"><div class="top5-head"><b class="top5-player" title="bingoplusd2qypq">bingoplusd2qypq</b><span class="top5-mult">50×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱2,000</b></div><div><span>RTP</span><b>94.19%</b></div><div><span>Rounds</span><b>383</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱5–₱1,000</span><span class="top5-ip">IP —</span></div></div><div class="top5-item"><div class="top5-head"><b class="top5-player" title="bingoplusz83fby">bingoplusz83fby</b><span class="top5-mult">51×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱1,530</b></div><div><span>RTP</span><b>127.34%</b></div><div><span>Rounds</span><b>625</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱5–₱30</span><span class="top5-ip">IP —</span></div></div><div class="top5-item"><div class="top5-head"><b class="top5-player" title="lp7kmz3ha">lp7kmz3ha</b><span class="top5-mult">75×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱1,500</b></div><div><span>RTP</span><b>329.69%</b></div><div><span>Rounds</span><b>47</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱10–₱20</span><span class="top5-ip">IP —</span></div></div></div>
           <!--PP:TOP5:END-->
         </div>
             <div class="panel pad chart-box gp-passline">
@@ -1430,22 +1457,7 @@
         </div>
           </div>
           
-        <div class="status-stack"><div class="panel pad compliance-panel"><div class="side-title"><h3>Compliance &amp; PAGCOR Update</h3><span>Current status</span></div>
-            <table>
-              <tbody>
-                <tr><th scope="row">GCP Accreditation</th><td><span class="compliance-status">✅ Approved — Numerical &amp; ECG</span></td></tr>
-                <tr><th scope="row">GCP Walkthrough</th><td><span class="compliance-status">📅 Oct 26, 2026 — Walkthrough for GCP Accreditation</span></td></tr>
-                <tr><th scope="row">Game Application</th><td><span class="compliance-status">✅ Approved — Banana Craze, PikaPika</span></td></tr>
-                <tr><th scope="row">Next Games for Application</th><td><span class="compliance-status">🔄 BLAZING 7S, LUCKY COLOR, GINTO MATCH</span></td></tr>
-              </tbody>
-            </table>
-          </div><div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
-            <div class="alert-row"><div><strong>GGR Status</strong><small>Positive daily GGR ₱80,415.57</small></div><span class="status ok">Healthy</span></div>
-          <div class="alert-row"><div><strong>RTP Status</strong><small>83.31% vs target ≈ 97.5%</small></div><span class="status warn">Below target</span></div>
-          <div class="alert-row"><div style="min-width:0"><strong>Fusebreak Alarm / Melt</strong><small>None</small></div><span class="status ok">None</span></div>
-          <div class="alert-row"><div style="min-width:0"><strong>High Winning Defense Alert</strong><small>None</small></div><span class="status ok">None</span></div>
-          </div></div>
-      </div>
+              </div>
     </section>
 
     <section class="section">
@@ -1612,7 +1624,23 @@
                 <tr><td>Tuesday, September 1, 2026</td><td>System maintenance for <strong>v2.16 upgrade</strong>, 9:30 AM–1:15 PM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
               </tbody>
             </table>
+          </div>
+        <div class="status-stack"><div class="panel pad compliance-panel"><div class="side-title"><h3>Compliance &amp; PAGCOR Update</h3><span>Current status</span></div>
+            <table>
+              <tbody>
+                <tr><th scope="row">GCP Accreditation</th><td><span class="compliance-status">✅ Approved — Numerical &amp; ECG</span></td></tr>
+                <tr><th scope="row">GCP Walkthrough</th><td><span class="compliance-status">📅 Oct 26, 2026 — Walkthrough for GCP Accreditation</span></td></tr>
+                <tr><th scope="row">Game Application</th><td><span class="compliance-status">✅ Approved — Banana Craze, PikaPika</span></td></tr>
+                <tr><th scope="row">Next Games for Application</th><td><span class="compliance-status">🔄 BLAZING 7S, LUCKY COLOR, GINTO MATCH</span></td></tr>
+              </tbody>
+            </table>
+          </div><div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
+            <div class="alert-row"><div><strong>GGR Status</strong><small>Positive daily GGR ₱80,415.57</small></div><span class="status ok">Healthy</span></div>
+          <div class="alert-row"><div><strong>RTP Status</strong><small>83.31% vs target ≈ 97.5%</small></div><span class="status warn">Below target</span></div>
+          <div class="alert-row"><div style="min-width:0"><strong>Fusebreak Alarm / Melt</strong><small>None</small></div><span class="status ok">None</span></div>
+          <div class="alert-row"><div style="min-width:0"><strong>High Winning Defense Alert</strong><small>None</small></div><span class="status ok">None</span></div>
           </div></div>
+</div>
     </section>
   </main>
   <dialog class="previous-dialog" id="previousReportDialog" aria-labelledby="previousReportTitle">
