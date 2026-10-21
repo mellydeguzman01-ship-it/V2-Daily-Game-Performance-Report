@@ -379,8 +379,9 @@
     .gp-overview > .go-band > .go-card { justify-content: flex-start; }
     /* The ring takes the leftover height, so the card is filled by the gauge
        itself instead of by wide gaps between head / rows / footer. */
-    .gp-overview .go-gauge { flex: 1 1 auto; width: auto; aspect-ratio: 1 / 1;
-                              min-height: 88px; max-height: 200px; margin: 4px auto 2px; }
+    .gp-overview .go-gauge { flex: 0 0 auto; width: min(100%, 200px); height: auto;
+                              aspect-ratio: 1 / 1; min-height: 0; max-height: 200px;
+                              margin: 6px auto 4px; }
     .gp-overview .go-gauge-val { font-size: clamp(16px, 2.6vh, 24px); }
     .gp-overview .go-gauge-lb { font-size: clamp(7px, 1vh, 10px); }
     /* Whatever the ring does not take is spread over the five rows themselves,
@@ -500,8 +501,8 @@
     .go-tick { stroke: #c2571a; }
     html.night .go-tick { stroke: var(--yellow); }
     .go-gauge-in { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 1px; pointer-events: none; }
-    .go-gauge-lb { font-size: 7px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+      justify-content: center; gap: 6px; pointer-events: none; }
+    .go-gauge-lb { font-size: 7px; line-height: 1; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
     .go-gauge-val { font-size: 16px; font-weight: 800; line-height: 1; color: var(--acc); font-variant-numeric: tabular-nums; }
     .go-rows { display: grid; gap: 0; }
     .go-row { display: grid; grid-template-columns: 11px minmax(0, 1fr) auto; align-items: center;
