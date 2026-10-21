@@ -364,6 +364,11 @@
     /* every child carried explicit row/column placement from the old 20-track grid */
     .gp-row-1 > .panel, .gp-row-2 > .panel { grid-column: auto !important; grid-row: auto !important; min-width: 0; }
     .gp-row-1 > .gp-overview { display: flex; flex-direction: column; gap: 8px; }
+    /* 2026-10-21: Feature Trigger Rate explanatory note removed on request - the
+       three bars spread over the card height instead of leaving an empty block. */
+    .gp-row-1 > .gp-feature { display: flex; flex-direction: column; }
+    .gp-row-1 > .gp-feature .dynamic-list { flex: 1 1 auto; grid-auto-rows: 1fr; gap: 14px; }
+    .gp-row-1 > .gp-feature .dynamic-item { display: flex; flex-direction: column; justify-content: space-between; }
     /* 2026-10-21 (user): the shareline and the long note under the TOTAL bar are
        gone, so the panel no longer fills its row by itself (measured 214px of dead
        space at the row's 663px height). The cards absorb it instead of pooling it
@@ -1425,7 +1430,6 @@
             <div class="dynamic-item"><div class="dynamic-head"><b>Bonus Round</b><span>778 rounds · 2.14%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span>2.14% of rounds</span><b>256 player entries</b></div></div>
             <div class="dynamic-item"><div class="dynamic-head"><b>Buy Feature</b><span>143 rounds · 0.39%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--green)"></div></div><div class="dynamic-foot"><span>0.39% of rounds</span><b>84 player entries</b></div></div>
           </div>
-          <div class="chart-note" style="margin-top:12px">Per settled round: 35,471 rounds (97.47%) triggered no feature; a round that paid an extra win (`otherWinAmount` > 0) counts as a Bonus Round (778 rounds, 2.14%) and `betType` BUY_FEATURE counts as a Buy Feature (143 rounds, 0.39%). The three blocks partition the sites' 36,392 settled rounds (BP1 + GP + AP), so once Bingo is counted they no longer add up to the day's own round total. Player entries count a player once per product: 712 played normal rounds, 256 saw a bonus and 84 bought a feature.</div>
           <!--GP:FEATURE:END-->
         </div>
           <div class="panel pad chart-box dynamic-rtp"><div class="side-title"><h3>Dynamic RTP</h3><span>Mode contribution</span></div>
