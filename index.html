@@ -353,9 +353,11 @@
        space is distributed between its parts instead of pooling in one dead pocket. */
     .hl-stack, .status-stack { display: grid; grid-template-rows: auto auto; gap: 10px;
                               align-content: stretch; align-items: stretch; min-width: 0; }
-    .hl-stack { grid-template-rows: 1fr auto; }
+    .hl-stack { grid-template-rows: auto 1fr; }
     .status-stack { grid-template-rows: auto 1fr; }
-    .hl-stack > .pp-top5, .status-stack > .incident-panel {
+    .hl-stack > .pp-top5 {
+      display: flex; flex-direction: column; justify-content: flex-start; }
+    .status-stack > .incident-panel {
       display: flex; flex-direction: column; justify-content: space-between; }
     /* Changelog <-> Top 5 Winning Players / 100 Rounds a Day swap.
        Each band item carries an explicit order: auto-placement sorts by
@@ -894,7 +896,7 @@
        and an 8-column table broke words mid-word there, so each player is one
        stacked block: name + multiplier, then Payout / RTP / Rounds, then site,
        stake range and IP. All eight fields survive, nothing wraps mid-word. */
-    .pp-top5 .top5-list { display: grid; align-content: space-between; height: 100%; min-width: 0; }
+    .pp-top5 .top5-list { display: grid; align-content: start; min-width: 0; }
     .pp-top5 .top5-item { padding: 5px 0; border-top: 1px solid var(--line); min-width: 0; }
     .pp-top5 .top5-item:first-child { border-top: 0; padding-top: 1px; }
     .pp-top5 .top5-head { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
