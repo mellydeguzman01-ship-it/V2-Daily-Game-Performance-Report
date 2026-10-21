@@ -169,6 +169,76 @@
     .plat-gp .plat-emblem { background: var(--blue); }
     .plat-ap .plat-emblem { background: var(--violet); }
 
+    /* 2026-10-21 (user): "lagyan mo ng neon glow yung per platform" — the three
+       platform cards (BP1 / GP / AP) get their own neon halo. Each card carries
+       --plat / --plat-rgb so one rule set covers all three: lit rim, two outer
+       glow layers, an inset rim light + inner bloom, a neon top edge, a glowing
+       rounds-share ring and a lit gauge label. Colours come from the existing
+       palette (cyan / blue / violet) — nothing outside this row is touched.
+       Selector is .platform-layout > .panel.plat-card (0,3,0) on purpose: the
+       light-theme `.panel` and night-theme `html.night .panel` box-shadow rules
+       outrank a bare `.plat-card`, and a bare class would be silently dropped.
+       The halo sits on the element (static, theme-tuned) and only the bloom
+       overlay breathes; reduced-motion is honoured. */
+    .platform-layout > .panel.plat-card {
+      position: relative; isolation: isolate;
+      --plat: var(--cyan); --plat-rgb: 64, 217, 208; --plat-bloom: .13;
+      --plat-glow:
+        0 0 0 1px rgba(var(--plat-rgb), .30),
+        0 0 14px -3px rgba(var(--plat-rgb), .50),
+        0 0 36px -14px rgba(var(--plat-rgb), .62),
+        inset 0 1px 0 rgba(var(--plat-rgb), .40),
+        inset 0 0 26px -17px rgba(var(--plat-rgb), .85);
+      border-color: rgba(var(--plat-rgb), .55);
+      box-shadow: var(--plat-glow), 0 10px 26px rgba(9, 19, 33, .16);
+    }
+    .platform-layout > .panel.plat-gp { --plat: var(--blue);   --plat-rgb: 110, 168, 255; }
+    .platform-layout > .panel.plat-ap { --plat: var(--violet); --plat-rgb: 183, 140, 255; }
+    /* Neon top edge: a hot line that fades out at both ends. */
+    .platform-layout > .panel.plat-card::before {
+      content: ""; position: absolute; inset: 0 0 auto 0; height: 2px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(var(--plat-rgb), .95) 20%,
+                                  var(--plat) 50%, rgba(var(--plat-rgb), .95) 80%, transparent 100%);
+      box-shadow: 0 0 12px 1px rgba(var(--plat-rgb), .70);
+      opacity: .95; pointer-events: none;
+    }
+    /* Tinted bloom behind the content, per platform. */
+    .platform-layout > .panel.plat-card::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit;
+      background: radial-gradient(120% 72% at 50% -18%,
+                                  rgba(var(--plat-rgb), var(--plat-bloom)), transparent 62%);
+      opacity: .6; pointer-events: none; z-index: -1;
+      animation: plat-neon-bloom 6s ease-in-out infinite;
+    }
+    .platform-layout > .panel.plat-card > * { position: relative; z-index: 1; }
+    .platform-layout > .panel.plat-card .plat-gauge circle + circle {
+      filter: drop-shadow(0 0 6px rgba(var(--plat-rgb), .85));
+    }
+    .platform-layout > .panel.plat-card .plat-gauge-lb { color: rgba(var(--plat-rgb), 1); }
+    .platform-layout > .panel.plat-card .plat-gauge-val {
+      text-shadow: 0 0 12px rgba(var(--plat-rgb), .70);
+    }
+    .platform-layout > .panel.plat-card .plat-name { text-shadow: 0 0 14px rgba(var(--plat-rgb), .50); }
+    .platform-layout > .panel.plat-card .plat-chip {
+      border-color: rgba(var(--plat-rgb), .55); color: rgba(var(--plat-rgb), 1);
+    }
+    /* Night mode (Melly's view) turns the halo up and lifts the value to white. */
+    html.night .platform-layout > .panel.plat-card {
+      --plat-bloom: .22;
+      --plat-glow:
+        0 0 0 1px rgba(var(--plat-rgb), .34),
+        0 0 18px -2px rgba(var(--plat-rgb), .62),
+        0 0 48px -14px rgba(var(--plat-rgb), .95),
+        inset 0 1px 0 rgba(var(--plat-rgb), .45),
+        inset 0 0 30px -15px rgba(var(--plat-rgb), 1);
+    }
+    html.night .platform-layout > .panel.plat-card .plat-gauge-val { color: #f6fbff; }
+    @keyframes plat-neon-bloom { 0%, 100% { opacity: .38 } 50% { opacity: .78 } }
+    @media (prefers-reduced-motion: reduce) {
+      .platform-layout > .panel.plat-card::after { animation: none; }
+    }
+
     /* 2026-10-21 (user): "palitan mo yan ng logo mismo ng platform" - the letter
        chips are gone, the real brand logos sit in their place. The head is a
        2-row grid so a wide logo never squeezes the platform name: row 1 is
