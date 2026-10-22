@@ -282,13 +282,20 @@
                      text-transform: uppercase; color: var(--muted); }
     .plat-gauge-val { font-size: 15px; line-height: 1; font-weight: 800; color: var(--text);
                       font-variant-numeric: tabular-nums; }
-    .plat-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 0 7px; flex: 1 1 auto;
-                    align-content: space-between; }
-    .plat-m { min-width: 0; padding: 3px 0; border-top: 1px solid var(--line); }
-    .plat-m span { display: block; font-size: 6.5px; font-weight: 700; letter-spacing: .02em;
+    /* 2026-10-22 (user): "masyadong maraming spaces sa mga platforms, dapat alisin
+       yan." align-content:space-between parked the card's leftover height as a
+       ~27px blank band between every metric row, which is what read as "daming
+       spaces". The grid is a table now: seven equal 1fr rows, one continuous
+       hairline per row, label over value centred inside its own row. The card
+       reads edge to edge - no blank bands, nothing floating. */
+    .plat-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; flex: 1 1 auto;
+                    align-content: stretch; grid-auto-rows: minmax(0, 1fr); }
+    .plat-m { min-width: 0; padding: 2px 0; border-top: 1px solid var(--line);
+              display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+    .plat-m span { display: block; font-size: 6.5px; font-weight: 700; letter-spacing: 0;
                    text-transform: uppercase; color: var(--muted); white-space: nowrap;
                    overflow: hidden; text-overflow: ellipsis; }
-    .plat-m b { display: block; font-size: 8.5px; font-weight: 800; color: var(--text);
+    .plat-m b { display: block; font-size: 9.5px; font-weight: 800; color: var(--text);
                 white-space: nowrap; font-variant-numeric: tabular-nums; }
     .plat-m b.positive { color: var(--green); }
     .plat-m b.negative { color: var(--red); }
@@ -911,31 +918,36 @@
     .pp-tiers .tiers-legend b { color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
     .pp-tiers .tiers-legend i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; }
     .pp-top5 tbody td:first-child { font-weight: 700; }
-    /* 2026-10-21 (user): five equal 20% columns. The Top 5 panel is ~300px wide
-       and an 8-column table broke words mid-word there, so each player is one
-       stacked block: name + multiplier, then Payout / RTP / Rounds, then site,
-       stake range and IP. All eight fields survive, nothing wraps mid-word. */
+    /* 2026-10-22 (user): "yung sa top 5 winning players, isang row dapat lahat ng
+       details kada players." Each player is ONE row now - site + name, payout,
+       RTP, rounds, multiplier - instead of a three-line stacked block, with the
+       column captions printed once above the list. Site / stake range / IP move
+       into the row's title tooltip so no field is lost. */
     .pp-top5 .top5-list { display: grid; align-content: start; min-width: 0; }
-    .pp-top5 .top5-item { padding: 5px 0; border-top: 1px solid var(--line); min-width: 0; }
-    .pp-top5 .top5-item:first-child { border-top: 0; padding-top: 1px; }
-    .pp-top5 .top5-head { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+    .pp-top5 .top5-head-row,
+    .pp-top5 .top5-item { display: grid; align-items: center; min-width: 0;
+                          grid-template-columns: minmax(0, 1fr) 52px 42px 34px 26px;
+                          column-gap: 6px; }
+    .pp-top5 .top5-head-row { padding: 0 0 4px; }
+    .pp-top5 .top5-head-row span { font-size: 6px; font-weight: 700; letter-spacing: .04em;
+                                   text-transform: uppercase; color: var(--muted);
+                                   white-space: nowrap; overflow: hidden; }
+    .pp-top5 .top5-head-row span:not(:first-child) { text-align: right; }
+    .pp-top5 .top5-item { padding: 10px 0; border-top: 1px solid var(--line); }
+    .pp-top5 .top5-item:first-child { border-top: 0; padding-top: 2px; }
+    .pp-top5 .top5-name { display: flex; align-items: baseline; gap: 4px; min-width: 0; }
+    .pp-top5 .top5-site { flex: 0 0 auto; font-size: 6.2px; font-weight: 800; color: var(--muted);
+                          letter-spacing: .02em; }
     .pp-top5 .top5-player { flex: 1 1 auto; min-width: 0; font-size: 8.5px; font-weight: 800;
                             color: var(--text); white-space: nowrap; overflow: hidden;
                             text-overflow: ellipsis; }
-    .pp-top5 .top5-mult { flex: 0 0 auto; font-size: 7.5px; font-weight: 800; color: var(--cyan);
-                          font-variant-numeric: tabular-nums; }
-    .pp-top5 .top5-vals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-                          gap: 0 6px; margin-top: 3px; }
-    .pp-top5 .top5-vals div { min-width: 0; }
-    .pp-top5 .top5-vals span { display: block; font-size: 6px; font-weight: 700; letter-spacing: .03em;
-                               text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-    .pp-top5 .top5-vals b { display: block; font-size: 8px; font-weight: 800; color: var(--text);
-                            white-space: nowrap; font-variant-numeric: tabular-nums; }
-    .pp-top5 .top5-meta { display: flex; gap: 6px; margin-top: 2px; font-size: 6.5px;
-                          color: var(--muted); min-width: 0; }
-    .pp-top5 .top5-meta span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .pp-top5 .top5-site { flex: 0 0 auto; font-weight: 800; color: var(--text); }
-    .pp-top5 .top5-ip { margin-left: auto; flex: 0 0 auto; }
+    .pp-top5 .top5-pay, .pp-top5 .top5-rtp, .pp-top5 .top5-rnd, .pp-top5 .top5-mult {
+      font-size: 8px; font-weight: 800; text-align: right; white-space: nowrap;
+      font-variant-numeric: tabular-nums; color: var(--text); }
+    .pp-top5 .top5-pay { color: var(--cyan); }
+    .pp-top5 .top5-rtp { font-weight: 700; }
+    .pp-top5 .top5-rnd { color: var(--muted); font-weight: 700; }
+    .pp-top5 .top5-mult { font-size: 7.5px; color: var(--cyan); }
     .player-grid table { min-width: 0; table-layout: fixed; font-size: 10px; }
     .player-grid th, .player-grid td { padding: 8px 3px; font-size: 9px; white-space: normal; overflow-wrap: anywhere; word-break: break-word; }
     .player-feature-panel { margin-top: 0; }
@@ -1542,7 +1554,8 @@
             <div class="panel pad pg-6 pp-top5">
           <div class="side-title"><h3>Top 5 Winning Players</h3><span>Biggest single-bet payout</span></div>
           <!--PP:TOP5:START-->
-          <div class="top5-list"><div class="top5-item"><div class="top5-head"><b class="top5-player" title="bingoplusvy39b8">bingoplusvy39b8</b><span class="top5-mult">250×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱25,000</b></div><div><span>RTP</span><b>117.28%</b></div><div><span>Rounds</span><b>1,083</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱50–₱100</span><span class="top5-ip">IP —</span></div></div><div class="top5-item"><div class="top5-head"><b class="top5-player" title="bingoplushbjky6">bingoplushbjky6</b><span class="top5-mult">36.75×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱7,350</b></div><div><span>RTP</span><b>528.13%</b></div><div><span>Rounds</span><b>8</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱200</span><span class="top5-ip">IP —</span></div></div><div class="top5-item"><div class="top5-head"><b class="top5-player" title="bingopluspeumun">bingopluspeumun</b><span class="top5-mult">7×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱3,500</b></div><div><span>RTP</span><b>58.17%</b></div><div><span>Rounds</span><b>45</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱20–₱500</span><span class="top5-ip">IP —</span></div></div><div class="top5-item"><div class="top5-head"><b class="top5-player" title="bingoplus5ymrdb">bingoplus5ymrdb</b><span class="top5-mult">28×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱2,800</b></div><div><span>RTP</span><b>188.64%</b></div><div><span>Rounds</span><b>22</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱100</span><span class="top5-ip">IP —</span></div></div><div class="top5-item"><div class="top5-head"><b class="top5-player" title="bingoplusfarc33">bingoplusfarc33</b><span class="top5-mult">13×</span></div><div class="top5-vals"><div><span>Payout</span><b>₱2,600</b></div><div><span>RTP</span><b>61.90%</b></div><div><span>Rounds</span><b>89</b></div></div><div class="top5-meta"><span class="top5-site">BP1</span><span class="top5-range">₱5–₱500</span><span class="top5-ip">IP —</span></div></div></div>
+          <div class="top5-head-row"><span></span><span>Payout</span><span>RTP</span><span>Rounds</span><span>Mult.</span></div>
+          <div class="top5-list"><div class="top5-item" title="BP1 · ₱50–₱100 · IP —"><div class="top5-name"><span class="top5-site">BP1</span><b class="top5-player" title="bingoplusvy39b8">bingoplusvy39b8</b></div><b class="top5-pay">₱25,000</b><span class="top5-rtp">117.28%</span><span class="top5-rnd">1,083</span><span class="top5-mult">250×</span></div><div class="top5-item" title="BP1 · ₱200 · IP —"><div class="top5-name"><span class="top5-site">BP1</span><b class="top5-player" title="bingoplushbjky6">bingoplushbjky6</b></div><b class="top5-pay">₱7,350</b><span class="top5-rtp">528.13%</span><span class="top5-rnd">8</span><span class="top5-mult">36.75×</span></div><div class="top5-item" title="BP1 · ₱20–₱500 · IP —"><div class="top5-name"><span class="top5-site">BP1</span><b class="top5-player" title="bingopluspeumun">bingopluspeumun</b></div><b class="top5-pay">₱3,500</b><span class="top5-rtp">58.17%</span><span class="top5-rnd">45</span><span class="top5-mult">7×</span></div><div class="top5-item" title="BP1 · ₱100 · IP —"><div class="top5-name"><span class="top5-site">BP1</span><b class="top5-player" title="bingoplus5ymrdb">bingoplus5ymrdb</b></div><b class="top5-pay">₱2,800</b><span class="top5-rtp">188.64%</span><span class="top5-rnd">22</span><span class="top5-mult">28×</span></div><div class="top5-item" title="BP1 · ₱5–₱500 · IP —"><div class="top5-name"><span class="top5-site">BP1</span><b class="top5-player" title="bingoplusfarc33">bingoplusfarc33</b></div><b class="top5-pay">₱2,600</b><span class="top5-rtp">61.90%</span><span class="top5-rnd">89</span><span class="top5-mult">13×</span></div></div>
           <!--PP:TOP5:END-->
         </div>
             <div class="panel pad chart-box gp-passline">
