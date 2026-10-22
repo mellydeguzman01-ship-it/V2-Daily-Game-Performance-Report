@@ -855,15 +855,29 @@
        card, so a short card pools its leftover height as one empty strip. Spread it
        between the card's own blocks instead of leaving it below the note. */
     .player-grid > .pp-avg, .player-grid > .pp-tiers { display: flex; flex-direction: column; justify-content: space-between; }
-    .player-grid > .panel:first-child .compact-pie { grid-template-columns: 1fr; gap: 5px; min-height: 0; }
-    /* A 15% card leaves ~138px of content box; the 180px donut overflowed it and was
-       clipped. Fit it to the card and let place-items:center do the centring. */
-    .player-grid > .panel:first-child .donut-wrap { min-height: 160px; min-width: 0; }
-    .player-grid > .panel:first-child .donut-wrap svg { width: min(126px, 100%); max-width: 100%; height: auto; }
-    .player-grid > .panel:first-child .donut-center strong { font-size: 18px; }
-    .player-grid > .panel:first-child .donut-center span { font-size: 9px; }
+    .player-grid > .panel:first-child .compact-pie { grid-template-columns: minmax(0, 1fr) 92px; gap: 10px; min-height: 0; }
+    /* 2026-10-22 (user: "masyadong maliit yung pie chart dito at ang laki pa ng
+       unused space, i-maximize mo yung space"). The card is a 20% track now, not
+       the old 15% one, so the 126px cap left ~180px of dead width either side of
+       the ring. The legend moves into that dead width instead of sitting under
+       the ring: the donut takes the whole remaining column (up to 250px) and
+       grows with the card. Nothing is added, cut or reworded. */
+    .player-grid > .panel:first-child .donut-wrap { min-height: 0; min-width: 0; }
+    .player-grid > .panel:first-child .donut-wrap svg { width: 100%; max-width: 280px; max-height: 280px; height: auto; }
+    .player-grid > .panel:first-child .donut-center strong { font-size: 30px; }
+    .player-grid > .panel:first-child .donut-center span { font-size: 11px; }
     .player-grid > .panel:first-child .legend-list { min-width: 0; }
-    .player-grid > .panel:first-child .legend-list div { font-size: 10px; gap: 6px; }
+    .player-grid > .panel:first-child .legend-list div { font-size: 10.5px; gap: 1px; flex-direction: column; align-items: flex-start; line-height: 1.3; }
+    .player-grid > .panel:first-child .legend-list b { font-size: 12px; white-space: nowrap; }
+    /* Once the 20-track grid collapses to one full-width card (<=1180px), a 92px
+       legend rail on the right would strand the ring in the middle of a 926px
+       card; stack the legend back under it there. Between 1181 and 1500px the
+       card is narrow, so the ring simply shrinks with it. */
+    @media (max-width: 1180px) {
+      .player-grid > .panel:first-child .compact-pie { grid-template-columns: 1fr; gap: 6px; }
+      .player-grid > .panel:first-child .donut-wrap svg { width: min(210px, 100%); }
+      .player-grid > .panel:first-child .legend-list div { flex-direction: row; align-items: center; justify-content: space-between; }
+    }
     .player-grid > .pg-chart { padding: 14px; }
     .player-grid > .pg-chart .chart { height: 285px; }
     .player-grid > .pg-chart .side-title { margin-bottom: 8px; }
