@@ -22,6 +22,15 @@
       --orange: #c2571a;
       --shadow: 0 12px 30px rgba(0, 0, 0, .22);
       --radius: 18px;
+      /* 2026-10-23 (Melly): "kapag naka light mode, yung DOD at WOW ay hindi na
+         masyadong kita". --green/--yellow/--red above are the NIGHT accents and stay
+         that way because charts, bars and legends are drawn with them; but as TEXT on
+         the pale light cards they measured 1.26:1 (amber) and 1.63:1 (green), i.e. a
+         smudge. These are the text-only twins, dark enough for 4.5:1+ on every card
+         tint, and html.night swaps them back to the bright set. */
+      --pos-text: #0a7a45;
+      --neg-text: #b3122b;
+      --warn-text: #8a5c00;
     }
 
     * { box-sizing: border-box; }
@@ -148,7 +157,9 @@
     .metric-divider { padding: 0 5px; color: #a2afbe; }
     .metric-context { display: flex; justify-content: space-between; gap: 6px; margin-top: 5px; color: #607187; font-size: 9px; line-height: 1.2; white-space: nowrap; }
     .metric-context span:last-child { text-align: right; }
-    .positive { color: var(--green); } .negative { color: var(--red); } .warning { color: var(--yellow); } .info { color: var(--blue); }
+    /* signal text: DoD / WoW chips, headline values, table cells. The -text tokens are
+       theme-aware (see :root and html.night), the graphics keep --green/--yellow/--red. */
+    .positive { color: var(--pos-text); } .negative { color: var(--neg-text); } .warning { color: var(--warn-text); } .info { color: var(--blue); }
     .accent-blue { border-top: 3px solid var(--blue); } .accent-green { border-top: 3px solid var(--green); }
     .accent-red { border-top: 3px solid var(--red); } .accent-violet { border-top: 3px solid var(--violet); } .accent-cyan { border-top: 3px solid var(--cyan); }
 
@@ -342,8 +353,8 @@
                    overflow: hidden; text-overflow: ellipsis; min-width: 0; }
     .plat-m b { display: block; font-size: 9.5px; font-weight: 800; color: var(--text);
                 white-space: nowrap; font-variant-numeric: tabular-nums; flex: 0 0 auto; }
-    .plat-m b.positive { color: var(--green); }
-    .plat-m b.negative { color: var(--red); }
+    .plat-m b.positive { color: var(--pos-text); }
+    .plat-m b.negative { color: var(--neg-text); }
     .platform-layout > .plat-bp { grid-column: 1; grid-row: 1; }
     .platform-layout > .plat-gp { grid-column: 2; grid-row: 1; }
     .platform-layout > .plat-ap { grid-column: 3; grid-row: 1; }
@@ -418,8 +429,8 @@
     .analysis-item h4 i { width: 6px; height: 6px; border-radius: 50%; flex: none; }
     .analysis-item p { margin: 0; font-size: 10.5px; line-height: 1.6; color: var(--text); }
     .analysis-item b { font-weight: 700; }
-    .analysis-item .up { color: var(--green); font-weight: 700; }
-    .analysis-item .down { color: var(--red); font-weight: 700; }
+    .analysis-item .up { color: var(--pos-text); font-weight: 700; }
+    .analysis-item .down { color: var(--neg-text); font-weight: 700; }
     @media (max-width: 1180px) { .analysis-body { grid-template-columns: 1fr; } }
     .bottom-band > .panel { min-width: 0; padding: 12px; }
     .bottom-band > .panel .side-title { margin-bottom: 8px; gap: 8px; }
@@ -739,8 +750,8 @@
     .byg-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 9px; }
     .byg-name { font-size: 12.5px; font-weight: 800; }
     .byg-badge { font-size: 8.5px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; border-radius: 999px; padding: 2px 7px; white-space: nowrap; }
-    .byg-badge.top { background: rgba(255,202,100,.18); color: var(--yellow); }
-    .byg-badge.new { background: rgba(85,214,139,.18); color: var(--green); }
+    .byg-badge.top { background: rgba(255,202,100,.18); color: var(--warn-text); }
+    .byg-badge.new { background: rgba(85,214,139,.18); color: var(--pos-text); }
     .byg-metrics { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px 6px; }
     .byg-metrics .lb { font-size: 8px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
     .byg-metrics .vl { font-size: 12px; font-weight: 800; margin-top: 2px; }
@@ -1169,6 +1180,8 @@
       --text: #eef4fb; --muted: #9fb1c5;
       --orange: #e0761f;
       --shadow: 0 12px 30px rgba(0, 0, 0, .22);
+      /* the bright signal set comes back on the navy panels */
+      --pos-text: #55d68b; --neg-text: #ff7388; --warn-text: #ffca64;
     }
     html.night body { background: var(--bg); }
     html.night .panel { background: linear-gradient(145deg, #142943, #0f1c2d); box-shadow: var(--shadow); }
@@ -1241,9 +1254,9 @@
      NOTE: never write the raw footer tag name in a comment here - build_v2_dashboard
      matches it as a literal and would splice the document. */
   .monthly-row > .table-scroll > table tfoot th.positive,
-  .monthly-row > .table-scroll > table tfoot td.positive { color: var(--green); }
+  .monthly-row > .table-scroll > table tfoot td.positive { color: var(--pos-text); }
   .monthly-row > .table-scroll > table tfoot th.negative,
-  .monthly-row > .table-scroll > table tfoot td.negative { color: var(--red); }
+  .monthly-row > .table-scroll > table tfoot td.negative { color: var(--neg-text); }
   
     /* ---- animated KPI icons (preview only) ---- */
     .header-metrics .metric-label { display: flex; align-items: center; gap: 8px; }
@@ -1564,7 +1577,11 @@
     .header-metrics .metric-foot { position: absolute; top: 13px; right: 16px; margin: 0;
         flex-direction: column; align-items: flex-end; justify-content: flex-start;
         gap: 3px; font-size: 9.5px; line-height: 1.2; }
-    .header-metrics .metric-foot span { white-space: nowrap; }
+    /* 2026-10-23 (Melly): the chips are the smallest type on the page, so they get the
+       heavy weight and tabular figures that the 9px submetric row already used. Width
+       grows by ~3% only - measured against the 78px label reserve, no re-wrap. */
+    .header-metrics .metric-foot span { white-space: nowrap; font-weight: 800;
+        letter-spacing: .01em; font-variant-numeric: tabular-nums; }
     .small-grid.mtd-grid .card { padding: 13px 14px; min-height: 98px; }
     .small-grid.mtd-grid .mtd-label { font-size: 10.5px; gap: 8px; }
     .small-grid.mtd-grid .mtd-ico { flex: 0 0 22px; width: 22px; height: 22px; }
