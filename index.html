@@ -126,6 +126,8 @@
     html.night .small-grid.mtd-grid .mtd-green  .mtd-ico { color: #5fd88a; }
     html.night .small-grid.mtd-grid .mtd-orange .mtd-ico { color: #ffb347; }
     html.night .small-grid.mtd-grid .mtd-cyan   .mtd-ico { color: #40d9d0; }
+    /* narrow viewports: the long 'MONTHLY TOTAL PLAYERS' label needs the slack */
+    @media (max-width: 1180px) { .small-grid.mtd-grid .mtd-label { font-size: 9px; letter-spacing: 0; } }
     .card { position: relative; overflow: hidden; }
     .card::after { content: ""; position: absolute; inset: auto -30px -70px auto; width: 130px; height: 130px; border-radius: 50%; background: rgba(255,255,255,.42); }
     .big-grid .card { color: #17253a; border-top: 0; }
