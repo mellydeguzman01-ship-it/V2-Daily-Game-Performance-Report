@@ -1739,6 +1739,40 @@
     html.night .go-gauge-lb { color: #ff9d6b; }
     .go-gauge-val { font-size: 20px; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
     html.night .go-gauge-val { text-shadow: 0 0 10px var(--acc-soft), 0 0 4px var(--acc); }
+
+    /* ---- 2026-10-27 (Melly): Platform Share = THE THREE PIE CHARTS IN ONE
+       HORIZONTAL ROW, never a vertical stack. The panel spans three columns, so
+       each metric becomes its own mini card in one of them: ring centred on top,
+       label + note + slice legend under it. Three equal tracks keep the three
+       rings on the same baseline at any width. ---- */
+    .platform-layout .platform-charts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      align-content: start;
+      align-items: stretch;
+    }
+    .platform-layout .platform-charts > .side-title,
+    .platform-layout .platform-charts > .keynote { grid-column: 1 / -1; }
+    .platform-layout .platform-charts .platform-chart {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);   /* ring ABOVE the copy, one row of cards */
+      justify-items: center;
+      align-content: start;
+      gap: 7px;
+      padding: 9px 10px 10px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--panel-2);
+    }
+    .platform-layout .platform-charts .platform-chart .mini-donut {
+      width: min(104px, 100%); height: auto; aspect-ratio: 1 / 1;
+    }
+    .platform-layout .platform-charts .platform-chart > div { width: 100%; min-width: 0; }
+    .platform-layout .platform-charts .platform-chart strong { text-align: center; }
+    @media (max-width: 780px) {
+      .platform-layout .platform-charts { grid-template-columns: minmax(0, 1fr); }
+    }
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
