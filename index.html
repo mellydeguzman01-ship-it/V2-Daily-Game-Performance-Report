@@ -1839,19 +1839,47 @@
        rings on the same baseline at any width. ---- */
     .platform-layout .platform-charts {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      /* 2026-10-27 (user): "YUNG PIE CHART, DAPAT NAKA ALIGN LANG SA BP, GP, AT
+         AP." Same 15 / 15 / 15 / 30 / 25 tracks as the platform row above, so
+         the three donuts sit under BingoPlus, GameZone and ArenaPlus instead of
+         being stretched across the full width. Columns 4-5 carry the Key Insight. */
+      grid-template-columns: 15fr 15fr 15fr 30fr 25fr;
+      grid-template-rows: auto minmax(150px, 1fr);
       gap: 10px;
-      align-content: start;
+      align-content: stretch;
       align-items: stretch;
+      padding-left: 0; padding-right: 0;
     }
-    .platform-layout .platform-charts > .side-title,
-    .platform-layout .platform-charts > .keynote { grid-column: 1 / -1; }
+    .platform-layout .platform-charts > .side-title {
+      grid-column: 1 / -1; padding-left: 13px; padding-right: 13px;
+    }
+    .platform-layout .platform-charts > .keynote {
+      grid-column: 4 / 6; grid-row: 2; align-self: stretch; margin: 0;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 16px 30% 16px 22px; font-size: 11.5px; line-height: 1.55;
+      text-align: left;
+    }
+    .platform-layout .platform-charts > .keynote b {
+      display: block; margin: 0 0 6px; color: var(--cyan);
+      font-size: 8.5px; letter-spacing: .14em; text-transform: uppercase;
+    }
+    .platform-layout .platform-charts > .keynote span { display: block; max-width: 62ch; }
+    .platform-layout .platform-charts > .keynote::after {
+      content: "%"; position: absolute; right: 26px; top: 50%;
+      transform: translateY(-50%); font-size: 104px; font-weight: 800;
+      line-height: 1; color: rgba(110,168,255,.10); pointer-events: none;
+    }
+    @media (max-width: 1500px) {
+      .platform-layout .platform-charts > .keynote { font-size: 10px; padding-right: 22%; }
+      .platform-layout .platform-charts > .keynote::after { font-size: 92px; right: 16px; }
+    }
     .platform-layout .platform-charts .platform-chart {
       display: flex;
       flex-direction: row-reverse;   /* DOM is svg then copy; copy lands LEFT */
       justify-content: center;
       align-items: center;
-      gap: 22px;
+      gap: 12px;
       min-height: 150px;
       padding: 12px 16px;
       border: 1px solid var(--line);
@@ -1862,7 +1890,7 @@
        sit left, the ring sits right. The contribution equations are gone. */
     .platform-layout .platform-charts .platform-chart .mini-donut {
       flex: 0 0 auto;
-      width: 120px; max-width: 120px; height: auto; aspect-ratio: 1 / 1;
+      width: min(120px, 42%); max-width: 120px; height: auto; aspect-ratio: 1 / 1;
     }
     .platform-layout .platform-charts .platform-chart > div {
       flex: 0 1 auto; width: max-content; max-width: 100%; min-width: 0;
@@ -1876,8 +1904,25 @@
     .platform-layout .platform-charts .share-values {
       justify-items: start; margin-top: 6px; font-size: 9px; line-height: 1.35;
     }
+    /* Below 1320 the five-column split is too tight for three donuts: the pie
+       cards go three-across again and the Key Insight drops underneath them. */
+    @media (max-width: 1320px) {
+      .platform-layout .platform-charts {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto auto auto;
+      }
+      .platform-layout .platform-charts > .keynote {
+        grid-column: 1 / -1; grid-row: 3; min-height: 88px;
+        padding: 14px 26% 14px 18px;
+      }
+    }
     @media (max-width: 780px) {
       .platform-layout .platform-charts { grid-template-columns: minmax(0, 1fr); }
+      .platform-layout .platform-charts > .keynote {
+        grid-column: 1 / -1; grid-row: auto; min-height: 0;
+        padding: 14px 76px 14px 16px;
+      }
+      .platform-layout .platform-charts > .keynote::after { font-size: 74px; right: 10px; }
     }
 </style>
   <script>
@@ -3054,7 +3099,7 @@
         if (!panel || panel.querySelector('.keynote')) return;
         const note = document.createElement('div');
         note.className = 'keynote';
-        note.innerHTML = `<b>Key Insight:</b> ${text}`;
+        note.innerHTML = `<b>Key Insight</b><span>${text}</span>`;
         const monthlyShares = panel.querySelector('.monthly-share-charts');
         if (monthlyShares) panel.insertBefore(note, monthlyShares);
         else panel.appendChild(note);
@@ -3221,7 +3266,7 @@
         'Unique-player counts are highest at the lower bet denominations.': '较低投注面额的唯一玩家数量最高。',
         'Normal Rounds are the primary feature behavior, while Buy Feature and Bonus Round are smaller segments.': '普通回合是主要功能行为，购买功能和奖励回合占比较小。',
         'The 30-day view compares daily bet and payout bars with RTP and D1 retention trendlines.': '30天视图通过每日投注和派彩柱状图，对比RTP与D1留存率趋势线。',
-        'Key Insight:': '关键洞察：', 'Archive': '存档', 'Choose a date below to open the verified report for that day.': '请选择下方日期，打开该日的已验证报告。', 'Back to Present Report': '返回当前报告',
+        'Key Insight': '关键洞察', 'Archive': '存档', 'Choose a date below to open the verified report for that day.': '请选择下方日期，打开该日的已验证报告。', 'Back to Present Report': '返回当前报告',
         'Daily report archive': '日报存档', 'View report': '查看报告', 'Close': '关闭', '97.5% target': '97.5%目标', 'Aug ': '8月', 'Sep ': '9月'
       };
       Object.assign(cn, {
