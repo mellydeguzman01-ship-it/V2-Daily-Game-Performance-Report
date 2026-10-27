@@ -679,6 +679,8 @@
     .gp-row-1 > .gp-modes { grid-column: 2; grid-row: 1; }
     .gp-row-1 > .gp-feature { grid-column: 2; grid-row: 2; }
     .gp-row-1 > .gp-passline { grid-column: 3; grid-row: 1 / span 2; }
+    .gp-row-1 > .gp-side { grid-column: 4; grid-row: 1 / span 2;
+      display: flex; flex-direction: column; gap: 10px; min-width: 0; }
     .gp-row-1 > .game-summary { grid-column: 4; grid-row: 1 / span 2; }
     .gp-row-1 > .gp-overview { display: flex; flex-direction: column; gap: 8px; }
     /* 2026-10-21: Round Type Distribution explanatory note removed on request - the
@@ -776,6 +778,34 @@
        total; in a 25% column the orbiting label clips that total. Here the
        ring still spins (.mini-donut keeps ch-spin) while the centre value is an
        HTML overlay, so it can neither rotate nor collide. */
+    /* 2026-10-27 (user): "dyan mo ilagay yung top 5 winning players, ilagay mo
+       siya sa game performance na section" - the dead band under the Game
+       Performance table now carries a compact Top 5. Two lines per player: name
+       + payout on line 1, the day's metrics on line 2, so all eight fields stay
+       readable in the 20% column instead of squeezing eight columns into 370px. */
+    .gp-top5 { display: flex; flex-direction: column; min-height: 0; }
+    .gp-top5 .side-title { margin-bottom: 2px; }
+    .gp-top5 .side-title h3 { font-size: 12px; }
+    .gp-top5 .side-title span { font-size: 8px; }
+    .gp-top5-list { flex: 1 1 auto; display: grid; grid-auto-rows: minmax(0, 1fr); margin-top: 2px; }
+    .gp-top5-item { display: flex; flex-direction: column; justify-content: center; gap: 2px;
+                    padding: 6px 0; border-top: 1px solid var(--line); min-width: 0; }
+    .gp-top5-item:first-child { border-top: 0; padding-top: 2px; }
+    .gp-top5-top { display: flex; align-items: baseline; gap: 5px; min-width: 0; }
+    .gp-rank { flex: 0 0 auto; width: 10px; font-size: 8px; font-weight: 900; color: var(--muted); }
+    .gp-site { flex: 0 0 auto; font-size: 6.2px; font-weight: 800; letter-spacing: .02em; color: var(--muted); }
+    .gp-player { flex: 1 1 auto; min-width: 0; font-size: 8.4px; font-weight: 800; color: var(--text);
+                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .gp-pay { flex: 0 0 auto; font-size: 10px; font-weight: 800; color: var(--cyan);
+              font-variant-numeric: tabular-nums; }
+    .gp-top5-meta { display: flex; flex-wrap: wrap; gap: 0 7px; font-size: 6.4px;
+                    line-height: 1.35; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .gp-top5-meta b { color: var(--text); font-weight: 800; }
+    .gp-top5-meta .positive, .gp-top5-meta .positive b { color: var(--pos-text); }
+    .gp-top5-meta .negative, .gp-top5-meta .negative b { color: var(--neg-text); }
+    .gp-top5-meta .gp-mult, .gp-top5-meta .gp-mult b { color: var(--cyan); }
+    .gp-top5-meta .gp-age { font-weight: 800; letter-spacing: .02em; }
+    .gp-top5-meta .gp-age.new { color: var(--pos-text); }
     .gp-overview { min-width: 0; }
     .byg-game { padding: 9px 0; }
     .byg-game + .byg-game { border-top: 1px solid var(--line); }
@@ -870,13 +900,15 @@
        already fill the panel (`.gp-overview > .go-band { flex: 1 1 auto }`). */
     .go-shareline { margin: 6px 1px 0; font-size: 8px; line-height: 1.5; color: var(--muted); }
     .go-note { margin: 4px 1px 0; font-size: 8px; line-height: 1.5; color: var(--muted); }
-    /* ---- Game Overview: games attached to BP1 that are not live yet ----------
+    /* ---- Game Overview: games live on BingoPlus (BP1) ----------------------
        2026-10-27 (user): "Game Overview - add the Ginto Match and Blazing 7s".
-       Neither game has settled a single round, so they cannot get a figures card
-       without inventing the figures. They get a launch-status strip instead: it
-       names them, says what they are, and stamps the hour the Backend game
-       report was read. The moment one of them settles, the builder promotes it
-       to a full card and the strip loses that row by itself. */
+       2026-10-27 (user, correction): "sa bingoplus live na yung lucky color,
+       blazing 7 at ginto match" -- they are LIVE, so the strip never says
+       otherwise. It lists the BingoPlus games that have no figures card yet,
+       says what they are, and stamps the hour the game report was read.
+       "0 rounds yet" = nothing settled in our capture window, not "not live".
+       The moment one of them settles, the builder promotes it to a full card
+       and the strip loses that row by itself. */
     .go-launch { margin-top: 7px; border: 1px solid var(--line); border-radius: 10px;
       background: var(--panel-2); overflow: hidden; }
     .go-launch-hd { display: flex; align-items: baseline; justify-content: space-between;
@@ -886,8 +918,8 @@
     .go-launch-as { font-size: 7px; line-height: 1.3; color: var(--muted); text-align: right; }
     .go-launch-i { display: grid; grid-template-columns: 7px minmax(0, 1fr) auto auto;
       align-items: center; gap: 7px; padding: 5px 9px; border-top: 1px solid var(--line); }
-    .go-launch-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow);
-      box-shadow: 0 0 0 3px rgba(255, 202, 100, .16); }
+    .go-launch-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+      box-shadow: 0 0 0 3px rgba(85, 214, 139, .18); }
     .go-launch-nm { font-size: 9.5px; font-weight: 800; color: var(--text);
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .go-launch-tg { font-size: 6.5px; font-weight: 800; letter-spacing: .04em;
@@ -1915,7 +1947,7 @@
           <div class="side-title"><h3>Game Overview</h3><span>Banana Craze vs Lucky Color (Bingo)</span></div>
           <!--GP:BYGAME:START-->
           <div class="go-band"><div class="go-card go-a"><div class="go-head"><div class="go-name">Banana Craze</div><span class="go-badge">Top GGR</span></div><div class="go-gauge"><svg viewBox="0 0 120 120" role="img" aria-label="RTP 93.59%"><circle class="go-ticks" cx="60" cy="60" r="57" pathLength="60" stroke-width="2.4" stroke-dasharray="0.55 0.45"/><line class="go-tick" x1="60" y1="1.4" x2="60" y2="8.2" stroke-width="3" stroke-linecap="round"/><circle class="go-track" cx="60" cy="60" r="48" stroke-width="8"/><circle class="go-halo" cx="60" cy="60" r="48" stroke-width="14" pathLength="100" stroke-dasharray="93.59 6.41" transform="rotate(-90 60 60)"/><circle class="go-arc" cx="60" cy="60" r="48" stroke-width="8" stroke-linecap="round" pathLength="100" stroke-dasharray="93.59 6.41" transform="rotate(-90 60 60)"/><circle class="go-tip" cx="41.19" cy="15.84" r="3.4"/></svg><div class="go-gauge-in"><span class="go-gauge-lb">RTP</span><span class="go-gauge-val">93.59%</span></div></div><div class="go-rows"><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.2"/><line x1="12" y1="1.7" x2="12" y2="5.3"/><line x1="12" y1="18.7" x2="12" y2="22.3"/><line x1="1.7" y1="12" x2="5.3" y2="12"/><line x1="18.7" y1="12" x2="22.3" y2="12"/></svg></span><span class="go-lb">GGR</span><span class="go-vl positive">₱35,616.50</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.4" y="6.2" width="19.2" height="11.6" rx="2.4"/><circle cx="12" cy="12" r="2.9"/><line x1="5.9" y1="9.6" x2="5.9" y2="9.6"/></svg></span><span class="go-lb">BET</span><span class="go-vl">₱555,467.50</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="7.1" rx="7.1" ry="3.1"/><path d="M4.9 7.1v4.3c0 1.7 3.2 3.1 7.1 3.1s7.1-1.4 7.1-3.1V7.1"/><path d="M4.9 11.4v4.3c0 1.7 3.2 3.1 7.1 3.1s7.1-1.4 7.1-3.1v-4.3"/></svg></span><span class="go-lb">PAYOUT</span><span class="go-vl">₱519,851.00</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5.1 20.1c0-3.8 3.1-6.2 6.9-6.2s6.9 2.4 6.9 6.2"/></svg></span><span class="go-lb">PLAYERS</span><span class="go-vl">909</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="1.45"/><circle cx="12" cy="7.2" r="1.45"/><circle cx="16.8" cy="7.2" r="1.45"/><circle cx="7.2" cy="12" r="1.45"/><circle cx="12" cy="12" r="1.45"/><circle cx="16.8" cy="12" r="1.45"/><circle cx="7.2" cy="16.8" r="1.45"/><circle cx="12" cy="16.8" r="1.45"/><circle cx="16.8" cy="16.8" r="1.45"/></svg></span><span class="go-lb">ROUNDS</span><span class="go-vl">41,068</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="3.4"/><line x1="12" y1="1.2" x2="12" y2="4.4"/><line x1="12" y1="19.6" x2="12" y2="22.8"/><line x1="1.2" y1="12" x2="4.4" y2="12"/><line x1="19.6" y1="12" x2="22.8" y2="12"/></svg></span><span class="go-lb">HITRATE</span><span class="go-vl">31.41%</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="6.6" width="18.4" height="10.8" rx="2.2"/><line x1="8.7" y1="6.6" x2="8.7" y2="17.4"/><line x1="15.3" y1="6.6" x2="15.3" y2="17.4"/></svg></span><span class="go-lb">TICKETS</span><span class="go-vl">12,898</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.6v14.8"/><path d="M6.4 10.2 12 4.6l5.6 5.6"/><line x1="5.4" y1="20.4" x2="18.6" y2="20.4"/></svg></span><span class="go-lb">MAXBET</span><span class="go-vl">₱200.00</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3.8h8v4.4a4 4 0 0 1-8 0z"/><path d="M8 4.6H5.2v1.8a3 3 0 0 0 3 3"/><path d="M16 4.6h2.8v1.8a3 3 0 0 1-3 3"/><line x1="12" y1="12.2" x2="12" y2="16.2"/><line x1="8.6" y1="20.2" x2="15.4" y2="20.2"/><path d="M8.6 20.2c0-2.2 1.5-4 3.4-4s3.4 1.8 3.4 4"/></svg></span><span class="go-lb">MAXWIN</span><span class="go-vl">₱5,000.00</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="7.4" y1="7.4" x2="16.6" y2="16.6"/><line x1="16.6" y1="7.4" x2="7.4" y2="16.6"/><circle cx="12" cy="12" r="9.2"/></svg></span><span class="go-lb">MAXMULT</span><span class="go-vl">250×</span></div></div><div class="go-foot">New players 589 &middot; ARPP 50.64 &middot; all sites BP1 + GP + AP</div></div><div class="go-card go-b go-hot"><div class="go-head"><div class="go-name">Lucky Color</div><span class="go-badge">Bingo</span></div><div class="go-gauge"><svg viewBox="0 0 120 120" role="img" aria-label="RTP 100.87%"><circle class="go-ticks" cx="60" cy="60" r="57" pathLength="60" stroke-width="2.4" stroke-dasharray="0.55 0.45"/><line class="go-tick" x1="60" y1="1.4" x2="60" y2="8.2" stroke-width="3" stroke-linecap="round"/><circle class="go-track" cx="60" cy="60" r="48" stroke-width="8"/><circle class="go-halo" cx="60" cy="60" r="48" stroke-width="14" pathLength="100" stroke-dasharray="100.00 0.00" transform="rotate(-90 60 60)"/><circle class="go-arc" cx="60" cy="60" r="48" stroke-width="8" stroke-linecap="round" pathLength="100" stroke-dasharray="100.00 0.00" transform="rotate(-90 60 60)"/><circle class="go-tip" cx="60.00" cy="12.00" r="3.4"/></svg><div class="go-gauge-in"><span class="go-gauge-lb">RTP</span><span class="go-gauge-val">100.87%</span></div></div><div class="go-rows"><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6.2"/><line x1="12" y1="1.7" x2="12" y2="5.3"/><line x1="12" y1="18.7" x2="12" y2="22.3"/><line x1="1.7" y1="12" x2="5.3" y2="12"/><line x1="18.7" y1="12" x2="22.3" y2="12"/></svg></span><span class="go-lb">GGR</span><span class="go-vl negative">-₱3,482.70</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.4" y="6.2" width="19.2" height="11.6" rx="2.4"/><circle cx="12" cy="12" r="2.9"/><line x1="5.9" y1="9.6" x2="5.9" y2="9.6"/></svg></span><span class="go-lb">BET</span><span class="go-vl">₱401,853.00</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="7.1" rx="7.1" ry="3.1"/><path d="M4.9 7.1v4.3c0 1.7 3.2 3.1 7.1 3.1s7.1-1.4 7.1-3.1V7.1"/><path d="M4.9 11.4v4.3c0 1.7 3.2 3.1 7.1 3.1s7.1-1.4 7.1-3.1v-4.3"/></svg></span><span class="go-lb">PAYOUT</span><span class="go-vl">₱405,335.70</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5.1 20.1c0-3.8 3.1-6.2 6.9-6.2s6.9 2.4 6.9 6.2"/></svg></span><span class="go-lb">PLAYERS</span><span class="go-vl">70</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7.2" r="1.45"/><circle cx="12" cy="7.2" r="1.45"/><circle cx="16.8" cy="7.2" r="1.45"/><circle cx="7.2" cy="12" r="1.45"/><circle cx="12" cy="12" r="1.45"/><circle cx="16.8" cy="12" r="1.45"/><circle cx="7.2" cy="16.8" r="1.45"/><circle cx="12" cy="16.8" r="1.45"/><circle cx="16.8" cy="16.8" r="1.45"/></svg></span><span class="go-lb">ROUNDS</span><span class="go-vl">8,204</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="3.4"/><line x1="12" y1="1.2" x2="12" y2="4.4"/><line x1="12" y1="19.6" x2="12" y2="22.8"/><line x1="1.2" y1="12" x2="4.4" y2="12"/><line x1="19.6" y1="12" x2="22.8" y2="12"/></svg></span><span class="go-lb">HITRATE</span><span class="go-vl">25.17%</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.8" y="6.6" width="18.4" height="10.8" rx="2.2"/><line x1="8.7" y1="6.6" x2="8.7" y2="17.4"/><line x1="15.3" y1="6.6" x2="15.3" y2="17.4"/></svg></span><span class="go-lb">TICKETS</span><span class="go-vl">2,065</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.6v14.8"/><path d="M6.4 10.2 12 4.6l5.6 5.6"/><line x1="5.4" y1="20.4" x2="18.6" y2="20.4"/></svg></span><span class="go-lb">MAXBET</span><span class="go-vl">₱200.00</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3.8h8v4.4a4 4 0 0 1-8 0z"/><path d="M8 4.6H5.2v1.8a3 3 0 0 0 3 3"/><path d="M16 4.6h2.8v1.8a3 3 0 0 1-3 3"/><line x1="12" y1="12.2" x2="12" y2="16.2"/><line x1="8.6" y1="20.2" x2="15.4" y2="20.2"/><path d="M8.6 20.2c0-2.2 1.5-4 3.4-4s3.4 1.8 3.4 4"/></svg></span><span class="go-lb">MAXWIN</span><span class="go-vl">₱20,300.00</span></div><div class="go-row"><span class="go-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="7.4" y1="7.4" x2="16.6" y2="16.6"/><line x1="16.6" y1="7.4" x2="7.4" y2="16.6"/><circle cx="12" cy="12" r="9.2"/></svg></span><span class="go-lb">MAXMULT</span><span class="go-vl">203×</span></div></div><div class="go-foot">New players 61 &middot; ARPP 117.20 &middot; Bingo section</div></div></div>
-          <div class="go-launch"><div class="go-launch-hd"><span class="go-launch-tt">Pre-launch &middot; BP1</span><span class="go-launch-as">game report 27 Oct 15:00</span></div><div class="go-launch-i"><span class="go-launch-dot"></span><span class="go-launch-nm">Blazing 7's</span><span class="go-launch-tg">Slot</span><span class="go-launch-vl">0 rounds &middot; not live</span></div><div class="go-launch-i"><span class="go-launch-dot"></span><span class="go-launch-nm">Ginto Match</span><span class="go-launch-tg">Bingo</span><span class="go-launch-vl">0 rounds &middot; not live</span></div></div>
+          <div class="go-launch"><div class="go-launch-hd"><span class="go-launch-tt">Live on BingoPlus &middot; BP1</span><span class="go-launch-as">game report 27 Oct 15:00</span></div><div class="go-launch-i"><span class="go-launch-dot"></span><span class="go-launch-nm">Blazing 7's</span><span class="go-launch-tg">Slot</span><span class="go-launch-vl">live &middot; 0 rounds yet</span></div><div class="go-launch-i"><span class="go-launch-dot"></span><span class="go-launch-nm">Ginto Match</span><span class="go-launch-tg">Bingo</span><span class="go-launch-vl">live &middot; 0 rounds yet</span></div></div>
           <!--GP:BYGAME:END-->
         </div>
           <div class="panel pad chart-box gp-modes">
@@ -1949,6 +1981,7 @@
           <div class="chart-note" style="margin-top:12px">Pass line = a player who settled 100 rounds or more on the reporting day: 92 of 909 players (10.1%) crossed it and 817 (89.9%) settled fewer than 100. Rounds are the settled ledger, one row per round.</div>
           <!--GP:PASSLINE:END-->
         </div>
+          <div class="gp-side">
           <div class="panel table-scroll game-summary">
     <table>
       <thead>
@@ -1965,6 +1998,19 @@
       </tbody>
     </table>
   </div>
+          <div class="panel pad gp-top5">
+          <div class="side-title"><h3>Top 5 Winning Players</h3><span>Biggest single-bet payout</span></div>
+          <!--GP:TOP5:START-->
+          <div class="gp-top5-list">
+            <div class="gp-top5-item" title="BP1 · best round ₱5,000.00 at 50× · first day 2026-10-26"><div class="gp-top5-top"><span class="gp-rank">1</span><span class="gp-site">BP1</span><b class="gp-player" title="bingoplusapnz4m">bingoplusapnz4m</b><b class="gp-pay">₱68,000.00</b></div><div class="gp-top5-meta"><span>BET <b>₱78,600.00</b></span><span class="positive">GGR <b>+₱10,600.00</b></span><span>RTP <b>86.5%</b></span><span><b>786</b> rounds</span><span class="gp-mult">50×</span><span class="gp-age new">NEW</span></div></div>
+            <div class="gp-top5-item" title="BP1 · best round ₱4,150.00 at 20.75× · first day 2026-10-10"><div class="gp-top5-top"><span class="gp-rank">2</span><span class="gp-site">BP1</span><b class="gp-player" title="bingoplus9rhkfy">bingoplus9rhkfy</b><b class="gp-pay">₱7,250.00</b></div><div class="gp-top5-meta"><span>BET <b>₱3,600.00</b></span><span class="negative">GGR <b>-₱3,650.00</b></span><span>RTP <b>201.4%</b></span><span><b>20</b> rounds</span><span class="gp-mult">25×</span><span class="gp-age">RET</span></div></div>
+            <div class="gp-top5-item" title="BP1 · best round ₱4,000.00 at 20× · first day 2026-10-01"><div class="gp-top5-top"><span class="gp-rank">3</span><span class="gp-site">BP1</span><b class="gp-player" title="bingoplusw58fh5">bingoplusw58fh5</b><b class="gp-pay">₱4,300.00</b></div><div class="gp-top5-meta"><span>BET <b>₱700.00</b></span><span class="negative">GGR <b>-₱3,600.00</b></span><span>RTP <b>614.3%</b></span><span><b>4</b> rounds</span><span class="gp-mult">20×</span><span class="gp-age">RET</span></div></div>
+            <div class="gp-top5-item" title="BP1 · best round ₱3,700.00 at 18.5× · first day 2026-10-19"><div class="gp-top5-top"><span class="gp-rank">4</span><span class="gp-site">BP1</span><b class="gp-player" title="bingoplusv6d64e">bingoplusv6d64e</b><b class="gp-pay">₱4,350.00</b></div><div class="gp-top5-meta"><span>BET <b>₱1,900.00</b></span><span class="negative">GGR <b>-₱2,450.00</b></span><span>RTP <b>228.9%</b></span><span><b>18</b> rounds</span><span class="gp-mult">18.5×</span><span class="gp-age">RET</span></div></div>
+            <div class="gp-top5-item" title="BP1 · best round ₱3,525.00 at 35.25× · first day 2026-10-01"><div class="gp-top5-top"><span class="gp-rank">5</span><span class="gp-site">BP1</span><b class="gp-player" title="bingoplusmbxbh4">bingoplusmbxbh4</b><b class="gp-pay">₱5,725.00</b></div><div class="gp-top5-meta"><span>BET <b>₱3,100.00</b></span><span class="negative">GGR <b>-₱2,625.00</b></span><span>RTP <b>184.7%</b></span><span><b>31</b> rounds</span><span class="gp-mult">35.25×</span><span class="gp-age">RET</span></div></div>
+          </div>
+          <!--GP:TOP5:END-->
+          </div>
+          </div>
         </div>
         <div class="gp-row-2">
           <div class="panel pad chart-box tall hourly-rtp"><div class="side-title"><h3>Hourly RTP (00:00–23:59)</h3><span>Bars: bet amount + payout (₱000s) · Lines: RTP + players + 97.5% threshold</span></div>
