@@ -797,17 +797,19 @@
        "Bingo" pill still reads as a category, not as the alarm. */
     .go-card.go-hot .go-arc,
     .go-card.go-hot .go-halo { stroke: #c8102e; }
-    .go-card.go-hot .go-arc { stroke-width: 9; filter: drop-shadow(0 0 6px #c8102e); }
+    .go-card.go-hot .go-arc { stroke-width: 9; filter: drop-shadow(0 0 3px rgba(200, 16, 46, .45)); }
     .go-card.go-hot .go-gauge-val { color: #c8102e; }
-    .go-card.go-hot .go-gauge-val { text-shadow: 0 0 10px rgba(200, 16, 46, .35), 0 0 4px #c8102e; }
+    .go-card.go-hot .go-gauge-val { text-shadow: 0 0 6px rgba(200, 16, 46, .22); }
     .go-card.go-hot .go-gauge { animation: go-rtp-hot 1.5s ease-in-out infinite; }
     html.night .go-card.go-hot .go-arc,
     html.night .go-card.go-hot .go-halo { stroke: #ff5c69; }
-    html.night .go-card.go-hot .go-arc { filter: drop-shadow(0 0 7px #ff5c69); }
-    html.night .go-card.go-hot .go-gauge-val { color: #ff5c69; }
+    html.night .go-card.go-hot .go-arc { filter: drop-shadow(0 0 3.5px rgba(255, 92, 105, .5)); }
+    html.night .go-card.go-hot .go-halo { opacity: .12; }
+    html.night .go-card.go-hot .go-gauge-val { color: #ff5c69;
+      text-shadow: 0 0 6px rgba(255, 92, 105, .25); }
     @keyframes go-rtp-hot {
-      0%, 100% { opacity: 1;   filter: drop-shadow(0 0 6px rgba(200, 16, 46, .55)); }
-      50%      { opacity: .42; filter: drop-shadow(0 0 1px rgba(200, 16, 46, .25)); }
+      0%, 100% { opacity: 1;   filter: drop-shadow(0 0 3px rgba(200, 16, 46, .38)); }
+      50%      { opacity: .55; filter: drop-shadow(0 0 0px rgba(200, 16, 46, .12)); }
     }
     @media (prefers-reduced-motion: reduce) {
       .go-card.go-hot .go-gauge { animation: none; opacity: 1; filter: none; }
