@@ -2946,10 +2946,25 @@
           let totalEl = null, caption = '';
           const small = host.querySelector('small');
           if (host.matches('.platform-chart')) {
-            const m = /=\s*(₱?[\d,]+(?:\.\d+)?)/.exec(small ? small.textContent : '');
+            // 2026-10-28 (user): "BAKIT MALI YUNG TOTAL GGR NA NANDYAN?" The caption
+            // can carry MORE THAN ONE "= amount": the GGR one reads "... = ₱31,427.43
+            // positive · GP ₱-5,351.22 (negative, not in the ring) · net ... = ₱25,948.40".
+            // Taking the FIRST match printed the positive base as TOTAL GGR, which
+            // disagreed with the KPI tile. The LAST "=" is the figure the caption
+            // reconciles to, which is the day total -- take that.
+            const _eqs = [...(small ? small.textContent : '').matchAll(/=\s*(₱?[\d,]+(?:\.\d+)?)/g)];
+            const m = _eqs.length ? _eqs[_eqs.length - 1] : null;
             const title = (host.querySelector('strong') || {}).textContent || '';
             if (m) {
               totalEl = m[1];
+              // Player Share's caption reconciles to the per-platform SUM, which counts a
+              // login that played both a site and Bingo twice (1,409 vs 1,380 distinct).
+              // The KPI tile and the header print the DISTINCT count, so the ring has to
+              // as well or the panel contradicts the page it sits on.
+              if (/player/i.test(title)) {
+                const d = /([\d,]+)\s+distinct players/i.exec(small ? small.textContent : '');
+                if (d) totalEl = d[1];
+              }
               caption = 'TOTAL ' + title.replace(/\s*share\s*$/i, '').toUpperCase().replace(/^PLAYER$/, 'PLAYERS').replace(/^ROUND$/, 'ROUNDS');
             }
           } else if (host.matches('.pp-tiers .tiers-pie')) {
