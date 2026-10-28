@@ -733,7 +733,10 @@
     .gp-overview .go-band.go-quad .go-card { gap: 4px; padding: 6px 5px 5px; }
     .gp-overview .go-band.go-quad .go-head { min-height: 24px; align-items: flex-start; gap: 4px; }
     .gp-overview .go-band.go-quad .go-name { font-size: 9.5px; line-height: 1.15; }
-    .gp-overview .go-band.go-quad .go-gauge { width: min(100%, 150px); max-height: 150px; margin: 2px auto 3px; }
+    /* 2026-10-28 (user): "medyo liitan mo ng kaunti yung bilog sa RTP" -> the ring
+       is 88% of the card's content box instead of filling it edge to edge, so the
+       circle sits a step in from the rows; the freed height goes to the rows. */
+    .gp-overview .go-band.go-quad .go-gauge { width: 88%; max-height: 120px; margin: 3px auto 5px; }
     .gp-overview .go-band.go-quad .go-gauge-val { font-size: clamp(11px, 1.35vh, 13px); }
     .gp-overview .go-band.go-quad .go-gauge-lb { font-size: clamp(6px, .8vh, 8px); }
     .gp-overview .go-band.go-quad .go-rows { flex: 1 1 auto; align-content: space-between;
@@ -930,12 +933,14 @@
     /* 2026-10-28 (user): the game name is replaced by its logo, centred and sized
        to the footprint the name used to occupy ("kung ano size nung game name,
        ganun lang din yung logo"). No box, no backdrop -- the PNG is already
-       trimmed. 24px = the .go-head band the name already sat in, so the header
+       trimmed. 20px sits inside the 24px .go-head band the name already sat in, so the header
        is exactly as tall as before and nothing below moves; the wordmark lands
        37-51px wide, i.e. the width the name string itself had (52-64px at the
        9.5px quad font in a 171px card). At 15px the two-line wordmarks collapsed
-       into 23-32px smudges that were no longer identifiable. */
-    .go-logo { display: block; height: 24px; width: auto; max-width: 92%;
+       into 23-32px smudges that were no longer identifiable.
+       2026-10-28 (user): "gawin mong 20px yung logo kasi hindi masyadong makita"
+       -> fixed at 20px (the .go-head band stays 24px, so nothing below moves). */
+    .go-logo { display: block; height: 20px; width: auto; max-width: 92%;
       margin: 0 auto; object-fit: contain; }
     .go-name { font-size: 11px; font-weight: 800; letter-spacing: .01em; color: var(--acc); }
     .go-gauge { position: relative; width: 88px; height: 88px; margin: 2px auto 1px; display: grid; place-items: center; }
