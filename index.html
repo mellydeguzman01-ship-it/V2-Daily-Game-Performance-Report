@@ -1003,47 +1003,6 @@
        already fill the panel (`.gp-overview > .go-band { flex: 1 1 auto }`). */
     .go-shareline { margin: 6px 1px 0; font-size: 8px; line-height: 1.5; color: var(--muted); }
     .go-note { margin: 4px 1px 0; font-size: 8px; line-height: 1.5; color: var(--muted); }
-    /* 2026-10-29 (boss request via Melly): "add traffic log 【can hide if no
-       traffic support】". One compact row of 24 hour cells: the colour is player
-       volume, the number is that hour's players, and the tooltip carries rounds
-       + bet. Hidden when the capture has no hourly traffic, so a day without
-       support simply does not show it.
-       2026-10-29 (Melly): "siguro yung traffic log mas maganda if nasa hourly
-       rtp?" -- moved out of the Game Overview band (per-game cards) into the
-       Hourly RTP panel, because it is whole-day, all-platform, per-hour data:
-       the same scope as that chart, and the same array as its pink Players line.
-       Its cells were 16px wide at 7px type in the 476px Game Overview column;
-       inside the hourly panel the strip sits under the plot area and gets the
-       plot's own inset, so the numbers line up with the hours they belong to. */
-    .go-traffic { margin: 5px 1px 0; border-top: 1px solid var(--line); padding-top: 4px; }
-    .go-traffic-top { display: flex; justify-content: space-between; align-items: baseline;
-                      gap: 8px; margin-bottom: 3px; }
-    .go-traffic-top span { font-size: 8px; font-weight: 800; letter-spacing: .08em; color: var(--muted); }
-    .go-traffic-top small { font-size: 7.5px; color: var(--muted); }
-    .go-traffic-grid { display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 2px; }
-    .go-traffic-cell { position: relative; border-radius: 3px; padding: 2px 1px 1px;
-                       background: color-mix(in srgb, var(--cyan) calc(var(--heat) * 1%), transparent);
-                       border: 1px solid color-mix(in srgb, var(--cyan) calc(18% + var(--heat) * .6%), transparent);
-                       text-align: center; cursor: default; }
-    .go-traffic-cell b { display: block; font-size: 7px; line-height: 1.1; color: var(--text); }
-    .go-traffic-cell i { display: block; font-style: normal; font-size: 6px; line-height: 1.1; color: var(--muted); }
-    /* In the Hourly RTP panel the strip sits under the plot area and is inset to
-       the chart's own padding (pad.l 40/900 = 4.4%, pad.r 108/900 = 12%), so each
-       cell reads directly beneath the hour it belongs to. The panel is 596px wide
-       against the 476px Game Overview column, so the cells go 16px -> 19px and the
-       number goes 7px -> 9.5px: readable without hovering. */
-    .hourly-rtp .go-traffic { margin: 7px 0 0; padding-top: 6px; }
-    .hourly-rtp .go-traffic-top span { font-size: 9px; }
-    .hourly-rtp .go-traffic-top small { font-size: 8px; }
-    /* 2% inset, not the chart's full 4.4%/12%: matching the plot exactly squeezed
-       the cell to 14px of content and clipped every 3-digit hour count (175-374
-       players). The strip reads hour-by-hour off the same 24 columns; the numbers
-       win the space. */
-    .hourly-rtp .go-traffic-grid { gap: 2px; padding: 0 2%; }
-    .hourly-rtp .go-traffic-cell { padding: 3px 0 2px; border-radius: 4px; }
-    .hourly-rtp .go-traffic-cell b { font-size: 9.5px; }
-    .hourly-rtp .go-traffic-cell i { font-size: 7px; }
-    @media (max-width: 1180px) { .go-traffic-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); } }
     /* ---- Game Overview: games live on BingoPlus (BP1) ----------------------
        2026-10-27 (user): "Game Overview - add the Ginto Match and Blazing 7s".
        2026-10-27 (user, correction): "sa bingoplus live na yung lucky color,
@@ -2315,8 +2274,7 @@
           <!-- TRAFFIC LOG (2026-10-29 Melly): moved here from the Game Overview band.
                Whole-day, all-platform, per-hour data: same scope as this chart and the
                same array as its pink Players line. Hidden when there is no hourly data. -->
-          <div class="go-traffic" id="trafficLog" hidden><div class="go-traffic-top"><span>TRAFFIC LOG</span><small id="trafficLogSum">Players per hour</small></div><div class="go-traffic-grid" id="trafficLogGrid"></div></div>
-          <div class="chart-note">Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. These bars are the settled ledger for Banana Craze + Lucky Color, totalling ₱1,872,547.50 against the ₱2,173,644.50 day total above; Ginto Match and Blazing 7's settle outside these hours. The green line is hourly RTP against the 97.5% target. The pink line counts the distinct players who settled at least one round in that hour; it is a headcount, not a partition of the day, so a player who plays in two hours counts in both and the 24 values must not be added up. The strip below is that same headcount in numbers, hour by hour; hover a cell for its rounds and bet.</div>
+          <div class="chart-note">Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. These bars are the settled ledger for Banana Craze + Lucky Color, totalling ₱1,872,547.50 against the ₱2,173,644.50 day total above; Ginto Match and Blazing 7’s settle outside these hours. The green line is hourly RTP against the 97.5% target. The pink line counts the distinct players who settled at least one round in that hour; it is a headcount, not a partition of the day, so a player who plays in two hours counts in both and the 24 values must not be added up.</div>
         </div>
           <div class="panel pad chart-box multiplier-distribution"><div class="side-title"><h3>Multiplier Distribution</h3><span>Winning outcome bands</span></div>
           <table class="dist-table"><thead><tr><th>Multiplier band</th><th>Rounds</th><th>Share</th><th></th></tr></thead><tbody><tr><td>0x</td><td>107,562</td><td>64.75%</td><td><div class="mini-bar"><i style="width:72%"></i></div></td></tr><tr><td>>0x - 5x</td><td>52,964</td><td>31.88%</td><td><div class="mini-bar"><i style="width:35%"></i></div></td></tr><tr><td>>5x - 20x</td><td>4,849</td><td>2.92%</td><td><div class="mini-bar"><i style="width:3%"></i></div></td></tr><tr><td>>20x - 50x</td><td>665</td><td>0.40%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>50x - 100x</td><td>69</td><td>0.04%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>100x - 300x</td><td>18</td><td>0.01%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>300x - 500x</td><td>0</td><td>0.00%</td><td><div class="mini-bar"><i style="width:0%"></i></div></td></tr><tr><td>>500x - 1000x</td><td>1</td><td>0.00%</td><td><div class="mini-bar"><i style="width:2%"></i></div></td></tr><tr><td>>1000x</td><td>0</td><td>0.00%</td><td><div class="mini-bar"><i style="width:0%"></i></div></td></tr></tbody></table>
@@ -2518,36 +2476,6 @@
         // (orders_flat). A player who plays in two hours counts in both, so these
         // 24 values are NOT a partition of the day's player total - never sum them.
         const hourPlayers = [79, 58, 54, 42, 24, 24, 43, 41, 44, 67, 175, 179, 184, 240, 191, 173, 167, 218, 238, 266, 368, 374, 284, 232];
-        // 2026-10-29 (boss request via Melly): "add traffic log 【can hide if no
-        // traffic support】". Built from the SAME injected hourly arrays as the
-        // chart, so the two can never disagree. No hourly players = no block.
-        const traffic = document.getElementById('trafficLog');
-        if (traffic) {
-          const fmtPeso = v => '₱' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-          const fmtInt = v => Number(v).toLocaleString('en-US');
-          const grid = document.getElementById('trafficLogGrid');
-          const trafficSum = document.getElementById('trafficLogSum');
-          const nums = hourPlayers.map(v => Number(v) || 0);
-          const totalTraffic = nums.reduce((a, b) => a + b, 0);
-          if (!grid || !totalTraffic) {
-            traffic.hidden = true;
-          } else {
-            const peak = Math.max(...nums);
-            const peakIdx = nums.indexOf(peak);
-            grid.innerHTML = hours.map((h, i) => {
-              const pl = nums[i], rd = Number(hourRounds[i]) || 0, bet = Number(betPhp[i]) || 0;
-              const heat = peak ? Math.round(pl / peak * 100) : 0;
-              return `<div class="go-traffic-cell" style="--heat:${heat}" data-en="${h} · ${fmtInt(pl)} players · ${fmtInt(rd)} rounds · ${fmtPeso(bet)}" data-cn="${h} · ${fmtInt(pl)} 位玩家 · ${fmtInt(rd)} 回合 · ${fmtPeso(bet)}"><b>${pl}</b><i>${h.slice(0, 2)}</i></div>`;
-            }).join('');
-            if (trafficSum) trafficSum.textContent = `Peak ${fmtInt(peak)} players at ${hours[peakIdx]} · ${fmtInt(totalTraffic)} player-hours`;
-            traffic.hidden = false;
-            grid.querySelectorAll('.go-traffic-cell').forEach(cell => {
-              bindTooltip(cell);
-              cell.setAttribute('data-tooltip-en', cell.dataset.en);
-              cell.setAttribute('data-tooltip-cn', cell.dataset.cn);
-            });
-          }
-        }
         const pesoFmt = v => '₱' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const intFmt = v => Number(v).toLocaleString('en-US');
         const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
@@ -3465,7 +3393,7 @@
         'Game Performance': '游戏表现', 'Banana Craze operating behavior and outcome distribution': 'Banana Craze运营行为与结果分布',
         'Rounds': '回合数', 'Total': '总计', 'Avg Round / Game': '平均每局回合投注', 'Hourly RTP (00:00–23:59)': '每小时RTP（00:00–23:59）', 'Hourly RTP': '每小时RTP',
         'Bars: bet amount + payout (₱000s) · Lines: RTP + players + 97.5% threshold': '柱状图：投注金额 + 派彩（₱千元）· 折线：RTP + 玩家数 + 97.5%阈值',
-        'Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. These bars are the settled ledger for Banana Craze + Lucky Color, totalling ₱1,872,547.50 against the ₱2,173,644.50 day total above; Ginto Match and Blazing 7's settle outside these hours. The green line is hourly RTP against the 97.5% target. The pink line counts the distinct players who settled at least one round in that hour; it is a headcount, not a partition of the day, so a player who plays in two hours counts in both and the 24 values must not be added up.': '报告日每小时合计 — 每对柱形表示该小时的投注金额与派彩总额，覆盖所有平台（BingoPlus、GameZone、ArenaPlus）及全部已结算回合；将鼠标悬停在柱形上可查看精确金额。绿线为每小时 RTP，对照 97.5% 目标。粉线统计该小时内有已结算回合的去重玩家人数；此为人数统计，并非当日玩家的划分，因此在两个小时内游玩过的玩家会被重复计入，24 个数值不可相加。',
+        'Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. These bars are the settled ledger for Banana Craze + Lucky Color, totalling ₱1,872,547.50 against the ₱2,173,644.50 day total above; Ginto Match and Blazing 7’s settle outside these hours. The green line is hourly RTP against the 97.5% target. The pink line counts the distinct players who settled at least one round in that hour; it is a headcount, not a partition of the day, so a player who plays in two hours counts in both and the 24 values must not be added up.': '报告日每小时合计 — 每对柱形表示该小时的投注金额与派彩总额，覆盖所有平台（BingoPlus、GameZone、ArenaPlus）及全部已结算回合；将鼠标悬停在柱形上可查看精确金额。绿线为每小时 RTP，对照 97.5% 目标。粉线统计该小时内有已结算回合的去重玩家人数；此为人数统计，并非当日玩家的划分，因此在两个小时内游玩过的玩家会被重复计入，24 个数值不可相加。',
         'Bet amount': '投注金额', 'RTP trendline': 'RTP趋势线', 'RTP threshold 97.5%': 'RTP阈值 97.5%',
         'Dynamic RTP': '动态RTP', 'Mode contribution': '模式贡献', 'rounds': '回合数',
         'Winning Rounds vs Losing Rounds': '中奖回合与未中奖回合', 'Loss vs win rounds': '未中奖与中奖回合', 'Total rounds': '总回合数',
