@@ -2271,9 +2271,6 @@
           <div class="panel pad chart-box tall hourly-rtp"><div class="side-title"><h3>Hourly RTP (00:00–23:59)</h3><span>Bars: bet amount + payout (₱000s) · Lines: RTP + players + 97.5% threshold</span></div>
           <svg id="hourlyRtpChart" class="chart tall-svg" viewBox="0 0 760 315" preserveAspectRatio="none" role="img" aria-label="Hourly RTP combo chart"></svg>
           <div class="legend"><span><i style="background:var(--blue)"></i>Bet amount</span><span><i style="background:var(--violet)"></i>Payout</span><span><i class="line" style="background:var(--green)"></i>RTP trendline</span><span><i class="line" style="background:#ff79c6"></i>Players</span><span><i class="line" style="background:#f2a65a"></i>RTP threshold 97.5%</span></div>
-          <!-- TRAFFIC LOG (2026-10-29 Melly): moved here from the Game Overview band.
-               Whole-day, all-platform, per-hour data: same scope as this chart and the
-               same array as its pink Players line. Hidden when there is no hourly data. -->
           <div class="chart-note">Hourly totals for the reporting day — each bar pair is the total bet and payout for that hour, summed across every platform (BingoPlus, GameZone, ArenaPlus) and all settled rounds; hover a bar for the exact peso amount. These bars are the settled ledger for Banana Craze + Lucky Color, totalling ₱1,872,547.50 against the ₱2,173,644.50 day total above; Ginto Match and Blazing 7’s settle outside these hours. The green line is hourly RTP against the 97.5% target. The pink line counts the distinct players who settled at least one round in that hour; it is a headcount, not a partition of the day, so a player who plays in two hours counts in both and the 24 values must not be added up.</div>
         </div>
           <div class="panel pad chart-box multiplier-distribution"><div class="side-title"><h3>Multiplier Distribution</h3><span>Winning outcome bands</span></div>
@@ -3374,7 +3371,6 @@
         ' were visible as new games': '均作为新游戏可见',
         'All four games are discoverable from the BP1 Loteria new-games list, giving the full portfolio stronger visibility': '四款游戏均可从 BP1 乐透专区的新游戏列表中找到，整体产品组合的曝光度更高',
         'REAL HITRATE counts settled rounds whose payout is above the bet amount (payout > bet), not every round that paid something. MTD RTP is month-to-date through the report day, reconciled to the month ledger.': '真实命中率按已结算回合计：派彩高于投注金额（payout > bet）的回合，而非所有有派彩的回合。月累计RTP为报告日止的当月累计值，并与月度账本核对。',
-        'TRAFFIC LOG': '流量日志', 'Players per hour': '每小时玩家数', 'Peak': '峰值',
         'Platform Performance': '平台表现', 'Platform-level contribution, status, and operational notes': '平台贡献、状态与运营备注',
         'Platform': '平台', 'Loteria': '乐透', 'Slot': '老虎机', 'Metric': '指标', 'Value': '数值', 'Active Players': '活跃玩家',
         'D1 Retention': 'D1留存率', 'Winning Tickets': '中奖票数', 'Avg Bet / Player': '每位玩家平均投注', 'GGR Share': 'GGR占比',
