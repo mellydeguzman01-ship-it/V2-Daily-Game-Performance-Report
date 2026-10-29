@@ -2343,7 +2343,7 @@
         <div class="panel pad pg-4 pp-avg">
           <div class="side-title"><h3>Average Bet &amp; Rounds per Player</h3><span>Loteria vs Slot</span></div>
           <!--PP:AVG:START-->
-          <table><colgroup><col><col><col><col></colgroup><thead><tr><th>Metric</th><th>Loteria</th><th>Slot</th><th>Bingo</th></tr></thead><tbody><tr><th scope="row">Average Bet / Player</th><td>₱562.03</td><td>₱308.61</td><td>₱1,839.17</td></tr><tr><th scope="row">Average Rounds / Player</th><td>54.3</td><td>72.0</td><td>47.6</td></tr><tr><th scope="row">Median Rounds / Player</th><td>29.0</td><td>42.0</td><td>12.0</td></tr></tbody></table><div class="chart-note">Loteria = BP1 · Slot = GP + AP · Bingo = Lucky Color, carried inside each platform (BP1 5,945 · GP 5,282 · AP 1,301 rounds) rather than as a fourth line. Average = total rounds ÷ distinct players: 111,676 ÷ 2,056 and 54,452 ÷ 756. Bingo: 12,528 ÷ 263. Median = the middle player’s rounds for the day.</div>
+          <table><colgroup><col><col><col><col></colgroup><thead><tr><th>Metric</th><th>Loteria</th><th>Slot</th><th>Bingo</th></tr></thead><tbody><tr><th scope="row">Average Bet / Player</th><td>₱562.03</td><td>₱308.61</td><td>₱1,839.17</td></tr><tr><th scope="row">Average Rounds / Player</th><td>54.3</td><td>72.0</td><td>47.6</td></tr><tr><th scope="row">Median Rounds / Player</th><td>29.0</td><td>42.0</td><td>12.0</td></tr></tbody></table>
           <!--PP:AVG:END-->
         </div>
         
@@ -2478,6 +2478,9 @@
         // (orders_flat). A player who plays in two hours counts in both, so these
         // 24 values are NOT a partition of the day's player total - never sum them.
         const hourPlayers = [79, 58, 54, 42, 24, 24, 43, 41, 44, 67, 175, 179, 184, 240, 191, 173, 167, 218, 238, 266, 368, 374, 284, 232];
+        // 2026-10-29 (user): the Hourly RTP keynote is written from these same
+        // arrays, so the sentence can never disagree with the chart.
+        window.__hourlyRtp = { hours, rtp, players: hourPlayers, betPhp };
         const pesoFmt = v => '₱' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const intFmt = v => Number(v).toLocaleString('en-US');
         const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
@@ -3269,6 +3272,61 @@
         else panel.appendChild(note);
       });
 
+      // ---- Hourly RTP keynote (2026-10-29, user) --------------------------
+      // "ANG ILALAGAY MO DYAN, KUNG ANONG ORAS MAY PINAKAMATAAS NA RTP AT
+      //  PLAYER. AT KAPAG MATAAS ANG DAMI NG PLAYERS, ILAGAY MO DITO BAKIT
+      //  MATAAS." Peak RTP hour + peak players hour, then the evening share and
+      // the reason the lobby was busy, read off the page's own changelog rows so
+      // the "why" is the day's own recorded change and not a guess.
+      (() => {
+        const h = window.__hourlyRtp;
+        const panel = document.querySelector('.hourly-rtp');
+        if (!h || !panel || panel.querySelector('.keynote')) return;
+        const nums = (h.players || []).map(v => Number(v) || 0);
+        const rtps = (h.rtp || []).map(v => Number(v) || 0);
+        if (!nums.length || !rtps.length) return;
+        const hrs = h.hours || [];
+        const pIdx = nums.indexOf(Math.max(...nums));
+        const rIdx = rtps.indexOf(Math.max(...rtps));
+        const tot = nums.reduce((a, b) => a + b, 0) || 1;
+        const eve = nums.slice(18).reduce((a, b) => a + b, 0);
+        const eveShare = Math.round(eve / tot * 100);
+        const nf = v => Number(v).toLocaleString('en-US');
+        const why = [];
+        [...document.querySelectorAll('.changelog-table tbody tr')].slice(0, 4).forEach(tr => {
+          const t = (tr.innerText || '').replace(/\s+/g, ' ');
+          if (/new games/i.test(t) && !why.length) why.push('all four titles sat in the BP1 Loteria new-games entry');
+          else if (/now live/i.test(t) && why.length < 2) why.push('three of them had just gone live on BP1');
+          else if (/minimum bet/i.test(t) && why.length < 2) why.push('the lower minimum bet kept entry cheap');
+        });
+        const reasonEn = why.length
+          ? 'Traffic is not luck: ' + why.join(' and ') + ', so the games stay visible where players browse.'
+          : 'Traffic tracks the evening window, when the lobby is busiest.';
+        const reasonCn = why.length
+          ? '流量并非偶然：' + why.join('；').replace(/all four titles sat in the BP1 Loteria new-games entry/, '四款游戏均出现在 BP1 乐透的新游戏入口').replace(/three of them had just gone live on BP1/, '其中三款刚在 BP1 上线').replace(/the lower minimum bet kept entry cheap/, '最低投注额下调') + '，因此游戏持续出现在玩家浏览的位置。'
+          : '流量集中在傍晚时段，此时大厅最为繁忙。';
+        const en = 'Highest RTP was ' + rtps[rIdx].toFixed(2) + '% at ' + hrs[rIdx] +
+          '; the most players were ' + nf(nums[pIdx]) + ' at ' + hrs[pIdx] + '. ' +
+          'The 18:00–23:00 window carried ' + eveShare + '% of the day’s hourly players. ' + reasonEn;
+        const cn = '最高 RTP 为 ' + rtps[rIdx].toFixed(2) + '%（' + hrs[rIdx] + '）；玩家最多 ' +
+          nf(nums[pIdx]) + ' 人（' + hrs[pIdx] + '）。18:00–23:00 占全天各小时玩家数的 ' +
+          eveShare + '%。' + reasonCn;
+        const note = document.createElement('div');
+        note.className = 'keynote';
+        note.innerHTML = '<b>Key Insight</b><span></span>';
+        note.querySelector('span').textContent = en;
+        note.dataset.en = en;
+        note.dataset.cn = cn;
+        panel.appendChild(note);
+      })();
+      document.addEventListener('dashboard-language-change', event => {
+        const lang = event.detail === 'cn' ? 'cn' : 'en';
+        document.querySelectorAll('.hourly-rtp .keynote').forEach(n => {
+          const span = n.querySelector('span');
+          if (span && n.dataset[lang]) span.textContent = n.dataset[lang];
+        });
+      });
+
       // --- CN wording for the Player Performance row-2 panels. Rewritten every build:
       // these sentences carry the day's own figures, so a literal left here would
       // hardcode the previous day's numbers into CN mode.
@@ -3287,7 +3345,6 @@
       });/*ANALYSISCN:END*/
       Object.assign(window.__dynCN, {
         /*CN:PPNOTES:START*/
-        "Loteria = BP1 · Slot = GP + AP · Bingo = Lucky Color, carried inside each platform (BP1 5,945 · GP 5,282 · AP 1,301 rounds) rather than as a fourth line. Average = total rounds ÷ distinct players: 111,676 ÷ 2,056 and 54,452 ÷ 756. Bingo: 12,528 ÷ 263. Median = the middle player’s rounds for the day.": "乐透 = BP1 · 老虎机 = GP + AP · 宾果 = Lucky Color，包含在各平台内（BP1 5,945 · GP 5,282 · AP 1,301 局），并非第四条线。平均值 = 总回合数 ÷ 去重玩家人数：111,676 ÷ 2,056，54,452 ÷ 756。 宾果：12,528 ÷ 263。 中位数 = 当日处于中间位置玩家的回合数。",
         "The average rounds per player sits above the median on both Loteria and Slot, so a small group of high-frequency accounts pulls the average up.": "乐透与老虎机的人均回合数均高于中位数，说明少数高频玩家拉高了平均值。",
         "Loteria carries the larger player group in the 1–10 and 11–20 and 21–50 and 51–100 and >100 bands; the largest band overall is 21–50 rounds with 615 Loteria and 217 Slot player entries.": "乐透在 1–10、11–20、21–50、51–100、>100 回合区间的玩家数高于老虎机；最大的区间为 21–50 回合，乐透 615 条、老虎机 217 条玩家记录。"
         /*CN:PPNOTES:END*/
