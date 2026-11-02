@@ -2224,9 +2224,9 @@
           <div class="side-title"><h3>Round Type Distribution</h3><span>Per settled round</span></div>
           <!--GP:FEATURE:START-->
           <div class="dynamic-list">
-            <div class="dynamic-item"><div class="dynamic-head"><b>Normal Round</b><span>466,243 rounds · 98.17%</span></div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--muted)"></div></div><div class="dynamic-foot"><span>98.17% of rounds</span><b>7,256 player entries</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>Bonus Round</b><span>6,941 rounds · 1.46%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span>1.46% of rounds</span><b>2,485 player entries</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>Buy Feature</b><span>1,737 rounds · 0.37%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--green)"></div></div><div class="dynamic-foot"><span>0.37% of rounds</span><b>1,067 player entries</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Normal Round</b><span>635,841 rounds · 98.65%</span></div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--muted)"></div></div><div class="dynamic-foot"><span>98.65% of rounds</span><b>7,256 player entries</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Bonus Round</b><span>6,941 rounds · 1.08%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span>1.08% of rounds</span><b>2,485 player entries</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Buy Feature</b><span>1,737 rounds · 0.27%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--green)"></div></div><div class="dynamic-foot"><span>0.27% of rounds</span><b>1,067 player entries</b></div></div>
           </div>
           <!--GP:FEATURE:END-->
         </div>
@@ -2630,15 +2630,15 @@
         const W = 1020, H = 340, pad = { l: 48, r: 66, t: 24, b: 84 }, base = H - pad.b;
         const start = Date.UTC(2026, 9, 3);
                 const dates = Array.from({ length: 30 }, (_, i) => new Date(start + i * 86400000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }));
-                const bet = [667.899, 601.096, 601.93, 448.001, 521.31, 390.248, 540.501, 692.307, 496.548, 378.877, 565.391, 603.558, 332.077, 396.544, 319.426, 373.732, 327.286, 481.81, 509.488, 310.561, 567.389, 490.06, 688.308, 957.321, 1283.605, 2173.644, 3371.242, 5191.703, 4874.041, 7157.395];
-                const payout = [707.94, 620.027, 592.2, 421.081, 510.485, 385.5, 578.848, 694.63, 481.039, 373.775, 549.521, 545.026, 315.665, 378.621, 305.957, 372.764, 319.874, 401.394, 511.977, 302.948, 594.727, 475.195, 694.515, 925.187, 1257.657, 2066.625, 3271.062, 4898.161, 4710.898, 7156.803];
-                const rtp = [106.0, 103.15, 98.38, 93.99, 97.92, 98.78, 107.09, 100.34, 96.88, 98.65, 97.19, 90.3, 95.06, 95.48, 95.78, 99.74, 97.74, 83.31, 100.49, 97.55, 104.82, 96.97, 100.9, 96.64, 97.98, 95.08, 97.03, 94.35, 96.65, 99.99];
+                const bet = [667.899, 601.096, 601.93, 448.001, 521.31, 390.248, 540.501, 692.307, 496.548, 378.877, 565.391, 603.558, 332.077, 396.544, 319.426, 373.732, 327.286, 481.81, 509.488, 310.561, 567.389, 490.06, 688.308, 957.321, 1260.623, 1872.547, 3371.242, 5191.703, 4874.041, 7157.395];
+                const payout = [707.94, 620.027, 592.2, 421.081, 510.485, 385.5, 578.848, 694.63, 481.039, 373.775, 549.521, 545.026, 315.665, 378.621, 305.957, 372.764, 319.874, 401.394, 511.977, 302.948, 594.727, 475.195, 694.515, 925.187, 1234.547, 1767.45, 3271.062, 4898.161, 4710.898, 7156.803];
+                const rtp = [106.0, 103.15, 98.38, 93.99, 97.92, 98.78, 107.09, 100.34, 96.88, 98.65, 97.19, 90.3, 95.06, 95.48, 95.78, 99.74, 97.74, 83.31, 100.49, 97.55, 104.82, 96.97, 100.9, 96.64, 97.93, 94.39, 97.03, 94.35, 96.65, 99.99];
                 const d1Retention = [6.94, 8.55, 5.95, 6.75, 6.52, 7.45, 7.62, 8.09, 7.54, 7.34, 9.54, 9.97, 10.33, 9.78, 8.64, 8.24, 7.73, 8.95, 11.14, 11.10, 11.97, 11.32, 12.52, 7.36, 10.01, 8.48, 8.69, 8.02, 7.76, 9.02];
         // Exact daily peso totals for the 30-day window (builder-injected).
         // The bars stay in ₱ thousands; the tooltip states the real amount so a
         // bar cannot be misread as ₱40.935 instead of ₱40,935.00.
-        const betPhp30 = [667898.50, 601096.00, 601930.00, 448001.00, 521310.00, 390248.00, 540501.00, 692307.00, 496548.50, 378876.50, 565391.00, 603558.50, 332077.50, 396544.00, 319426.50, 373732.00, 327286.00, 481810.00, 509487.50, 310561.00, 567388.50, 490059.50, 688307.50, 957320.50, 1283605.00, 2173644.50, 3371242.50, 5191703.50, 4874040.50, 7157395.00];
-        const payoutPhp30 = [707939.63, 620027.00, 592200.00, 421081.12, 510484.88, 385499.87, 578847.63, 694630.38, 481039.37, 373775.38, 549520.75, 545025.70, 315664.85, 378621.45, 305956.50, 372763.72, 319873.75, 401394.43, 511977.10, 302947.65, 594727.43, 475194.55, 694514.70, 925186.70, 1257656.59, 2066625.45, 3271061.65, 4898160.75, 4710898.07, 7156803.42];
+        const betPhp30 = [667898.50, 601096.00, 601930.00, 448001.00, 521310.00, 390248.00, 540501.00, 692307.00, 496548.50, 378876.50, 565391.00, 603558.50, 332077.50, 396544.00, 319426.50, 373732.00, 327286.00, 481810.00, 509487.50, 310561.00, 567388.50, 490059.50, 688307.50, 957320.50, 1260623.00, 1872547.50, 3371242.50, 5191703.50, 4874040.50, 7157395.00];
+        const payoutPhp30 = [707939.63, 620027.00, 592200.00, 421081.12, 510484.88, 385499.87, 578847.63, 694630.38, 481039.37, 373775.38, 549520.75, 545025.70, 315664.85, 378621.45, 305956.50, 372763.72, 319873.75, 401394.43, 511977.10, 302947.65, 594727.43, 475194.55, 694514.70, 925186.70, 1234546.79, 1767450.15, 3271061.65, 4898160.75, 4710898.07, 7156803.42];
         const pesoFmt = v => '₱' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
         const x = i => pad.l + plotW * i / (dates.length - 1);
