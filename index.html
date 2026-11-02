@@ -1000,7 +1000,7 @@
     .go-ico { display: block; width: 11px; height: 11px; color: var(--acc); }
     .go-ico svg { display: block; width: 11px; height: 11px; }
     .go-lb { font-size: 7.5px; font-weight: 800; letter-spacing: 0; color: var(--muted); }
-    .go-vl { font-size: 10px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .go-vl { font-size: 8.5px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
     .go-vl.positive { color: #0e7d45; }
     .go-vl.negative { color: #b3122b; }
     html.night .go-vl.positive { color: var(--green); }
@@ -1244,7 +1244,7 @@
        RTP, rounds, multiplier - instead of a three-line stacked block, with the
        column captions printed once above the list. Site / stake range / IP move
        into the row's title tooltip so no field is lost. */
-    .pp-top5 .top5-list { display: grid; align-content: start; min-width: 0; }
+    .pp-top5 .top5-list { display: grid; align-content: stretch; grid-auto-rows: minmax(0, 1fr); min-width: 0; }
     /* 2026-10-22 (user): "ang laki ng space, magdagdag ka pa ng metrics ...
        bet amount, payout, ggr, rtp, rounds, multi, new or old player." Eight
        columns, one row per player; the wide name column that used to eat the
@@ -2218,19 +2218,17 @@
           <!--GP:MODES:START-->
           <div class="mode-row"><div class="mode-label">Operation Mode</div><div class="mode-track" role="img" aria-label="Operation Mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg" style="width:81.7%;background:var(--blue)"></div><div class="seg" style="width:18.3%;background:var(--pink)"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 81.7%</span><span><i style="background:var(--pink)"></i>Autoplay 18.3%</span></div></div>
           <div class="mode-row"><div class="mode-label">Speed Mode</div><div class="mode-track" role="img" aria-label="Speed Mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg" style="width:68.8%;background:var(--yellow)"></div><div class="seg" style="width:31.2%;background:var(--orange)"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 68.8%</span><span><i style="background:var(--orange)"></i>Turbo 31.2%</span></div></div>
-          <div class="chart-note" style="margin-top:12px">Share of settled rounds by mode. Operation Mode is how a round was started; Speed Mode is how fast it played. The two settings are independent, so each bar is its own 100% split — they are not halves of one total and must not be added together.</div>
           <!--GP:MODES:END-->
         </div>
           <div class="panel pad chart-box gp-feature">
           <div class="side-title"><h3>Round Type Distribution</h3><span>Per settled round</span></div>
           <!--GP:FEATURE:START-->
           <div class="dynamic-list">
-            <div class="dynamic-item"><div class="dynamic-head"><b>Normal Round</b><span>466,243 rounds · 72.34%</span></div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--muted)"></div></div><div class="dynamic-foot"><span>72.34% of rounds</span><b>7,256 player entries</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>Bonus Round</b><span>6,941 rounds · 1.08%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span>1.08% of rounds</span><b>2,485 player entries</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>Buy Feature</b><span>1,737 rounds · 0.27%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--green)"></div></div><div class="dynamic-foot"><span>0.27% of rounds</span><b>1,067 player entries</b></div></div>
-            <div class="dynamic-item"><div class="dynamic-head"><b>No round-type split</b><span>169,598 rounds · 26.31%</span></div><div class="bar-track"><div class="bar-fill" style="width:36%;background:var(--line)"></div></div><div class="dynamic-foot"><span>26.31% of rounds</span><b>no betType in source</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Normal Round</b><span>466,243 rounds · 98.17%</span></div><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--muted)"></div></div><div class="dynamic-foot"><span>98.17% of rounds</span><b>7,256 player entries</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Bonus Round</b><span>6,941 rounds · 1.46%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--yellow)"></div></div><div class="dynamic-foot"><span>1.46% of rounds</span><b>2,485 player entries</b></div></div>
+            <div class="dynamic-item"><div class="dynamic-head"><b>Buy Feature</b><span>1,737 rounds · 0.37%</span></div><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--green)"></div></div><div class="dynamic-foot"><span>0.37% of rounds</span><b>1,067 player entries</b></div></div>
           </div>
-          <div class="chart-note" style="margin-top:10px">Round-type split comes from the Local Z order capture (474,921 settled rows) — the only source that carries betType. The three rows above plus the unsplit remainder add to the day's 644,519 settled rounds. The remaining 169,598 carry no round-type split in the source: Ginto Match 147,217 · Blazing 7's 10,613 · Lucky Color 10,588 = 168,418, less the -1,180 rows the capture holds above the settled ledger. All four rows add to 644,519.</div><!--GP:FEATURE:END-->
+          <!--GP:FEATURE:END-->
         </div>
           <div class="panel pad chart-box gp-passline">
           <div class="side-title"><h3>100 Rounds a Day</h3><span>Pass line · ≥100 rounds</span></div>
