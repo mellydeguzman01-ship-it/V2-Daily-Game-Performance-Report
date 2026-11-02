@@ -694,7 +694,7 @@
     .gp-row-1 > .gp-passline { grid-column: 3; grid-row: 1 / span 2; }
     .gp-row-1 > .gp-side { grid-column: 4; grid-row: 1 / span 2;
       display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-    .gp-row-1 > .gp-side > .gp-top5 { flex: 1 1 auto; }
+    .gp-row-1 > .gp-side > .gp-top5 { flex: 0 0 auto; }
     .gp-row-1 > .game-summary { grid-column: 4; grid-row: 1 / span 2; }
     .gp-row-1 > .gp-overview { display: flex; flex-direction: column; gap: 8px; }
     /* 2026-10-21: Round Type Distribution explanatory note removed on request - the
@@ -759,7 +759,7 @@
     .gp-overview .go-band.go-quad .go-ico { grid-column: 1; grid-row: 1; }
     .gp-overview .go-band.go-quad .go-lb { grid-column: 2; grid-row: 1; font-size: 7.5px; }
     .gp-overview .go-band.go-quad .go-vl { grid-column: 1 / -1; grid-row: 2;
-      justify-self: end; font-size: 13.5px; line-height: 1.05; }
+      justify-self: end; font-size: 11px; line-height: 1.05; }
     .gp-overview .go-band.go-quad .go-ico,
     .gp-overview .go-band.go-quad .go-ico svg { width: 9px; height: 9px; }
     .gp-overview .go-band.go-quad .go-foot { font-size: 6.5px; line-height: 1.3; margin-top: 2px; }
@@ -854,7 +854,7 @@
     .gp-top5 .side-title { margin-bottom: 2px; }
     .gp-top5 .side-title h3 { font-size: 12px; }
     .gp-top5 .side-title span { font-size: 8px; }
-    .gp-top5-list { flex: 1 1 auto; display: grid; grid-auto-rows: minmax(0, 1fr); margin-top: 2px; }
+    .gp-top5-list { flex: 0 0 auto; display: grid; grid-auto-rows: auto; align-content: start; margin-top: 2px; }
     .gp-top5-item { display: flex; flex-direction: column; justify-content: center; gap: 2px;
                     padding: 6px 0; border-top: 1px solid var(--line); min-width: 0; }
     .gp-top5-item:first-child { border-top: 0; padding-top: 2px; }
