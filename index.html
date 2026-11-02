@@ -1081,7 +1081,12 @@
     .chart.denom-svg { width: 100% !important; height: auto !important;
                        flex: 0 0 auto !important; min-height: 0 !important; }
     .chart.tall-svg { height: 285px; }
-    .monthly-row .chart.tall-svg { height: 340px; }
+    /* 2026-11-02 (user, red box): the chart card stretched to the table card's
+       height and pooled the leftover as dead space at its foot (95px at 1900px,
+       228px at 1264px). The chart is what fills it; its viewBox is recomputed to
+       the box it is given, so nothing is stretched. */
+    .monthly-row > .panel.chart-box { display: flex; flex-direction: column; min-height: 0; }
+    .monthly-row .chart.tall-svg { flex: 1 1 auto; height: auto; min-height: 300px; }
     .chart text[fill="#f3f7fb"] { fill: var(--text); }
     .legend { display: flex; flex-wrap: wrap; gap: 10px 15px; color: var(--muted); font-size: 11px; margin-top: 8px; }
     .legend span { display: inline-flex; gap: 6px; align-items: center; }
@@ -2627,7 +2632,7 @@
 
       const thirtyDay = document.getElementById('thirtyDayChart');
       if (thirtyDay) {
-        const W = 1020, H = 340, pad = { l: 48, r: 66, t: 24, b: 84 }, base = H - pad.b;
+        const W = 1020, pad = { l: 48, r: 66, t: 26, b: 58 };
         const start = Date.UTC(2026, 9, 3);
                 const dates = Array.from({ length: 30 }, (_, i) => new Date(start + i * 86400000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }));
                 const bet = [667.899, 601.096, 601.93, 448.001, 521.31, 390.248, 540.501, 692.307, 496.548, 378.877, 565.391, 603.558, 332.077, 396.544, 319.426, 373.732, 327.286, 481.81, 509.488, 310.561, 567.389, 490.06, 688.308, 957.321, 1283.605, 2173.644, 3371.242, 5191.703, 4874.041, 7157.395];
@@ -2640,6 +2645,16 @@
         const betPhp30 = [667898.50, 601096.00, 601930.00, 448001.00, 521310.00, 390248.00, 540501.00, 692307.00, 496548.50, 378876.50, 565391.00, 603558.50, 332077.50, 396544.00, 319426.50, 373732.00, 327286.00, 481810.00, 509487.50, 310561.00, 567388.50, 490059.50, 688307.50, 957320.50, 1283605.00, 2173644.50, 3371242.50, 5191703.50, 4874040.50, 7157395.00];
         const payoutPhp30 = [707939.63, 620027.00, 592200.00, 421081.12, 510484.88, 385499.87, 578847.63, 694630.38, 481039.37, 373775.38, 549520.75, 545025.70, 315664.85, 378621.45, 305956.50, 372763.72, 319873.75, 401394.43, 511977.10, 302947.65, 594727.43, 475194.55, 694514.70, 925186.70, 1257656.59, 2066625.45, 3271061.65, 4898160.75, 4710898.07, 7156803.42];
         const pesoFmt = v => '₱' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        // 2026-11-02 (user, red box): the panel is a flex column now and the chart
+        // takes the height the table card leaves it, so it redraws to whatever box the
+        // layout hands over. H comes from the measured size, so one user unit stays one
+        // pixel and preserveAspectRatio="none" never stretches the ink.
+        const drawThirtyDay = () => {
+        const t30box = thirtyDay.getBoundingClientRect();
+        const t30w = t30box.width || 1020;
+        const t30h = Math.max(300, t30box.height || 340);
+        const H = Math.round(W * t30h / t30w);
+        const base = H - pad.b;
         const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b;
         const x = i => pad.l + plotW * i / (dates.length - 1);
         // The amount axis used to be pinned at 800 while the data kept growing:
@@ -2648,10 +2663,26 @@
         // -- the two biggest days of the month rendered as if they were 800k.
         // The axis now lifts to the data on the same grid the approved 0-800 set
         // uses, and stays byte-identical to it on a day that does not exceed it.
+        // 2026-11-02 (user, red box around the left axis): a 200-step axis over
+        // 7,200 drew 37 tick labels into 256px of plot, one unreadable column, and a
+        // bare "7200" never said it meant 7.2 million pesos. The step now targets five
+        // gridlines and every tick prints the real peso amount.
+        const niceStep = max => {
+          const raw = max / 5;
+          const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+          for (const m of [1, 2, 2.5, 5, 10]) if (m * pow >= raw) return m * pow;
+          return 10 * pow;
+        };
+        const axisTickLabel = value => {
+          if (!value) return '\u20b10';
+          const php = value * 1000;
+          if (php >= 1e6) { const m = php / 1e6; return '\u20b1' + (Number.isInteger(m) ? m : m.toFixed(1)) + 'M'; }
+          return '\u20b1' + Math.round(php / 1000) + 'k';
+        };
         const amountMax = Math.max(...bet, ...payout);
         const axisOver = amountMax > 800;
-        const axisTop = axisOver ? Math.ceil(amountMax / 200) * 200 : 800;
-        const axisStep = axisOver ? 200 : 100;
+        const axisStep = axisOver ? niceStep(amountMax) : 100;
+        const axisTop = axisOver ? Math.ceil(amountMax / axisStep) * axisStep : 800;
         const yAmount = value => base - value / axisTop * plotH;
         const rtpMin = 50, rtpMax = 110;
         const yRtp = value => base - (value - rtpMin) / (rtpMax - rtpMin) * plotH;
@@ -2662,7 +2693,7 @@
         for (let value = 0; value <= axisTop + 1e-9; value += axisStep) {
           const y = yAmount(value);
           thirtyDay.appendChild(make('line', { x1: pad.l, y1: y, x2: W - pad.r, y2: y, stroke: value ? '#1d344c' : '#2c4660' }));
-          drawLabel(thirtyDay, 7, y + 4, String(value), { 'font-size': 9 });
+          drawLabel(thirtyDay, 7, y + 4, axisTickLabel(value), { 'font-size': 10 });
         }
         dates.forEach((date, i) => drawLabel(thirtyDay, x(i), base + 24, date, { 'text-anchor': 'end', transform: `rotate(-65 ${x(i)} ${base + 24})`, 'font-size': 8 }));
         [50, 60, 70, 80, 90, 100, 110].forEach(value => drawLabel(thirtyDay, W - 26, yRtp(value) + 4, `${value}%`, { fill: '#55d68b', 'font-size': 9 }));
@@ -2722,6 +2753,14 @@
         };
         peak30(d1Retention, yRetention, '#f2a65a', 'D1 Retention', 'D1\u7559\u5b58\u7387');
         peak30(rtp, yRtp, '#55d68b', 'RTP', 'RTP');
+        };
+        drawThirtyDay();
+        // Same debounce as the ring labels: a resize re-flows the panel, so the chart
+        // refits its own box instead of keeping a stale viewBox.
+        let t30RT = null;
+        window.addEventListener('resize', () => { clearTimeout(t30RT); t30RT = setTimeout(drawThirtyDay, 150); });
+        window.addEventListener('load', drawThirtyDay);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawThirtyDay);
       }
 
       const bindStaticRects = (selector, tips) => {
@@ -3257,8 +3296,6 @@
         /*PP:ENGAGE_INSIGHT:START*/
         ['.pp-engage', 'Loteria carries the larger player group in the 1–10 and 11–20 and 21–50 and 51–100 and >100 bands; the largest band overall is 51–100 rounds with 1,198 Loteria and 752 Slot player entries.'],
         /*PP:ENGAGE_INSIGHT:END*/
-        ['.monthly-row > .panel:first-child', 'The 30-day view compares daily bet and payout bars with RTP and D1 retention trendlines.'],
-        ['.monthly-row > .panel:nth-child(2)', 'MTD platform totals are month-to-date from the per-site settled-order ledger for November 1. Each site row and the month total are each rounded to the centavo, with the total rounded once from the full-precision ledger, so the rows can miss the total by ₱0.01.'],
       ];
       notes.forEach(([selector, text]) => {
         const panel = document.querySelector(selector);
