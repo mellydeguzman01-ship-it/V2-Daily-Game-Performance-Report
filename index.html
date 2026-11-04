@@ -2170,6 +2170,50 @@
     }
 
 
+    /* ==== 2026-11-05 (Melly, H5/mobile): "yung compliance at alarm, isang row mo
+       lang yan" - Compliance & PAGCOR Update and Alerts & Incident Report sit on
+       ONE row on phones instead of stacking (they were 2x 208px tall stacked).
+       Two equal tracks; the panels keep their own colours/borders, and the type
+       inside is scaled down a notch so nothing wraps into a tower in a 180px
+       card. Desktop (>780px) is untouched. ==== */
+    @media (max-width: 780px) {
+      .platform-layout > .status-stack {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-template-rows: auto !important;
+        gap: 6px;
+        align-items: stretch;
+      }
+      .platform-layout > .status-stack > .panel {
+        padding: 7px 6px 8px; gap: 0;
+      }
+      .platform-layout > .status-stack > .panel .side-title {
+        margin-bottom: 4px; gap: 3px; flex-wrap: wrap;
+      }
+      .platform-layout > .status-stack > .panel .side-title h3 {
+        font-size: 8.6px; line-height: 1.15; letter-spacing: -.01em;
+      }
+      .platform-layout > .status-stack > .panel .side-title span {
+        font-size: 6.8px; line-height: 1.2; flex: 0 0 100%; margin-top: 1px;
+      }
+      .platform-layout > .status-stack tr { padding: 3px 0; }
+      .platform-layout > .status-stack th { font-size: 7.2px; letter-spacing: .01em; }
+      .platform-layout > .status-stack td,
+      .platform-layout > .status-stack .compliance-status {
+        font-size: 8.2px; line-height: 1.3;
+      }
+      .platform-layout > .status-stack .alert-row {
+        padding: 4px 0; gap: 3px; align-items: flex-start;
+      }
+      .platform-layout > .status-stack .alert-row strong { font-size: 8.2px; line-height: 1.2; }
+      .platform-layout > .status-stack .alert-row small {
+        font-size: 7.2px; line-height: 1.25; margin-top: 1px;
+      }
+      .platform-layout > .status-stack .status {
+        font-size: 6.4px; padding: 1px 4px; letter-spacing: 0; max-width: 42%;
+      }
+    }
+
+
     /* 2026-10-28 (Melly): the DoD/WoW chips must never collide with the amount.
        Force the top-right chip layout at every width (the >=2000px grid put the
        chips in the value's row and they touched the amount). */
