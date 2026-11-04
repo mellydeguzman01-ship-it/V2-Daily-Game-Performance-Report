@@ -1210,6 +1210,10 @@
     .heat-legend span { gap: 4px; }
     .heat-legend i { width: 9px; height: 9px; border-radius: 2px;
                     box-shadow: inset 0 0 0 1px rgba(148,163,184,.45); }
+    /* The count printed inside a cell must not eat the hover: the labels sit exactly
+       on the cell centre, so without this every hover over a number hit a <text> and
+       the cell's tooltip never opened. */
+    svg.eng-heat text { pointer-events: none; }
     .pp-engage > .keynote { margin-top: 6px; }
     /* Player Performance row 1 (2026-10-06, user: "masyadong malaki yung unused
        space dito ... gusto ko tanggalin mo yang space na yan", with the same row's
