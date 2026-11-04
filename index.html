@@ -2110,6 +2110,66 @@
     }
 
 
+    /* ==== 2026-11-05 (Melly, H5/mobile): "one row lang yang BingoPlus GameZone
+       at ArenaPlus; pati yung Platform Share, Player Share at GGR Share isang row
+       lang." Two things are fixed here for phones:
+       1. .platform-layout carries grid-template-columns: 45fr 30fr 25fr !important
+          (the 2026-10-28 desktop pass), so the <=1180 single-column rule never
+          applied and the platform block was squeezed into a 155px column at 390px
+          wide - that is why every amount read "P4,505,57...". Force one column.
+       2. The three platform cards and the three share pies then sit on ONE row,
+          with the label above its value and type scaled so no figure truncates.
+       Desktop (>1180px) is untouched. ==== */
+    @media (max-width: 1180px) {
+      .platform-layout { grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important; }
+      .platform-layout > .plat-left,
+      .platform-layout > .changelog-table,
+      .platform-layout > .status-stack { grid-column: 1 !important; grid-row: auto !important; }
+      .plat-left { width: 100%; }
+    }
+    @media (max-width: 780px) {
+      .platform-layout .plat-cards,
+      .plat-cards { grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 5px; }
+      /* the <=1180 block pins every card to grid-column 1 (it assumed a stack);
+         with three tracks they must flow into their own column. */
+      .plat-cards > .plat-card,
+      .platform-layout .plat-card { grid-column: auto !important; grid-row: auto !important;
+        padding: 6px 5px; gap: 4px; border-radius: 10px; }
+      .plat-head { gap: 2px; }
+      .plat-logo { height: 15px; }
+      .plat-id .plat-name,
+      .plat-name { font-size: clamp(8.5px, 2.2vw, 11px); }
+      .plat-chip { font-size: clamp(6px, 1.5vw, 7.5px); padding: 0 4px; letter-spacing: .02em; }
+      .platform-layout .plat-m,
+      .plat-m { flex-direction: column; align-items: flex-start; gap: 0;
+        padding: 3px 1px; }
+      .platform-layout .plat-m span,
+      .plat-m span { font-size: clamp(6px, 1.7vw, 8.5px); letter-spacing: .01em; white-space: nowrap; }
+      .platform-layout .plat-m b,
+      .plat-m b { font-size: clamp(9px, 2.55vw, 12.5px); letter-spacing: -.02em; white-space: nowrap;
+        font-variant-numeric: tabular-nums; }
+      /* the three share pies, one row */
+      .platform-layout .platform-charts { grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto auto; gap: 5px; padding: 8px 6px; }
+      .platform-layout .platform-charts .platform-chart { flex-direction: column;
+        gap: 3px; padding: 5px 3px; min-height: 0; }
+      .platform-layout .platform-charts .platform-chart {
+        --ring-lbl-size: clamp(6.4px, 1.85vw, 9px);  /* the % rides its arc; 11px overflows a 58px ring */ }
+      .platform-layout .platform-charts .platform-chart .mini-donut {
+        width: min(58px, 74%); max-width: 58px; }
+      .platform-layout .platform-charts .platform-chart > div { width: 100%;
+        max-width: 100%; }
+      .platform-layout .platform-charts .platform-chart strong { font-size: clamp(8px, 2.1vw, 10.5px);
+        text-align: center; }
+      .platform-layout .platform-charts .share-values { justify-items: center;
+        font-size: clamp(6.6px, 1.95vw, 9.5px); gap: 1px; line-height: 1.2; margin-top: 3px; }
+      .platform-layout .platform-charts .share-values span { text-align: center;
+        white-space: nowrap; }
+    }
+
+
     /* 2026-10-28 (Melly): the DoD/WoW chips must never collide with the amount.
        Force the top-right chip layout at every width (the >=2000px grid put the
        chips in the value's row and they touched the amount). */
