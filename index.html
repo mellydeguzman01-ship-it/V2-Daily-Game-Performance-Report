@@ -1137,6 +1137,7 @@
     /* 2026-11-02 (user): the chart is regenerated to its own aspect, so any leftover
        height must sit at the foot of the card, never split the chart from its legend. */
     .player-grid > .pg-denom { display: flex; flex-direction: column; justify-content: flex-start; }
+    .player-feature-panel .side-title h3 { white-space: nowrap; flex: 0 0 auto; }
     /* Same trap on the other two cards of row 2: the row is as tall as the tallest
        card, so a short card pools its leftover height as one empty strip. Spread it
        between the card's own blocks instead of leaving it below the note. */
@@ -2341,14 +2342,10 @@
         <div class="panel pad pg-4"><div class="side-title"><h3>Player per Platform</h3><span>New vs returning + active players</span></div><div class="table-scroll"><table><thead><tr><th>Platform</th><th>New players</th><th>Returning players</th><th>Active Players</th><th>New share</th></tr></thead><tbody><tr><td><b>BP1</b><span class="platform-sub">BingoPlus</span></td><td>773</td><td>2,145</td><td>2,918</td><td>26.5%</td></tr><tr><td><b>GP</b><span class="platform-sub">GameZone</span></td><td>1,962</td><td>1,949</td><td>3,911</td><td>50.2%</td></tr><tr><td><b>AP</b><span class="platform-sub">ArenaPlus</span></td><td>6</td><td>10</td><td>16</td><td>37.5%</td></tr></tbody></table></div><div class="chart-note">Returning = active players minus accounts created that day.</div></div>
         <div class="panel pad pg-4 pg-retention"><div class="side-title"><h3>Player Retention</h3><span>Combined all-active return rate</span></div><div class="retention-row"><div><strong>D1 Retention</strong><small>Next-day returning players</small><svg class="spark" viewBox="0 0 160 28"><polyline points="1,4 27.3333,23.4687 53.6667,18.5688 80,22.725 106.333,22.5937 132.667,24.5187 159,25" fill="none" stroke="#ffca64" stroke-width="2"/></svg></div><div class="retention-value warning">8.16%</div></div><div class="retention-row"><div><strong>D3 Retention</strong><small>Third-day returning players</small><svg class="spark" viewBox="0 0 160 28"><polyline points="1,4 27.3333,10.2508 53.6667,6.8796 80,19.6622 106.333,15.1672 132.667,21.4883 159,25" fill="none" stroke="#6ea8ff" stroke-width="2"/></svg></div><div class="retention-value ">4.14%</div></div><div class="retention-row"><div><strong>D7 Retention</strong><small>Seventh-day returning players</small><svg class="spark" viewBox="0 0 160 28"><polyline points="1,9.4 27.3333,14.44 53.6667,18.82 80,10.66 106.333,4 132.667,25 159,8.38" fill="none" stroke="#b78cff" stroke-width="2"/></svg></div><div class="retention-value ">2.91%</div></div></div>
       <div class="panel pad table-scroll player-feature-panel pg-4">
-        <div class="side-title"><h3>Players by Game Feature Behavior</h3><span>Players may appear in more than one category</span></div>
+        <div class="side-title"><h3>Players by Game</h3><span>Players · new · rounds</span></div>
         <table>
-          <thead><tr><th>Feature Behavior</th><th>Players</th><th>Share of Active Players</th><th>Average Rounds / Player</th><th>Rounds</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">Normal Bet</th><td>6,792</td><td>96.3%</td><td>66.3</td><td>442,601</td></tr>
-            <tr><th scope="row">Buy Feature</th><td>1,014</td><td>14.4%</td><td>1.7</td><td>1,763</td></tr>
-            <tr><th scope="row">Bonus Round</th><td>2,850</td><td>40.4%</td><td>2.7</td><td>7,707</td></tr>
-          </tbody>
+          <thead><tr><th>Game</th><th>Players</th><th title="New = first settled round on that bet site that day">New players</th><th>Rounds</th></tr></thead>
+          <tbody><tr><th scope="row">Banana Craze</th><td>—</td><td>—</td><td>—</td></tr><tr><th scope="row">Lucky Color</th><td>302</td><td>212</td><td>10,898</td></tr><tr><th scope="row">Blazing 7s</th><td>614</td><td>427</td><td>24,476</td></tr><tr><th scope="row">Ginto Match</th><td>1,533</td><td>713</td><td>172,766</td></tr></tbody>
         </table>
       
       </div>
@@ -3308,7 +3305,7 @@
         ['.player-grid > .panel:nth-child(2)', 'GP has the largest active-player base among the three platforms.'],
         ['.pg-retention', 'D1 retention is the main player-engagement metric to monitor.'],
         ['.pg-denom', 'Unique-player counts are highest at the lower bet denominations, with Loteria and Slot shown separately.'],
-        ['.player-feature-panel', 'Normal Bet is the primary feature behavior; Buy Feature is a smaller segment.'],
+        ['.player-feature-panel', 'One row per game for the report day; a dash means that game settled no rounds.'],
         ['.pp-avg', 'The average rounds per player sits above the median on both Loteria and Slot, so a small group of high-frequency accounts pulls the average up.'],
         /*PP:ENGAGE_INSIGHT:START*/
         ['.pp-engage', 'Loteria carries the larger player group in the 1–10 band; the largest band overall is 21–50 rounds with 826 Loteria and 987 Slot player entries.'],
@@ -3519,7 +3516,7 @@
         'Next-day returning players': '次日回访玩家', 'D3 Retention': 'D3留存率', 'Third-day returning players': '第三日回访玩家',
         'D7 Retention': 'D7留存率', 'Seventh-day returning players': '第七日回访玩家', 'Rounds Comparison': '回合数对比',
         'Unique Players by Bet Denomination': '按投注面额划分的唯一玩家', 'Unique players by their selected bet denomination.': '按所选投注面额划分的唯一玩家。', 'Nov 1 rounds range has the most unique players, shown separately for Loteria and Slot.': '1–10回合区间的唯一玩家最多，并按乐透与老虎机分别显示。',
-        'Players by Game Feature Behavior': '按游戏功能行为划分的玩家', 'Players may appear in more than one category': '玩家可能出现在多个类别中',
+        'Players by Game Feature Behavior': '按游戏功能行为划分的玩家', 'Players by Game': '按游戏划分的玩家', 'Players · new · rounds': '玩家 · 新玩家 · 回合数', 'Game': '游戏', 'Players and settled rounds for the day · new = first settled round on that bet site': '当日玩家与已结算回合·新玩家 = 当天在该投注站的首次已结算回合', 'Players may appear in more than one category': '玩家可能出现在多个类别中',
         'Feature Behavior': '功能行为', 'Share of Active Players': '活跃玩家占比', 'Average Rounds / Player': '平均回合数 / 玩家',
         'Player Engagement Distribution': '玩家参与度分布', 'Loteria vs Slot': '乐透与老虎机', 'Rounds per Player': '每人回合数', 'Number of Players': '玩家数量',
         'Average Bet & Rounds per Player': '人均投注与回合数', 'Average Bet / Player': '人均投注', 'Median Rounds / Player': '回合数中位数', 'Metric': '指标',
@@ -3565,7 +3562,7 @@
         "Winning rounds are rounds with a payout greater than zero.": "中奖回合指派彩大于零的回合。",
         "Players created on November 3, 2026 accounted for most of the day’s activity.": "11 月 3 日当天创建的新玩家贡献了当日大部分活跃度。",
         "New players recorded more rounds than returning players on every platform.": "三个平台中新玩家的回合数均多于回访玩家。",
-        "Normal Bet is the primary feature behavior; Buy Feature is a smaller segment.": "普通投注是主要的功能行为；购买功能占比较小。",
+        "Normal Bet is the primary feature behavior; Buy Feature is a smaller segment.": "普通投注是主要的功能行为；购买功能占比较小。", "One row per game for the report day; a dash means that game settled no rounds.": "每款游戏一行，均为报告当日数据；横线表示该游戏当日没有已结算回合。",
         "MTD platform totals are month-to-date from the per-site settled-order ledger for November 1–3. Each site row and the month total are each rounded to the centavo, with the total rounded once from the full-precision ledger, so the rows can miss the total by ₱0.01.": "月初至今平台总计取自各分站已结算订单账目，覆盖 11 月 1–3 日。各分站行与月度总计均按分取整，总计由全精度订单账目一次取整，因此各行合计可能与总计相差 ₱0.01。",
         "Winning rounds represent 29.7% of Loteria rounds and 29.8% of Slot rounds on November 3, 2026.": "2026 年 9 月 30 日，中奖回合占乐透回合数的 29.7%，占老虎机回合数的 29.8%。",
       });
