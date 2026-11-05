@@ -2241,6 +2241,82 @@
        comparison line (the players tile has no comparable previous-month count) */
     .small-grid.mtd-grid .card { justify-content: flex-start; }
 
+
+    /* ==== 2026-11-05 (Melly, H5/mobile): "yung 4 main card sa General Operation
+       Data, nagooverlap yung text - medyo liitan at gawing one row; ganun din sa
+       submetrics na card, isang row lang." Phones only (<=780px):
+       1. The four headline KPI cards drop from 2x2 to ONE row of four equal tracks.
+       2. The DoD/WoW chips leave the absolutely positioned top-right corner (they
+          sat ON the label in a ~88px card) and move under the amount as a hairline-
+          separated block, so nothing overlaps.
+       3. Same for the four month-to-date tiles: one row, label wraps under a small
+          icon, the Oct comparison line wraps instead of clipping.
+       Every measure is clamp()-scaled so the widest figures (P5,986,697.00 and
+       P30,538,580.00) still fit an ~88px card at 390px.
+       Desktop (>780px) is untouched. ==== */
+    @media (max-width: 780px) {
+      .header-metrics,
+      .small-grid.mtd-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 5px;
+      }
+      .header-metrics { margin-top: 12px; }
+      .small-grid.mtd-grid { margin-top: 6px; }
+
+      .header-metrics .card {
+        height: auto !important; min-height: 0 !important;
+        padding: 7px 5px 8px; gap: 0; border-radius: 10px;
+        justify-content: flex-start;
+      }
+      .header-metrics .metric-label {
+        padding-right: 0 !important; gap: 3px;
+        font-size: clamp(6.2px, 1.7vw, 8.5px); line-height: 1.1;
+        letter-spacing: 0; white-space: normal; align-items: flex-start;
+      }
+      .header-metrics .kpi-ico,
+      .header-metrics .kpi-ico.kpi-img { width: 14px; height: 14px; flex: 0 0 14px; }
+      .header-metrics .metric-value {
+        margin-top: 4px; font-size: clamp(7.4px, 2.05vw, 10.5px);
+        line-height: 1.12; letter-spacing: -.035em; white-space: nowrap;
+      }
+      .header-metrics .metric-subtext {
+        align-self: flex-start; text-align: left; margin-top: 2px;
+        font-size: clamp(5.8px, 1.55vw, 7.6px); line-height: 1.15; white-space: normal;
+      }
+      .header-metrics .metric-foot {
+        position: static !important; top: auto; right: auto;
+        flex-direction: column; align-items: flex-start; justify-content: flex-start;
+        gap: 1px; margin-top: 4px; padding-top: 4px;
+        border-top: 1px solid rgba(148,177,211,.18);
+        font-size: clamp(5.8px, 1.55vw, 7.6px); line-height: 1.2; text-align: left;
+      }
+      .header-metrics .metric-foot span { font-size: inherit; white-space: nowrap; }
+
+      /* submetrics = the four month-to-date tiles, one row */
+      .small-grid.mtd-grid .card {
+        min-height: 0; padding: 7px 5px 8px; border-radius: 10px;
+        justify-content: flex-start;
+      }
+      .small-grid.mtd-grid .mtd-label {
+        gap: 3px; font-size: clamp(5.8px, 1.55vw, 7.4px); line-height: 1.15;
+        letter-spacing: 0; white-space: normal; align-items: flex-start;
+        /* "MONTHLY BET AMOUNT" wraps to two lines while "MONTHLY GGR" does not;
+           reserve both lines so the four amounts keep one baseline */
+        min-height: 2.3em;
+      }
+      .small-grid.mtd-grid .mtd-ico,
+      .small-grid.mtd-grid .mtd-ico.kpi-img { width: 12px; height: 12px; flex: 0 0 12px; }
+      .small-grid.mtd-grid .metric-value {
+        margin-top: 4px; font-size: clamp(7.4px, 2.05vw, 10.5px);
+        line-height: 1.12; letter-spacing: -.035em; white-space: nowrap;
+      }
+      .small-grid.mtd-grid .mtd-prev {
+        margin-top: 4px; padding-top: 4px;
+        font-size: clamp(5.6px, 1.5vw, 7.2px); line-height: 1.25;
+        letter-spacing: 0; white-space: normal;
+      }
+    }
+
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
