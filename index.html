@@ -683,7 +683,7 @@
        Game Modes and Round Type Distribution share ONE 20% column, stacked, so
        each keeps a readable width instead of being halved into 10%. */
     .gp-row-1 { display: grid; grid-template-columns: 40fr 20fr 20fr 20fr;
-      grid-template-rows: auto auto; gap: 10px; align-items: stretch; }
+      grid-template-rows: auto 1fr; gap: 10px; align-items: stretch; }
     .gp-row-2 { display: grid; grid-template-columns: 50fr 15fr 15fr 20fr; gap: 10px; align-items: stretch; }
     /* every child carried explicit row/column placement from the old 20-track grid */
     .gp-row-2 > .panel { grid-column: auto !important; grid-row: auto !important; min-width: 0; }
@@ -771,20 +771,35 @@
     .go-card.go-nodata .go-tip { display: none; }
     .go-card.go-nodata .go-gauge-val { color: var(--muted); }
     .go-card.go-nodata .go-vl { color: var(--muted); }
-    /* Game Modes (user spec 2026-10-12): two 100% stacked bars, Loteria vs Slot.
-       PLOT ONLY - no data is wired yet, so the segments sit at an even placeholder
-       split and the panel says so; do not read these widths as values. */
-    .gp-modes .mode-row + .mode-row { margin-top: 14px; }
-    .gp-modes .mode-label { font-size: 10px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
-    .gp-modes .mode-track { display: flex; height: 15px; border-radius: 8px; overflow: hidden;
-                            background: var(--panel-2); border: 1px solid var(--line); }
+    /* Game Modes (compact pill spec 2026-11-05, user mockup): two 100%-stacked
+       pill bars on ONE short card. The card sizes to its content instead of
+       stretching to the row, so the big blank pocket under the legends is gone.
+       Each share fades toward the split with a soft seam glow, exactly like the
+       reference: blue -> pale -> pink, yellow -> pale -> orange.
+       `.gp-modes` is a .chart-box, whose 305px min-height is cancelled below. */
+    .gp-modes.chart-box { min-height: 0; }
+    .gp-modes .mode-row + .mode-row { margin-top: 16px; }
+    .gp-modes .mode-label { font-size: 10px; font-weight: 700; color: var(--text);
+                            letter-spacing: .1px; margin-bottom: 7px; }
+    .gp-modes .mode-track { position: relative; display: flex; height: 12px;
+                            border-radius: 999px; overflow: hidden;
+                            background: var(--panel-2);
+                            box-shadow: inset 0 0 0 1px var(--line); }
     .gp-modes .mode-track .seg { height: 100%; }
+    /* Each share carries its own fade toward the split, so the two colours meet in
+       a soft wash instead of a hard edge (no white overlay band). */
+    .gp-modes .mode-track .seg-blue   { background: linear-gradient(90deg, var(--blue) 0%, var(--blue) 58%, #dbe9ff 100%); }
+    .gp-modes .mode-track .seg-pink   { background: linear-gradient(90deg, #ffe4f1 0%, var(--pink) 40%, var(--pink) 100%); }
+    .gp-modes .mode-track .seg-yellow { background: linear-gradient(90deg, var(--yellow) 0%, var(--yellow) 55%, #fff2d2 100%); }
+    .gp-modes .mode-track .seg-orange { background: linear-gradient(90deg, #ffdcbe 0%, var(--orange) 42%, var(--orange) 100%); }
+    .gp-modes .mode-track .seg:first-child { border-radius: 999px 0 0 999px; }
+    .gp-modes .mode-track .seg:last-child { border-radius: 0 999px 999px 0; }
     /* The stacked fill lives in a wrapper so the entrance can wipe the WHOLE split in.
        Clipping each segment instead would move the boundary while the two grew at
        different rates; clipping the wrapper keeps the split correct at every frame,
        and the resting state is the measured width. */
-    .gp-modes .mode-track { position: relative; }
-    .gp-modes .mode-track .mode-fill { display: flex; height: 100%; width: 100%; }
+    .gp-modes .mode-track .mode-fill { position: relative; display: flex;
+                                       height: 100%; width: 100%; }
     @keyframes gm-wipe  { from { clip-path: inset(0 100% 0 0) } to { clip-path: inset(0 0 0 0) } }
     @keyframes gm-sheen { from { background-position: -60% 0 } to { background-position: 160% 0 } }
     /* ARMED BY .bars-live: barMotion observes .gp-modes, so the bars draw in as the panel
@@ -795,7 +810,7 @@
        changes a segment's width, so the bar is never briefly showing the wrong split. */
     .gp-modes .mode-track::after {
       content: ""; position: absolute; inset: 0; pointer-events: none;
-      background-image: linear-gradient(90deg, transparent, rgba(255,255,255,.78), transparent);
+      background-image: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
       background-size: 38% 100%; background-repeat: no-repeat;
     }
     .gp-modes.bars-live .mode-track::after { animation: gm-sheen 3.2s linear infinite; }
@@ -803,9 +818,11 @@
     @media (prefers-reduced-motion: reduce) {
       .gp-modes .mode-fill, .gp-modes .mode-track::after { animation: none !important; }
     }
-    .gp-modes .mode-legend { display: flex; gap: 14px; font-size: 9px; color: var(--muted); margin-top: 6px; }
-    .gp-modes .mode-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
-                               margin-right: 5px; vertical-align: -1px; }
+    .gp-modes .mode-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 9.5px;
+                             color: var(--muted); margin-top: 7px; }
+    .gp-modes .mode-legend span { display: inline-flex; align-items: center; }
+    .gp-modes .mode-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2.5px;
+                               margin-right: 5px; }
     /* User 2026-10-02: "sa row ng hourly rtp, ipanatay mo din yung cards/panel".
        In the Hourly RTP row (gp-row-2) the two columns beside it stretch to the row,
        but this third column's two cards were content-sized, so they stopped ~140px
@@ -2507,8 +2524,8 @@
           <div class="panel pad chart-box gp-modes">
           <div class="side-title"><h3>Game Modes</h3><span>share of settled rounds</span></div>
           <!--GP:MODES:START-->
-          <div class="mode-row"><div class="mode-label">Operation Mode</div><div class="mode-track" role="img" aria-label="Operation Mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg" style="width:80.3%;background:var(--blue)"></div><div class="seg" style="width:19.7%;background:var(--pink)"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 80.3%</span><span><i style="background:var(--pink)"></i>Autoplay 19.7%</span></div></div>
-          <div class="mode-row"><div class="mode-label">Speed Mode</div><div class="mode-track" role="img" aria-label="Speed Mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg" style="width:68.7%;background:var(--yellow)"></div><div class="seg" style="width:31.3%;background:var(--orange)"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 68.7%</span><span><i style="background:var(--orange)"></i>Turbo 31.3%</span></div></div>
+          <div class="mode-row"><div class="mode-label">Operation Mode</div><div class="mode-track" role="img" aria-label="Operation Mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:80.3%"></div><div class="seg seg-pink" style="width:19.7%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 80.3%</span><span><i style="background:var(--pink)"></i>Autoplay 19.7%</span></div></div>
+          <div class="mode-row"><div class="mode-label">Speed Mode</div><div class="mode-track" role="img" aria-label="Speed Mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:68.7%"></div><div class="seg seg-orange" style="width:31.3%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 68.7%</span><span><i style="background:var(--orange)"></i>Turbo 31.3%</span></div></div>
           <!--GP:MODES:END-->
         </div>
           <div class="panel pad chart-box gp-feature">
