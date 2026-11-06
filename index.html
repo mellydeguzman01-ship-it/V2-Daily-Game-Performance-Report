@@ -871,7 +871,18 @@
     /* 2026-10-29 (user, red boxes = the empty bands): these two cards were
        stretched by their grid row to match the tallest panel beside them, leaving
        a tall empty area inside each card. They now size to their own content. */
-    .hourly-rtp, .dynamic-rtp { align-self: start; }
+    /* 2026-11-06 (Melly, "ipantay mo yung cards"): with align-self:start the two
+       cards that size to their content stopped 45-175px above the row bottom
+       (Dynamic RTP worst: 339px vs a 488px row). All four now stretch to the
+       row, and each absorbs the extra height inside itself instead of leaving
+       a dead pocket: the hourly chart centres between title and legend, and the
+       Dynamic RTP list distributes its three mode rows over the card. */
+    .hourly-rtp, .dynamic-rtp { align-self: stretch; }
+    .hourly-rtp { display: flex; flex-direction: column; }
+    .hourly-rtp .tall-svg { margin: auto 0; }
+    .dynamic-rtp { display: flex; flex-direction: column; }
+    .dynamic-rtp .dynamic-list { flex: 1 1 auto; display: flex; flex-direction: column;
+                                 justify-content: space-between; }
     .dynamic-rtp { grid-column: 11 / span 10; grid-row: 1; }
     .hourly-rtp { grid-column: 1 / span 10; grid-row: 2; }
     .multiplier-distribution { grid-column: 11 / span 10; grid-row: 2; }
