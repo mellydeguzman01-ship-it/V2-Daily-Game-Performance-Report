@@ -786,6 +786,24 @@
     .gp-overview .go-band.go-quad .go-ico,
     .gp-overview .go-band.go-quad .go-ico svg { width: 9px; height: 9px; }
     .gp-overview .go-band.go-quad .go-foot { font-size: 6.5px; line-height: 1.3; margin-top: 2px; }
+    /* 2026-11-06 (Melly): "sa game overview, masyadong mahaba yung card nung per
+       game. dapat hindi masyadong mahaba, if possible liitan yang text."
+       The four cards sat in ONE 40%-wide column while the panel spans two grid
+       rows, so each card was 756px tall at 1920 and the 15 metric rows were
+       spread by space-between to fill it. The band is 2x2 now (same four games,
+       same order, same rows), which halves the card height and doubles its
+       width - wide enough for a metric to sit on ONE line again, so the label
+       and figure no longer stack. Type comes down with it. */
+    .go-band.go-quad { grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr)); }
+    .gp-overview .go-band.go-quad .go-rows { align-content: stretch; grid-auto-rows: minmax(0, 1fr); }
+    .gp-overview .go-band.go-quad .go-row { grid-template-columns: 9px minmax(0, 1fr) auto;
+      grid-template-rows: auto; align-content: center; gap: 0 5px; padding: 1.5px 0; }
+    .gp-overview .go-band.go-quad .go-lb { grid-column: 2; grid-row: 1; font-size: 7.5px; }
+    .gp-overview .go-band.go-quad .go-vl { grid-column: 3; grid-row: 1;
+      justify-self: end; font-size: 9.5px; line-height: 1.15; }
+    .gp-overview .go-band.go-quad .go-gauge { max-height: 104px; width: 76%; margin: 2px auto 4px; }
+
     /* A game that has not settled a round yet: the ring is an empty track (no
        arc, no tip, no glow) and its RTP reads as a muted dash, because 0% would
        be a reading and there is no reading. */
