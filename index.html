@@ -2414,6 +2414,15 @@
     .plat-new-table tbody tr:last-child th,
     .plat-new-table tbody tr:last-child td { border-bottom: 0; }
 
+
+    /* 2026-11-06 (Melly): Game Modes per game. Each game keeps its own two
+       100%-stacked partitions, so the panel no longer shows one pooled split.
+       Compact: game name, Operation bar + legend, Speed bar + legend. */
+    .gp-modes .mode-game + .mode-game { margin-top: 12px; }
+    .gp-modes .mode-game-name { font-size: 10.5px; font-weight: 800; color: var(--text);
+                                letter-spacing: .1px; margin-bottom: 6px; }
+    .gp-modes .mode-game .mode-legend { margin-top: 5px; gap: 12px; }
+    .gp-modes .mode-game .mode-legend + .mode-track { margin-top: 9px; }
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
@@ -2552,8 +2561,10 @@
           <div class="panel pad chart-box gp-modes">
           <div class="side-title"><h3>Game Modes</h3><span>share of settled rounds</span></div>
           <!--GP:MODES:START-->
-          <div class="mode-row"><div class="mode-label">Operation Mode</div><div class="mode-track" role="img" aria-label="Operation Mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:80.2%"></div><div class="seg seg-pink" style="width:19.8%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 80.2%</span><span><i style="background:var(--pink)"></i>Autoplay 19.8%</span></div></div>
-          <div class="mode-row"><div class="mode-label">Speed Mode</div><div class="mode-track" role="img" aria-label="Speed Mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:70.4%"></div><div class="seg seg-orange" style="width:29.6%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 70.4%</span><span><i style="background:var(--orange)"></i>Turbo 29.6%</span></div></div>
+          <div class="mode-game"><div class="mode-game-name">Banana Craze</div><div class="mode-track" role="img" aria-label="Banana Craze · operation mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:80.2%"></div><div class="seg seg-pink" style="width:19.8%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 80.2%</span><span><i style="background:var(--pink)"></i>Autoplay 19.8%</span></div><div class="mode-track" role="img" aria-label="Banana Craze · speed mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:70.4%"></div><div class="seg seg-orange" style="width:29.6%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 70.4%</span><span><i style="background:var(--orange)"></i>Turbo 29.6%</span></div></div>
+          <div class="mode-game"><div class="mode-game-name">Ginto Match</div><div class="mode-track" role="img" aria-label="Ginto Match · operation mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:84.0%"></div><div class="seg seg-pink" style="width:16.0%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 84.0%</span><span><i style="background:var(--pink)"></i>Autoplay 16.0%</span></div><div class="mode-track" role="img" aria-label="Ginto Match · speed mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:3.1%"></div><div class="seg seg-orange" style="width:96.9%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 3.1%</span><span><i style="background:var(--orange)"></i>Turbo 96.9%</span></div></div>
+          <div class="mode-game"><div class="mode-game-name">Lucky Color</div><div class="mode-track" role="img" aria-label="Lucky Color · operation mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:72.9%"></div><div class="seg seg-pink" style="width:27.1%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 72.9%</span><span><i style="background:var(--pink)"></i>Autoplay 27.1%</span></div><div class="mode-track" role="img" aria-label="Lucky Color · speed mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:8.3%"></div><div class="seg seg-orange" style="width:91.7%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 8.3%</span><span><i style="background:var(--orange)"></i>Turbo 91.7%</span></div></div>
+          <div class="mode-game"><div class="mode-game-name">Blazing 7S</div><div class="mode-track" role="img" aria-label="Blazing 7S · operation mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:81.1%"></div><div class="seg seg-pink" style="width:18.9%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 81.1%</span><span><i style="background:var(--pink)"></i>Autoplay 18.9%</span></div><div class="mode-track" role="img" aria-label="Blazing 7S · speed mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:11.8%"></div><div class="seg seg-orange" style="width:88.2%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 11.8%</span><span><i style="background:var(--orange)"></i>Turbo 88.2%</span></div></div>
           <!--GP:MODES:END-->
         </div>
           <div class="panel pad chart-box gp-feature">
