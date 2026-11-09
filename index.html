@@ -705,25 +705,54 @@
        Modes & Round Type Distribution 20% | 100 Rounds a Day 20% | Table 20%".
        Game Modes and Round Type Distribution share ONE 20% column, stacked, so
        each keeps a readable width instead of being halved into 10%. */
-    .gp-row-1 { display: grid; grid-template-columns: 40fr 20fr 20fr 20fr;
-      grid-template-rows: auto 1fr; gap: 10px; align-items: stretch; }
+    .gp-row-1 { display: grid; grid-template-columns: 33fr 32fr 35fr;
+      grid-template-rows: auto 1fr auto; gap: 10px; align-items: stretch; }
     .gp-row-2 { display: grid; grid-template-columns: 50fr 15fr 15fr 20fr; gap: 10px; align-items: stretch; }
     /* every child carried explicit row/column placement from the old 20-track grid */
     .gp-row-2 > .panel { grid-column: auto !important; grid-row: auto !important; min-width: 0; }
     .gp-row-1 > .panel { min-width: 0; }
-    .gp-row-1 > .gp-overview { grid-column: 1; grid-row: 1 / span 2; }
-    .gp-row-1 > .gp-modes { grid-column: 2; grid-row: 1; }
-    .gp-row-1 > .gp-feature { grid-column: 2; grid-row: 2; }
-    .gp-row-1 > .gp-passline { grid-column: 3; grid-row: 1 / span 2; }
-    .gp-row-1 > .gp-side { grid-column: 4; grid-row: 1 / span 2;
+    /* 2026-11-09 (Melly): "isang row mo lang tong mga games dito sa game overview" +
+       "ilagay mo sa baba ng 100 Rounds a Day, yung Round Type Distribution".
+       Game Overview is now its OWN full-width row (four cards across), and the band
+       below it is three columns: Game Modes | 100 Rounds a Day over Round Type |
+       metrics + Top 5.  Row 2 is 1fr so 100 Rounds a Day absorbs the slack and the
+       Round Type card keeps its natural (slim) height, its bottom still landing on
+       the grid bottom with the two spanning columns. */
+    .gp-row-1 > .gp-overview { grid-column: 1 / -1; grid-row: 1; }
+    .gp-row-1 > .gp-modes { grid-column: 1; grid-row: 2 / span 2; }
+    .gp-row-1 > .gp-feature { grid-column: 2; grid-row: 3; }
+    .gp-row-1 > .gp-passline { grid-column: 2; grid-row: 2; }
+    .gp-row-1 > .gp-side { grid-column: 3; grid-row: 2 / span 2;
       display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-    .gp-row-1 > .gp-side > .gp-top5 { flex: 0 0 auto; }
-    .gp-row-1 > .game-summary { grid-column: 4; grid-row: 1 / span 2; }
+    .gp-row-1 > .gp-side > .gp-top5 { flex: 1 1 auto; }
+    /* 2026-11-09: with the cards moved out, the band is taller than this column's
+       own content, so the five player rows share the leftover height instead of
+       leaving a pocket under the last card (same 1fr-rows convention as the
+       overview cards and .plat-metrics). */
+    .gp-row-1 > .gp-side > .gp-top5 .gp-top5-list { flex: 1 1 auto;
+      grid-auto-rows: minmax(0, 1fr); align-content: stretch; }
+    .gp-row-1 > .game-summary { grid-column: 3; grid-row: 2 / span 2; }
     .gp-row-1 > .gp-overview { display: flex; flex-direction: column; gap: 8px; }
     /* 2026-10-21: Round Type Distribution explanatory note removed on request - the
        three bars spread over the card height instead of leaving an empty block. */
     .gp-row-1 > .gp-feature { display: flex; flex-direction: column; }
-    .gp-row-1 > .gp-feature .dynamic-list { flex: 1 1 auto; grid-auto-rows: 1fr; gap: 14px; }
+    .gp-row-1 > .gp-feature .dynamic-list { flex: 1 1 auto; grid-auto-rows: 1fr; gap: 8px; }
+    /* 2026-11-09 (Melly): "ilagay mo sa baba ng 100 Rounds a Day, yung Round Type
+       Distribution. nipisan mo lang yung kada metrics para hindi humaba yung card."
+       100 Rounds a Day and Round Type now share ONE column, so the pair is what sets
+       the band's height. Both carried .chart-box's 305px min-height, which spread
+       their 40px rows over 81px each - stacked, that pair measured 877px against a
+       609px side column and forced ~400px of dead air into Game Modes. The
+       min-height is cancelled here and the rows go to their natural height, so the
+       stack is ~450px and the band is driven by the side column instead. */
+    .gp-row-1 > .gp-feature.chart-box,
+    .gp-row-1 > .gp-passline.chart-box { min-height: 0; }
+    .gp-row-1 > .gp-feature .dynamic-list,
+    .gp-row-1 > .gp-passline .dynamic-list { flex: 0 0 auto; grid-auto-rows: auto;
+      gap: 8px; height: auto; }
+    .gp-row-1 > .gp-feature .dynamic-item,
+    .gp-row-1 > .gp-passline .dynamic-item { justify-content: flex-start; gap: 3px;
+      padding: 4px 0; }
     .gp-row-1 > .gp-feature .dynamic-item { display: flex; flex-direction: column; justify-content: space-between; }
     /* 2026-10-21 (user): the shareline and the long note under the TOTAL bar are
        gone, so the panel no longer fills its row by itself (measured 214px of dead
@@ -794,11 +823,11 @@
        same order, same rows), which halves the card height and doubles its
        width - wide enough for a metric to sit on ONE line again, so the label
        and figure no longer stack. Type comes down with it. */
-    .go-band.go-quad { grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: repeat(2, minmax(0, 1fr)); }
+    .go-band.go-quad { grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-rows: auto; }
     .gp-overview .go-band.go-quad .go-rows { align-content: stretch; grid-auto-rows: minmax(0, 1fr); }
     .gp-overview .go-band.go-quad .go-row { grid-template-columns: 9px minmax(0, 1fr) auto;
-      grid-template-rows: auto; align-content: center; gap: 0 5px; padding: 1.5px 0; }
+      grid-template-rows: auto; align-content: center; gap: 0 5px; padding: 0.5px 0; }
     .gp-overview .go-band.go-quad .go-lb { grid-column: 2; grid-row: 1; font-size: 7.5px; }
     .gp-overview .go-band.go-quad .go-vl { grid-column: 3; grid-row: 1;
       justify-self: end; font-size: 9.5px; line-height: 1.15; }
@@ -819,6 +848,13 @@
        reference: blue -> pale -> pink, yellow -> pale -> orange.
        `.gp-modes` is a .chart-box, whose 305px min-height is cancelled below. */
     .gp-modes.chart-box { min-height: 0; }
+    /* 2026-11-09: with the four game cards lifted out into their own full-width
+       row, this panel spans the band's two rows on its own, so it is taller than
+       its four game blocks. They share that height equally instead of pooling
+       ~410px of dead space under the last one. */
+    .gp-modes { display: flex; flex-direction: column; }
+    .gp-modes > .mode-game { flex: 1 1 0; display: flex; flex-direction: column;
+                             justify-content: center; min-height: 0; }
     .gp-modes .mode-row + .mode-row { margin-top: 16px; }
     .gp-modes .mode-label { font-size: 10px; font-weight: 700; color: var(--text);
                             letter-spacing: .1px; margin-bottom: 7px; }
