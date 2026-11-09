@@ -877,6 +877,18 @@
        and 10px figure on one line (measured to fit the 162px content box), with
        a slightly larger ring to fill the card head-to-foot. Below 1600px the
        slimmer 6.5/8.5px pair above still applies. */
+    /* The table moved from a 35% track to 20%, so its widest cells (month-to-date
+       money, 12 characters) no longer fit at 10px below ~1500px. Step the table
+       type down with the width rather than letting a fixed-layout cell clip. */
+    @media (max-width: 1500px) {
+      .game-summary table { font-size: 9px; }
+      .game-summary th, .game-summary td { padding: 8px 4px; }
+    }
+    @media (max-width: 1340px) {
+      .game-summary table { font-size: 8.5px; }
+      .game-summary th, .game-summary td { padding: 7px 3px; }
+    }
+
     @media (min-width: 1600px) {
       .gp-overview .go-band.go-quad .go-row { grid-template-columns: 9px minmax(0, 1fr) auto;
         gap: 0 4px; }
