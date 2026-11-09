@@ -2703,32 +2703,32 @@
        Player Engagement Distribution 20% | Players by Spend Tier 20%
        (20 tracks: 6 + 6 + 4 + 4; row 1 above is untouched at 4+3+4+9).
        ===================================================================== */
-    .player-grid > .pp-vip { grid-column: span 6;
-      display: flex; flex-direction: column; gap: 9px;
-      justify-content: space-between; min-width: 0; }
-    .pp-vip .vip-metrics { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 0 14px; }
-    .pp-vip .vip-m { display: flex; align-items: baseline; justify-content: space-between;
-      gap: 6px; padding: 5px 0; border-top: 1px solid var(--line); }
-    .pp-vip .vip-m:nth-child(1), .pp-vip .vip-m:nth-child(2) { border-top: 0; }
-    .pp-vip .vip-m span { font-size: 10px; line-height: 1.2; color: var(--muted); }
-    .pp-vip .vip-m b { font-size: 12.5px; font-weight: 800; color: var(--text);
-      font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .pp-vip .vip-block { border-top: 1px solid var(--line); padding-top: 8px; }
-    .pp-vip .vip-hd { font-size: 9.5px; font-weight: 800; letter-spacing: .05em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-    .pp-vip .vip-ret-row { display: flex; align-items: baseline; justify-content: space-between;
-      gap: 10px; }
-    .pp-vip .vip-ret-row div { display: flex; align-items: baseline; gap: 5px; }
-    .pp-vip .vip-ret-row span { font-size: 9px; font-weight: 800; color: var(--muted); }
-    .pp-vip .vip-ret-row b { font-size: 12px; font-weight: 800; color: var(--text); }
-    .pp-vip .vip-plat-row { display: flex; align-items: baseline; justify-content: space-between;
-      gap: 10px; padding: 5px 0; border-top: 1px solid var(--line);
-      font-size: 10px; color: var(--text); }
-    .pp-vip .vip-plat-row:first-of-type { border-top: 0; }
-    .pp-vip .vip-plat-head { color: var(--muted); font-size: 9px; font-weight: 800;
-      letter-spacing: .05em; text-transform: uppercase; padding-bottom: 2px; }
-    .pp-vip .vip-plat-row b { font-weight: 800; font-variant-numeric: tabular-nums; }
+    .player-grid > .pp-vip { grid-column: span 6; display: flex; flex-direction: column;
+      gap: 10px; min-width: 0; }
+    .pp-vip .vip-kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 6px; }
+    .pp-vip .vip-k { display: flex; flex-direction: column; justify-content: flex-start;
+      gap: 3px; padding: 7px 6px; border: 1px solid var(--line); border-radius: 9px;
+      background: var(--panel-2); min-width: 0; }
+    .pp-vip .vip-k span { font-size: 7.5px; line-height: 1.15; font-weight: 700;
+      letter-spacing: .01em; color: var(--muted); text-transform: uppercase; }
+    .pp-vip .vip-k b { font-size: 13px; font-weight: 800; line-height: 1.1; color: var(--text);
+      font-variant-numeric: tabular-nums; }
+    .pp-vip .vip-k small { font-size: 7px; line-height: 1.2; color: var(--muted);
+      font-variant-numeric: tabular-nums; }
+    .pp-vip .vip-tbl { flex: 1 1 auto; min-height: 0; }
+    .pp-vip .vip-tbl table { width: 100%; table-layout: fixed; border-collapse: collapse;
+      font-size: 8.5px; }
+    .pp-vip .vip-tbl thead th { font-size: 7.5px; font-weight: 800; letter-spacing: .02em;
+      text-transform: uppercase; color: var(--muted); text-align: right; padding: 6px 5px;
+      border-bottom: 1px solid var(--line); white-space: normal; line-height: 1.2; }
+    .pp-vip .vip-tbl thead th:first-child { text-align: left; }
+    .pp-vip .vip-tbl tbody td { padding: 6px 5px; text-align: right; color: var(--text);
+      font-variant-numeric: tabular-nums; border-bottom: 1px solid var(--line);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pp-vip .vip-tbl tbody td:first-child { text-align: left; }
+    .pp-vip .vip-tbl td.vip-empty { text-align: center; color: var(--muted);
+      font-size: 8.5px; white-space: normal; }
 
     /* Spend Tier now owns 20% instead of 40%: the table and the ring stack
        instead of sitting side by side, and the type steps down so the daily-bet
@@ -3004,28 +3004,20 @@
         <!-- Row 2: 40fr / 20fr / 40fr - denomination, average per player, spend tier -->
         <div class="panel pad pp-vip">
           <div class="side-title"><h3>VIP Player Performance</h3><span></span></div>
-          <div class="vip-metrics">
-            <div class="vip-m"><span>Total VIP Players</span><b>——</b></div>
-            <div class="vip-m"><span>New VIPs</span><b>——</b></div>
-            <div class="vip-m"><span>Active VIPs</span><b>——</b></div>
-            <div class="vip-m"><span>VIP Player Share</span><b>——</b></div>
-            <div class="vip-m"><span>VIP Bet Share</span><b>——</b></div>
-            <div class="vip-m"><span>VIP GGR Share</span><b>——</b></div>
+          <div class="vip-kpis">
+            <div class="vip-k"><span>Total VIP Players</span><b>——</b></div>
+            <div class="vip-k"><span>NEW VIPs</span><b>——</b></div>
+            <div class="vip-k"><span>Active VIPs</span><b>——</b></div>
+            <div class="vip-k"><span>VIP Player Share</span><b>——</b></div>
+            <div class="vip-k"><span>VIP Bet Share</span><b>——</b><small>Total bet ₱——</small></div>
+            <div class="vip-k"><span>VIP GGR Share</span><b>——</b><small>Total GGR ₱——</small></div>
           </div>
-          <div class="vip-block">
-            <div class="vip-hd">VIP Retention</div>
-            <div class="vip-ret-row">
-              <div><span>D1</span><b>——</b></div>
-              <div><span>D7</span><b>——</b></div>
-              <div><span>D30</span><b>——</b></div>
-            </div>
-          </div>
-          <div class="vip-block">
-            <div class="vip-hd">VIP Players by Platform</div>
-            <div class="vip-plat-row vip-plat-head"><span>Platform</span><span>VIPs</span></div>
-            <div class="vip-plat-row"><span>BingoPlus</span><b>——</b></div>
-            <div class="vip-plat-row"><span>GameZone</span><b>——</b></div>
-            <div class="vip-plat-row"><span>ArenaPlus</span><b>——</b></div>
+          <div class="vip-tbl">
+            <table>
+              <colgroup><col style="width:25%"><col style="width:15%"><col style="width:14%"><col style="width:12%"><col style="width:7%"><col style="width:9%"><col style="width:9%"><col style="width:9%"></colgroup>
+              <thead><tr><th>VIP account</th><th>Total Bet Amount</th><th>Total Payout</th><th>Total GGR</th><th>RTP</th><th>Total Rounds</th><th>Active Days</th><th>Platform</th></tr></thead>
+              <tbody><tr><td colspan="8" class="vip-empty">No VIP accounts — no VIP level in the Local Z source yet</td></tr></tbody>
+            </table>
           </div>
         </div>
         <div class="panel pad chart-box pg-6 pg-denom pg-chart"><div class="side-title"><h3>Unique Players by Bet Denomination</h3><span>Daily · unique players per bet amount</span></div><svg class="chart denom-svg" viewBox="0 0 658 206" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Daily unique players by bet denomination, separated by Loteria, Slot and Bingo"><defs><linearGradient id="denloteria" x1="0" x2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#38bdf8"/></linearGradient><linearGradient id="denslot" x1="0" x2="1"><stop offset="0" stop-color="#b78cff"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient><linearGradient id="denbingo" x1="0" x2="1"><stop offset="0" stop-color="#fde047"/><stop offset="1" stop-color="#22c55e"/></linearGradient></defs><text x="0" y="11" style="fill:var(--text)" font-size="10" font-weight="800">Loteria</text><text x="0" y="21.5" style="fill:var(--muted)" font-size="8.5">Starting bet ₱5 · 2,274 players</text><line x1="46" y1="25.0" x2="46" y2="190.0" style="stroke:var(--line)"/><rect x="52" y="28.0" width="120.0" height="14.0" rx="4" fill="url(#denloteria)"/><text x="178.0" y="38.2" style="fill:var(--text)" font-size="9" font-weight="700">2,149</text><text x="46" y="38.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">₱5–10</text><rect x="52" y="57.0" width="10.8" height="14.0" rx="4" fill="url(#denloteria)"/><text x="68.8" y="67.2" style="fill:var(--text)" font-size="9" font-weight="700">193</text><text x="46" y="67.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱10–20</text><rect x="52" y="86.0" width="4.5" height="14.0" rx="4" fill="url(#denloteria)"/><text x="62.5" y="96.2" style="fill:var(--text)" font-size="9" font-weight="700">80</text><text x="46" y="96.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱20–50</text><rect x="52" y="115.0" width="20.7" height="14.0" rx="4" fill="url(#denloteria)"/><text x="78.7" y="125.2" style="fill:var(--text)" font-size="9" font-weight="700">370</text><text x="46" y="125.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱50–100</text><rect x="52" y="144.0" width="4.3" height="14.0" rx="4" fill="url(#denloteria)"/><text x="62.3" y="154.2" style="fill:var(--text)" font-size="9" font-weight="700">77</text><text x="46" y="154.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱100–1000</text><rect x="52" y="173.0" width="1.6" height="14.0" rx="4" fill="url(#denloteria)"/><text x="59.6" y="183.2" style="fill:var(--text)" font-size="9" font-weight="700">1</text><text x="46" y="183.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱1000</text><text x="226" y="11" style="fill:var(--text)" font-size="10" font-weight="800">Slot</text><text x="226" y="21.5" style="fill:var(--muted)" font-size="8.5">Starting bet ₱0.50 · 1,093 players</text><line x1="272" y1="25.0" x2="272" y2="190.0" style="stroke:var(--line)"/><rect x="278" y="28.0" width="120.0" height="14.0" rx="4" fill="url(#denslot)"/><text x="404.0" y="38.2" style="fill:var(--text)" font-size="9" font-weight="700">979</text><text x="272" y="38.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">₱0.5–3</text><rect x="278" y="57.0" width="35.7" height="14.0" rx="4" fill="url(#denslot)"/><text x="319.7" y="67.2" style="fill:var(--text)" font-size="9" font-weight="700">291</text><text x="272" y="67.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱3–10</text><rect x="278" y="86.0" width="16.3" height="14.0" rx="4" fill="url(#denslot)"/><text x="300.3" y="96.2" style="fill:var(--text)" font-size="9" font-weight="700">133</text><text x="272" y="96.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱10–50</text><rect x="278" y="115.0" width="7.6" height="14.0" rx="4" fill="url(#denslot)"/><text x="291.6" y="125.2" style="fill:var(--text)" font-size="9" font-weight="700">62</text><text x="272" y="125.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱50–100</text><rect x="278" y="144.0" width="1.6" height="14.0" rx="4" fill="url(#denslot)"/><text x="285.6" y="154.2" style="fill:var(--text)" font-size="9" font-weight="700">13</text><text x="272" y="154.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱100–400</text><rect x="278" y="173.0" width="1.6" height="14.0" rx="4" fill="url(#denslot)"/><text x="285.6" y="183.2" style="fill:var(--text)" font-size="9" font-weight="700">6</text><text x="272" y="183.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱400</text><text x="452" y="11" style="fill:var(--text)" font-size="10" font-weight="800">Bingo</text><text x="452" y="21.5" style="fill:var(--muted)" font-size="8.5">Stakes ₱1–5 · 380 players</text><line x1="498" y1="25.0" x2="498" y2="190.0" style="stroke:var(--line)"/><rect x="504" y="28.0" width="24.1" height="14.0" rx="4" fill="url(#denbingo)"/><text x="534.1" y="38.2" style="fill:var(--text)" font-size="9" font-weight="700">58</text><text x="498" y="38.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">₱1</text><rect x="504" y="57.0" width="7.9" height="14.0" rx="4" fill="url(#denbingo)"/><text x="517.9" y="67.2" style="fill:var(--text)" font-size="9" font-weight="700">19</text><text x="498" y="67.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱1–2</text><rect x="504" y="86.0" width="4.6" height="14.0" rx="4" fill="url(#denbingo)"/><text x="514.6" y="96.2" style="fill:var(--text)" font-size="9" font-weight="700">11</text><text x="498" y="96.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱2–3</text><rect x="504" y="115.0" width="120.0" height="14.0" rx="4" fill="url(#denbingo)"/><text x="630.0" y="125.2" style="fill:var(--text)" font-size="9" font-weight="700">289</text><text x="498" y="125.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱3–5</text><rect x="504" y="144.0" width="33.2" height="14.0" rx="4" fill="url(#denbingo)"/><text x="543.2" y="154.2" style="fill:var(--text)" font-size="9" font-weight="700">80</text><text x="498" y="154.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱5–100</text><rect x="504" y="173.0" width="1.6" height="14.0" rx="2" style="fill:var(--line)"/><text x="512.0" y="183.2" style="fill:var(--muted)" font-size="9" font-weight="700">0</text><text x="498" y="183.2" style="fill:var(--muted)" font-size="8.5" text-anchor="end" font-weight="600">>₱100</text></svg></div>
@@ -4069,16 +4061,20 @@
         "The average rounds per player sits above the median on both Loteria and Slot, so a small group of high-frequency accounts pulls the average up.": "乐透与老虎机的人均回合数均高于中位数，说明少数高频玩家拉高了平均值。",
         "Loteria carries the larger player group in the 1–10 and 11–20 and 21–50 and 51–100 and >100 bands; the largest band overall is 51–100 rounds with 620 Loteria and 248 Slot player entries.": "乐透在 1–10、11–20、21–50、51–100、>100 回合区间的玩家数高于老虎机；最大的区间为 51–100 回合，乐透 620 条、老虎机 248 条玩家记录。",
         "VIP Player Performance": "VIP 玩家表现",
-        "Level-tagged members · client feed": "带等级标记的会员 · 客户端数据",
         "Total VIP Players": "VIP 玩家总数",
-        "New VIPs": "新增 VIP",
+        "NEW VIPs": "新增 VIP",
         "Active VIPs": "活跃 VIP",
         "VIP Player Share": "VIP 玩家占比",
         "VIP Bet Share": "VIP 投注占比",
         "VIP GGR Share": "VIP 游戏总收入占比",
-        "VIP Retention": "VIP 留存",
-        "VIP Players by Platform": "各平台 VIP 玩家",
-        "VIPs": "VIP 数"
+        "Total bet": "总投注",
+        "Total GGR": "总游戏总收入",
+        "VIP account": "VIP 账号",
+        "Total Bet Amount": "总投注金额",
+        "Total Payout": "总派彩",
+        "Total Rounds": "总回合数",
+        "Active Days": "活跃天数",
+        "No VIP accounts — no VIP level in the Local Z source yet": "暂无 VIP 账号 — 数据源尚无 VIP 等级"
         /*CN:PPNOTES:END*/
       });
       /*CN:PANELS:START*/
