@@ -2755,6 +2755,62 @@
        Denomination and Engagement cards, so their charts take that height. */
     .player-grid > .pp-engage .chart.eng-svg { max-height: 250px !important; }
     .player-grid > .pg-denom .chart.denom-svg { max-height: 250px !important; }
+
+    /* =====================================================================
+       2026-11-09 (Melly) — H5 / MOBILE ONLY. Desktop is untouched.
+       "yung Game mode at VIP player sa dashboard h5 version hindi maayos.
+        dapat hindi nag ooverlap."
+       Game Modes: stack the four games as plain blocks (no flex compression,
+       no absolute layers) so name / track / legend can never collide.
+       VIP: 2-up KPI cards, and the eight-column account table scrolls inside
+       its own panel instead of squeezing every money cell to ellipsis.
+       ===================================================================== */
+    @media (max-width: 700px) {
+      .gp-modes { display: block !important; min-height: 0 !important; }
+      .gp-modes > .mode-game {
+        display: block !important; position: static !important;
+        flex: none !important; height: auto !important; min-height: 0 !important;
+        margin: 0 0 16px !important; padding: 0 !important;
+      }
+      .gp-modes > .mode-game:last-child { margin-bottom: 0 !important; }
+      .gp-modes .mode-game-name {
+        position: static !important; display: block; margin: 0 0 7px;
+        font-size: 12px; line-height: 1.25; letter-spacing: .01em;
+      }
+      .gp-modes .mode-track {
+        position: static !important; display: flex !important;
+        width: 100% !important; height: 12px; margin: 0 0 5px;
+        overflow: hidden;
+      }
+      .gp-modes .mode-legend {
+        position: static !important; display: flex !important;
+        justify-content: space-between; gap: 10px;
+        margin: 0 0 11px; font-size: 10px; line-height: 1.2;
+      }
+      .gp-modes .mode-legend:last-child { margin-bottom: 0; }
+      .gp-modes .mode-legend span { white-space: nowrap; }
+      .gp-modes .mode-legend i { display: inline-block; width: 7px; height: 7px;
+        border-radius: 2px; margin-right: 5px; vertical-align: 1px; }
+
+      .pp-vip .vip-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8px;
+      }
+      .pp-vip .vip-k { padding: 8px 10px; }
+      .pp-vip .vip-k span { white-space: normal; overflow: visible;
+        text-overflow: clip; font-size: 8.5px; line-height: 1.2; }
+      .pp-vip .vip-k b { font-size: 15px; }
+      .pp-vip .vip-k small { white-space: normal; overflow: visible;
+        text-overflow: clip; font-size: 8px; }
+      .pp-vip .vip-tbl { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .pp-vip .vip-tbl table { min-width: 720px; }
+      .pp-vip .vip-tbl thead th { font-size: 7.5px; padding: 5px 6px; }
+      .pp-vip .vip-tbl tbody td { padding: 5px 6px; font-size: 9px; }
+      .pp-vip .vip-tag { display: block; margin: 2px 0 0; width: max-content;
+        font-size: 6.5px; }
+      .pp-vip .vip-tbl tbody td:first-child,
+      .pp-vip .vip-tbl thead th:first-child { position: sticky; left: 0;
+        background: var(--panel); z-index: 1; }
+    }
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
