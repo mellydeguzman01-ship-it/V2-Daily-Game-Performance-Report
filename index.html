@@ -705,8 +705,8 @@
        Modes & Round Type Distribution 20% | 100 Rounds a Day 20% | Table 20%".
        Game Modes and Round Type Distribution share ONE 20% column, stacked, so
        each keeps a readable width instead of being halved into 10%. */
-    .gp-row-1 { display: grid; grid-template-columns: 33fr 32fr 35fr;
-      grid-template-rows: auto 1fr auto; gap: 10px; align-items: stretch; }
+    .gp-row-1 { display: grid; grid-template-columns: 40fr 20fr 20fr 20fr;
+      grid-template-rows: auto 1fr; gap: 10px; align-items: stretch; }
     .gp-row-2 { display: grid; grid-template-columns: 50fr 15fr 15fr 20fr; gap: 10px; align-items: stretch; }
     /* every child carried explicit row/column placement from the old 20-track grid */
     .gp-row-2 > .panel { grid-column: auto !important; grid-row: auto !important; min-width: 0; }
@@ -718,11 +718,11 @@
        metrics + Top 5.  Row 2 is 1fr so 100 Rounds a Day absorbs the slack and the
        Round Type card keeps its natural (slim) height, its bottom still landing on
        the grid bottom with the two spanning columns. */
-    .gp-row-1 > .gp-overview { grid-column: 1 / -1; grid-row: 1; }
-    .gp-row-1 > .gp-modes { grid-column: 1; grid-row: 2 / span 2; }
-    .gp-row-1 > .gp-feature { grid-column: 2; grid-row: 3; }
-    .gp-row-1 > .gp-passline { grid-column: 2; grid-row: 2; }
-    .gp-row-1 > .gp-side { grid-column: 3; grid-row: 2 / span 2;
+    .gp-row-1 > .gp-overview { grid-column: 1; grid-row: 1 / span 2; }
+    .gp-row-1 > .gp-modes { grid-column: 2; grid-row: 1 / span 2; }
+    .gp-row-1 > .gp-feature { grid-column: 3; grid-row: 2; }
+    .gp-row-1 > .gp-passline { grid-column: 3; grid-row: 1; }
+    .gp-row-1 > .gp-side { grid-column: 4; grid-row: 1 / span 2;
       display: flex; flex-direction: column; gap: 10px; min-width: 0; }
     .gp-row-1 > .gp-side > .gp-top5 { flex: 1 1 auto; }
     /* 2026-11-09: with the cards moved out, the band is taller than this column's
@@ -731,7 +731,7 @@
        overview cards and .plat-metrics). */
     .gp-row-1 > .gp-side > .gp-top5 .gp-top5-list { flex: 1 1 auto;
       grid-auto-rows: minmax(0, 1fr); align-content: stretch; }
-    .gp-row-1 > .game-summary { grid-column: 3; grid-row: 2 / span 2; }
+    .gp-row-1 > .game-summary { grid-column: 4; grid-row: 1 / span 2; }
     .gp-row-1 > .gp-overview { display: flex; flex-direction: column; gap: 8px; }
     /* 2026-10-21: Round Type Distribution explanatory note removed on request - the
        three bars spread over the card height instead of leaving an empty block. */
@@ -832,6 +832,65 @@
     .gp-overview .go-band.go-quad .go-vl { grid-column: 3; grid-row: 1;
       justify-self: end; font-size: 9.5px; line-height: 1.15; }
     .gp-overview .go-band.go-quad .go-gauge { max-height: 104px; width: 76%; margin: 2px auto 4px; }
+
+    /* 2026-11-09 (Melly): "GAME PERFORMANCE: ONE ROW ... Game Overview 40%".
+       Game Overview now owns the 40% track (it used to span the full width), so
+       the four cards sit in ~22% of the width they had. Everything inside a card
+       steps down one notch and the metric row keeps label + figure on ONE line
+       (icon 8px, label 6.5px, figure 8.5px), which fits a ~177px card at 1909px
+       and still holds at 1440px. Nothing is removed: all 15 rows stay. */
+    .gp-overview .go-band.go-quad .go-card { gap: 3px; padding: 5px 4px 4px; }
+    .gp-overview .go-band.go-quad .go-head { min-height: 18px; gap: 3px; }
+    .gp-overview .go-band.go-quad .go-logo { height: 17px; max-width: 96%; }
+    .gp-overview .go-band.go-quad .go-gauge { max-height: 76px; width: 68%;
+      margin: 2px auto 3px; }
+    .gp-overview .go-band.go-quad .go-gauge-in { gap: 6px; }
+    .gp-overview .go-band.go-quad .go-gauge-val { font-size: 10.5px; }
+    .gp-overview .go-band.go-quad .go-gauge-lb { font-size: 5.5px; letter-spacing: .04em;  line-height: 1;}
+    .gp-overview .go-band.go-quad .go-row { grid-template-columns: 8px minmax(0, 1fr) auto;
+      gap: 0 3px; padding: 0.5px 0; }
+    .gp-overview .go-band.go-quad .go-ico,
+    .gp-overview .go-band.go-quad .go-ico svg { width: 8px; height: 8px; }
+    .gp-overview .go-band.go-quad .go-lb { font-size: 6.5px; }
+    .gp-overview .go-band.go-quad .go-vl { font-size: 8.5px; }
+    .gp-overview .go-band.go-quad .go-foot { font-size: 6px; }
+
+    /* The 100 Rounds a Day / Round Type stack is the column that sets the band
+       height (5 items x 65px + 3 items x 71px = 761px at 1909), so the two cards
+       under Game Overview stretched to that. Their rows lose the air that was
+       never content: bar margins 9/6 -> 5/3px, track 7 -> 6px, head 12 -> 11px,
+       foot 11 -> 10px, list gap 8 -> 6px. Item 65 -> 52px, 71 -> 57px, so the
+       stack measures ~580px and the band is driven by TABLE + Top 5 instead. */
+    .gp-row-1 > .gp-passline .dynamic-list,
+    .gp-row-1 > .gp-feature .dynamic-list { gap: 6px; }
+    .gp-row-1 > .gp-passline .dynamic-item,
+    .gp-row-1 > .gp-feature .dynamic-item { padding: 3px 0; }
+    .gp-row-1 > .gp-passline .dynamic-head,
+    .gp-row-1 > .gp-feature .dynamic-head { font-size: 11px; }
+    .gp-row-1 > .gp-passline .bar-track,
+    .gp-row-1 > .gp-feature .bar-track { height: 6px; margin: 5px 0 3px; }
+    .gp-row-1 > .gp-passline .dynamic-foot,
+    .gp-row-1 > .gp-feature .dynamic-foot { font-size: 10px; }
+
+    /* Wide screens give each card 170px instead of 123px, and the band gives it
+       ~545px of height, so the metric type steps back UP one notch: 7.5px label
+       and 10px figure on one line (measured to fit the 162px content box), with
+       a slightly larger ring to fill the card head-to-foot. Below 1600px the
+       slimmer 6.5/8.5px pair above still applies. */
+    @media (min-width: 1600px) {
+      .gp-overview .go-band.go-quad .go-row { grid-template-columns: 9px minmax(0, 1fr) auto;
+        gap: 0 4px; }
+      .gp-overview .go-band.go-quad .go-ico,
+      .gp-overview .go-band.go-quad .go-ico svg { width: 9px; height: 9px; }
+      .gp-overview .go-band.go-quad .go-lb { font-size: 7.5px; }
+      .gp-overview .go-band.go-quad .go-vl { font-size: 10px; }
+      .gp-overview .go-band.go-quad .go-gauge { max-height: 96px; width: 74%;
+        margin: 3px auto 4px; }
+      .gp-overview .go-band.go-quad .go-gauge-val { font-size: 12px; }
+      .gp-overview .go-band.go-quad .go-gauge-lb { font-size: 6px; }
+      .gp-overview .go-band.go-quad .go-name { font-size: 9px; }
+      .gp-overview .go-band.go-quad .go-logo { height: 19px; }
+    }
 
     /* A game that has not settled a round yet: the ring is an empty track (no
        arc, no tip, no glow) and its RTP reads as a muted dash, because 0% would

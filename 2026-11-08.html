@@ -711,19 +711,48 @@
     /* every child carried explicit row/column placement from the old 20-track grid */
     .gp-row-2 > .panel { grid-column: auto !important; grid-row: auto !important; min-width: 0; }
     .gp-row-1 > .panel { min-width: 0; }
+    /* 2026-11-09 (Melly): "isang row mo lang tong mga games dito sa game overview" +
+       "ilagay mo sa baba ng 100 Rounds a Day, yung Round Type Distribution".
+       Game Overview is now its OWN full-width row (four cards across), and the band
+       below it is three columns: Game Modes | 100 Rounds a Day over Round Type |
+       metrics + Top 5.  Row 2 is 1fr so 100 Rounds a Day absorbs the slack and the
+       Round Type card keeps its natural (slim) height, its bottom still landing on
+       the grid bottom with the two spanning columns. */
     .gp-row-1 > .gp-overview { grid-column: 1; grid-row: 1 / span 2; }
-    .gp-row-1 > .gp-modes { grid-column: 2; grid-row: 1; }
-    .gp-row-1 > .gp-feature { grid-column: 2; grid-row: 2; }
-    .gp-row-1 > .gp-passline { grid-column: 3; grid-row: 1 / span 2; }
+    .gp-row-1 > .gp-modes { grid-column: 2; grid-row: 1 / span 2; }
+    .gp-row-1 > .gp-feature { grid-column: 3; grid-row: 2; }
+    .gp-row-1 > .gp-passline { grid-column: 3; grid-row: 1; }
     .gp-row-1 > .gp-side { grid-column: 4; grid-row: 1 / span 2;
       display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-    .gp-row-1 > .gp-side > .gp-top5 { flex: 0 0 auto; }
+    .gp-row-1 > .gp-side > .gp-top5 { flex: 1 1 auto; }
+    /* 2026-11-09: with the cards moved out, the band is taller than this column's
+       own content, so the five player rows share the leftover height instead of
+       leaving a pocket under the last card (same 1fr-rows convention as the
+       overview cards and .plat-metrics). */
+    .gp-row-1 > .gp-side > .gp-top5 .gp-top5-list { flex: 1 1 auto;
+      grid-auto-rows: minmax(0, 1fr); align-content: stretch; }
     .gp-row-1 > .game-summary { grid-column: 4; grid-row: 1 / span 2; }
     .gp-row-1 > .gp-overview { display: flex; flex-direction: column; gap: 8px; }
     /* 2026-10-21: Round Type Distribution explanatory note removed on request - the
        three bars spread over the card height instead of leaving an empty block. */
     .gp-row-1 > .gp-feature { display: flex; flex-direction: column; }
-    .gp-row-1 > .gp-feature .dynamic-list { flex: 1 1 auto; grid-auto-rows: 1fr; gap: 14px; }
+    .gp-row-1 > .gp-feature .dynamic-list { flex: 1 1 auto; grid-auto-rows: 1fr; gap: 8px; }
+    /* 2026-11-09 (Melly): "ilagay mo sa baba ng 100 Rounds a Day, yung Round Type
+       Distribution. nipisan mo lang yung kada metrics para hindi humaba yung card."
+       100 Rounds a Day and Round Type now share ONE column, so the pair is what sets
+       the band's height. Both carried .chart-box's 305px min-height, which spread
+       their 40px rows over 81px each - stacked, that pair measured 877px against a
+       609px side column and forced ~400px of dead air into Game Modes. The
+       min-height is cancelled here and the rows go to their natural height, so the
+       stack is ~450px and the band is driven by the side column instead. */
+    .gp-row-1 > .gp-feature.chart-box,
+    .gp-row-1 > .gp-passline.chart-box { min-height: 0; }
+    .gp-row-1 > .gp-feature .dynamic-list,
+    .gp-row-1 > .gp-passline .dynamic-list { flex: 0 0 auto; grid-auto-rows: auto;
+      gap: 8px; height: auto; }
+    .gp-row-1 > .gp-feature .dynamic-item,
+    .gp-row-1 > .gp-passline .dynamic-item { justify-content: flex-start; gap: 3px;
+      padding: 4px 0; }
     .gp-row-1 > .gp-feature .dynamic-item { display: flex; flex-direction: column; justify-content: space-between; }
     /* 2026-10-21 (user): the shareline and the long note under the TOTAL bar are
        gone, so the panel no longer fills its row by itself (measured 214px of dead
@@ -794,15 +823,74 @@
        same order, same rows), which halves the card height and doubles its
        width - wide enough for a metric to sit on ONE line again, so the label
        and figure no longer stack. Type comes down with it. */
-    .go-band.go-quad { grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-template-rows: repeat(2, minmax(0, 1fr)); }
+    .go-band.go-quad { grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-rows: auto; }
     .gp-overview .go-band.go-quad .go-rows { align-content: stretch; grid-auto-rows: minmax(0, 1fr); }
     .gp-overview .go-band.go-quad .go-row { grid-template-columns: 9px minmax(0, 1fr) auto;
-      grid-template-rows: auto; align-content: center; gap: 0 5px; padding: 1.5px 0; }
+      grid-template-rows: auto; align-content: center; gap: 0 5px; padding: 0.5px 0; }
     .gp-overview .go-band.go-quad .go-lb { grid-column: 2; grid-row: 1; font-size: 7.5px; }
     .gp-overview .go-band.go-quad .go-vl { grid-column: 3; grid-row: 1;
       justify-self: end; font-size: 9.5px; line-height: 1.15; }
     .gp-overview .go-band.go-quad .go-gauge { max-height: 104px; width: 76%; margin: 2px auto 4px; }
+
+    /* 2026-11-09 (Melly): "GAME PERFORMANCE: ONE ROW ... Game Overview 40%".
+       Game Overview now owns the 40% track (it used to span the full width), so
+       the four cards sit in ~22% of the width they had. Everything inside a card
+       steps down one notch and the metric row keeps label + figure on ONE line
+       (icon 8px, label 6.5px, figure 8.5px), which fits a ~177px card at 1909px
+       and still holds at 1440px. Nothing is removed: all 15 rows stay. */
+    .gp-overview .go-band.go-quad .go-card { gap: 3px; padding: 5px 4px 4px; }
+    .gp-overview .go-band.go-quad .go-head { min-height: 18px; gap: 3px; }
+    .gp-overview .go-band.go-quad .go-logo { height: 17px; max-width: 96%; }
+    .gp-overview .go-band.go-quad .go-gauge { max-height: 76px; width: 68%;
+      margin: 2px auto 3px; }
+    .gp-overview .go-band.go-quad .go-gauge-in { gap: 6px; }
+    .gp-overview .go-band.go-quad .go-gauge-val { font-size: 10.5px; }
+    .gp-overview .go-band.go-quad .go-gauge-lb { font-size: 5.5px; letter-spacing: .04em;  line-height: 1;}
+    .gp-overview .go-band.go-quad .go-row { grid-template-columns: 8px minmax(0, 1fr) auto;
+      gap: 0 3px; padding: 0.5px 0; }
+    .gp-overview .go-band.go-quad .go-ico,
+    .gp-overview .go-band.go-quad .go-ico svg { width: 8px; height: 8px; }
+    .gp-overview .go-band.go-quad .go-lb { font-size: 6.5px; }
+    .gp-overview .go-band.go-quad .go-vl { font-size: 8.5px; }
+    .gp-overview .go-band.go-quad .go-foot { font-size: 6px; }
+
+    /* The 100 Rounds a Day / Round Type stack is the column that sets the band
+       height (5 items x 65px + 3 items x 71px = 761px at 1909), so the two cards
+       under Game Overview stretched to that. Their rows lose the air that was
+       never content: bar margins 9/6 -> 5/3px, track 7 -> 6px, head 12 -> 11px,
+       foot 11 -> 10px, list gap 8 -> 6px. Item 65 -> 52px, 71 -> 57px, so the
+       stack measures ~580px and the band is driven by TABLE + Top 5 instead. */
+    .gp-row-1 > .gp-passline .dynamic-list,
+    .gp-row-1 > .gp-feature .dynamic-list { gap: 6px; }
+    .gp-row-1 > .gp-passline .dynamic-item,
+    .gp-row-1 > .gp-feature .dynamic-item { padding: 3px 0; }
+    .gp-row-1 > .gp-passline .dynamic-head,
+    .gp-row-1 > .gp-feature .dynamic-head { font-size: 11px; }
+    .gp-row-1 > .gp-passline .bar-track,
+    .gp-row-1 > .gp-feature .bar-track { height: 6px; margin: 5px 0 3px; }
+    .gp-row-1 > .gp-passline .dynamic-foot,
+    .gp-row-1 > .gp-feature .dynamic-foot { font-size: 10px; }
+
+    /* Wide screens give each card 170px instead of 123px, and the band gives it
+       ~545px of height, so the metric type steps back UP one notch: 7.5px label
+       and 10px figure on one line (measured to fit the 162px content box), with
+       a slightly larger ring to fill the card head-to-foot. Below 1600px the
+       slimmer 6.5/8.5px pair above still applies. */
+    @media (min-width: 1600px) {
+      .gp-overview .go-band.go-quad .go-row { grid-template-columns: 9px minmax(0, 1fr) auto;
+        gap: 0 4px; }
+      .gp-overview .go-band.go-quad .go-ico,
+      .gp-overview .go-band.go-quad .go-ico svg { width: 9px; height: 9px; }
+      .gp-overview .go-band.go-quad .go-lb { font-size: 7.5px; }
+      .gp-overview .go-band.go-quad .go-vl { font-size: 10px; }
+      .gp-overview .go-band.go-quad .go-gauge { max-height: 96px; width: 74%;
+        margin: 3px auto 4px; }
+      .gp-overview .go-band.go-quad .go-gauge-val { font-size: 12px; }
+      .gp-overview .go-band.go-quad .go-gauge-lb { font-size: 6px; }
+      .gp-overview .go-band.go-quad .go-name { font-size: 9px; }
+      .gp-overview .go-band.go-quad .go-logo { height: 19px; }
+    }
 
     /* A game that has not settled a round yet: the ring is an empty track (no
        arc, no tip, no glow) and its RTP reads as a muted dash, because 0% would
@@ -819,6 +907,13 @@
        reference: blue -> pale -> pink, yellow -> pale -> orange.
        `.gp-modes` is a .chart-box, whose 305px min-height is cancelled below. */
     .gp-modes.chart-box { min-height: 0; }
+    /* 2026-11-09: with the four game cards lifted out into their own full-width
+       row, this panel spans the band's two rows on its own, so it is taller than
+       its four game blocks. They share that height equally instead of pooling
+       ~410px of dead space under the last one. */
+    .gp-modes { display: flex; flex-direction: column; }
+    .gp-modes > .mode-game { flex: 1 1 0; display: flex; flex-direction: column;
+                             justify-content: center; min-height: 0; }
     .gp-modes .mode-row + .mode-row { margin-top: 16px; }
     .gp-modes .mode-label { font-size: 10px; font-weight: 700; color: var(--text);
                             letter-spacing: .1px; margin-bottom: 7px; }
@@ -2595,7 +2690,7 @@
           </div><div class="panel pad incident-panel"><div class="side-title"><h3>Alerts &amp; Incident Report</h3><span>Daily status</span></div>
             <div class="alert-row"><div><strong>GGR Status</strong><small>Negative daily GGR ₱-4,992.28</small></div><span class="status danger">Negative</span></div>
           <div class="alert-row"><div><strong>RTP Status</strong><small>100.10% vs target ≈ 97.5%</small></div><span class="status danger">Above 100%</span></div>
-          <div class="alert-row incident-live"><div style="min-width:0"><strong>Fusebreak Alarm / Melt</strong><small>Melt</small></div><span class="status danger">Melt</span></div>
+          <div class="alert-row"><div style="min-width:0"><strong>Fusebreak Alarm / Melt</strong><small>Circuit Break Alarm Trigger due to one player, Lucky Color, BP1_bingoplusqsm5uo (GameZone)</small></div><span class="status warn">Alarm</span></div>
           <div class="alert-row incident-live"><div style="min-width:0"><strong>High Winning Alert</strong><small>BANANA CRAZE, LUCKY COLOR · 2 alarms · 00:54 / 11:26 · max 75×</small></div><span class="status danger">Alert</span></div>
           </div></div>
       </div>
@@ -2615,8 +2710,10 @@
           <div class="panel pad chart-box gp-modes">
           <div class="side-title"><h3>Game Modes</h3><span>share of settled rounds</span></div>
           <!--GP:MODES:START-->
-          <div class="mode-row"><div class="mode-label">Operation Mode</div><div class="mode-track" role="img" aria-label="Operation Mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:85.1%"></div><div class="seg seg-pink" style="width:14.9%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 85.1%</span><span><i style="background:var(--pink)"></i>Autoplay 14.9%</span></div></div>
-          <div class="mode-row"><div class="mode-label">Speed Mode</div><div class="mode-track" role="img" aria-label="Speed Mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:71.6%"></div><div class="seg seg-orange" style="width:28.4%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 71.6%</span><span><i style="background:var(--orange)"></i>Turbo 28.4%</span></div></div>
+          <div class="mode-game mg-banana"><div class="mode-game-name">Banana Craze</div><div class="mode-track" role="img" aria-label="Banana Craze · operation mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:85.1%"></div><div class="seg seg-pink" style="width:14.9%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 85.1%</span><span><i style="background:var(--pink)"></i>Autoplay 14.9%</span></div><div class="mode-track" role="img" aria-label="Banana Craze · speed mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:71.6%"></div><div class="seg seg-orange" style="width:28.4%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 71.6%</span><span><i style="background:var(--orange)"></i>Turbo 28.4%</span></div></div>
+          <div class="mode-game mg-ginto"><div class="mode-game-name">Ginto Match</div><div class="mode-track" role="img" aria-label="Ginto Match · operation mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:82.6%"></div><div class="seg seg-pink" style="width:17.4%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 82.6%</span><span><i style="background:var(--pink)"></i>Autoplay 17.4%</span></div><div class="mode-track" role="img" aria-label="Ginto Match · speed mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:2.9%"></div><div class="seg seg-orange" style="width:97.1%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 2.9%</span><span><i style="background:var(--orange)"></i>Turbo 97.1%</span></div></div>
+          <div class="mode-game mg-lucky"><div class="mode-game-name">Lucky Color</div><div class="mode-track" role="img" aria-label="Lucky Color · operation mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:72.6%"></div><div class="seg seg-pink" style="width:27.4%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 72.6%</span><span><i style="background:var(--pink)"></i>Autoplay 27.4%</span></div><div class="mode-track" role="img" aria-label="Lucky Color · speed mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:8.9%"></div><div class="seg seg-orange" style="width:91.1%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 8.9%</span><span><i style="background:var(--orange)"></i>Turbo 91.1%</span></div></div>
+          <div class="mode-game mg-blazing"><div class="mode-game-name">Blazing 7S</div><div class="mode-track" role="img" aria-label="Blazing 7S · operation mode, 100% stacked bar, Manual versus Autoplay"><div class="mode-fill"><div class="seg seg-blue" style="width:85.5%"></div><div class="seg seg-pink" style="width:14.5%"></div></div></div><div class="mode-legend"><span><i style="background:var(--blue)"></i>Manual 85.5%</span><span><i style="background:var(--pink)"></i>Autoplay 14.5%</span></div><div class="mode-track" role="img" aria-label="Blazing 7S · speed mode, 100% stacked bar, Normal versus Turbo"><div class="mode-fill"><div class="seg seg-yellow" style="width:12.1%"></div><div class="seg seg-orange" style="width:87.9%"></div></div></div><div class="mode-legend"><span><i style="background:var(--yellow)"></i>Normal 12.1%</span><span><i style="background:var(--orange)"></i>Turbo 87.9%</span></div></div>
           <!--GP:MODES:END-->
         </div>
           <div class="panel pad chart-box gp-feature">
@@ -4060,7 +4157,7 @@
         'High Activity': '高活跃',
         'Hour of day (PHT)': '一天中的小时（PHT）'
       });
-      /* gc-alerts-i18n */ Object.assign(cn, {"Melt": "", "BANANA CRAZE, LUCKY COLOR · 2 alarms · 00:54 / 11:26 · max 75×": "BANANA CRAZE, LUCKY COLOR · 2 次告警 · 00:54 / 11:26 · 最大 75×"});
+      /* gc-alerts-i18n */ Object.assign(cn, {"Circuit Break Alarm Trigger due to one player, Lucky Color, BP1_bingoplusqsm5uo (GameZone)": "熔断告警触发（单一玩家） · Lucky Color · BP1_bingoplusqsm5uo（GameZone）", "BANANA CRAZE, LUCKY COLOR · 2 alarms · 00:54 / 11:26 · max 75×": "BANANA CRAZE, LUCKY COLOR · 2 次告警 · 00:54 / 11:26 · 最大 75×"});
       /* incident-panel-i18n */ Object.assign(cn, {"Fuse-breaker Alert": "熔断警报", "Fusebreak Alarm / Melt": "熔断警报 / 熔毁", "Fusebreak Alarm": "熔断警报", "Melt": "熔毁", "Warning": "警告", "None": "无", "max ": "最大 ", "High Winning Alert": "高倍中奖警报", "High Winning": "高倍中奖", "Top Winning Player Alerts": "高额中奖玩家警报", "No high-multiplier win reached the alert threshold.": "当日无高倍中奖达到警报阈值。", "day RTP": "当日RTP", "Original": "原始", "Repeat": "重复", "Retries": "重试", "Trigger Repeat": "重复触发", "Trigger": "触发"});
       const entries = Object.entries(cn).sort((a, b) => b[0].length - a[0].length);
 
