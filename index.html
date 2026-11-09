@@ -705,8 +705,12 @@
        Modes & Round Type Distribution 20% | 100 Rounds a Day 20% | Table 20%".
        Game Modes and Round Type Distribution share ONE 20% column, stacked, so
        each keeps a readable width instead of being halved into 10%. */
+    /* 2026-11-09: rows auto auto, not auto 1fr. A 1fr second row made the grid hand
+       ALL leftover height to the Round Type panel, which then pushed the band to
+       564px and every card with it. With two auto rows the band is the natural
+       height of the tallest column (510px at 1909) and the cards land at 446. */
     .gp-row-1 { display: grid; grid-template-columns: 40fr 20fr 20fr 20fr;
-      grid-template-rows: auto 1fr; gap: 10px; align-items: stretch; }
+      grid-template-rows: auto auto; gap: 10px; align-items: stretch; }
     .gp-row-2 { display: grid; grid-template-columns: 50fr 15fr 15fr 20fr; gap: 10px; align-items: stretch; }
     /* every child carried explicit row/column placement from the old 20-track grid */
     .gp-row-2 > .panel { grid-column: auto !important; grid-row: auto !important; min-width: 0; }
@@ -888,6 +892,67 @@
       .gp-row-1 .game-summary table { font-size: 8.5px; }
       .gp-row-1 .game-summary th, .gp-row-1 .game-summary td { padding: 7px 3px; }
     }
+
+    /* 2026-11-09 (Melly), pass 2 of the one-row band: "bawasan mo pa yung
+       height nung card dito sa game overview ... tanggalin mo yung mga unused
+       space". A card is as tall as the band, so the band's dead height goes
+       first: 100 Rounds / Round Type rows drop 52/58 -> 40/46px, the TABLE rows
+       33 -> 27px and the Top 5 rows 43 -> 37px, which pulls the band 646 -> ~510
+       and the cards 567 -> ~430. Card rows keep their content height and spread
+       with space-between, so slack lands BETWEEN rows (never a hole at the
+       foot, never an overflow). All content is kept. */
+    .gp-row-1 > .gp-passline .dynamic-head,
+    .gp-row-1 > .gp-feature .dynamic-head { font-size: 10px; }
+    .gp-row-1 > .gp-passline .dynamic-foot,
+    .gp-row-1 > .gp-feature .dynamic-foot { font-size: 9px; }
+    .gp-row-1 > .gp-passline .bar-track,
+    .gp-row-1 > .gp-feature .bar-track { height: 5px; margin: 3px 0 2px; }
+    .gp-row-1 > .gp-passline .dynamic-item,
+    .gp-row-1 > .gp-feature .dynamic-item { padding: 2px 0; }
+    .gp-row-1 .game-summary th, .gp-row-1 .game-summary td { padding: 5px 5px; }
+    .gp-row-1 .gp-top5 .gp-top5-item { padding-top: 4px; padding-bottom: 4px; }
+
+    .gp-overview .go-band.go-quad .go-rows { align-content: space-between;
+      grid-auto-rows: auto; }
+    .gp-overview .go-band.go-quad .go-row { padding: 0; }
+    .gp-overview .go-band.go-quad .go-gauge { max-height: 80px; }
+
+    /* 2026-11-09 (Melly), pass 4: "tanggalin mo yung mga unused space". A one-line
+       metric row holds 11px of content in a 22-28px slice, so the slack shows up as
+       air between rows however the card is stretched. Each metric becomes a
+       two-line block instead - icon + label on top, the figure right-aligned
+       underneath - so the row's own content fills the height it is given. Same 15
+       metrics, same order; the figure stays at 10px (readable) while the label
+       drops to 7px. */
+    .gp-overview .go-band.go-quad .go-rows { align-content: stretch; }
+    .gp-overview .go-band.go-quad .go-row { grid-template-columns: 8px minmax(0, 1fr);
+      grid-template-rows: auto auto; align-content: center; gap: 0 4px; padding: 0; }
+    .gp-overview .go-band.go-quad .go-ico { grid-column: 1; grid-row: 1; }
+    .gp-overview .go-band.go-quad .go-lb { grid-column: 2; grid-row: 1; font-size: 6.5px;
+      line-height: 1.1; }
+    .gp-overview .go-band.go-quad .go-vl { grid-column: 1 / -1; grid-row: 2;
+      justify-self: end; font-size: 9.5px; line-height: 1.15; }
+
+    /* 2026-11-09 (Melly), pass 3: the frame itself. Every panel in the band
+       carried 18px padding and a 13px title margin, i.e. 49px of frame per card
+       (98px on the stacked column) before a single metric. 13px + 8px gives the
+       first row back to the content. */
+    .gp-row-1 > .panel.pad,
+    .gp-row-1 > .gp-side > .panel.pad { padding: 13px; }
+    .gp-row-1 > .panel > .side-title,
+    .gp-row-1 > .gp-side .side-title { margin-bottom: 8px; }
+    .gp-row-1 > .gp-passline .side-title,
+    .gp-row-1 > .gp-feature .side-title { margin-bottom: 6px; }
+    .gp-row-1 > .gp-passline .dynamic-list,
+    .gp-row-1 > .gp-feature .dynamic-list { margin-top: 5px; gap: 5px; }
+    .gp-row-1 > .gp-passline .dynamic-head,
+    .gp-row-1 > .gp-feature .dynamic-head { font-size: 9.5px; }
+    .gp-row-1 > .gp-passline .dynamic-foot,
+    .gp-row-1 > .gp-feature .dynamic-foot { font-size: 8.5px; }
+    .gp-row-1 > .gp-passline .bar-track,
+    .gp-row-1 > .gp-feature .bar-track { height: 4px; margin: 2px 0 2px; }
+    .gp-row-1 .game-summary th, .gp-row-1 .game-summary td { padding: 3px 5px; }
+    .gp-row-1 .gp-top5 .gp-top5-item { padding-top: 3px; padding-bottom: 3px; }
 
     @media (min-width: 1600px) {
       .gp-overview .go-band.go-quad .go-row { grid-template-columns: 9px minmax(0, 1fr) auto;
@@ -2584,6 +2649,53 @@
     .gp-modes .mode-game-name { color: var(--gm-acc, var(--text)); }
     .gp-modes .mode-game .mode-legend { margin-top: 5px; gap: 12px; }
     .gp-modes .mode-game .mode-legend + .mode-track { margin-top: 9px; }
+
+    /* =====================================================================
+       2026-11-09 (Melly) — GAME PERFORMANCE ONE ROW, FINAL OVERRIDES
+       "bawasan mo pa yung height nung card ... tanggalin mo yung mga unused space"
+       Placed at the END of the sheet on purpose: the base `.game-summary`
+       padding, the 1600px card-type media query and `.go-*` rules all sit
+       further down the file, so an earlier block loses the cascade tie (a
+       media query is not more specific, only later).
+       ===================================================================== */
+    .gp-row-1 > .panel.pad,
+    .gp-row-1 > .gp-side > .panel.pad { padding: 13px; }
+    .gp-row-1 > .panel > .side-title { margin-bottom: 8px; }
+    .gp-row-1 > .gp-passline .side-title,
+    .gp-row-1 > .gp-feature .side-title { margin-bottom: 6px; }
+    .gp-row-1 > .gp-passline .dynamic-list,
+    .gp-row-1 > .gp-feature .dynamic-list { margin-top: 5px; gap: 5px; }
+    .gp-row-1 > .gp-passline .dynamic-head,
+    .gp-row-1 > .gp-feature .dynamic-head { font-size: 9.5px; }
+    .gp-row-1 > .gp-passline .dynamic-foot,
+    .gp-row-1 > .gp-feature .dynamic-foot { font-size: 8.5px; }
+    .gp-row-1 > .gp-passline .bar-track,
+    .gp-row-1 > .gp-feature .bar-track { height: 4px; margin: 2px 0; }
+    .gp-row-1 > .gp-passline .dynamic-item,
+    .gp-row-1 > .gp-feature .dynamic-item { padding: 2px 0; }
+    .gp-row-1 .game-summary th, .gp-row-1 .game-summary td { padding: 3px 5px; }
+    .gp-row-1 .gp-top5 .gp-top5-item { padding-top: 3px; padding-bottom: 3px; }
+    .gp-row-1.gp-row-1 .gp-modes .mode-game { margin-top: 8px; }
+
+    /* metric rows: two-line blocks that fill the height they are given */
+    .gp-overview .go-band.go-quad .go-rows { align-content: stretch;
+      grid-auto-rows: minmax(0, 1fr); }
+    .gp-overview .go-band.go-quad .go-row { grid-template-columns: 8px minmax(0, 1fr);
+      grid-template-rows: auto auto; align-content: center; gap: 0 4px; padding: 0; }
+    .gp-overview .go-band.go-quad .go-ico { grid-column: 1; grid-row: 1; }
+    .gp-overview .go-band.go-quad .go-ico,
+    .gp-overview .go-band.go-quad .go-ico svg { width: 8px; height: 8px; }
+    .gp-overview .go-band.go-quad .go-lb { grid-column: 2; grid-row: 1;
+      font-size: 6.5px; line-height: 1.1; }
+    .gp-overview .go-band.go-quad .go-vl { grid-column: 1 / -1; grid-row: 2;
+      justify-self: end; font-size: 9.5px; line-height: 1.15; }
+    .gp-overview .go-band.go-quad .go-card { gap: 2px; padding: 5px 4px 4px; }
+    .gp-overview .go-band.go-quad .go-head { min-height: 16px; }
+    .gp-overview .go-band.go-quad .go-logo { height: 16px; }
+    .gp-overview .go-band.go-quad .go-gauge { max-height: 80px; width: 74%;
+      margin: 2px auto 3px; }
+    .gp-overview .go-band.go-quad .go-gauge-val { font-size: 11px; }
+    .gp-overview .go-band.go-quad .go-gauge-lb { font-size: 5.5px; }
 </style>
   <script>
     /* Night mode is applied before first paint so a returning visitor who
