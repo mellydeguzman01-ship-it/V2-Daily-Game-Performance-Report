@@ -3017,6 +3017,7 @@
             <table>
               <thead><tr><th>Date</th><th>Details</th><th>Outcome</th></tr></thead>
               <tbody>
+                <tr><td>Thursday, November 12, 2026</td><td>Update to <strong>Banana Craze</strong> — added a <strong>0.8× base multiplier</strong> reward and reduced the RTP to <strong>97%</strong></td><td>Banana Craze now pays a 0.8× base multiplier reward, with RTP adjusted to 97%</td></tr>
                 <tr><td>Wednesday, October 28, 2026</td><td>BingoPlus (BP1) Loteria listed all four Game Engine titles in its <strong>new games</strong> entry — <strong>Banana Craze, Lucky Color, Ginto Match and Blazing 7's</strong> were visible as new games</td><td>All four games are discoverable from the BP1 Loteria new-games list, giving the full portfolio stronger visibility</td></tr>
                 <tr><td>Tuesday, October 27, 2026</td><td>Live games update — <strong>Lucky Color, Ginto Match and Blazing 7's</strong> are now live on <strong>BingoPlus (BP1)</strong></td><td>Live-game coverage expanded to Lucky Color, Ginto Match and Blazing 7's</td></tr>
                 <tr><td>Monday, October 12, 2026</td><td>RTP adjusted from <strong>98.3% → 97.5%</strong></td><td>RTP configuration updated to <strong>97.5%</strong>, reflecting the new target setting.</td></tr>
@@ -3593,9 +3594,10 @@ Manual play remains the dominant operating mode across all four games, indicatin
         thirtyDay.appendChild(flow30(d1_30, 'tp-flow d1'));  // D1 retention - orange ink, half a cycle behind
         // Days on which the configured RTP target moved. The red dot marks the day; the
         // tooltip names the move. 2026-09-18: 97.0% -> 98.3%. 2026-10-12: 98.3% -> 97.5%.
+        // 2026-11-12: 97.5% -> 97.0% (Banana Craze 0.8x multiplier update).
         // Keyed by the same 'Mon D' label the dates array produces, and declared AFTER
         // the window block so the builder's array splice cannot touch it.
-        const RTP_CHANGE_LABELS = { 'Sep 18': '97.0% → 98.3%', 'Oct 12': '98.3% → 97.5%' };
+        const RTP_CHANGE_LABELS = { 'Sep 18': '97.0% → 98.3%', 'Oct 12': '98.3% → 97.5%', 'Nov 12': '97.5% → 97.0%' };
         [rtp, d1Retention].forEach((series, seriesIndex) => series.forEach((value, i) => {
           const changeLabel = seriesIndex ? undefined : RTP_CHANGE_LABELS[dates[i]];
           const isRtpChange = changeLabel !== undefined;
