@@ -722,12 +722,12 @@
        gave them (cancel .chart-box's 305px min-height, natural row height). */
     .gp-stack { display: flex; flex-direction: column; gap: 10px; min-width: 0; min-height: 0; }
     .gp-stack > .panel { min-width: 0; min-height: 0; }
-    .gp-stack .dynamic-list { flex: 0 0 auto; grid-auto-rows: auto; gap: 6px; height: auto; margin-top: 4px; }
-    .gp-stack .dynamic-item { justify-content: flex-start; gap: 3px; padding: 3px 8px; border-radius: 8px; }
-    .gp-stack .dynamic-head { font-size: 10px; }
-    .gp-stack .dynamic-head span { font-size: 9px; }
-    .gp-stack .bar-track { height: 5px; margin: 4px 0 2px; }
-    .gp-stack .dynamic-foot { font-size: 9px; }
+    .gp-stack .dynamic-list { flex: 0 0 auto; grid-auto-rows: auto; gap: 4px; height: auto; margin-top: 2px; }
+    .gp-stack .dynamic-item { justify-content: flex-start; gap: 2px; padding: 1px 7px; border-radius: 7px; }
+    .gp-stack .dynamic-head { font-size: 9px; }
+    .gp-stack .dynamic-head span { font-size: 8px; }
+    .gp-stack .bar-track { height: 4px; margin: 2px 0 1px; }
+    .gp-stack .dynamic-foot { font-size: 8px; display: none; }
     /* 2026-11-09 (Melly): "isang row mo lang tong mga games dito sa game overview" +
        "ilagay mo sa baba ng 100 Rounds a Day, yung Round Type Distribution".
        Game Overview is now its OWN full-width row (four cards across), and the band
@@ -1002,12 +1002,12 @@
        its four game blocks. They share that height equally instead of pooling
        ~410px of dead space under the last one. */
     .gp-modes { display: flex; flex-direction: column; }
-    .gp-modes > .mode-game { flex: 1 1 0; display: flex; flex-direction: column;
-                             justify-content: center; min-height: 0; }
+    .gp-modes > .mode-game { flex: 0 0 auto; display: flex; flex-direction: column;
+                             justify-content: flex-start; min-height: 0; }
     .gp-modes .mode-row + .mode-row { margin-top: 16px; }
     .gp-modes .mode-label { font-size: 10px; font-weight: 700; color: var(--text);
                             letter-spacing: .1px; margin-bottom: 7px; }
-    .gp-modes .mode-track { position: relative; display: flex; height: 12px;
+    .gp-modes .mode-track { position: relative; display: flex; height: 10px;
                             border-radius: 999px; overflow: hidden;
                             background: var(--panel-2);
                             box-shadow: inset 0 0 0 1px var(--line); }
@@ -1367,6 +1367,17 @@
     .dynamic-head { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; } .dynamic-head span { color: var(--muted); }
     .bar-track { height: 7px; border-radius: 99px; background: rgba(148,177,211,.13); overflow: hidden; margin: 9px 0 6px; } .bar-fill { height: 100%; border-radius: inherit; background: var(--blue); }
     .dynamic-foot { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; }
+    .pp-mixed { display: flex; flex-direction: column; }
+    .rr-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .rr-kpi { padding: 8px 9px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel-2); min-width: 0; }
+    .rr-kpi .metric-label { font-size: 10px; line-height: 1.2; }
+    .rr-kpi .metric-value { font-size: 17px; margin-top: 4px; }
+    .rr-kpi .metric-subtext { font-size: 8.5px; }
+    .rr-bars { display: flex; flex-direction: column; gap: 12px; flex: 1 1 auto; justify-content: space-between; }
+    .rr-bar-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 11px; margin-bottom: 5px; }
+    .rr-game { color: var(--text); font-weight: 700; }
+    .rr-bar-head b { color: var(--cyan); font-weight: 800; }
+    .rr-bars .bar-track { margin: 0; height: 16px; }
 
     .distribution { display: grid; grid-template-columns: 1.25fr .75fr; gap: 14px; }
     .dist-table { min-width: 500px; } .dist-table td, .dist-table th { padding: 8px 10px; }
@@ -2644,7 +2655,7 @@
        Compact: game name, Operation bar + legend, Speed bar + legend. */
     .gp-modes .mode-game + .mode-game { margin-top: 12px; }
     .gp-modes .mode-game-name { font-size: 10.5px; font-weight: 800; color: var(--text);
-                                letter-spacing: .1px; margin-bottom: 6px; }
+                                letter-spacing: .1px; margin-bottom: 4px; }
     /* 2026-11-06 (Melly): "yung color ng text ng sa game dapat iba ibang color
        din para mabilis maidentify". Every game name carries that game's own
        accent, so the four blocks read by colour instead of by position. The
@@ -2662,8 +2673,8 @@
     html.night .gp-modes .mode-game.mg-blazing { --gm-acc: #ff9f45; }
     html.night .gp-modes .mode-game.mg-ginto   { --gm-acc: #ffca64; }
     .gp-modes .mode-game-name { color: var(--gm-acc, var(--text)); }
-    .gp-modes .mode-game .mode-legend { margin-top: 5px; gap: 12px; }
-    .gp-modes .mode-game .mode-legend + .mode-track { margin-top: 9px; }
+    .gp-modes .mode-game .mode-legend { margin-top: 3px; gap: 10px; }
+    .gp-modes .mode-game .mode-legend + .mode-track { margin-top: 4px; }
 
     /* =====================================================================
        2026-11-09 (Melly) — GAME PERFORMANCE ONE ROW, FINAL OVERRIDES
@@ -2690,7 +2701,7 @@
     .gp-row-1 > .gp-feature .dynamic-item { padding: 2px 0; }
     .gp-row-1 .game-summary th, .gp-row-1 .game-summary td { padding: 3px 5px; }
     .gp-row-1 .gp-top5 .gp-top5-item { padding-top: 3px; padding-bottom: 3px; }
-    .gp-row-1.gp-row-1 .gp-modes .mode-game { margin-top: 8px; }
+    .gp-row-1.gp-row-1 .gp-modes .mode-game { margin-top: 5px; }
 
     /* metric rows: two-line blocks that fill the height they are given */
     .gp-overview .go-band.go-quad .go-rows { align-content: stretch;
@@ -3256,11 +3267,20 @@
           <div class="alert-row incident-live"><div style="min-width:0"><strong>High Winning Alert</strong><small>BANANA CRAZE, BLAZING 7s · 2 alarms · 00:42 / 12:56 · max 200×</small></div><span class="status danger">Alert</span></div>
           </div>
       <div class="panel pad pp-mixed">
-          <div class="side-title"><h3>Repeat-Round Rate (%)</h3><span>≥2 rounds</span></div>
+          <div class="side-title"><h3>Repeat-Round Rate by Game</h3><span>players with ≥2 settled rounds</span></div>
           <!--PP:MIXED_A:START-->
-          <div style="display:flex;gap:18px;flex-wrap:wrap"><div><div class="metric-label">Repeat-round players (≥2 rounds)</div><div class="metric-value positive">9,390</div><div class="metric-subtext">93.9% of 10,003 players</div></div><div><div class="metric-label">One round only</div><div class="metric-value negative">613</div><div class="metric-subtext">6.1% of players</div></div></div>
-          <div class="chart-note" style="margin-top:12px">Repeat-round rate = players with 2 or more settled rounds that day ÷ every player the ledger settled (10,003); 613 players (6.1%) settled exactly one round.</div>
-          <!--PP:MIXED_A:END-->
+          <div class="rr-kpis">
+            <div class="rr-kpi"><div class="metric-label">Repeat-Round Rate</div><div class="metric-value positive">94.7%</div><div class="metric-subtext">14,780 of 15,608 players</div></div>
+            <div class="rr-kpi"><div class="metric-label">Repeat Players</div><div class="metric-value">14,780</div><div class="metric-subtext">≥2 settled rounds</div></div>
+            <div class="rr-kpi"><div class="metric-label">Avg. Rounds / Player</div><div class="metric-value">110.4</div><div class="metric-subtext">1,723,024 total rounds</div></div>
+          </div>
+          <div class="rr-bars">
+            <div class="rr-bar"><div class="rr-bar-head"><span class="rr-game">Banana Craze</span><b>93.9%</b></div><div class="bar-track"><div class="bar-fill" style="width:93.9%;background:var(--cyan)"></div></div></div>
+            <div class="rr-bar"><div class="rr-bar-head"><span class="rr-game">Ginto Match</span><b>96.0%</b></div><div class="bar-track"><div class="bar-fill" style="width:96%;background:var(--cyan)"></div></div></div>
+            <div class="rr-bar"><div class="rr-bar-head"><span class="rr-game">Blazing 7&#39;s</span><b>95.0%</b></div><div class="bar-track"><div class="bar-fill" style="width:95%;background:var(--cyan)"></div></div></div>
+            <div class="rr-bar"><div class="rr-bar-head"><span class="rr-game">Lucky Color</span><b>94.4%</b></div><div class="bar-track"><div class="bar-fill" style="width:94.4%;background:var(--cyan)"></div></div></div>
+          </div>
+          
         </div>
       <div class="panel pad chart-box gp-modes">
           <div class="side-title"><h3>Game Modes</h3><span>share of settled rounds</span></div>
@@ -4494,7 +4514,12 @@
         "consecutive winning rounds, one player": "同一玩家连续中奖回合",
         "consecutive losing rounds, one player": "同一玩家连续未中奖回合",
         "Repeat-round players (≥2 rounds)": "回合重复玩家（≥2 回合）",
-        "One round only": "仅一个回合"
+        "One round only": "仅一个回合",
+        "Repeat-Round Rate by Game": "各游戏回合重复率",
+        "players with ≥2 settled rounds": "结算回合数 ≥2 的玩家",
+        "Repeat-Round Rate": "回合重复率",
+        "Repeat Players": "重复玩家",
+        "Avg. Rounds / Player": "平均回合数 / 玩家"
         });
         /*CN:PANELS:END*/
     })();
