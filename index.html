@@ -104,6 +104,8 @@
     .dialog-inner { padding: 20px; }
     .dialog-inner p { color: var(--muted); margin-top: 8px; font-size: 13px; }
     .dialog-actions { display: flex; justify-content: flex-end; margin-top: 18px; }
+    dialog#changelogDialog { width: min(720px, calc(100% - 30px)); }
+    dialog#changelogDialog .dialog-inner { max-height: 84vh; overflow: auto; }
 
     .section { margin-top: 16px; }
     .section-head { display: flex; justify-content: space-between; gap: 12px; align-items: end; margin-bottom: 13px; }
@@ -2774,8 +2776,8 @@
        instead of sitting side by side, and the type steps down so the daily-bet
        column (P2,000-P10,000) still fits its cell. */
     .player-grid > .pp-tiers .tiers-split { grid-template-columns: minmax(0, 1fr); gap: 9px; }
-    .player-grid > .pp-tiers .tiers-pie { display: grid; grid-template-columns: minmax(0, 1fr) 310px; align-items: center; gap: 14px; }
-    .player-grid > .pp-tiers .tiers-donut { width: 310px; height: 310px; justify-self: end; }
+    .player-grid > .pp-tiers .tiers-pie { display: grid; grid-template-columns: minmax(0, 1fr) 150px; align-items: center; gap: 14px; }
+    .player-grid > .pp-tiers .tiers-donut { width: 150px; height: 150px; justify-self: end; }
     .player-grid > .pp-tiers .tiers-split table { font-size: 8.5px; }
     .player-grid > .pp-tiers .tiers-split th,
     .player-grid > .pp-tiers .tiers-split td { padding: 4px 3px; white-space: normal; }
@@ -3185,6 +3187,7 @@
             <button type="button" class="header-button" id="previousReportButton">Previous Daily Report</button>
             <button type="button" class="header-button" id="backToLatestReportButton">Back to Present Report</button>
             <button type="button" class="header-button" id="complianceButton">Compliance Update</button>
+            <button type="button" class="header-button" id="changelogButton">Changelog</button>
           </div>
         </div>
         <div class="band-stripes" aria-hidden="true"></div>
@@ -3400,14 +3403,14 @@
         </div>
         
         
-        <div class="panel pad pg-6 pp-tiers" style="grid-column: span 6;">
+        <div class="panel pad pg-6 pp-tiers" style="grid-column: span 8;">
           <div class="side-title"><h3>Players by Spend Tier</h3><span>Per-player daily bet</span></div>
           <!--PP:TIERS:START-->
           <div class="tiers-split"><div class="table-scroll"><table><colgroup><col style="width:26%"><col style="width:36%"><col style="width:19%"><col style="width:19%"></colgroup><thead><tr><th>Tier</th><th>Daily bet</th><th>Players</th><th>Share</th></tr></thead><tbody><tr><th scope="row">Micro</th><td>&lt;₱100</td><td>2,785</td><td>27.8%</td></tr><tr><th scope="row">Casual</th><td>₱100–₱500</td><td>3,978</td><td>39.8%</td></tr><tr><th scope="row">Regular</th><td>₱500–₱2,000</td><td>2,539</td><td>25.4%</td></tr><tr><th scope="row">High</th><td>₱2,000–₱10,000</td><td>651</td><td>6.5%</td></tr><tr><th scope="row">High Value</th><td>₱10,000+</td><td>50</td><td>0.5%</td></tr></tbody></table></div>
           <div class="tiers-pie"><div class="tiers-legend"><div><span><i style="background:var(--blue)"></i>Micro</span><b>2,785 · 27.8%</b></div><div><span><i style="background:var(--cyan)"></i>Casual</span><b>3,978 · 39.8%</b></div><div><span><i style="background:var(--violet)"></i>Regular</span><b>2,539 · 25.4%</b></div><div><span><i style="background:var(--yellow)"></i>High</span><b>651 · 6.5%</b></div><div><span><i style="background:var(--red)"></i>High Value</span><b>50 · 0.5%</b></div></div><div class="tiers-donut" role="img" aria-label="Players by spend tier: share of the day’s players in each tier" style="background:conic-gradient(var(--blue) 0% 27.8%, var(--cyan) 27.8% 67.6%, var(--violet) 67.6% 93.0%, var(--yellow) 93.0% 99.5%, var(--red) 99.5% 100%)"></div></div></div>
           <!--PP:TIERS:END-->
         </div>
-        <div class="panel pad pp-vip" style="grid-column: span 7;">
+        <div class="panel pad pp-vip" style="grid-column: span 12;">
           <div class="side-title"><h3>VIP Player Monitoring</h3><span>Lifetime to 10 Nov 2026 · turnover ≥ ₱1,000,000</span></div>
           <div class="vip-kpis">
             <div class="vip-k"><span>Total VIP Players</span><b>2</b><small>+5 potential</small></div>
@@ -3434,24 +3437,7 @@
           </div>
         </div>
         
-        <div class="panel pad changelog-table" style="grid-column: span 7;"><div class="side-title"><h3>Changelog</h3><span>Latest updates</span></div>
-            <table>
-              <thead><tr><th>Date</th><th>Details</th><th>Outcome</th></tr></thead>
-              <tbody>
-                <tr><td>Thursday, November 12, 2026</td><td>Update to <strong>Banana Craze</strong> — added a <strong>0.8× base multiplier</strong> reward and reduced the RTP to <strong>97%</strong></td><td>Banana Craze now pays a 0.8× base multiplier reward, with RTP adjusted to 97%</td></tr>
-                <tr><td>Wednesday, October 28, 2026</td><td>BingoPlus (BP1) Loteria listed all four Game Engine titles in its <strong>new games</strong> entry — <strong>Banana Craze, Lucky Color, Ginto Match and Blazing 7's</strong> were visible as new games</td><td>All four games are discoverable from the BP1 Loteria new-games list, giving the full portfolio stronger visibility</td></tr>
-                <tr><td>Tuesday, October 27, 2026</td><td>Live games update — <strong>Lucky Color, Ginto Match and Blazing 7's</strong> are now live on <strong>BingoPlus (BP1)</strong></td><td>Live-game coverage expanded to Lucky Color, Ginto Match and Blazing 7's</td></tr>
-                <tr><td>Monday, October 12, 2026</td><td>RTP adjusted from <strong>98.3% → 97.5%</strong></td><td>RTP configuration updated to <strong>97.5%</strong>, reflecting the new target setting.</td></tr>
-                <tr><td>Wednesday, September 23, 2026</td><td>At around <strong>1:00–2:00 PM</strong>, Banana Craze on ArenaPlus was added to Better Entry and featured in the New Game section</td><td>Better Entry improved game visibility and accessibility</td></tr>
-                <tr><td>Monday, September 21, 2026</td><td>Launch of <strong>Banana Craze on ArenaPlus</strong></td><td>Game Engine officially entered ArenaPlus</td></tr>
-                <tr><td>Thursday, September 17, 2026</td><td>Launch of <strong>Banana Craze on GameZone</strong>; minimum bet updated to <strong>₱0.50 at 2:00 PM</strong></td><td>Game Engine officially entered GameZone; lower minimum bet provided a more accessible entry point and supported increased traffic</td></tr>
-                <tr><td>Friday, September 18, 2026</td><td><strong>10:42 AM:</strong> RTP adjusted from <strong>97.0% → 98.3%</strong></td><td>RTP configuration was successfully updated to <strong>98.3%</strong>, reflecting the new target setting.</td></tr>
-                <tr><td>Monday, September 14, 2026</td><td>System maintenance for <strong>v2.17 upgrade</strong>, 9:00 AM–10:30 AM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
-                <tr><td>Thursday, September 10, 2026</td><td>Improved <strong>Banana Craze placement in BingoPlus Loteria</strong>, around 3:00 PM</td><td>Improved game visibility and accessibility within the Loteria section</td></tr>
-                <tr><td>Tuesday, September 1, 2026</td><td>System maintenance for <strong>v2.16 upgrade</strong>, 9:30 AM–1:15 PM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
-              </tbody>
-            </table>
-          </div>
+        
       
     </section>
 
@@ -3495,6 +3481,32 @@
             </table>
           </div>
       <div class="dialog-actions"><button type="button" class="header-button" id="closeCompliance">Close</button></div>
+    </div>
+  </dialog>
+  <dialog class="previous-dialog" id="changelogDialog" aria-labelledby="changelogTitle">
+    <div class="dialog-inner">
+      <div class="panel pad changelog-table"><div class="side-title"><h3 id="changelogTitle">Changelog</h3><span>Latest updates</span></div>
+<table>
+              <thead><tr><th>Date</th><th>Details</th><th>Outcome</th></tr></thead>
+              <tbody>
+                <tr><td>Thursday, November 12, 2026</td><td>Update to <strong>Banana Craze</strong> — added a <strong>0.8× base multiplier</strong> reward and reduced the RTP to <strong>97%</strong></td><td>Banana Craze now pays a 0.8× base multiplier reward, with RTP adjusted to 97%</td></tr>
+                <tr><td>Monday, November 9, 2026</td><td>RTP raised from <strong>97% to 97.5%</strong>, hitrate lowered from <strong>38% to 35.5%</strong>, removed <strong>500×+</strong> win chance and increased <strong>5–50×</strong> win frequency</td><td>Blazing 7s now runs at 97.5% RTP with a lower hitrate but more frequent mid-range wins</td></tr>
+                <tr><td>Monday, November 9, 2026</td><td>RTP distribution adjusted — reduced <strong>20×+</strong> hit probability and raised low-multiplier wins; hitrate reduced by <strong>2.5%</strong></td><td>Lucky Color hitrate reduced and low-multiplier wins made more frequent</td></tr>
+                <tr><td>Friday, November 6, 2026</td><td>November launch plan (live before certification): <strong>Bingo Flux, Fortune Ocean, Lucky Color Combo and Halo Rush</strong> all targeted for <strong>late November</strong></td><td>Four new BP1 titles — Bingo Flux, Fortune Ocean, Lucky Color Combo (Bingo/Perya) and Halo Rush (Slot) — planned to go live late Nov 2026</td></tr>
+                <tr><td>Wednesday, October 28, 2026</td><td>BingoPlus (BP1) Loteria listed all four Game Engine titles in its <strong>new games</strong> entry — <strong>Banana Craze, Lucky Color, Ginto Match and Blazing 7's</strong> were visible as new games</td><td>All four games are discoverable from the BP1 Loteria new-games list, giving the full portfolio stronger visibility</td></tr>
+                <tr><td>Tuesday, October 27, 2026</td><td>Live games update — <strong>Lucky Color, Ginto Match and Blazing 7's</strong> are now live on <strong>BingoPlus (BP1)</strong></td><td>Live-game coverage expanded to Lucky Color, Ginto Match and Blazing 7's</td></tr>
+                <tr><td>Monday, October 12, 2026</td><td>RTP adjusted from <strong>98.3% → 97.5%</strong></td><td>RTP configuration updated to <strong>97.5%</strong>, reflecting the new target setting.</td></tr>
+                <tr><td>Wednesday, September 23, 2026</td><td>At around <strong>1:00–2:00 PM</strong>, Banana Craze on ArenaPlus was added to Better Entry and featured in the New Game section</td><td>Better Entry improved game visibility and accessibility</td></tr>
+                <tr><td>Monday, September 21, 2026</td><td>Launch of <strong>Banana Craze on ArenaPlus</strong></td><td>Game Engine officially entered ArenaPlus</td></tr>
+                <tr><td>Thursday, September 17, 2026</td><td>Launch of <strong>Banana Craze on GameZone</strong>; minimum bet updated to <strong>₱0.50 at 2:00 PM</strong></td><td>Game Engine officially entered GameZone; lower minimum bet provided a more accessible entry point and supported increased traffic</td></tr>
+                <tr><td>Friday, September 18, 2026</td><td><strong>10:42 AM:</strong> RTP adjusted from <strong>97.0% → 98.3%</strong></td><td>RTP configuration was successfully updated to <strong>98.3%</strong>, reflecting the new target setting.</td></tr>
+                <tr><td>Monday, September 14, 2026</td><td>System maintenance for <strong>v2.17 upgrade</strong>, 9:00 AM–10:30 AM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
+                <tr><td>Thursday, September 10, 2026</td><td>Improved <strong>Banana Craze placement in BingoPlus Loteria</strong>, around 3:00 PM</td><td>Improved game visibility and accessibility within the Loteria section</td></tr>
+                <tr><td>Tuesday, September 1, 2026</td><td>System maintenance for <strong>v2.16 upgrade</strong>, 9:30 AM–1:15 PM; Game Hall temporarily closed</td><td>System upgrade completed</td></tr>
+              </tbody>
+            </table>
+      </div>
+      <div class="dialog-actions"><button type="button" class="header-button" id="closeChangelog">Close</button></div>
     </div>
   </dialog>
 <dialog class="previous-dialog" id="previousReportDialog" aria-labelledby="previousReportTitle">
@@ -4558,6 +4570,9 @@
       const complianceButton = document.getElementById('complianceButton');
       const complianceDialog = document.getElementById('complianceDialog');
       const closeCompliance = document.getElementById('closeCompliance');
+      const changelogButton = document.getElementById('changelogButton');
+      const changelogDialog = document.getElementById('changelogDialog');
+      const closeChangelog = document.getElementById('closeChangelog');
       const archiveList = document.getElementById('reportArchiveList');
       const previousReportHelp = document.getElementById('previousReportHelp');
       const reportDateValue = document.getElementById('reportDateValue');
@@ -4663,6 +4678,28 @@
         'Key Insight': '关键洞察', 'Archive': '存档', 'Choose a date below to open the verified report for that day.': '请选择下方日期，打开该日的已验证报告。', 'Back to Present Report': '返回当前报告',
         'Daily report archive': '日报存档', 'View report': '查看报告', 'Close': '关闭', '97.5% target': '97.5%目标', 'Aug ': '8月', 'Sep ': '9月'
       };
+      Object.assign(cn, {
+        'Monday, November 9, 2026': '2026年11月9日星期一',
+        'Friday, November 6, 2026': '2026年11月6日星期五',
+        'RTP raised from': 'RTP 从',
+        '97% to 97.5%': '97% 上调至 97.5%',
+        ', hitrate lowered from': '，命中率从',
+        '38% to 35.5%': '38% 下调至 35.5%',
+        ', removed': '，移除',
+        '500×+': '500倍以上',
+        'win chance and increased': '的中奖概率，并提高',
+        '5–50×': '5–50倍',
+        'win frequency': '的中奖频率',
+        'Blazing 7s now runs at 97.5% RTP with a lower hitrate but more frequent mid-range wins': 'Blazing 7s 现以 97.5% RTP 运行，命中率降低但中倍奖励更频繁',
+        'RTP distribution adjusted — reduced': 'RTP 分布调整 — 降低',
+        '20×+': '20倍以上',
+        'hit probability and raised low-multiplier wins; hitrate reduced by': '的出现概率并提高低倍率中奖；命中率下调',
+        'Lucky Color hitrate reduced and low-multiplier wins made more frequent': 'Lucky Color 命中率下调，低倍率中奖更频繁',
+        'November launch plan (live before certification):': '11月上线计划（未审先上）：',
+        'all targeted for': '均计划于',
+        'late November': '11月下旬',
+        'Four new BP1 titles — Bingo Flux, Fortune Ocean, Lucky Color Combo (Bingo/Perya) and Halo Rush (Slot) — planned to go live late Nov 2026': '四款新的 BP1 游戏 — Bingo Flux、Fortune Ocean、Lucky Color Combo（Bingo/Perya）与 Halo Rush（Slot）— 计划于 2026 年 11 月下旬上线'
+      });
       Object.assign(cn, {
         'DoD': '日环比', 'WoW': '周环比', 'pp': '百分点', 'Monthly Total': '月度总计', 'Monthly Average': '月度平均', 'Monthly Avg': '月度平均', 'Monthly Max': '月度最高',
         'PHT': '菲律宾时间', 'NON': '普通模式', 'Cumulative': '累计', 'rounds': '回合数', 'Player Share': '玩家占比', 'Bet Share': '投注占比', 'Popular Bet Amount': '最常用投注金额',
@@ -4927,6 +4964,9 @@
       complianceButton?.addEventListener('click', () => complianceDialog?.showModal());
       closeCompliance?.addEventListener('click', () => complianceDialog?.close());
       complianceDialog?.addEventListener('click', event => { if (event.target === complianceDialog) complianceDialog.close(); });
+      changelogButton?.addEventListener('click', () => changelogDialog?.showModal());
+      closeChangelog?.addEventListener('click', () => changelogDialog?.close());
+      changelogDialog?.addEventListener('click', event => { if (event.target === changelogDialog) changelogDialog.close(); });
       previousDialog?.addEventListener('click', event => {
         if (event.target === previousDialog) previousDialog.close();
       });
