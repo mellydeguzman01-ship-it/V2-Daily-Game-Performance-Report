@@ -3171,7 +3171,15 @@
       });
     })();
   </script>
-</head>
+<style>
+/* Compact the summary row and keep platform metrics in two columns. */
+.mc-row .po,.mc-row .vchart{height:auto;min-height:150px}
+.mc-row .pp-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:6px}
+.mc-row .pp-m{min-width:0;padding:4px 2px}
+.mc-row .pp-m b{font-size:clamp(9px,.68vw,11px)}
+@media(max-width:1100px){.mc-row .pp-m b{font-size:11px}}
+@media(max-width:700px){.mc-row .plat-stack{overflow-x:auto}.mc-row .pp-item{min-width:195px}}
+</style></head>
 <body>
   <main class="wrap">
     <header class="topbar">
